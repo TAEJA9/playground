@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Playground</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    /* 🎨 [수정] 헤더 텍스트 그라데이션 애니메이션 */
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .gradient-animate {
+      background-size: 200% 200%;
+      animation: gradient 15s ease infinite;
+    }
+    
+    /* 🎨 [수정] 기술 격자 무늬를 좀 더 은은한 slate 색상으로 변경 */
+    .tech-grid {
+      background-image: 
+        linear-gradient(rgba(100, 116, 139, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(100, 116, 139, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+    
+    /* 🎨 [삭제] 기존 float-shapes 애니메이션 관련 CSS (새 '오로라'로 대체) */
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-8px);
+    }
+    
+    /* 🎨 [추가] 배경 오로라 애니메이션 */
+    @keyframes aurora {
+      0%, 100% { transform: translate(0px, 0px) scale(1); }
+      50% { transform: translate(80px, 40px) scale(1.2); }
+    }
+    .aurora-animation {
+      animation: aurora 12s ease-in-out infinite;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="min-h-full">
+  <div class="min-h-full relative overflow-hidden" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);">
+  
+    <div class="absolute top-1/2 left-1/2 w-[70vw] h-[70vh] -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-20 blur-3xl rounded-full aurora-animation"></div>
+    </div>
+    
+    <div class="tech-grid absolute inset-0"></div>
+    
+    <div class="container mx-auto px-4 py-16 relative z-10">
+      <div class="text-center mb-16">
+        <h1 id="main-title" class="text-6xl font-bold text-white mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 gradient-animate">🧪 AI Playground</h1>
+        <p id="subtitle" class="text-xl text-slate-300">나의 AI 실험실에 오신 것을 환영합니다</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        
+        <a id="card-1" href="https://taeja9.github.io/playground/winner.html" target="_blank" rel="noopener noreferrer" class="block">
+          <div class="card-hover bg-slate-800 bg-opacity-90 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-slate-600 h-full transition-all duration-300 hover:border-blue-400">
+            <div class="text-5xl mb-4">
+              🎯
+            </div>
+            <h3 id="card-1-title" class="text-2xl font-bold text-white mb-3">이벤트 당첨자 추첨기</h3>
+            <p id="card-1-description" class="text-slate-300 leading-relaxed">이제 엑셀 지옥은 해방! 추출된 정보를 넣고, 시드 값을 입력하면 끝! 간편하고 정확한 이벤트 당첨자 추첨을 시작해보세요!</p>
+            <div class="mt-6 inline-flex items-center text-blue-400 font-semibold">
+              <span>바로가기</span>
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+              </svg>
+            </div>
+          </div>
+        </a>
+        
+        <div class="card-hover bg-slate-700 bg-opacity-50 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-slate-700 h-full opacity-70 transition-all duration-300 hover:opacity-100 hover:border-slate-500">
+          <div class="text-5xl mb-4 opacity-50">
+            🤖
+          </div>
+          <h3 class="text-2xl font-bold text-slate-200 mb-3">Coming Soon</h3>
+          <p class="text-slate-400">새로운 AI 도구가 곧 공개됩니다</p>
+        </div>
+        
+        <div class="card-hover bg-slate-700 bg-opacity-50 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-slate-700 h-full opacity-70 transition-all duration-300 hover:opacity-100 hover:border-slate-500">
+          <div class="text-5xl mb-4 opacity-50">
+            ✨
+          </div>
+          <h3 class="text-2xl font-bold text-slate-200 mb-3">Coming Soon</h3>
+          <p class="text-slate-400">새로운 AI 도구가 곧 공개됩니다</p>
+        </div>
+        
+        <div class="card-hover bg-slate-700 bg-opacity-50 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-slate-700 h-full opacity-70 transition-all duration-300 hover:opacity-100 hover:border-slate-500">
+          <div class="text-5xl mb-4 opacity-50">
+            🚀
+          </div>
+          <h3 class="text-2xl font-bold text-slate-200 mb-3">Coming Soon</h3>
+          <p class="text-slate-400">새로운 AI 도구가 곧 공개됩니다</p>
+        </div>
+        
+        <div class="card-hover bg-slate-700 bg-opacity-50 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-slate-700 h-full opacity-70 transition-all duration-300 hover:opacity-100 hover:border-slate-500">
+          <div class="text-5xl mb-4 opacity-50">
+            💡
+          </div>
+          <h3 class="text-2xl font-bold text-slate-200 mb-3">Coming Soon</h3>
+          <p class="text-slate-400">새로운 AI 도구가 곧 공개됩니다</p>
+        </div>
+        
+        <div class="card-hover bg-slate-700 bg-opacity-50 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-slate-700 h-full opacity-70 transition-all duration-300 hover:opacity-100 hover:border-slate-500">
+          <div class="text-5xl mb-4 opacity-50">
+            🎨
+          </div>
+          <h3 class="text-2xl font-bold text-slate-200 mb-3">Coming Soon</h3>
+          <p class="text-slate-400">새로운 AI 도구가 곧 공개됩니다</p>
+        </div>
+      </div>
+      
+      <div class="text-center mt-16">
+        <p class="text-slate-400 text-sm">더 많은 AI 도구들이 준비 중입니다 🔬</p>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const defaultConfig = {
+      background_color: "#0f172a",
+      secondary_color: "#334155",
+      card_background: "#1e293b",
+      text_color: "#ffffff",
+      accent_color: "#60a5fa",
+      font_family: "system-ui, -apple-system, sans-serif",
+      font_size: 16,
+      main_title: "🧪 AI Playground",
+      subtitle: "나의 AI 실험실에 오신 것을 환영합니다",
+      card_1_title: "이벤트 당첨자 추첨기",
+      card_1_description: "이제 엑셀 지옥은 해방! 추출된 정보를 넣고, 시드 값을 입력하면 끝! 간편하고 정확한 이벤트 당첨자 추첨을 시작해보세요!",
+      card_1_link: "https://example.com"
+    };
+
+    async function onConfigChange(config) {
+      const bgColor1 = config.background_color || defaultConfig.background_color;
+      const bgColor2 = config.secondary_color || defaultConfig.secondary_color;
+      const cardBg = config.card_background || defaultConfig.card_background;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      const fontFamily = config.font_family || defaultConfig.font_family;
+      const fontSize = config.font_size || defaultConfig.font_size;
+
+      // Background gradient
+      document.querySelector('.min-h-full.relative').style.background = `linear-gradient(135deg, ${bgColor1} 0%, #1e293b 50%, ${bgColor2} 100%)`;
+
+      // Font family
+      document.body.style.fontFamily = `${fontFamily}, system-ui, -apple-system, sans-serif`;
+
+      // Font sizes
+      document.getElementById('main-title').style.fontSize = `${fontSize * 3.75}px`;
+      document.getElementById('subtitle').style.fontSize = `${fontSize * 1.25}px`;
+      
+      const cardTitles = document.querySelectorAll('h3');
+      cardTitles.forEach(title => {
+        title.style.fontSize = `${fontSize * 1.5}px`;
+      });
+      
+      const cardDescriptions = document.querySelectorAll('p');
+      cardDescriptions.forEach(desc => {
+        desc.style.fontSize = `${fontSize}px`;
+      });
+
+      // Card background
+      document.querySelector('#card-1 > div').style.backgroundColor = cardBg;
+
+      // Text colors
+      document.getElementById('card-1-title').style.color = textColor;
+      document.getElementById('card-1-description').style.color = textColor;
+      
+      // Accent color
+      // 🎨 [수정] querySelector 오류 수정 (기존: .text-purple-600, 현재: .text-blue-400)
+      document.querySelector('#card-1 .text-blue-400').style.color = accentColor;
+
+      // Text content
+      document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+      document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+      document.getElementById('card-1-title').textContent = config.card_1_title || defaultConfig.card_1_title;
+      document.getElementById('card-1-description').textContent = config.card_1_description || defaultConfig.card_1_description;
+      
+      // Update link
+      const link = config.card_1_link || defaultConfig.card_1_link;
+      document.getElementById('card-1').href = link;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              config.secondary_color = value;
+              window.elementSdk.setConfig({ secondary_color: value });
+            }
+          },
+          {
+            get: () => config.card_background || defaultConfig.card_background,
+            set: (value) => {
+              config.card_background = value;
+              window.elementSdk.setConfig({ card_background: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              window.elementSdk.setConfig({ accent_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            config.font_size = value;
+            window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["main_title", config.main_title || defaultConfig.main_title],
+        ["subtitle", config.subtitle || defaultConfig.subtitle],
+        ["card_1_title", config.card_1_title || defaultConfig.card_1_title],
+        ["card_1_description", config.card_1_description || defaultConfig.card_1_description],
+        ["card_1_link", config.card_1_link || defaultConfig.card_1_link]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'998cd33480d1aa35',t:'MTc2MjE4MjkwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+ </body>
+</html>
