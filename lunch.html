@@ -3,40 +3,60 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>🍴 오늘 점심 먹으러 어디 가지?</title>
+  <title>🍴 뭐 먹으러 갈래요?</title>
 
   <!-- Pretendard -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- QRCode Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
   <style>
     :root { --brand-1:#f97316; --brand-2:#ec4899; --ink:#0a0a0a; }
     html,body{ font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; }
+    .brand-divider{height:3px;border-radius:9999px;background:linear-gradient(90deg,var(--brand-1),var(--brand-2))}
+    .spring-in{animation:spring-in .32s cubic-bezier(.2,.65,.25,1) both}
+    @keyframes spring-in{0%{transform:translateY(8px) scale(.98);opacity:0}60%{transform:translateY(-2px) scale(1.03);opacity:1}100%{transform:none}}
+    @media (max-width: 768px){ .mobile-tight{ padding:14px !important; } }
+
+    /* 모달 공통: 항상 flex 중앙정렬, 보이기/숨기기는 opacity+visibility로 */
+    .modal-backdrop{
+      position:fixed; inset:0; z-index:50;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(0,0,0,.35); backdrop-filter:blur(2px);
+      opacity:0; visibility:hidden; transition:opacity .18s ease, visibility .18s ease;
+    }
+    .modal-backdrop.show{ opacity:1; visibility:visible; }
+    .modal-box{ background:white; border-radius:1rem; padding:1.25rem 1.5rem; box-shadow:0 8px 30px rgba(0,0,0,.2); text-align:center; }
+
+    /* 카드 장식 */
     .card{ position:relative; overflow:hidden; }
     .card::before{
       content:""; position:absolute; inset:-40% -40% auto auto; width:180px; height:180px; border-radius:9999px;
       background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.7), transparent 60%); filter:blur(8px); transform:rotate(20deg);
     }
-    @keyframes spring-in{0%{transform:translateY(8px) scale(.98);opacity:0}60%{transform:translateY(-2px) scale(1.03);opacity:1}100%{transform:none}}
-    .spring-in{animation:spring-in .32s cubic-bezier(.2,.65,.25,1) both}
-    .brand-divider{height:3px;border-radius:9999px;background:linear-gradient(90deg,var(--brand-1),var(--brand-2))}
-    @media (max-width: 768px){ .mobile-tight{ padding:14px !important; } }
-
-    /* 로딩 모달 */
-    #loadingModal{ position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:center; justify-content:center; z-index:50; backdrop-filter:saturate(140%) blur(2px);}
-    #loadingModal.show{ display:flex; }
-    .loading-box{ background:white; border-radius:1rem; padding:1.25rem 1.5rem; box-shadow:0 8px 30px rgba(0,0,0,0.2); text-align:center; animation:popIn .22s ease-out; }
-    @keyframes popIn{0%{transform:scale(.92);opacity:.5}100%{transform:scale(1);opacity:1}}
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-rose-100 via-amber-100 to-sky-100 text-[var(--ink)]">
   <!-- 로딩 모달 -->
-  <div id="loadingModal">
-    <div class="loading-box">
-      <div id="loadingEmojis" class="text-3xl mb-1">🍕🍔🍟🍣🍜</div>
+  <div id="loadingModal" class="modal-backdrop" aria-modal="true" role="dialog">
+    <div class="modal-box">
+      <div id="loadingEmojis" class="text-3xl mb-1">🍕🍔🍣🍜</div>
       <p class="font-semibold text-zinc-700">Loading...</p>
+    </div>
+  </div>
+
+  <!-- QR 모달 -->
+  <div id="qrModal" class="modal-backdrop" aria-modal="true" role="dialog">
+    <div class="modal-box w-[min(92vw,360px)]">
+      <h4 class="text-lg font-bold mb-2">📱 점심 추천 QR</h4>
+      <canvas id="qrCanvas" class="mx-auto block"></canvas>
+      <p id="qrUrlText" class="text-xs text-zinc-600 mt-2 break-all"></p>
+      <div class="mt-4">
+        <button id="qrClose" class="px-4 py-2 rounded-xl border border-zinc-300 bg-white hover:bg-zinc-50 text-sm">닫기</button>
+      </div>
     </div>
   </div>
 
@@ -47,37 +67,37 @@
         <div class="flex items-center gap-2 sm:gap-3">
           <span class="text-2xl sm:text-3xl">🍱</span>
           <div>
-            <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">오늘 점심 먹으러 어디 가지?</h1>
-            <p class="text-xs sm:text-sm text-zinc-600">가게를 추가해 보세요!</p>
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">오늘 점심, 어디 가지?</h1>
+            <p class="text-xs sm:text-sm text-zinc-600">좋아요 수가 가장 많은 곳으로 가기로 해요!</p>
           </div>
         </div>
         <div class="flex items-center gap-2">
+          <button id="qrBtn" class="px-2.5 py-1.5 rounded-xl border border-zinc-300 bg-white/80 hover:bg-white text-xs sm:text-sm">📷 QR 코드</button>
           <span id="todayBadge" class="px-2.5 py-1 rounded-full text-xs bg-white/80 border border-white/60 shadow-sm"></span>
-          <button id="adminResetBtn" class="px-2.5 py-1.5 rounded-xl border border-zinc-300 bg-white/80 hover:bg-white transition text-xs sm:text-sm">
-            🧨 관리자 모드
+          <button id="adminResetBtn" class="px-2.5 py-1.5 rounded-xl border border-zinc-300 bg-white/80 hover:bg-white text-xs sm:text-sm">
+            🧨 관리자 초기화
           </button>
         </div>
       </div>
       <div class="brand-divider mt-3"></div>
     </section>
 
-    <!-- 메인: 오른쪽 영역을 더 넓게 -->
+    <!-- 메인: 오른쪽 넓게 -->
     <section class="grid grid-cols-1 md:grid-cols-[1fr_1.3fr] gap-4 md:gap-6">
-      <!-- 왼쪽 카드 -->
+      <!-- 추천 카드 -->
       <div id="resultCard" class="card p-6 sm:p-7 bg-white/90 rounded-3xl shadow-xl border border-white/50 mobile-tight">
         <p class="text-xs sm:text-sm text-zinc-500">오늘의 선택</p>
-        <h2 id="resultText" class="mt-1 sm:mt-2 text-3xl sm:text-4xl md:text-5xl font-black leading-tight">뭐 먹으러 갈래요?</h2>
+        <h2 id="resultText" class="mt-1 sm:mt-2 text-3xl sm:text-4xl md:text-5xl font-black leading-tight">랜덤 추천 클릭!</h2>
         <p class="mt-2 text-[11px] sm:text-xs text-zinc-500">리더보드에 있는 가게 중에서 랜덤으로 골라드려요.</p>
         <div class="mt-5 flex flex-col sm:flex-row gap-2">
-          <button id="randomAll" class="w-full sm:w-auto px-4 py-3 rounded-2xl bg-gradient-to-r from-amber-400 to-pink-400 text-white font-semibold shadow hover:opacity-95">🎲 랜덤 추천</button>
+          <button id="randomAll" class="w-full sm:w-auto px-4 py-3 rounded-2xl bg-gradient-to-r from-amber-400 to-pink-400 text-white font-semibold shadow">🎲 랜덤 추천</button>
           <button id="likeBtn" class="w-full sm:w-auto px-4 py-3 rounded-2xl border border-zinc-200 bg-white hover:bg-zinc-50">👍 좋아요</button>
         </div>
       </div>
 
-      <!-- 오른쪽: 리더보드 + 가게 추가 -->
+      <!-- 리더보드 / 입력 -->
       <div class="p-6 sm:p-7 bg-white/90 rounded-3xl shadow-xl border border-white/50 mobile-tight">
         <h3 class="text-lg sm:text-xl font-bold mb-3">🔥 인기 가게 리더보드</h3>
-
         <div class="overflow-auto rounded-2xl border border-zinc-200 max-h-[260px] sm:max-h-[340px]">
           <table class="w-full text-xs sm:text-sm">
             <thead class="bg-zinc-50 sticky top-0">
@@ -89,15 +109,12 @@
 
         <div class="mt-4 sm:mt-5">
           <h4 class="font-semibold mb-2">가게 추가</h4>
-
-          <!-- ★ 한 줄 고정: sm 이상에서는 flex-nowrap -->
           <div class="flex flex-col sm:flex-row sm:flex-nowrap gap-2 items-stretch">
             <input id="placeName" class="px-3 py-2 border rounded-xl text-sm flex-[2] min-w-0" placeholder="시그니처 타워" />
             <input id="placeCat"  class="px-3 py-2 border rounded-xl text-sm flex-1 min-w-0" list="catsList" placeholder="카테고리(선택)" />
             <datalist id="catsList"></datalist>
             <button id="addPlaceBtn" class="px-4 py-2 rounded-xl bg-zinc-900 text-white text-sm shrink-0 whitespace-nowrap">추가</button>
           </div>
-
           <p class="text-[11px] sm:text-xs text-zinc-500 mt-1">카테고리는 비워도 됩니다. 새 이름을 적으면 새 카테고리로 저장돼요.</p>
         </div>
       </div>
@@ -109,50 +126,37 @@
   </main>
 
   <script>
-    // ===== 설정 =====
-    const WEB_APP_URL    = "https://script.google.com/macros/s/AKfycbyfLjdjQked5ZDMiQr219fW3BnsDBEaddK5aEviom9GQQT9fOwsKfRLkvdDwOgLiYtgzA/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyfLjdjQked5ZDMiQr219fW3BnsDBEaddK5aEviom9GQQT9fOwsKfRLkvdDwOgLiYtgzA/exec";
     const ADMIN_PASSWORD = "24003";
+    const QR_TARGET_URL  = "https://taeja9.github.io/playground/lunch.html";
 
-    // ===== 상태 =====
-    let places=[], votes={}, currentPick='';
-    let toggled = JSON.parse(sessionStorage.getItem('lunch_like_toggle') || "{}");
-
-    // ===== 엘리먼트 =====
     const $ = (s)=>document.querySelector(s);
-    const resultText=$("#resultText"), likeBtn=$("#likeBtn"), randomAll=$("#randomAll"),
-          leaderBody=$("#leaderboard"), addPlaceBtn=$("#addPlaceBtn"), placeName=$("#placeName"),
-          placeCat=$("#placeCat"), catsList=$("#catsList"), adminResetBtn=$("#adminResetBtn"),
-          todayBadge=$("#todayBadge"), modal=$("#loadingModal"), modalEmoji=$("#loadingEmojis");
+    const loadingModal=$("#loadingModal"),loadingEmojis=$("#loadingEmojis");
+    const qrModal=$("#qrModal"),qrCanvas=$("#qrCanvas"),qrUrlText=$("#qrUrlText"),qrClose=$("#qrClose"),qrBtn=$("#qrBtn");
+    const todayBadge=$("#todayBadge"),leaderBody=$("#leaderboard"),resultText=$("#resultText"),
+          randomAll=$("#randomAll"),likeBtn=$("#likeBtn"),addPlaceBtn=$("#addPlaceBtn"),
+          placeName=$("#placeName"),placeCat=$("#placeCat"),catsList=$("#catsList"),adminResetBtn=$("#adminResetBtn");
 
-    // ★ 이모지 목록을 배열로 명시(유니코드 안전)
-    const LOADING_EMOJIS = ["🍕","🍔","🍟","🌭","🍿","🥓","🥚","🍳","🧇","🥞","🧈","🍞","🥐","🥨","🥯","🥖","🫓","🧀","🥗","🥙","🥪","🌮","🌯","🫔","🥫","🍖","🍗","🥩","🍠","🥟","🥠","🥡","🍱","🍘","🍙","🍚","🍛","🍜","🦪","🍣","🍤","🍥","🥮","🍢","🧆","🥘","🍲","🫕","🍝","🥣","🥧","🍦","🍧","🍨","🍩","🎂"];
+    let places=[],votes={},currentPick='';
+    let toggled=JSON.parse(sessionStorage.getItem('lunch_like_toggle')||"{}");
 
+    const LOADING_EMOJIS=["🍕","🍔","🍟","🌭","🍿","🥓","🍳","🧇","🥞","🍞","🥐","🥨","🥪","🌮","🍗","🍛","🍱","🍣","🥟","🍝","🎂"];
     const qs=(p)=>Object.entries(p).map(([k,v])=>`${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join("&");
     const saveToggle=()=>sessionStorage.setItem('lunch_like_toggle',JSON.stringify(toggled));
-    const setLikeBtnLabel=()=>{ likeBtn.textContent = currentPick ? (toggled[currentPick] ? "🙅‍♀️ 좋아요 취소" : "👍 좋아요") : "👍 좋아요"; };
+    const setLikeBtnLabel=()=>{ likeBtn.textContent=currentPick?(toggled[currentPick]?"🙅‍♀️ 좋아요 취소":"👍 좋아요"):"👍 좋아요"; };
 
-    function sampleEmojis(n=5){
-      const arr=[...LOADING_EMOJIS];
-      const pick=[];
-      while(pick.length<n && arr.length){
-        const i=Math.floor(Math.random()*arr.length);
-        pick.push(arr.splice(i,1)[0]);
-      }
-      return pick.join('');
-    }
     function showLoading(msg="Loading..."){
-      modalEmoji.textContent = sampleEmojis(5);
-      modal.querySelector("p").textContent = msg;
-      modal.classList.add("show");
+      loadingEmojis.textContent = Array.from({length:5},()=>LOADING_EMOJIS[Math.floor(Math.random()*LOADING_EMOJIS.length)]).join('');
+      loadingModal.querySelector("p").textContent=msg;
+      loadingModal.classList.add("show");
     }
-    function hideLoading(){ modal.classList.remove("show"); }
-
+    function hideLoading(){ loadingModal.classList.remove("show"); }
     function formatTodayBadge(){
-      const d=new Date(); const wd=["일","월","화","수","목","금","토"][d.getDay()];
-      todayBadge.textContent = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")} ${wd}요일`;
+      const d=new Date(); const w=["일","월","화","수","목","금","토"][d.getDay()];
+      todayBadge.textContent=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")} ${w}요일`;
     }
 
-    async function api(fn,params={}){ const url=WEB_APP_URL+"?"+qs({fn,...params}); const r=await fetch(url); return r.json(); }
+    async function api(fn,params={}){ const r=await fetch(WEB_APP_URL+"?"+qs({fn,...params})); return r.json(); }
     async function withLoading(msg,fn){ showLoading(msg); try{ return await fn(); } finally{ hideLoading(); } }
 
     async function refresh(){
@@ -162,23 +166,16 @@
         renderLeaderboard(); renderCats(); setLikeBtnLabel();
       });
     }
-
-    function renderCats(){
-      const cats=[...new Set(places.map(p=>p.cat).filter(Boolean))];
-      catsList.innerHTML = cats.map(c=>`<option value="${c}">`).join("");
-    }
-
+    function renderCats(){ const cats=[...new Set(places.map(p=>p.cat).filter(Boolean))]; catsList.innerHTML=cats.map(c=>`<option value="${c}">`).join(""); }
     function renderLeaderboard(){
-      const rows = places.map(p=>({n:p.name, v:votes[p.name]||0})).sort((a,b)=>b.v-a.v);
-      leaderBody.innerHTML = rows.length
-        ? rows.map((r,i)=>`<tr><td class="px-3 py-2">${i+1}</td><td class="px-3 py-2">${r.n}</td><td class="px-3 py-2 text-right font-semibold">${r.v}</td></tr>`).join("")
-        : `<tr><td colspan="3" class="px-3 py-3 text-center text-zinc-500">가게를 추가해보세요!</td></tr>`;
+      const rows=places.map(p=>({n:p.name,v:votes[p.name]||0})).sort((a,b)=>b.v-a.v);
+      leaderBody.innerHTML=rows.length?rows.map((r,i)=>`<tr><td class="px-3 py-2">${i+1}</td><td class="px-3 py-2">${r.n}</td><td class="px-3 py-2 text-right font-semibold">${r.v}</td></tr>`).join("")
+        :`<tr><td colspan="3" class="px-3 py-3 text-center text-zinc-500">가게를 추가해보세요!</td></tr>`;
     }
-
-    function renderResult(name){
-      if(!name){ resultText.textContent="버튼을 눌러 시작!"; setLikeBtnLabel(); return; }
+    function renderResult(n){
+      if(!n){ resultText.textContent="버튼을 눌러 시작!"; setLikeBtnLabel(); return; }
       const em=["🍜","🍛","🍕","🥗","🍣","🍗","🥪","🌮","🍔","🥟","🍝"];
-      resultText.textContent = `${name} ${em[Math.floor(Math.random()*em.length)]}`;
+      resultText.textContent=`${n} ${em[Math.floor(Math.random()*em.length)]}`;
       resultText.classList.remove("spring-in"); void resultText.offsetWidth; resultText.classList.add("spring-in");
       setLikeBtnLabel();
     }
@@ -191,41 +188,68 @@
         votes=s.votes||{}; toggled[currentPick]=!was; saveToggle(); renderLeaderboard(); setLikeBtnLabel();
       });
     }
-
     async function doAdd(){
-      const n=placeName.value.trim(); const c=placeCat.value.trim();
-      if(!n) return;
+      const n=placeName.value.trim(), c=placeCat.value.trim(); if(!n) return;
       await withLoading("가게 추가 중…", async ()=>{
         const s=await api("add",{name:n,cat:c});
         places=s.places||[]; votes=s.votes||{};
         placeName.value=""; renderLeaderboard(); renderCats(); currentPick=n; renderResult(n);
       });
     }
-
     async function doAdminWipe(){
-      const pw = prompt("관리자 비밀번호를 입력하세요:");
-      if(pw!==ADMIN_PASSWORD){ alert("비밀번호가 틀렸습니다."); return; }
+      const pw=prompt("관리자 비밀번호를 입력하세요:"); if(pw!==ADMIN_PASSWORD){ alert("비밀번호가 틀렸습니다."); return; }
       await withLoading("전체 비우는 중…", async ()=>{
-        const s=await api("wipe"); // ★ 테이블 비우기
+        const s=await api("wipe");
         places=s.places||[]; votes=s.votes||{}; toggled={}; saveToggle();
         renderLeaderboard(); renderCats(); currentPick=""; renderResult("");
         alert("오늘의 추천이 종료되었습니다. (순위/가게/좋아요 전부 초기화)");
       });
     }
 
-    // 이벤트
-    randomAll.onclick = ()=>withLoading("추천 중…", ()=>{
-      const pool=places.map(p=>p.name); if(!pool.length){ currentPick=""; renderResult(""); return; }
-      currentPick = pool[Math.floor(Math.random()*pool.length)];
-      renderResult(currentPick);
-    });
-    likeBtn.onclick     = doVoteToggle;
-    addPlaceBtn.onclick = doAdd;
-    adminResetBtn.onclick = doAdminWipe;
+    // QR 모달 (중앙 고정 + 폴백 이미지는 block/mx-auto)
+    function openQrModal(){
+      qrUrlText.textContent=QR_TARGET_URL;
+      qrModal.classList.add("show");
 
-    formatTodayBadge();
-    refresh();
+      // 캔버스 초기화
+      const ctx = qrCanvas.getContext && qrCanvas.getContext('2d');
+      if (ctx) ctx.clearRect(0,0,qrCanvas.width||0,qrCanvas.height||0);
+
+      // 기존 폴백 이미지 제거
+      const next = qrCanvas.nextElementSibling;
+      if (next && next.dataset && next.dataset.qrimg === '1') next.remove();
+
+      const encoded = encodeURIComponent(QR_TARGET_URL);
+      const fallbackImg = () => {
+        const img = new Image();
+        img.width = 240; img.height = 240;
+        img.alt = 'QR code';
+        img.decoding = 'async';
+        img.loading = 'eager';
+        img.dataset.qrimg = '1';
+        img.className = 'block mx-auto';   // ← 중앙 정렬 보장
+        img.src = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encoded}`;
+        qrCanvas.insertAdjacentElement('afterend', img);
+      };
+
+      if (typeof QRCode !== 'undefined' && QRCode.toCanvas) {
+        QRCode.toCanvas(qrCanvas, QR_TARGET_URL, { width: 240, margin: 1 }, (err) => {
+          if (err) fallbackImg();
+        });
+      } else {
+        fallbackImg();
+      }
+    }
+    function closeQrModal(){ qrModal.classList.remove("show"); }
+
+    // 이벤트
+    randomAll.onclick=()=>withLoading("추천 중…",()=>{const pool=places.map(p=>p.name);if(!pool.length){currentPick="";renderResult("");return;}currentPick=pool[Math.floor(Math.random()*pool.length)];renderResult(currentPick);});
+    likeBtn.onclick=doVoteToggle; addPlaceBtn.onclick=doAdd; adminResetBtn.onclick=doAdminWipe;
+    document.getElementById('qrBtn').onclick=openQrModal;
+    document.getElementById('qrClose').onclick=closeQrModal;
+    qrModal.addEventListener('click', (e)=>{ if (e.target===qrModal) closeQrModal(); });
+
+    formatTodayBadge(); refresh();
   </script>
 </body>
 </html>
-
