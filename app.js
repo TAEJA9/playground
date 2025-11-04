@@ -34,7 +34,7 @@ const CARD_DATA = [
     icon: "😽",
     title: "전국투어 맛집 자랑",
     desc: "전국 방방곡곡을 돌아다니는 WK의 맛집 버킷 리스트",
-    href: "https://taeja9.github.io/playground/lunch.html",
+    href: "https://taeja9.github.io/playground/tasty-wk.html",
     cats: ["WK-Only"],   // ← 이벤트만 남김
     isActive: false     // ← 유일하게 클릭 가능
   },
@@ -230,6 +230,7 @@ function init(){
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
 
 
 
