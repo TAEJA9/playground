@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>AI Playground</title>
+<link rel="icon" type="image/png" href="favicon.png" />
 
 <!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -13,19 +14,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard/dist/web/static/pretendard.css" />
 
 <style>
-  /* 전체 박스사이징 */
   html, body { box-sizing: border-box; }
   *, *::before, *::after { box-sizing: inherit; }
+  body { font-family: Pretendard, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial; color:#fff; }
 
-  /* 헤더 텍스트 그라데이션 애니메이션 */
-  @keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  .gradient-animate { background-size: 200% 200%; animation: gradient 15s ease infinite; }
-
-  /* 기술 격자: 더 은은한 slate */
+  /* 배경 레이어(스크롤해도 화면 꽉 채움) */
+  .bg-layer { position: fixed; inset: 0; pointer-events:none; }
+  @keyframes aurora { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(80px,40px) scale(1.2)} }
+  .aurora-animation { animation: aurora 12s ease-in-out infinite; }
   .tech-grid {
     background-image:
       linear-gradient(rgba(100,116,139,.10) 1px, transparent 1px),
@@ -33,30 +29,19 @@
     background-size: 50px 50px;
   }
 
-  /* 오로라 */
-  @keyframes aurora {
-    0%,100% { transform: translate(0,0) scale(1); }
-    50% { transform: translate(80px,40px) scale(1.2); }
-  }
-  .aurora-animation { animation: aurora 12s ease-in-out infinite; }
-
-  /* 카드 hover */
-  .card-hover { transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+  .card-hover { transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
   .card-hover:hover { transform: translateY(-6px); }
 
-  /* 배경 레이어: 화면 가득(스크롤해도 고정) */
-  .bg-layer { position: fixed; inset: 0; pointer-events: none; }
+  .btn-cat.active { outline: 2px solid rgb(59 130 246); border-color: rgb(59 130 246); }
+
+  /* 비활성 카드(Coming Soon) */
+  .card-disabled { opacity:.7; cursor:not-allowed; }
+  .card-disabled .link-row { color:#94a3b8; } /* slate-400 */
 </style>
-
-<style>@view-transition { navigation: auto; }</style>
-
-<!-- (옵션) 사내 편집 SDK가 필요하면 유지 -->
-<script src="/_sdk/element_sdk.js"></script>
-<script src="/_sdk/data_sdk.js" type="text/javascript"></script>
 </head>
-<body class="min-h-screen font-pretendard text-white">
-  <!-- 배경: 그라데이션 + 오로라 + 그리드 패턴 (스크롤해도 꽉 차게 고정) -->
-  <div class="bg-layer" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);"></div>
+<body class="min-h-screen">
+  <!-- 배경 -->
+  <div class="bg-layer" style="background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#334155 100%)"></div>
   <div class="bg-layer">
     <div class="absolute top-1/2 left-1/2 w-[70vw] h-[70vh] -translate-x-1/2 -translate-y-1/2">
       <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-20 blur-3xl rounded-full aurora-animation"></div>
@@ -64,237 +49,69 @@
   </div>
   <div class="bg-layer tech-grid"></div>
 
-  <!-- 컨텐츠 -->
+  <!-- 콘텐츠 -->
   <div class="relative z-10">
     <div class="max-w-7xl mx-auto px-4 py-12 md:py-16">
-      <!-- 헤더 -->
+      <!-- 헤더 (아이콘/그라데이션 제거) -->
       <header class="text-center mb-10 md:mb-14">
-        <h1 id="main-title" class="text-4xl md:text-6xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 gradient-animate">
-          🧪 AI Playground
+        <h1 class="text-4xl md:text-6xl font-bold mb-3 text-white">
+          AI Playground
         </h1>
-        <p id="subtitle" class="text-slate-300">AI Playground에 오신 것을 환영합니다!</p>
+        <p class="text-slate-300">나의 AI 실험실에 오신 것을 환영합니다</p>
       </header>
 
-      <!-- 컨트롤바: 검색 + 카테고리 -->
+      <!-- 컨트롤바 -->
       <section class="bg-slate-800/60 border border-slate-700 rounded-2xl shadow-xl p-4 md:p-6 backdrop-blur">
-        <div class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
-          <!-- 검색 -->
-          <div class="flex-1">
-            <label class="block text-sm text-slate-300 mb-2">검색</label>
-            <div class="relative">
-              <input id="searchInput" type="text" placeholder="도구 이름/설명 검색..."
-                     class="w-full rounded-xl bg-slate-900/60 border border-slate-700 px-4 py-3 text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              <svg class="w-5 h-5 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-4.35-4.35M10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/>
-              </svg>
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+            <!-- 검색 -->
+            <div class="flex-1">
+              <label class="block text-sm text-slate-300 mb-2">검색</label>
+              <div class="relative">
+                <input id="searchInput" type="text" placeholder="도구 이름/설명 검색..."
+                  class="w-full rounded-xl bg-slate-900/60 border border-slate-700 px-4 py-3 text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <svg class="w-5 h-5 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-4.35-4.35M10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- 페이지 크기 -->
+            <div class="flex items-center gap-3">
+              <label class="flex items-center gap-2 text-sm text-slate-300">
+                페이지 크기
+                <select id="pageSize" class="rounded-lg bg-slate-900/60 border border-slate-700 px-2 py-2 text-slate-100">
+                  <option value="6">6</option>
+                  <option value="9" selected>9</option>
+                  <option value="12">12</option>
+                  <option value="18">18</option>
+                </select>
+              </label>
             </div>
           </div>
 
-          <!-- 카테고리 -->
-          <div class="flex flex-wrap gap-2">
-            <button class="cat-btn px-4 py-2 rounded-full border border-slate-600 bg-slate-900/50 hover:border-blue-400"
-                    data-cat="all">전체</button>
-            <button class="cat-btn px-4 py-2 rounded-full border border-slate-600 bg-slate-900/50 hover:border-blue-400"
-                    data-cat="event">이벤트</button>
-            <button class="cat-btn px-4 py-2 rounded-full border border-slate-600 bg-slate-900/50 hover:border-blue-400"
-                    data-cat="nlp">NLP</button>
-            <button class="cat-btn px-4 py-2 rounded-full border border-slate-600 bg-slate-900/50 hover:border-blue-400"
-                    data-cat="vision">Vision</button>
-            <button class="cat-btn px-4 py-2 rounded-full border border-slate-600 bg-slate-900/50 hover:border-blue-400"
-                    data-cat="utils">유틸</button>
-          </div>
+          <!-- 카테고리(자동 생성) -->
+          <div id="catBar" class="flex flex-wrap gap-2"></div>
         </div>
       </section>
 
       <!-- 카드 그리드 -->
-      <!-- 균등 높이: 부모 grid에 items-stretch, 카드에 h-full + flex-col -->
       <section class="mt-8">
         <div id="cardGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-          <!-- 카드 템플릿 예시(복제해서 N개까지 확장 가능) -->
-          <a href="https://taeja9.github.io/playground/winner.html"
-             target="_blank" rel="noopener noreferrer"
-             class="group block"
-             data-title="이벤트 당첨자 추첨기" data-desc="엑셀 업로드 시드 재현 마스킹"
-             data-cat="event utils">
-            <div class="card-hover h-full bg-slate-800/90 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-slate-600 hover:border-blue-400 flex flex-col">
-              <div class="text-5xl mb-4">🎯</div>
-              <h3 class="text-2xl font-bold text-white mb-3">이벤트 당첨자 추첨기</h3>
-              <p class="text-slate-300 leading-relaxed flex-1">
-                엑셀 업로드 → 시드로 재현 가능한 추첨 → 원본/마스킹 결과 다운로드까지 한 번에!
-              </p>
-              <div class="mt-6 inline-flex items-center text-blue-400 font-semibold">
-                <span>바로가기</span>
-                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                </svg>
-              </div>
-            </div>
-          </a>
-
-          <!-- 빈 공간 채워줄 플레이스홀더 카드들(Coming soon) -->
-          <div class="card-hover h-full bg-slate-700/50 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-slate-700 hover:border-slate-500 flex flex-col"
-               data-title="텍스트 요약" data-desc="요약 NLP 문서" data-cat="nlp">
-            <div class="text-5xl mb-4 opacity-70">🤖</div>
-            <h3 class="text-2xl font-bold text-slate-200 mb-3">Coming Soon</h3>
-            <p class="text-slate-400 flex-1">새로운 AI 도구가 곧 공개됩니다</p>
-          </div>
-
-          <div class="card-hover h-full bg-slate-700/50 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-slate-700 hover:border-slate-500 flex flex-col"
-               data-title="이미지 캡션" data-desc="vision caption 이미지" data-cat="vision">
-            <div class="text-5xl mb-4 opacity-70">✨</div>
-            <h3 class="text-2xl font-bold text-slate-200 mb-3">Coming Soon</h3>
-            <p class="text-slate-400 flex-1">새로운 AI 도구가 곧 공개됩니다</p>
-          </div>
-
-          <div class="card-hover h-full bg-slate-700/50 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-slate-700 hover:border-slate-500 flex flex-col"
-               data-title="스피치 인식" data-desc="stt 음성 텍스트 변환" data-cat="nlp">
-            <div class="text-5xl mb-4 opacity-70">🚀</div>
-            <h3 class="text-2xl font-bold text-slate-200 mb-3">Coming Soon</h3>
-            <p class="text-slate-400 flex-1">새로운 AI 도구가 곧 공개됩니다</p>
-          </div>
-
-          <div class="card-hover h-full bg-slate-700/50 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-slate-700 hover:border-slate-500 flex flex-col"
-               data-title="데이터 정제" data-desc="유틸 csv 정리" data-cat="utils">
-            <div class="text-5xl mb-4 opacity-70">💡</div>
-            <h3 class="text-2xl font-bold text-slate-200 mb-3">Coming Soon</h3>
-            <p class="text-slate-400 flex-1">새로운 AI 도구가 곧 공개됩니다</p>
-          </div>
-
-          <div class="card-hover h-full bg-slate-700/50 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-slate-700 hover:border-slate-500 flex flex-col"
-               data-title="이미지 편집" data-desc="vision 편집 도구" data-cat="vision">
-            <div class="text-5xl mb-4 opacity-70">🎨</div>
-            <h3 class="text-2xl font-bold text-slate-200 mb-3">Coming Soon</h3>
-            <p class="text-slate-400 flex-1">새로운 AI 도구가 곧 공개됩니다</p>
-          </div>
+          <!-- 카드들은 app.js가 렌더링 -->
         </div>
-        <!-- 더 많은 카드가 필요하면 위 카드 블록을 복제해서 data-cat, data-title, data-desc만 바꿔 붙이면 끝 -->
+
+        <!-- 페이지네이션 -->
+        <div id="pager" class="mt-8 flex items-center justify-center gap-2"></div>
       </section>
 
-      <div class="text-center mt-12">
+      <footer class="text-center mt-12">
         <p class="text-slate-400 text-sm">더 많은 AI 도구들이 준비 중입니다 🔬</p>
-      </div>
+      </footer>
     </div>
   </div>
 
-<script>
-  // 검색 + 카테고리 필터
-  const searchInput = document.getElementById('searchInput');
-  const catButtons = document.querySelectorAll('.cat-btn');
-  const cards = Array.from(document.querySelectorAll('#cardGrid > *')); // <a> 혹은 <div>
-
-  let activeCat = 'all';
-
-  function applyFilters(){
-    const q = (searchInput.value || '').trim().toLowerCase();
-    cards.forEach(el=>{
-      const title = (el.getAttribute('data-title')||'').toLowerCase();
-      const desc  = (el.getAttribute('data-desc') ||'').toLowerCase();
-      const cats  = (el.getAttribute('data-cat')  ||'').toLowerCase().split(/\s+/);
-
-      const matchText = !q || title.includes(q) || desc.includes(q);
-      const matchCat  = activeCat==='all' || cats.includes(activeCat);
-
-      el.style.display = (matchText && matchCat) ? '' : 'none';
-    });
-  }
-
-  searchInput.addEventListener('input', applyFilters);
-  catButtons.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      catButtons.forEach(b=>b.classList.remove('ring-2','ring-blue-400','border-blue-400'));
-      btn.classList.add('ring-2','ring-blue-400','border-blue-400');
-      activeCat = btn.getAttribute('data-cat');
-      applyFilters();
-    });
-  });
-  // 초기 상태: 전체 선택 강조
-  (function initCatUI(){
-    const allBtn = document.querySelector('.cat-btn[data-cat="all"]');
-    if(allBtn){ allBtn.click(); }
-  })();
-
-  // (옵션) 사내 elementSdk 연동 유지
-  const defaultConfig = {
-    background_color: "#0f172a",
-    secondary_color: "#334155",
-    card_background: "#1e293b",
-    text_color: "#ffffff",
-    accent_color: "#60a5fa",
-    font_family: "Pretendard",
-    font_size: 16,
-    main_title: "🧪 AI Playground",
-    subtitle: "나의 AI 실험실에 오신 것을 환영합니다",
-    card_1_title: "이벤트 당첨자 추첨기",
-    card_1_description: "이제 엑셀 지옥은 해방! 추출된 정보를 넣고, 시드 값을 입력하면 끝!",
-    card_1_link: "https://taeja9.github.io/playground/winner.html"
-  };
-
-  async function onConfigChange(config) {
-    const bg1 = config.background_color || defaultConfig.background_color;
-    const bg2 = config.secondary_color || defaultConfig.secondary_color;
-    document.querySelector('.bg-layer').style.background =
-      `linear-gradient(135deg, ${bg1} 0%, #1e293b 50%, ${bg2} 100%)`;
-
-    // 제목/부제
-    document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
-    document.getElementById('subtitle').textContent   = config.subtitle    || defaultConfig.subtitle;
-
-    // 폰트/사이즈
-    document.body.style.fontFamily = (config.font_family || defaultConfig.font_family) + ', Pretendard, system-ui, -apple-system, sans-serif';
-    const size = config.font_size || defaultConfig.font_size;
-    document.getElementById('main-title').style.fontSize = `${size * 3.6}px`;
-    document.getElementById('subtitle').style.fontSize   = `${size * 1.2}px`;
-
-    // 카드1 변경
-    const card1 = document.querySelector('#cardGrid > a');
-    if(card1){
-      const titleEl = card1.querySelector('h3');
-      const descEl  = card1.querySelector('p');
-      titleEl.textContent = config.card_1_title || defaultConfig.card_1_title;
-      descEl.textContent  = config.card_1_description || defaultConfig.card_1_description;
-      card1.href = config.card_1_link || defaultConfig.card_1_link;
-    }
-  }
-
-  function mapToCapabilities(config) {
-    return {
-      recolorables: [
-        { get:()=>config.background_color||defaultConfig.background_color,
-          set:(v)=>{ config.background_color=v; window.elementSdk?.setConfig({background_color:v}); } },
-        { get:()=>config.secondary_color||defaultConfig.secondary_color,
-          set:(v)=>{ config.secondary_color=v; window.elementSdk?.setConfig({secondary_color:v}); } },
-        { get:()=>config.card_background||defaultConfig.card_background,
-          set:(v)=>{ config.card_background=v; window.elementSdk?.setConfig({card_background:v}); } },
-        { get:()=>config.text_color||defaultConfig.text_color,
-          set:(v)=>{ config.text_color=v; window.elementSdk?.setConfig({text_color:v}); } },
-        { get:()=>config.accent_color||defaultConfig.accent_color,
-          set:(v)=>{ config.accent_color=v; window.elementSdk?.setConfig({accent_color:v}); } },
-      ],
-      borderables: [],
-      fontEditable: {
-        get:()=>config.font_family||defaultConfig.font_family,
-        set:(v)=>{ config.font_family=v; window.elementSdk?.setConfig({font_family:v}); }
-      },
-      fontSizeable: {
-        get:()=>config.font_size||defaultConfig.font_size,
-        set:(v)=>{ config.font_size=v; window.elementSdk?.setConfig({font_size:v}); }
-      }
-    };
-  }
-
-  function mapToEditPanelValues(config){
-    return new Map([
-      ['main_title', config.main_title || defaultConfig.main_title],
-      ['subtitle',   config.subtitle    || defaultConfig.subtitle],
-      ['card_1_title', config.card_1_title || defaultConfig.card_1_title],
-      ['card_1_description', config.card_1_description || defaultConfig.card_1_description],
-      ['card_1_link', config.card_1_link || defaultConfig.card_1_link],
-    ]);
-  }
-
-  if(window.elementSdk){
-    window.elementSdk.init({ defaultConfig, onConfigChange, mapToCapabilities, mapToEditPanelValues });
-  }
-</script>
+  <!-- 앱 로직 -->
+  <script src="app.js"></script>
 </body>
 </html>
