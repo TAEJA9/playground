@@ -230,10 +230,3 @@ function init(){
 }
 
 document.addEventListener("DOMContentLoaded", init);
-
-
-
-
-
-
-이건데. 여기에서 true 인것중에서 비번 설정을 걸어서 on인거는 모달로 비번 입력하세요! 해서 맞아야 링크가 열렸음 좋겟다고.
