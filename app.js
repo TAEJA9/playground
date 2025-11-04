@@ -36,9 +36,10 @@ const CARD_DATA = [
     desc: "전국 방방곡곡을 돌아다니는 WK의 맛집 버킷 리스트",
     href: "https://taeja9.github.io/playground/tasty-wk.html",
     cats: ["WK-Only"],   // ← 이벤트만 남김
-    isActive: TRUE     // ← 유일하게 클릭 가능
+    isActive: true    // ← 유일하게 클릭 가능
   },
    
+
   // 이하 전부 Coming Soon (제목도 바꿈, 클릭 불가, 카테고리 비움)
   { icon:"🤖", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
   { icon:"✨", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
