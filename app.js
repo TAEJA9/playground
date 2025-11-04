@@ -20,7 +20,15 @@ const CARD_DATA = [
     cats: ["board"],   // ← 이벤트만 남김
     isActive: true     // ← 유일하게 클릭 가능
   },
-   
+
+    {
+    icon: "🍱",
+    title: "점메추 투표하기",
+    desc: "오늘 점심 먹으러 어디 갈 지 고민되시나요. 가게를 골라 좋아요 수가 많은 곳으로 가보면 어떨까요?",
+    href: "https://taeja9.github.io/playground/lunch.html",
+    cats: ["board"],   // ← 이벤트만 남김
+    isActive: true     // ← 유일하게 클릭 가능
+  },
   // 이하 전부 Coming Soon (제목도 바꿈, 클릭 불가, 카테고리 비움)
   { icon:"🤖", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
   { icon:"✨", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
@@ -212,5 +220,6 @@ function init(){
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
 
 
