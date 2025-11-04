@@ -12,6 +12,15 @@ const CARD_DATA = [
     isActive: true     // ← 유일하게 클릭 가능
   },
 
+ {
+    icon: "📝",
+    title: "나만의 게시판",
+    desc: "온라인 게시판 여기 있어요! QR코드로 간편한 초대, Apps Script를 활용한 무료 이용, 쌍방향 수업에 완전 필요함",
+    href: "https://taeja9.github.io/jypad/index.html",
+    cats: ["board"],   // ← 이벤트만 남김
+    isActive: true     // ← 유일하게 클릭 가능
+  },
+   
   // 이하 전부 Coming Soon (제목도 바꿈, 클릭 불가, 카테고리 비움)
   { icon:"🤖", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
   { icon:"✨", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
@@ -203,4 +212,5 @@ function init(){
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
 
