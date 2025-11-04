@@ -1,11 +1,6 @@
-// 🎨 [추가] 비밀번호 설정
-// 여기에 설정한 비밀번호를 입력해야만 보호된 카드의 링크가 열립니다.
-const SECRET_PASSWORD = "4372"; // ⬅️ 'SECRET_PASSWORD'을 너만 아는 비밀번호로 바꿔!
-
 /* =========================
    데이터: 여기만 편집하면 카드가 늘어납니다
    - isActive: true면 클릭 가능(실서비스), false면 Coming Soon 비활성
-  - isProtected: true면 클릭 시 비밀번호를 묻습니다 (isActive가 true일 때만 작동)
 ========================= */
 const CARD_DATA = [
   {
@@ -13,9 +8,8 @@ const CARD_DATA = [
     title: "이벤트 당첨자 추첨기",
     desc: "엑셀만 업로드하면 끝! 시드 번호를 입력하여 동일한 추첨 결과 재현! 추가 추첨 혜택도 한 번에~ 지금 바로 추첨해 보세요!",
     href: "https://taeja9.github.io/playground/winner.html",
-    cats: ["event"],
-    isActive: true,
-    isProtected: false // 🎨 [추가] 비밀번호 필요 없음
+    cats: ["event"],   // ← 이벤트만 남김
+    isActive: true     // ← 유일하게 클릭 가능
   },
 
  {
@@ -23,9 +17,8 @@ const CARD_DATA = [
     title: "나만의 게시판",
     desc: "온라인 게시판 여기 있어요! QR코드로 간편한 초대, Apps Script를 활용한 무료 이용, 쌍방향 수업에 완전 필요함",
     href: "https://taeja9.github.io/jypad/index.html",
-    cats: ["board"],
-    isActive: true,
-    isProtected: false // 🎨 [추가] 비밀번호 필요 없음
+    cats: ["board"],   // ← 이벤트만 남김
+    isActive: true     // ← 유일하게 클릭 가능
   },
 
     {
@@ -33,9 +26,8 @@ const CARD_DATA = [
     title: "점메추 투표하기",
     desc: "오늘 점심 먹으러 어디 갈 지 고민되시나요. 가게를 골라 좋아요 수가 많은 곳으로 가보면 어떨까요?",
     href: "https://taeja9.github.io/playground/lunch.html",
-    cats: ["board"],
-    isActive: true,
-    isProtected: false // 🎨 [추가] 비밀번호 필요 없음
+    cats: ["board"],   // ← 이벤트만 남김
+    isActive: true     // ← 유일하게 클릭 가능
   },
 
    {
@@ -43,21 +35,20 @@ const CARD_DATA = [
     title: "전국투어 맛집 자랑",
     desc: "전국 방방곡곡을 돌아다니는 WK의 맛집 버킷 리스트",
     href: "https://taeja9.github.io/playground/tasty-wk.html",
-    cats: ["WK-Only"],
-    isActive: true,
-    isProtected: true  // 🎨 [추가] ✨ 이 카드는 비밀번호가 필요함!
+    cats: ["WK-Only"],   // ← 이벤트만 남김
+    isActive: true     // ← 유일하게 클릭 가능
   },
    
-  // 이하 전부 Coming Soon
-  { icon:"🤖", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, isProtected: false },
-  { icon:"✨", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, isProtected: false },
-  { icon:"🚀", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, isProtected: false },
-  { icon:"💡", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, isProtected: false },
-  { icon:"🎨", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, isProtected: false },
+  // 이하 전부 Coming Soon (제목도 바꿈, 클릭 불가, 카테고리 비움)
+  { icon:"🤖", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
+  { icon:"✨", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
+  { icon:"🚀", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
+  { icon:"💡", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
+  { icon:"🎨", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
 ];
 
 /* =========================
-   상태 (이하 동일)
+   상태
 ========================= */
 let state = {
   q: "",
@@ -77,7 +68,7 @@ const el = {
 };
 
 /* =========================
-   유틸 (동일)
+   유틸
 ========================= */
 function uniq(arr){ return [...new Set(arr)]; }
 function flatten(arrs){ return arrs.reduce((a,b)=>a.concat(b),[]); }
@@ -91,7 +82,7 @@ function escapeHtml(s){
 }
 
 /* =========================
-   카테고리 자동 생성 (동일)
+   카테고리 자동 생성
 ========================= */
 function collectCategories(data){
   const cats = uniq(flatten(data.map(d => d.cats || []))).sort();
@@ -124,7 +115,7 @@ function renderCategories(){
 }
 
 /* =========================
-   필터링/페이징 (동일)
+   필터링/페이징
 ========================= */
 function filterData(){
   const q = state.q.trim().toLowerCase();
@@ -157,27 +148,23 @@ function renderCards(){
           ${d.isActive ? escapeHtml(d.desc||"") : "Coming Soon"}
         </p>
         <div class="mt-6 inline-flex items-center font-semibold link-row ${d.isActive ? 'text-blue-400' : 'text-slate-400'}">
-                    <span>${d.isProtected ? '🔒 ' : ''}${d.isActive ? '바로가기' : '준비 중'}</span> 
+          <span>${d.isActive ? '바로가기' : '준비 중'}</span>
           <svg class="w-5 h-5 ml-2 ${d.isActive ? 'group-hover:translate-x-1 transition-transform' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${d.isActive ? 'M13 7l5 5m0 0l-5 5m5-5H6' : 'M6 12h12'}"/>
           </svg>
         </div>
       </div>
     `;
-
-    // 🎨 [수정] 보호된 카드일 경우 'data-protected="true"' 속성을 <a> 태그에 추가
-    const protectedAttr = d.isProtected ? 'data-protected="true"' : '';
-
     return d.isActive
       ? `<a href="${d.href}" target="_blank" rel="noopener noreferrer" class="group block"
-             ${protectedAttr}              data-title="${escapeHtml(d.title)}" data-desc="${escapeHtml(d.desc||"")}" data-cat="${(d.cats||[]).join(" ")}">${body}</a>`
+             data-title="${escapeHtml(d.title)}" data-desc="${escapeHtml(d.desc||"")}" data-cat="${(d.cats||[]).join(" ")}">${body}</a>`
       : `<div class="group block" aria-disabled="true"
              data-title="${escapeHtml(d.title)}" data-desc="${escapeHtml(d.desc||"")}" data-cat="${(d.cats||[]).join(" ")}">${body}</div>`;
   }).join("");
 }
 
 /* =========================
-   페이지네이션 (동일)
+   페이지네이션
 ========================= */
 function renderPager(){
   const total = state.pageCount;
@@ -240,29 +227,13 @@ function init(){
     state.page = 1;
     applyAndRender();
   });
-
-  // 🎨 [추가] 카드 그리드 전체에 이벤트 리스너 추가 (이벤트 위임)
-  el.grid.addEventListener("click", function(e) {
-    // 클릭된 요소에서 가장 가까운 'data-protected' 속성을 가진 <a> 태그를 찾음
-    const protectedCard = e.target.closest("a[data-protected='true']");
-
-    if (protectedCard) {
-      // 보호된 카드를 클릭했다면!
-      e.preventDefault(); // [중요] 기본 링크 이동을 즉시 막음
-
-      // 비밀번호 입력 프롬프트
-      const pass = prompt("🔒 비밀번호를 입력하세요:");
-
-      if (pass === SECRET_PASSWORD) {
-        // 비밀번호가 일치하면 새 탭에서 링크 열기
-        window.open(protectedCard.href, "_blank", "noopener,noreferrer");
-      } else if (pass !== null && pass !== "") {
-        // 비밀번호가 틀렸고, 사용자가 '취소'를 누르지 않았다면
-        alert("비밀번호가 틀렸습니다!");
-      }
-      // 사용자가 '취소'를 누르거나(null) 그냥 Enter를 누르면(빈 문자열) 아무것도 안 함
-    }
-  });
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
+
+
+
+
+
+이건데. 여기에서 true 인것중에서 비번 설정을 걸어서 on인거는 모달로 비번 입력하세요! 해서 맞아야 링크가 열렸음 좋겟다고.
