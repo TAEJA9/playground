@@ -21,7 +21,7 @@ const CARD_DATA = [
     isActive: true     // ← 유일하게 클릭 가능
   },
 
-    {
+{
     icon: "🍱",
     title: "점메추 투표하기",
     desc: "오늘 점심 먹으러 어디 갈 지 고민되시나요. 가게를 골라 좋아요 수가 많은 곳으로 가보면 어떨까요?",
@@ -30,7 +30,7 @@ const CARD_DATA = [
     isActive: true     // ← 유일하게 클릭 가능
   },
 
-   {
+{
     icon: "😽",
     title: "전국투어 맛집 자랑",
     desc: "전국 방방곡곡을 돌아다니는 WK의 맛집 버킷 리스트",
@@ -44,9 +44,9 @@ const CARD_DATA = [
     title:"개체 대량등록 결과 변환기",
     desc:"CMS에 대량등록한 개체들.. 언제 링크로 변환하고 파일명을 추출하나요.... 이렇게 해보세요!",
     href:"https://taeja9.github.io/playground/xlsx.html",
-    cats:[automation],
-    isActive:true
-},
+    cats:["automation"], // 카테고리
+    isActive:true // 클릭 가능
+   },
    
   // 이하 전부 Coming Soon (제목도 바꿈, 클릭 불가, 카테고리 비움)
   { icon:"🤖", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
@@ -239,3 +239,4 @@ function init(){
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
