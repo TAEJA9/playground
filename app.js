@@ -35,11 +35,19 @@ const CARD_DATA = [
     title: "전국투어 맛집 자랑",
     desc: "전국 방방곡곡을 돌아다니는 WK의 맛집 버킷 리스트",
     href: "https://taeja9.github.io/playground/tasty-wk.html",
-    cats: ["WK-Only"],   // ← 이벤트만 남김
+    cats: ["wk-only"],   // ← 이벤트만 남김
     isActive: true    // ← 유일하게 클릭 가능
   },
    
-
+ {
+    icon:"💻",
+    title:"개체 대량등록 결과 변환기",
+    desc:"CMS에 대량등록한 개체들.. 언제 링크로 변환하고 파일명을 추출하나요.... 이렇게 해보세요!",
+    href:"https://taeja9.github.io/playground/xlsx.html",
+    cats:[automation],
+    isActive:true
+},
+   
   // 이하 전부 Coming Soon (제목도 바꿈, 클릭 불가, 카테고리 비움)
   { icon:"🤖", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
   { icon:"✨", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
@@ -230,4 +238,4 @@ function init(){
   });
 }
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", init);
