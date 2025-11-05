@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>YBM Cloud Excel Maker</title>
+
+<!-- Pretendard Font -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@latest/dist/web/static/pretendard.css" />
+
+<!-- SheetJS -->
+<link rel="preconnect" href="https://cdn.sheetjs.com">
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
+<style>
+  :root {
+    /* Light theme (default) */
+    --bg:#f7f8fb; --fg:#0f172a; --muted:#606a85; --accent:#2f66f5; --card:#ffffff; --line:#e5e7ef;
+    --ok:#16a34a; --warn:#f59e0b; --danger:#ef4444;
+    --thead:#eef2ff;
+    --input-bg:#ffffff; --input-border:#d7dbef;
+    --header-bg:rgba(255,255,255,.8);
+    --shadow:0 8px 24px rgba(15,23,42,.08);
+  }
+
+  /* Dark theme overrides */
+  [data-theme="dark"] {
+    --bg:#0b1020; --fg:#e6e9f5; --muted:#9aa3c7; --accent:#7aa2ff; --card:#111735; --line:#1c2447;
+    --ok:#20d77a; --warn:#ffb020; --danger:#ff646e;
+    --thead:#0f1840;
+    --input-bg:#0e1430; --input-border:#1c2447;
+    --header-bg:rgba(0,0,0,.25);
+    --shadow:0 8px 24px rgba(0,0,0,.25);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:"Pretendard", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  }
+
+  header {
+    padding:14px 20px; border-bottom:1px solid var(--line); background:var(--header-bg);
+    position:sticky; top:0; z-index:10; backdrop-filter:saturate(140%) blur(8px);
+  }
+  .header-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:8px; }
+  h1 { margin:0; font-size:20px; letter-spacing:.2px; flex:1; }
+
+  .container { max-width:1100px; margin:0 auto; padding:20px; display:grid; gap:16px; }
+  .step { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:var(--shadow); }
+  .step-title { display:flex; align-items:center; gap:10px; margin:0 0 12px; font-size:16px; color:var(--accent); }
+  .badge {
+    width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center;
+    background:color-mix(in srgb, var(--accent) 16%, transparent); color:var(--accent);
+    border:1px solid var(--accent); border-radius:50%; font-weight:700; font-size:12px;
+  }
+
+  input[type="text"], select {
+    width:100%; background:var(--input-bg); color:var(--fg);
+    border:1px solid var(--input-border); border-radius:12px; padding:10px 12px;
+  }
+
+  /* 텍스트 영역: 고정 높이 + 내부 스크롤, 리사이즈 비활성화 */
+  textarea#raw {
+    width:100%; height:260px; background:var(--input-bg); color:var(--fg);
+    border:1px solid var(--input-border); border-radius:12px; padding:10px 12px; line-height:1.6;
+    resize:none; overflow:auto;
+  }
+
+  .hint { font-size:12px; color:var(--muted); margin-top:6px; }
+  .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+  .grid-4 { display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; }
+  .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .grow { flex:1; }
+  button {
+    background:var(--accent); color:#ffffff; border:0; border-radius:12px; padding:10px 16px; font-weight:800; cursor:pointer;
+  }
+  button.ghost { background:transparent; color:var(--accent); border:1px solid var(--accent); }
+  button.warn { background:var(--warn); color:#131313; }
+  button.ok { background:var(--ok); color:#ffffff; }
+  button:disabled { opacity:.6; cursor:not-allowed; }
+
+  table { width:100%; border-collapse:collapse; font-size:13px; border-radius:12px; overflow:hidden; }
+  th, td { border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; }
+  thead th { background:var(--thead); }
+  footer {
+    padding:24px 20px 48px; color:var(--muted); text-align:center; border-top:1px solid var(--line); margin-top:8px;
+  }
+  @media (max-width:980px) { .grid-2, .grid-4 { grid-template-columns:1fr; } }
+
+  .subtle { color:var(--muted); font-size:12px; }
+  .divider { height:1px; background:var(--line); margin:12px 0; }
+  .header-label { font-size:12px; color:var(--muted); margin-bottom:6px; display:block; }
+  .preview-box { min-height:80px; }
+  .toggle { display:inline-flex; align-items:center; gap:8px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <h1>YBM Cloud Excel Maker — 세미콜론 텍스트 → 엑셀(XLSX/CSV)</h1>
+    <div class="toggle">
+      <button class="ghost" id="themeBtn" aria-label="테마 전환">다크 모드</button>
+      <button class="ghost" id="btnResetHeader">다시 하기</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- 1) 대량등록 결과 입력하기 -->
+  <section class="step" id="step1">
+    <h2 class="step-title"><span class="badge">1</span> 대량등록 결과 입력하기</h2>
+    <textarea id="raw" placeholder="예) 1;성공;C2025...;[데일리학습] ...mp3  2;성공;C2025...;[데일리학습] ...mp3  3;성공;C2025...;[...]"></textarea>
+    <div class="hint">
+      기본 분리 방식은 <b>번호 기준</b>입니다. (예: <code>1; ... 2; ... 3; ...</code>)<br/>
+      줄바꿈으로 이미 레코드가 나뉘어 있다면 아래에서 '줄바꿈 기준'으로 바꿔도 됩니다.
+    </div>
+    <div class="row" style="margin-top:10px;">
+      <div class="grow">
+        <label for="recSep" class="header-label">레코드 분리 방식</label>
+        <select id="recSep">
+          <option value="number" selected>번호 기준 (예: 1;, 2;, 3;)</option>
+          <option value="newline">줄바꿈 기준</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2) 설정하기 -->
+  <section class="step" id="step2">
+    <h2 class="step-title"><span class="badge">2</span> 설정하기</h2>
+
+    <div class="grid-2">
+      <div>
+        <label class="header-label">링크 기본 URL (contentId 자동 붙음)</label>
+        <input id="baseUrl" type="text" value="https://www.ybmcloud.com/viewer?contentId=" />
+        <div class="hint">결과 링크는 “기본URL + 콘텐츠ID” 형태로 생성됩니다.</div>
+      </div>
+      <div>
+        <label class="header-label">설명</label>
+        <div class="subtle">입력 형식은 <code>인덱스;상태;콘텐츠ID;파일명</code> (세미콜론 구분) 입니다.</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="grid-4">
+      <!-- Column A -->
+      <div>
+        <label class="header-label">A열 머리글</label>
+        <input id="headA" type="text" value="파일명" />
+        <label class="header-label" style="margin-top:8px;">A열 데이터</label>
+        <select id="colA">
+          <option value="filename">파일명(원본)</option>
+          <option value="filename_ext">파일명(확장자 포함)</option>
+          <option value="filename_noext" selected>파일명(확장자 제외)</option>
+          <option value="link">링크(자동)</option>
+          <option value="content_id">개체ID(콘텐츠ID)</option>
+          <option value="status">상태</option>
+          <option value="idx">인덱스</option>
+          <option value="empty">빈값</option>
+          <option value="custom">직접입력</option>
+        </select>
+        <input type="text" id="customA" placeholder="A열 직접입력 값" style="display:none; margin-top:6px;">
+      </div>
+
+      <!-- Column B -->
+      <div>
+        <label class="header-label">B열 머리글</label>
+        <input id="headB" type="text" value="링크" />
+        <label class="header-label" style="margin-top:8px;">B열 데이터</label>
+        <select id="colB">
+          <option value="filename">파일명(원본)</option>
+          <option value="filename_ext">파일명(확장자 포함)</option>
+          <option value="filename_noext">파일명(확장자 제외)</option>
+          <option value="link" selected>링크(자동)</option>
+          <option value="content_id">개체ID(콘텐츠ID)</option>
+          <option value="status">상태</option>
+          <option value="idx">인덱스</option>
+          <option value="empty">빈값</option>
+          <option value="custom">직접입력</option>
+        </select>
+        <input type="text" id="customB" placeholder="B열 직접입력 값" style="display:none; margin-top:6px;">
+      </div>
+
+      <!-- Column C -->
+      <div>
+        <label class="header-label">C열 머리글</label>
+        <input id="headC" type="text" value="개체ID" />
+        <label class="header-label" style="margin-top:8px;">C열 데이터</label>
+        <select id="colC">
+          <option value="filename">파일명(원본)</option>
+          <option value="filename_ext">파일명(확장자 포함)</option>
+          <option value="filename_noext">파일명(확장자 제외)</option>
+          <option value="link">링크(자동)</option>
+          <option value="content_id" selected>개체ID(콘텐츠ID)</option>
+          <option value="status">상태</option>
+          <option value="idx">인덱스</option>
+          <option value="empty">빈값</option>
+          <option value="custom">직접입력</option>
+        </select>
+        <input type="text" id="customC" placeholder="C열 직접입력 값" style="display:none; margin-top:6px;">
+      </div>
+
+      <!-- Column D -->
+      <div>
+        <label class="header-label">D열 머리글</label>
+        <input id="headD" type="text" value="" placeholder="(선택)" />
+        <label class="header-label" style="margin-top:8px;">D열 데이터</label>
+        <select id="colD">
+          <option value="empty" selected>빈값</option>
+          <option value="filename">파일명(원본)</option>
+          <option value="filename_ext">파일명(확장자 포함)</option>
+          <option value="filename_noext">파일명(확장자 제외)</option>
+          <option value="link">링크(자동)</option>
+          <option value="content_id">개체ID(콘텐츠ID)</option>
+          <option value="status">상태</option>
+          <option value="idx">인덱스</option>
+          <option value="custom">직접입력</option>
+        </select>
+        <input type="text" id="customD" placeholder="D열 직접입력 값" style="display:none; margin-top:6px;">
+      </div>
+    </div>
+  </section>
+
+  <!-- 3) 미리보기 -->
+  <section class="step" id="step3">
+    <h2 class="step-title"><span class="badge">3</span> 미리보기</h2>
+    <div class="row" style="margin-bottom:10px;">
+      <button id="btnPreview">미리보기 생성</button>
+      <span class="subtle">최대 20행까지만 미리보기 표기됩니다.</span>
+    </div>
+    <div id="preview" class="preview-box"></div>
+  </section>
+
+  <!-- 4) 다운로드하기 -->
+  <section class="step" id="step4">
+    <h2 class="step-title"><span class="badge">4</span> 다운로드하기</h2>
+    <div class="row">
+      <button class="ok" id="btnDownloadXLSX">엑셀 다운로드 (XLSX)</button>
+      <button class="ghost" id="btnDownloadCSV">CSV 다운로드</button>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  ⓒ Jeongyeon. 2025
+</footer>
+
+<script>
+  // ---------- Theme handling ----------
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('themeBtn');
+  function applyTheme(mode) {
+    root.setAttribute('data-theme', mode);
+    themeBtn.textContent = (mode === 'dark') ? '라이트 모드' : '다크 모드';
+    localStorage.setItem('ybm_theme', mode);
+  }
+  (function initTheme(){
+    const saved = localStorage.getItem('ybm_theme');
+    if (saved === 'dark' || saved === 'light') {
+      applyTheme(saved);
+    } else {
+      // 시스템 선호 반영 (optional): 라이트 기본, 다크 선호 시 다크
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(prefersDark ? 'dark' : 'light');
+    }
+  })();
+  themeBtn.addEventListener('click', () => {
+    const next = (root.getAttribute('data-theme') === 'dark') ? 'light' : 'dark';
+    applyTheme(next);
+  });
+
+  // ---------- Elements ----------
+  const el = (id)=>document.getElementById(id);
+  const raw = el('raw'), recSep = el('recSep'), baseUrl = el('baseUrl');
+  const headA = el('headA'), headB = el('headB'), headC = el('headC'), headD = el('headD');
+  const colA = el('colA'), colB = el('colB'), colC = el('colC'), colD = el('colD');
+  const customA = el('customA'), customB = el('customB'), customC = el('customC'), customD = el('customD');
+  const previewBox = el('preview');
+  const btnPreview = el('btnPreview'), btnX = el('btnDownloadXLSX'), btnCSV = el('btnDownloadCSV');
+  const btnResetHeader = el('btnResetHeader');
+
+  // ---------- UI helpers ----------
+  function toggleCustom(sel, input) { input.style.display = sel.value === 'custom' ? 'block' : 'none'; }
+  [colA,colB,colC,colD].forEach((sel, i) => sel.addEventListener('change', () => {
+    toggleCustom(sel, [customA,customB,customC,customD][i]);
+  }));
+
+  // ---------- Record splitters ----------
+  function splitByNumber(t) {
+    // 번호(연속 숫자 후 ;)를 레코드 시작으로 인식: "1; ... 2; ... 3; ..."
+    const text = (t||"").replace(/\r\n/g, '\n').trim();
+    if (!text) return [];
+    const re = /(\d+;[\s\S]*?)(?=(?:\s*\d+;)|$)/g;
+    const out = [];
+    let m;
+    while ((m = re.exec(text)) !== null) {
+      const chunk = m[1].trim();
+      if (chunk) out.push(chunk);
+    }
+    return out;
+  }
+  function splitByNewline(t) {
+    const text = (t||"").replace(/\r\n/g, '\n').trim();
+    if (!text) return [];
+    return text.split(/\n+/).filter(Boolean);
+  }
+  function splitRecords(rawText, method) {
+    if (method === 'newline') return splitByNewline(rawText);
+    return splitByNumber(rawText); // default: number-based
+  }
+
+  // ---------- Parse one record: idx;status;content_id;filename ----------
+  function parse(rawText) {
+    const rows = [];
+    const recs = splitRecords(rawText, recSep.value);
+    for (const rec of recs) {
+      const cells = rec.split(';');
+      if (cells.length < 4) continue;
+      const last4 = cells.slice(-4).map(s=>s.trim());
+      const [idx, status, content_id, filename] = last4;
+      rows.push({ idx, status, content_id, filename });
+    }
+    return rows;
+  }
+
+  // ---------- Map to column value ----------
+  function mapValue(row, selValue, customInput) {
+    switch (selValue) {
+      case 'filename': return row.filename || '';
+      case 'filename_ext': return row.filename || '';
+      case 'filename_noext': return row.filename ? row.filename.replace(/\.[^/.]+$/, '') : '';
+      case 'link': return (baseUrl.value.trim() || '') + (row.content_id || '');
+      case 'content_id': return row.content_id || '';
+      case 'status': return row.status || '';
+      case 'idx': return row.idx || '';
+      case 'empty': return '';
+      case 'custom': return customInput.value || '';
+      default: return '';
+    }
+  }
+
+  function buildData(rows) {
+    const headers = [headA.value || '파일명', headB.value || '링크', headC.value || '개체ID', headD.value || ''];
+    const sels = [colA, colB, colC, colD];
+    const customs = [customA, customB, customC, customD];
+
+    const data = [headers];
+    for (const r of rows) {
+      data.push([
+        mapValue(r, sels[0].value, customs[0]),
+        mapValue(r, sels[1].value, customs[1]),
+        mapValue(r, sels[2].value, customs[2]),
+        mapValue(r, sels[3].value, customs[3]),
+      ]);
+    }
+    return data;
+  }
+
+  // ---------- Preview ----------
+  function renderPreview(data) {
+    if (!data || data.length <= 1) {
+      previewBox.innerHTML = '<div class="subtle">유효한 레코드를 찾지 못했습니다.</div>';
+      return;
+    }
+    const head = data[0];
+    const body = data.slice(1, Math.min(21, data.length)); // 20행 미리보기
+    let html = '<table><thead><tr>';
+    head.forEach(h => html += `<th>${h}</th>`);
+    html += '</tr></thead><tbody>';
+    body.forEach(row => {
+      html += '<tr>' + row.map(v => `<td>${(v ?? '')}</td>`).join('') + '</tr>';
+    });
+    html += '</tbody></table>';
+    previewBox.innerHTML = html + '<div class="hint" style="margin-top:8px;">미리보기는 최대 20행만 표시됩니다. 전체는 다운로드 파일에서 확인하세요.</div>';
+  }
+
+  // ---------- Download ----------
+  function downloadXLSX(data, filename='ybmcloud_links.xlsx') {
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, filename);
+  }
+  function downloadCSV(data, filename='ybmcloud_links.csv') {
+    const csv = data.map(r => r.map(v => {
+      const s = (v ?? '').toString();
+      return /[",;\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    }).join(',')).join('\n');
+    const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = filename; a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  // ---------- Events ----------
+  document.getElementById('btnPreview').addEventListener('click', () => {
+    const rows = parse(raw.value);
+    const data = buildData(rows);
+    renderPreview(data);
+  });
+
+  document.getElementById('btnDownloadXLSX').addEventListener('click', () => {
+    const rows = parse(raw.value);
+    const data = buildData(rows);
+    if (data.length <= 1) { alert('변환할 데이터가 없습니다. 입력을 확인하세요.'); return; }
+    downloadXLSX(data);
+  });
+
+  document.getElementById('btnDownloadCSV').addEventListener('click', () => {
+    const rows = parse(raw.value);
+    const data = buildData(rows);
+    if (data.length <= 1) { alert('변환할 데이터가 없습니다. 입력을 확인하세요.'); return; }
+    downloadCSV(data);
+  });
+
+  // 헤더 '다시 하기' — 초기화
+  document.getElementById('btnResetHeader').addEventListener('click', () => {
+    raw.value = '';
+    recSep.value = 'number';
+    baseUrl.value = 'https://www.ybmcloud.com/viewer?contentId=';
+    headA.value = '파일명'; headB.value='링크'; headC.value='개체ID'; headD.value='';
+    colA.value = 'filename_noext'; colB.value='link'; colC.value='content_id'; colD.value='empty';
+    [customA,customB,customC,customD].forEach(i=>i.value='');
+    [customA,customB,customC,customD].forEach(i=>i.style.display='none');
+    previewBox.innerHTML = '';
+  });
+</script>
+</body>
+</html>
