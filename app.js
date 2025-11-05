@@ -1,6 +1,5 @@
 /* =========================
-   데이터: 여기만 편집하면 카드가 늘어납니다
-   - isActive: true면 클릭 가능(실서비스), false면 Coming Soon 비활성
+   데이터 (수정 없음)
 ========================= */
 const CARD_DATA = [
   {
@@ -8,35 +7,36 @@ const CARD_DATA = [
     title: "이벤트 당첨자 추첨기",
     desc: "엑셀만 업로드하면 끝! 시드 번호를 입력하여 동일한 추첨 결과 재현! 추가 추첨 혜택도 한 번에~ 지금 바로 추첨해 보세요!",
     href: "https://taeja9.github.io/playground/winner.html",
-    cats: ["event"],   // ← 이벤트만 남김
-    isActive: true     // ← 유일하게 클릭 가능
+    cats: ["event"],
+    isActive: true,
+    author: "정연"
   },
-
  {
     icon: "📝",
     title: "나만의 게시판",
     desc: "온라인 게시판 여기 있어요! QR코드로 간편한 초대, Apps Script를 활용한 무료 이용, 쌍방향 수업에 완전 필요함",
     href: "https://taeja9.github.io/jypad/index.html",
-    cats: ["board"],   // ← 이벤트만 남김
-    isActive: true     // ← 유일하게 클릭 가능
+    cats: ["board"],
+    isActive: true,
+    author: "정연"
   },
-
 {
     icon: "🍱",
     title: "점메추 투표하기",
     desc: "오늘 점심 먹으러 어디 갈 지 고민되시나요. 가게를 골라 좋아요 수가 많은 곳으로 가보면 어떨까요?",
     href: "https://taeja9.github.io/playground/lunch.html",
-    cats: ["board"],   // ← 이벤트만 남김
-    isActive: true     // ← 유일하게 클릭 가능
+    cats: ["board"],
+    isActive: true,
+    author: "정연"
   },
-
 {
     icon: "😽",
     title: "전국투어 맛집 자랑",
     desc: "전국 방방곡곡을 돌아다니는 WK의 맛집 버킷 리스트",
     href: "https://taeja9.github.io/playground/tasty-wk.html",
-    cats: ["wk-only"],   // ← 이벤트만 남김
-    isActive: true    // ← 유일하게 클릭 가능
+    cats: ["wk-only"],
+    isActive: true,
+    author: "정연"
   },
    
  {
@@ -44,20 +44,30 @@ const CARD_DATA = [
     title:"개체 대량등록 결과 변환기",
     desc:"CMS에 대량등록한 개체들.. 언제 링크로 변환하고 파일명을 추출하나요.... 이렇게 해보세요!",
     href:"https://taeja9.github.io/playground/xlsx.html",
-    cats:["automation"], // 카테고리
-    isActive:true // 클릭 가능
+    cats:["automation"],
+    isActive:true,
+    author: "정연"
+   },
+
+ {
+    icon:"🐳",
+    title:"AI 필기인식 서비스 비교 분석 결과",
+    desc:"AI 필기인식 서비스 비교 항목 선정부터 분석 결과까지 완전 시각화 미쳤지 모야",
+    href:"https://claude.ai/public/artifacts/1c92aef1-b1da-455e-9508-94c355adb973",
+    cats:["automation"],
+    isActive:true,
+    author: "유진"
    },
    
-  // 이하 전부 Coming Soon (제목도 바꿈, 클릭 불가, 카테고리 비움)
-  { icon:"🤖", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
-  { icon:"✨", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
-  { icon:"🚀", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
-  { icon:"💡", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
-  { icon:"🎨", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false },
+  { icon:"🤖", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, author: null },
+  { icon:"✨", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, author: null },
+  { icon:"🚀", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, author: null },
+  { icon:"💡", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, author: null },
+  { icon:"🎨", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, author: null },
 ];
 
 /* =========================
-   상태
+   상태 (수정 없음)
 ========================= */
 let state = {
   q: "",
@@ -77,13 +87,21 @@ const el = {
 };
 
 /* =========================
-   유틸
+   유틸 (수정 없음)
 ========================= */
 function uniq(arr){ return [...new Set(arr)]; }
 function flatten(arrs){ return arrs.reduce((a,b)=>a.concat(b),[]); }
 function labelCat(c){
   if (c === "all") return "전체";
-  const map = { event:"이벤트", nlp:"NLP", vision:"Vision", utils:"유틸" };
+  const map = { 
+    event:"이벤트", 
+    board:"게시판",
+    "wk-only": "WK-Only",
+    automation: "자동화",
+    nlp:"NLP", 
+    vision:"Vision", 
+    utils:"유틸" 
+  };
   return map[c] || c;
 }
 function escapeHtml(s){
@@ -91,7 +109,7 @@ function escapeHtml(s){
 }
 
 /* =========================
-   카테고리 자동 생성
+   카테고리 자동 생성 (수정 없음)
 ========================= */
 function collectCategories(data){
   const cats = uniq(flatten(data.map(d => d.cats || []))).sort();
@@ -124,13 +142,16 @@ function renderCategories(){
 }
 
 /* =========================
-   필터링/페이징
+   필터링/페이징 (수정 없음)
 ========================= */
 function filterData(){
   const q = state.q.trim().toLowerCase();
   state.filtered = CARD_DATA.filter(d => {
     const inCat = state.cat === "all" || (d.cats||[]).map(x=>x.toLowerCase()).includes(state.cat);
-    const inText = !q || d.title.toLowerCase().includes(q) || (d.desc||"").toLowerCase().includes(q);
+    const inText = !q || 
+      d.title.toLowerCase().includes(q) || 
+      (d.desc||"").toLowerCase().includes(q) ||
+      (d.author||"").toLowerCase().includes(q);
     return inCat && inText;
   });
   state.pageCount = Math.max(1, Math.ceil(state.filtered.length / state.pageSize));
@@ -147,15 +168,26 @@ function currentSlice(){
 function renderCards(){
   const items = currentSlice();
   el.grid.innerHTML = items.map(d => {
+    
+    // 🎨 [수정] 제작자 '배지' HTML 생성 (기존 로직 변경)
+    const authorBadgeHtml = (d.isActive && d.author) ? 
+      `<div class="card-author">${escapeHtml(d.author)}</div>` : '';
+
+    // 🎨 [수정] 
+    // 1. 카드 <div>에 'relative' 클래스 추가
+    // 2. <div> 바로 안쪽에 {authorBadgeHtml} 변수 삽입
+    // 3. 하단에 있던 {authorHtml} 로직 완전 삭제
     const body = `
-      <div class="card-hover h-full ${d.isActive ? 'bg-slate-800/90 border-slate-600 hover:border-blue-400' : 'bg-slate-700/50 border-slate-700'} backdrop-blur-sm rounded-2xl p-8 shadow-2xl border flex flex-col ${d.isActive ? '' : 'card-disabled'}">
-        <div class="text-5xl mb-4 ${d.isActive ? '' : 'opacity-70'}">${d.icon||"🧰"}</div>
+      <div class="card-hover relative h-full ${d.isActive ? 'bg-slate-800/90 border-slate-600 hover:border-blue-400' : 'bg-slate-700/50 border-slate-700'} backdrop-blur-sm rounded-2xl p-8 shadow-2xl border flex flex-col ${d.isActive ? '' : 'card-disabled'}">
+        
+        ${authorBadgeHtml} <div class="text-5xl mb-4 ${d.isActive ? '' : 'opacity-70'}">${d.icon||"🧰"}</div>
         <h3 class="text-2xl font-bold ${d.isActive ? 'text-white' : 'text-slate-200'} mb-3">
           ${escapeHtml(d.title)}
         </h3>
         <p class="text-slate-300 leading-relaxed flex-1 ${d.isActive ? '' : 'opacity-80'}">
           ${d.isActive ? escapeHtml(d.desc||"") : "Coming Soon"}
         </p>
+
         <div class="mt-6 inline-flex items-center font-semibold link-row ${d.isActive ? 'text-blue-400' : 'text-slate-400'}">
           <span>${d.isActive ? '바로가기' : '준비 중'}</span>
           <svg class="w-5 h-5 ml-2 ${d.isActive ? 'group-hover:translate-x-1 transition-transform' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -173,7 +205,7 @@ function renderCards(){
 }
 
 /* =========================
-   페이지네이션
+   페이지네이션 (수정 없음)
 ========================= */
 function renderPager(){
   const total = state.pageCount;
@@ -212,7 +244,7 @@ function renderPager(){
 }
 
 /* =========================
-   메인
+   메인 (수정 없음)
 ========================= */
 function applyAndRender(){
   filterData();
@@ -239,4 +271,3 @@ function init(){
 }
 
 document.addEventListener("DOMContentLoaded", init);
-
