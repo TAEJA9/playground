@@ -59,15 +59,15 @@ const CARD_DATA = [
     author: "유진"
    },
 
- {
-    icon:"💯",
-    title:"문제은행 파일 검사기",
-    desc:"지긋지긋한 문제은행 파일 매칭하기... 편집팀의 실수... 지겨버.. 검사기로 한 번에 파일 확인! 뭐가 틀렸는지 바로 확인!",
-    href:"https://claude.ai/public/artifacts/1c92aef1-b1da-455e-9508-94c355adb973",
-    cats:["automation"],
-    isActive:FALSE,
-    author: "정연"
-   },
+ // {
+ //    icon:"💯",
+ //    title:"문제은행 파일 검사기",
+ //    desc:"지긋지긋한 문제은행 파일 매칭하기... 편집팀의 실수... 지겨버.. 검사기로 한 번에 파일 확인! 뭐가 틀렸는지 바로 확인!",
+ //    href:"https://claude.ai/public/artifacts/1c92aef1-b1da-455e-9508-94c355adb973",
+ //    cats:["automation"],
+ //    isActive:FALSE,
+ //    author: "정연"
+ //   },
 
    
   { icon:"🤖", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, author: null },
@@ -282,4 +282,5 @@ function init(){
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
 
