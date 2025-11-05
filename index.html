@@ -6,10 +6,8 @@
 <title>AI Playground</title>
 <link rel="icon" type="image/png" href="favicon.png" />
 
-<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- Pretendard -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard/dist/web/static/pretendard.css" />
 
@@ -37,10 +35,27 @@
   /* 비활성 카드(Coming Soon) */
   .card-disabled { opacity:.7; cursor:not-allowed; }
   .card-disabled .link-row { color:#94a3b8; } /* slate-400 */
+
+  /* 🎨 [추가] 제작자 배지 스타일 */
+  .card-author {
+    position: absolute;
+    /* p-8(32px) 패딩 안쪽으로 1rem(16px) 만큼 들어오게 */
+    top: 16px; 
+    right: 16px;
+    /* Tailwind: bg-slate-800/70 backdrop-blur-sm border border-slate-700 rounded-full px-3 py-1 text-xs font-medium text-slate-300 */
+    background-color: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgb(51, 65, 85);
+    border-radius: 9999px;
+    padding: 4px 12px;
+    font-size: 0.8rem; /* 12px */
+    font-weight: 500;
+    color: rgb(203, 213, 225);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
 </style>
 </head>
 <body class="min-h-screen">
-  <!-- 배경 -->
   <div class="bg-layer" style="background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#334155 100%)"></div>
   <div class="bg-layer">
     <div class="absolute top-1/2 left-1/2 w-[70vw] h-[70vh] -translate-x-1/2 -translate-y-1/2">
@@ -49,10 +64,8 @@
   </div>
   <div class="bg-layer tech-grid"></div>
 
-  <!-- 콘텐츠 -->
   <div class="relative z-10">
     <div class="max-w-7xl mx-auto px-4 py-12 md:py-16">
-      <!-- 헤더 (아이콘/그라데이션 제거) -->
       <header class="text-center mb-10 md:mb-14">
         <h1 class="text-4xl md:text-6xl font-bold mb-3 text-white">
           AI Playground
@@ -61,15 +74,13 @@
          <p class="text-slate-300">AI 실험실 기능들은 소리소문 없이 나타났다 사라질 수 있습니다. 🌬️</p>
       </header>
 
-      <!-- 컨트롤바 -->
       <section class="bg-slate-800/60 border border-slate-700 rounded-2xl shadow-xl p-4 md:p-6 backdrop-blur">
         <div class="flex flex-col gap-4">
           <div class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
-            <!-- 검색 -->
             <div class="flex-1">
               <label class="block text-sm text-slate-300 mb-2">검색</label>
               <div class="relative">
-                <input id="searchInput" type="text" placeholder="도구 이름/설명 검색..."
+                <input id="searchInput" type="text" placeholder="도구 이름, 설명, 제작자 검색..."
                   class="w-full rounded-xl bg-slate-900/60 border border-slate-700 px-4 py-3 text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 <svg class="w-5 h-5 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-4.35-4.35M10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/>
@@ -77,7 +88,6 @@
               </div>
             </div>
 
-            <!-- 페이지 크기 -->
             <div class="flex items-center gap-3">
               <label class="flex items-center gap-2 text-sm text-slate-300">
                 페이지 크기
@@ -91,31 +101,24 @@
             </div>
           </div>
 
-          <!-- 카테고리(자동 생성) -->
           <div id="catBar" class="flex flex-wrap gap-2"></div>
         </div>
       </section>
 
-      <!-- 카드 그리드 -->
       <section class="mt-8">
         <div id="cardGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-          <!-- 카드들은 app.js가 렌더링 -->
-        </div>
+          </div>
 
-        <!-- 페이지네이션 -->
         <div id="pager" class="mt-8 flex items-center justify-center gap-2"></div>
       </section>
 
       <footer class="text-center mt-12">
         <p class="text-slate-400 text-sm">더 많은 AI 도구들이 준비 중입니다 🔬</p>
+        <p class="text-slate-500 text-sm mt-2">ⓒ Jeongyeon. 2025</p>
       </footer>
     </div>
   </div>
 
-  <!-- 앱 로직 -->
   <script src="app.js"></script>
 </body>
 </html>
-
-
-
