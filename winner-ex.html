@@ -7,24 +7,32 @@
 <meta name="color-scheme" content="light dark">
 <style>
   :root{
-    --bg: #fafafa; --card: #ffffff; --text: #111; --subtext:#666;
-    --primary:#111; --accent:#2563eb; --border:#e5e7eb; --shadow: 0 10px 30px rgba(0,0,0,.06); --radius:16px;
+    --bg:#fafafa; --card:#fff; --text:#111; --subtext:#666;
+    --primary:#111; --accent:#2563eb; --border:#e5e7eb;
+    --shadow:0 10px 30px rgba(0,0,0,.06); --radius:16px;
   }
   @media (prefers-color-scheme: dark){
-    :root{ --bg:#0b0c0f; --card:#121418; --text:#e5e7eb; --subtext:#9aa2b1; --primary:#e5e7eb; --accent:#3b82f6; --border:#1f2430; --shadow: 0 10px 30px rgba(0,0,0,.4) }
+    :root{ --bg:#0b0c0f; --card:#121418; --text:#e5e7eb; --subtext:#9aa2b1;
+      --primary:#e5e7eb; --accent:#3b82f6; --border:#1f2430; --shadow:0 10px 30px rgba(0,0,0,.4) }
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--text);font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial}
+  body{margin:0;background:var(--bg);color:var(--text);
+       font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans KR",Arial}
   .wrap{max-width:980px;margin:32px auto;padding:0 16px}
   header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:12px}
   header h1{font-size:22px;margin:0}
-  header .badge{font-size:12px;color:var(--accent);background:color-mix(in oklab,var(--accent) 12%, transparent);padding:6px 10px;border-radius:999px;border:1px solid color-mix(in oklab,var(--accent) 35%, transparent)}
-  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin:14px 0}
+  header .badge{font-size:12px;color:var(--accent);
+    background:color-mix(in oklab,var(--accent) 12%,transparent);
+    padding:6px 10px;border-radius:999px;
+    border:1px solid color-mix(in oklab,var(--accent) 35%,transparent)}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:18px;margin:14px 0}
   .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   @media (max-width:880px){.row,.grid2{grid-template-columns:1fr}}
   label{font-size:14px;display:flex;flex-direction:column;gap:6px}
-  input[type="text"],input[type="number"],.pill{width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:transparent;color:var(--text)}
+  input[type="text"],input[type="number"],.pill{width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--border);
+    background:transparent;color:var(--text)}
   .hint{color:var(--subtext);font-size:13px;margin-top:6px}
   .toolbar{display:flex;gap:10px;flex-wrap:wrap}
   button{appearance:none;border:0;border-radius:12px;padding:12px 16px;font-weight:600;cursor:pointer}
@@ -33,9 +41,10 @@
   .btn:disabled{opacity:.6;cursor:not-allowed}
   .radio-row{display:flex;gap:18px;flex-wrap:wrap}
   .drop{border:2px dashed var(--border);border-radius:16px;padding:20px;text-align:center;transition:.2s background}
-  .drop.drag{background:color-mix(in oklab,var(--accent) 10%, transparent)}
+  .drop.drag{background:color-mix(in oklab,var(--accent) 10%,transparent)}
   .kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:6px}
-  .log{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;font-size:13px;white-space:pre-wrap;background:color-mix(in oklab,var(--card) 60%, transparent);border-radius:12px;padding:12px;border:1px dashed var(--border)}
+  .log{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:13px;white-space:pre-wrap;
+    background:color-mix(in oklab,var(--card) 60%,transparent);border-radius:12px;padding:12px;border:1px dashed var(--border)}
   footer{margin:18px 0 40px;text-align:right;color:var(--subtext);font-size:12px}
   .switch{display:flex;align-items:center;gap:8px}
   .switch input{width:18px;height:18px}
@@ -45,139 +54,117 @@
   .section-title{font-weight:800;font-size:13px;color:var(--accent);letter-spacing:.08em;margin:10px 0 6px}
   .subcard{border:1px dashed var(--border);border-radius:14px;padding:14px}
 </style>
-<!-- SheetJS -->
+<!-- SheetJS & seedrandom -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<!-- seedrandom -->
 <script src="https://cdn.jsdelivr.net/npm/seedrandom@3.0.5/seedrandom.min.js"></script>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div>
-        <div class="kicker">EVENT WINNERS</div>
-        <h1>이벤트 당첨자 추첨기</h1>
-      </div>
-      <div class="badge">Client-only · Privacy-safe</div>
-    </header>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="kicker">EVENT WINNERS</div>
+      <h1>이벤트 당첨자 추첨기</h1>
+    </div>
+    <div class="badge">Client-only · Privacy-safe</div>
+  </header>
 
-    <!-- 업로드: 참여자 / 제외자 구역 분리 -->
-    <section class="card">
-      <div class="kicker">UPLOAD</div>
-
-      <div class="grid2">
-        <!-- 참여자 구역 -->
-        <div class="subcard">
-          <div class="section-title">참여자 리스트 파일 선택</div>
-          <div id="drop" class="drop">
-            <strong>엑셀 파일 드래그&드롭</strong><br/>
-            <span class="hint">또는 아래에서 파일 선택</span>
-          </div>
-          <label style="margin-top:10px">
-            <span>참여자 엑셀 선택</span>
-            <span class="pill">
-              <label class="fake btn secondary">
-                <input type="file" id="fileInput" accept=".xlsx,.xls" />파일 선택
-              </label>
-            </span>
-          </label>
-
-          <div class="switch" style="margin-top:10px">
-            <input type="checkbox" id="headerless">
-            <label for="headerless" style="margin:0">첫 행에 열머리글 없음(참여자만: 이름, id, 전화번호 순)</label>
-          </div>
-          <div class="row" style="margin-top:10px">
-            <label>전체 참여자 시트명
-              <input type="text" id="sheetJoined" value="joined_all" placeholder="예: joined_all 또는 sheet1" />
-            </label>
-            <label>당해 이벤트 참여자 시트명
-              <input type="text" id="sheetOnly" value="only_joined" placeholder="예: only_joined" />
-            </label>
-          </div>
-          <div class="hint">시트명은 입력한 값과 **정확히 일치**하는 시트를 사용합니다. 예: <b>sheet1</b>라고 입력하면 sheet1을 찾습니다.</div>
+  <!-- 업로드: 참여자 / 제외자 분리 -->
+  <section class="card">
+    <div class="kicker">UPLOAD</div>
+    <div class="grid2">
+      <!-- 참여자 -->
+      <div class="subcard">
+        <div class="section-title">참여자 리스트 파일 선택</div>
+        <div id="drop" class="drop">
+          <strong>엑셀 파일 드래그&드롭</strong><br/>
+          <span class="hint">또는 아래에서 파일 선택</span>
         </div>
+        <label style="margin-top:10px">
+          <span>참여자 엑셀 선택</span>
+          <span class="pill"><label class="fake btn secondary"><input type="file" id="fileInput" accept=".xlsx,.xls" />파일 선택</label></span>
+        </label>
 
-        <!-- 제외자 구역 -->
-        <div class="subcard">
-          <div class="section-title">제외자 리스트 파일 선택</div>
-          <div id="dropEx" class="drop">
-            <strong>제외자 엑셀 드래그&드롭</strong><br/>
-            <span class="hint">선택사항 · 헤더 포함 [이름, id, 전화번호]</span>
-          </div>
-          <label style="margin-top:10px">
-            <span>제외자 엑셀 선택(선택)</span>
-            <span class="pill">
-              <label class="fake btn secondary">
-                <input type="file" id="fileInputEx" accept=".xlsx,.xls" />파일 선택
-              </label>
-            </span>
-          </label>
-
-          <label style="margin-top:10px">제외자 시트명
-            <input type="text" id="sheetExclude" value="exclude_list" placeholder="예: exclude_list" />
-          </label>
-
-          <label style="margin-top:10px">랜덤 시드 (0~10000)
-            <input type="number" id="seed" min="0" max="10000" placeholder="비우면 자동 랜덤" />
-          </label>
-          <div class="hint">💡 시드값은 추첨 결과를 고정하기 위한 숫자입니다. 같은 데이터 + 같은 시드 = 같은 결과.</div>
+        <div class="switch" style="margin-top:10px">
+          <input type="checkbox" id="headerless">
+          <label for="headerless" style="margin:0">첫 행에 열머리글 없음(참여자만: 이름, id, 전화번호 순)</label>
         </div>
-      </div>
-    </section>
-
-    <!-- 모드 -->
-    <section class="card">
-      <div class="kicker">MODE</div>
-      <div class="radio-row">
-        <label><input type="radio" name="mode" value="dual" checked> 이중 추첨(중복 가능)</label>
-        <label><input type="radio" name="mode" value="single"> 단일 추첨(한 시트에서 N명)</label>
-      </div>
-
-      <div id="dualConfig" style="margin-top:12px">
-        <div class="row">
-          <label>전체 참여자 추첨 인원 (A)
-            <input type="number" id="nJoined" value="125" min="0" />
+        <div class="row" style="margin-top:10px">
+          <label>전체 참여자 시트명
+            <input type="text" id="sheetJoined" value="joined_all" placeholder="예: joined_all 또는 sheet1" />
           </label>
-          <label>당해 이벤트 최종 인원 (B)
-            <input type="number" id="nTotalOther" value="1000" min="0" />
+          <label>당해 이벤트 참여자 시트명
+            <input type="text" id="sheetOnly" value="only_joined" placeholder="예: only_joined" />
           </label>
         </div>
-        <div class="row">
-          <label>두 상품 중복 인원 (O)
-            <input type="number" id="nOverlap" value="20" min="0" />
-          </label>
-          <div></div>
+        <div class="hint">시트명은 입력한 값과 <b>정확히 일치</b>하는 시트를 사용합니다. 예: <b>sheet1</b>라고 입력하면 sheet1을 찾습니다.</div>
+      </div>
+
+      <!-- 제외자 -->
+      <div class="subcard">
+        <div class="section-title">제외자 리스트 파일 선택</div>
+        <div id="dropEx" class="drop">
+          <strong>제외자 엑셀 드래그&드롭</strong><br/>
+          <span class="hint">선택사항 · 헤더 포함 [이름, id, 전화번호]</span>
         </div>
-      </div>
+        <label style="margin-top:10px">
+          <span>제외자 엑셀 선택(선택)</span>
+          <span class="pill"><label class="fake btn secondary"><input type="file" id="fileInputEx" accept=".xlsx,.xls" />파일 선택</label></span>
+        </label>
 
-      <div id="singleConfig" style="display:none;margin-top:12px">
-        <div class="row">
-          <label>시트명
-            <input type="text" id="sheetSingle" value="joined_all" placeholder="예: joined_all 또는 sheet1" />
-          </label>
-          <label>추첨 인원
-            <input type="number" id="nSingle" value="100" min="1" />
-          </label>
-        </div>
-      </div>
+        <label style="margin-top:10px">제외자 시트명
+          <input type="text" id="sheetExclude" value="exclude_list" placeholder="예: exclude_list" />
+        </label>
 
-      <div class="toolbar" style="margin-top:14px">
-        <button id="runBtn" class="btn">추첨 실행</button>
-        <button id="downloadBtn" class="btn secondary" disabled>원본 결과 다운로드</button>
-        <button id="downloadMaskedBtn" class="btn secondary" disabled>마스킹 결과 다운로드</button>
+        <label style="margin-top:10px">랜덤 시드 (0~10000)
+          <input type="number" id="seed" min="0" max="10000" placeholder="비우면 자동 랜덤" />
+        </label>
+        <div class="hint">💡 시드값은 추첨 결과를 고정하기 위한 숫자입니다. 같은 데이터 + 같은 시드 = 같은 결과.</div>
       </div>
-      <div class="hint" style="margin-top:6px">
-        원본 결과 확인 후 개인정보가 포함된 배포용으로는 “마스킹 결과 다운로드”를 사용하세요.
+    </div>
+  </section>
+
+  <!-- 모드 -->
+  <section class="card">
+    <div class="kicker">MODE</div>
+    <div class="radio-row">
+      <label><input type="radio" name="mode" value="dual" checked> 이중 추첨(중복 가능)</label>
+      <label><input type="radio" name="mode" value="single"> 단일 추첨(한 시트에서 N명)</label>
+    </div>
+
+    <div id="dualConfig" style="margin-top:12px">
+      <div class="row">
+        <label>전체 참여자 추첨 인원 (A)<input type="number" id="nJoined" value="125" min="0" /></label>
+        <label>당해 이벤트 최종 인원 (B)<input type="number" id="nTotalOther" value="1000" min="0" /></label>
       </div>
-    </section>
+      <div class="row">
+        <label>두 상품 중복 인원 (O)<input type="number" id="nOverlap" value="20" min="0" /></label>
+        <div></div>
+      </div>
+    </div>
 
-    <!-- 로그 -->
-    <section class="card">
-      <div class="kicker">LOG</div>
-      <div id="log" class="log">준비됨.</div>
-    </section>
+    <div id="singleConfig" style="display:none;margin-top:12px">
+      <div class="row">
+        <label>시트명<input type="text" id="sheetSingle" value="joined_all" placeholder="예: joined_all 또는 sheet1" /></label>
+        <label>추첨 인원<input type="number" id="nSingle" value="100" min="1" /></label>
+      </div>
+    </div>
 
-    <footer>ⓒ Jeongyeon. 2025</footer>
-  </div>
+    <div class="toolbar" style="margin-top:14px">
+      <button id="runBtn" class="btn">추첨 실행</button>
+      <button id="downloadBtn" class="btn secondary" disabled>원본 결과 다운로드</button>
+      <button id="downloadMaskedBtn" class="btn secondary" disabled>마스킹 결과 다운로드</button>
+    </div>
+    <div class="hint" style="margin-top:6px">원본 결과 확인 후 개인정보가 포함된 배포용으로는 “마스킹 결과 다운로드”를 사용하세요.</div>
+  </section>
+
+  <!-- 로그 -->
+  <section class="card">
+    <div class="kicker">LOG</div>
+    <div id="log" class="log">준비됨.</div>
+  </section>
+
+  <footer>ⓒ Jeongyeon. 2025</footer>
+</div>
 
 <script>
 (function(){
@@ -185,10 +172,8 @@
   const logBox = $('#log');
 
   // 파일 입력
-  const fileInput = $('#fileInput');
-  const drop = $('#drop');
-  const fileInputEx = $('#fileInputEx');
-  const dropEx = $('#dropEx');
+  const fileInput = $('#fileInput'), drop = $('#drop');
+  const fileInputEx = $('#fileInputEx'), dropEx = $('#dropEx');
 
   // 설정
   const headerless = $('#headerless');
@@ -199,35 +184,28 @@
 
   // 모드/수량
   const modeRadios = document.getElementsByName('mode');
-  const dualConfig = $('#dualConfig');
-  const singleConfig = $('#singleConfig');
-  const nJoined = $('#nJoined');
-  const nTotalOther = $('#nTotalOther');
-  const nOverlap = $('#nOverlap');
-  const sheetSingle = $('#sheetSingle');
-  const nSingle = $('#nSingle');
+  const dualConfig = $('#dualConfig'), singleConfig = $('#singleConfig');
+  const nJoined = $('#nJoined'), nTotalOther = $('#nTotalOther'), nOverlap = $('#nOverlap');
+  const sheetSingle = $('#sheetSingle'), nSingle = $('#nSingle');
 
   // 버튼
-  const runBtn = $('#runBtn');
-  const downloadBtn = $('#downloadBtn');
-  const downloadMaskedBtn = $('#downloadMaskedBtn');
+  const runBtn = $('#runBtn'), downloadBtn = $('#downloadBtn'), downloadMaskedBtn = $('#downloadMaskedBtn');
 
-  let resultsWB = null;
-  let resultsWBMasked = null;
+  let resultsWB = null, resultsWBMasked = null;
 
-  function setLog(msg){ logBox.textContent = msg; }
-  function addLog(msg){ logBox.textContent += (logBox.textContent? "\n":"") + msg; }
+  function setLog(m){ logBox.textContent = m; }
+  function addLog(m){ logBox.textContent += (logBox.textContent? "\n":"") + m; }
   function getMode(){ return [...modeRadios].find(r=>r.checked).value; }
 
-  // DnD: 참여자
-  ;['dragenter','dragover'].forEach(evt=>drop.addEventListener(evt,(e)=>{e.preventDefault();drop.classList.add('drag');}));
-  ;['dragleave','drop'].forEach(evt=>drop.addEventListener(evt,(e)=>{e.preventDefault();drop.classList.remove('drag');}));
-  drop.addEventListener('drop',(e)=>{ const f=e.dataTransfer.files?.[0]; if(f){ fileInput.files=e.dataTransfer.files; addLog(`참여자 파일 선택: ${f.name}`); }});
+  // Drag & Drop (참여자)
+  ;['dragenter','dragover'].forEach(evt=>drop.addEventListener(evt,e=>{e.preventDefault();drop.classList.add('drag');}));
+  ;['dragleave','drop'].forEach(evt=>drop.addEventListener(evt,e=>{e.preventDefault();drop.classList.remove('drag');}));
+  drop.addEventListener('drop', e=>{ const f=e.dataTransfer.files?.[0]; if(f){ fileInput.files=e.dataTransfer.files; addLog(`참여자 파일 선택: ${f.name}`); }});
 
-  // DnD: 제외자
-  ;['dragenter','dragover'].forEach(evt=>dropEx.addEventListener(evt,(e)=>{e.preventDefault();dropEx.classList.add('drag');}));
-  ;['dragleave','drop'].forEach(evt=>dropEx.addEventListener(evt,(e)=>{e.preventDefault();dropEx.classList.remove('drag');}));
-  dropEx.addEventListener('drop',(e)=>{ const f=e.dataTransfer.files?.[0]; if(f){ fileInputEx.files=e.dataTransfer.files; addLog(`제외자 파일 선택: ${f.name}`); }});
+  // Drag & Drop (제외자)
+  ;['dragenter','dragover'].forEach(evt=>dropEx.addEventListener(evt,e=>{e.preventDefault();dropEx.classList.add('drag');}));
+  ;['dragleave','drop'].forEach(evt=>dropEx.addEventListener(evt,e=>{e.preventDefault();dropEx.classList.remove('drag');}));
+  dropEx.addEventListener('drop', e=>{ const f=e.dataTransfer.files?.[0]; if(f){ fileInputEx.files=e.dataTransfer.files; addLog(`제외자 파일 선택: ${f.name}`); }});
 
   // 모드 토글
   [...modeRadios].forEach(r => r.addEventListener('change', ()=>{
@@ -244,137 +222,94 @@
       seedInput.value = String(auto);
       return auto;
     }
-    const v = parseInt(s, 10);
+    const v = parseInt(s,10);
     if(isNaN(v) || v<0 || v>10000) throw new Error('시드는 0~10000 정수로 입력하세요.');
     return v;
   }
 
   // 마스킹
-  function maskName(name){
-    if(!name) return '';
-    const s = String(name);
-    if(s.length <= 1) return '*';
-    if(s.length === 2) return s[0] + '*';
-    return s[0] + '*' + s[s.length-1];
-  }
-  function maskId(id){
-    if(!id) return '';
-    const s = String(id);
-    if(s.length <= 3) return '***';
-    return s.slice(0, s.length-3) + '***';
-  }
+  const maskName = name => !name ? '' : (String(name).length<=1? '*' : (String(name).length===2? String(name)[0]+'*' : String(name)[0]+'*'+String(name).slice(-1)));
+  const maskId = id => !id ? '' : (String(id).length<=3? '***' : String(id).slice(0, -3)+'***');
   function maskPhone(phone){
     if(!phone) return '';
     const s = String(phone);
     const m = s.match(/^(\d{2,3})-(\d{3,4})-(\d{4})$/);
-    if(m){ return `${m[1]}-****-${m[3]}`; }
-    return s.replace(/\d(?=\d{4})/g, '*');
+    if(m) return `${m[1]}-****-${m[3]}`;
+    return s.replace(/\d(?=\d{4})/g,'*');
   }
 
-  function toSheet(rows){
-    const data = rows.map(r=>({이름:r.이름||'', id:r.id||'', 전화번호:r.전화번호||''}));
-    return XLSX.utils.json_to_sheet(data);
-  }
-  function toSheetMasked(rows){
-    const data = rows.map(r=>({
-      이름: maskName(r.이름||''),
-      id: maskId(r.id||''),
-      전화번호: maskPhone(r.전화번호||'')
-    }));
-    return XLSX.utils.json_to_sheet(data);
-  }
+  const toSheet = rows => XLSX.utils.json_to_sheet(rows.map(r=>({이름:r.이름||'', id:r.id||'', 전화번호:r.전화번호||''})));
+  const toSheetMasked = rows => XLSX.utils.json_to_sheet(rows.map(r=>({이름:maskName(r.이름||''), id:maskId(r.id||''), 전화번호:maskPhone(r.전화번호||'')})));
 
   // 읽기
   function readSheet(ws, hasHeader){
-    const rows = XLSX.utils.sheet_to_json(ws, {header: 1, raw:false, defval:''});
-    const out = [];
+    const rows = XLSX.utils.sheet_to_json(ws, {header:1, raw:false, defval:''});
+    const out=[];
     if(hasHeader){
-      const header = (rows[0]||[]).map(s=>String(s||'').trim());
-      const idxName = header.findIndex(h=>h==='이름' || /name/i.test(h));
-      const idxId = header.findIndex(h=>h==='id' || /^ID$/i.test(h));
-      const idxPhone = header.findIndex(h=>h==='전화번호' || /phone|tel/i.test(h));
-      if(idxName<0 || idxId<0 || idxPhone<0) throw new Error('헤더가 있는 경우, 컬럼명은 최소 [이름, id, 전화번호]가 있어야 합니다.');
-      for(let i=1;i<rows.length;i++){
-        const r = rows[i]||[];
-        out.push({이름:String(r[idxName]||'').trim()||undefined, id:String(r[idxId]||'').trim()||undefined, 전화번호:String(r[idxPhone]||'').trim()||undefined});
+      const header=(rows[0]||[]).map(s=>String(s||'').trim());
+      const iN=header.findIndex(h=>h==='이름'||/name/i.test(h));
+      const iI=header.findIndex(h=>h==='id'||/^ID$/i.test(h));
+      const iP=header.findIndex(h=>h==='전화번호'||/phone|tel/i.test(h));
+      if(iN<0||iI<0||iP<0) throw new Error('헤더가 있는 경우, 최소 [이름, id, 전화번호]가 필요합니다.');
+      for(let i=1;i<rows.length;i++){ const r=rows[i]||[];
+        out.push({이름:String(r[iN]||'').trim()||undefined, id:String(r[iI]||'').trim()||undefined, 전화번호:String(r[iP]||'').trim()||undefined});
       }
-    } else {
-      for(const r of rows){
-        if(!r) continue;
+    }else{
+      for(const r of rows){ if(!r) continue;
         out.push({이름:String((r[0]??'')).trim()||undefined, id:String((r[1]??'')).trim()||undefined, 전화번호:String((r[2]??'')).trim()||undefined});
       }
     }
     return out;
   }
   function readExcludeSheet(ws){
-    const rows = XLSX.utils.sheet_to_json(ws, {header: 1, raw:false, defval:''});
-    const out = [];
-    const header = (rows[0]||[]).map(s=>String(s||'').trim());
-    const idxName = header.findIndex(h=>h==='이름' || /name/i.test(h));
-    const idxId = header.findIndex(h=>h==='id' || /^ID$/i.test(h));
-    const idxPhone = header.findIndex(h=>h==='전화번호' || /phone|tel/i.test(h));
-    if(idxName<0 || idxId<0 || idxPhone<0) throw new Error('exclude_list 시트에는 [이름, id, 전화번호] 헤더가 필요합니다.');
-    for(let i=1;i<rows.length;i++){
-      const r = rows[i]||[];
-      out.push({이름:String(r[idxName]||'').trim()||undefined, id:String(r[idxId]||'').trim()||undefined, 전화번호:String(r[idxPhone]||'').trim()||undefined});
+    const rows = XLSX.utils.sheet_to_json(ws, {header:1, raw:false, defval:''});
+    const out=[]; const header=(rows[0]||[]).map(s=>String(s||'').trim());
+    const iN=header.findIndex(h=>h==='이름'||/name/i.test(h));
+    const iI=header.findIndex(h=>h==='id'||/^ID$/i.test(h));
+    const iP=header.findIndex(h=>h==='전화번호'||/phone|tel/i.test(h));
+    if(iN<0||iI<0||iP<0) throw new Error('exclude_list 시트에는 [이름, id, 전화번호] 헤더가 필요합니다.');
+    for(let i=1;i<rows.length;i++){ const r=rows[i]||[];
+      out.push({이름:String(r[iN]||'').trim()||undefined, id:String(r[iI]||'').trim()||undefined, 전화번호:String(r[iP]||'').trim()||undefined});
     }
     return out;
   }
 
   // 키/유틸
-  function makeKey(o){
-    if(o.id) return `id|${o.id}`;
-    if(o.전화번호) return `phone|${o.전화번호}`;
-    return `namecombo|${o.이름||''}|${o.전화번호||''}`;
-  }
-  function uniqueByKey(arr){
-    const seen = new Set(); const out=[];
-    for(const o of arr){
-      const k = makeKey(o);
-      if(!seen.has(k)){ seen.add(k); out.push({...o, _key:k}); }
-    }
-    return out;
-  }
+  const makeKey = o => o.id ? `id|${o.id}` : (o.전화번호 ? `phone|${o.전화번호}` : `namecombo|${o.이름||''}|${o.전화번호||''}`);
+  function uniqueByKey(arr){ const seen=new Set(), out=[]; for(const o of arr){ const k=makeKey(o); if(!seen.has(k)){seen.add(k); out.push({...o,_key:k});}} return out; }
   function sampleKeys(keysArr, n, rng){
-    if(n < 0) throw new Error('추첨 인원은 0 이상이어야 합니다.');
-    if(keysArr.length < n) throw new Error(`추첨 인원이 데이터보다 많습니다. 데이터 ${keysArr.length} / 요청 ${n}`);
-    const a = keysArr.slice();
-    for(let i=a.length-1;i>0;i--){
-      const j = Math.floor(rng()*(i+1));
-      [a[i],a[j]] = [a[j],a[i]];
-    }
+    if(n<0) throw new Error('추첨 인원은 0 이상이어야 합니다.');
+    if(keysArr.length<n) throw new Error(`추첨 인원이 데이터보다 많습니다. 데이터 ${keysArr.length} / 요청 ${n}`);
+    const a=keysArr.slice();
+    for(let i=a.length-1;i>0;i--){ const j=Math.floor(rng()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
     return a.slice(0,n);
   }
-  function shuffleRows(rows, rng){
-    const a = rows.slice();
-    for(let i=a.length-1;i>0;i--){
-      const j = Math.floor(rng()*(i+1));
-      [a[i],a[j]] = [a[j],a[i]];
-    }
-    return a;
-  }
+  const shuffleRows = (rows, rng) => { const a=rows.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(rng()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; };
 
-  function verifyNoExcluded(winners, excludeSet){
-    const hits = winners.filter(w => excludeSet.has(w._key));
-    return hits; // 0이면 통과
+  // [NEW] 정렬된 키 배열 (시드 재현성 보장)
+  const orderedKeysFromRows = rows => rows.map(r=>r._key).slice().sort();
+
+  // [NEW] 검증 로그 유틸
+  function logExclusionStats({poolName, poolRows, winnersRows, excludeSet}) {
+    const inPool = poolRows.filter(r => excludeSet.has(r._key)).length;
+    const inWinners = winnersRows.filter(r => excludeSet.has(r._key)).length;
+    addLog(`🔎 검증[${poolName}]: 후보풀 교집합 ${inPool}명 / 당첨자 포함 ${inWinners}명`);
+    return { inPool, inWinners };
   }
 
   // 실행
   $('#runBtn').addEventListener('click', async ()=>{
     try{
       setLog('실행 중…');
-      downloadBtn.disabled = true;
-      downloadMaskedBtn.disabled = true;
-      resultsWB = XLSX.utils.book_new();
-      resultsWBMasked = XLSX.utils.book_new();
+      downloadBtn.disabled = true; downloadMaskedBtn.disabled = true;
+      resultsWB = XLSX.utils.book_new(); resultsWBMasked = XLSX.utils.book_new();
 
       if(!fileInput.files[0]) throw new Error('참여자 엑셀 파일을 선택하세요.');
       const buf = await fileInput.files[0].arrayBuffer();
       const wb = XLSX.read(buf, {type:'array'});
 
       // 제외 로드(선택)
-      let excludeSet = new Set();
-      let excludeRows = [];
+      let excludeSet = new Set(), excludeRows=[];
       if(fileInputEx.files[0]){
         const bufEx = await fileInputEx.files[0].arrayBuffer();
         const wbEx = XLSX.read(bufEx, {type:'array'});
@@ -383,7 +318,7 @@
         const exArrRaw = readExcludeSheet(wsEx);
         const exUniq = uniqueByKey(exArrRaw);
         excludeSet = new Set(exUniq.map(r=>r._key));
-        excludeRows = exUniq; // 검증시 사용
+        excludeRows = exUniq;
         addLog(`제외자 ${excludeSet.size}명 로드됨.`);
       } else {
         addLog('제외자 파일 미선택: 제외 없이 진행합니다.');
@@ -392,27 +327,24 @@
       const hasHeader = !headerless.checked;
       const seed = resolveSeed();
       const rng = new Math.seedrandom(String(seed));
-
-      const applyExclude = (arr)=> arr.filter(r=>!excludeSet.has(r._key));
+      const applyExclude = arr => arr.filter(r=>!excludeSet.has(r._key));
 
       if(getMode()==='single'){
         const sname = sheetSingle.value.trim();
         const ws = wb.Sheets[sname];
         if(!ws) throw new Error(`시트 없음: ${sname}`);
         let arr = uniqueByKey(readSheet(ws, hasHeader));
-        const before = arr.length;
-        arr = applyExclude(arr);
-        const after = arr.length;
+        const before = arr.length; arr = applyExclude(arr); const after = arr.length;
         addLog(`단일모드: 제외 적용 ${before - after}명 제외됨. (잔여 ${after})`);
 
         const n = parseInt(nSingle.value,10);
-        const pick = sampleKeys(arr.map(r=>r._key), n, rng);
+        const pick = sampleKeys(orderedKeysFromRows(arr), n, rng);  // 정렬된 키로 샘플
         const winners = shuffleRows(arr.filter(r=>pick.includes(r._key)), rng);
 
-        // 검증(제외자 포함 여부)
-        const hits = verifyNoExcluded(winners, excludeSet);
-        if(hits.length>0){
-          addLog(`⚠️ 검증: 제외자 ${hits.length}명 포함됨. 결과 파일에 'excluded_hits(검증)' 시트로 기록합니다.`);
+        // 검증 로그 + 시트
+        const statsSingle = logExclusionStats({poolName:sname, poolRows:arr, winnersRows:winners, excludeSet});
+        if (statsSingle.inWinners > 0) {
+          const hits = winners.filter(w=>excludeSet.has(w._key));
           XLSX.utils.book_append_sheet(resultsWB, toSheet(hits), 'excluded_hits(검증)');
           XLSX.utils.book_append_sheet(resultsWBMasked, toSheetMasked(hits), 'excluded_hits(검증)_masked');
         } else {
@@ -421,8 +353,8 @@
 
         XLSX.utils.book_append_sheet(resultsWB, toSheet(winners), 'winners_single');
         XLSX.utils.book_append_sheet(resultsWBMasked, toSheetMasked(winners), 'winners_single(masked)');
-
         setLog(`단일 추첨 완료: ${winners.length}명\n시드: ${seed}`);
+
       } else {
         const wsJ = wb.Sheets[sheetJoined.value.trim()];
         const wsO = wb.Sheets[sheetOnly.value.trim()];
@@ -431,19 +363,18 @@
 
         // 원본
         let joinedArr = uniqueByKey(readSheet(wsJ, hasHeader));
-        let onlyArr = uniqueByKey(readSheet(wsO, hasHeader));
+        let onlyArr   = uniqueByKey(readSheet(wsO, hasHeader));
 
         // 제외 적용
-        const beforeJ = joinedArr.length;
-        const beforeO = onlyArr.length;
+        const beforeJ=joinedArr.length, beforeO=onlyArr.length;
         joinedArr = applyExclude(joinedArr);
         onlyArr   = applyExclude(onlyArr);
         addLog(`이중모드: 제외 적용 joined_all ${beforeJ - joinedArr.length}명, only_joined ${beforeO - onlyArr.length}명 제외됨.`);
 
-        // 키 세트
-        const joinedKeys = new Set(joinedArr.map(r=>r._key));
-        const onlyKeysRaw = new Set(onlyArr.map(r=>r._key));
-        const onlyKeys = [...onlyKeysRaw].filter(k=>!joinedKeys.has(k)); // 정책 유지
+        // 정렬된 키로 고정
+        const joinedKeysArr = orderedKeysFromRows(joinedArr);
+        const joinedKeySet  = new Set(joinedKeysArr);
+        const onlyKeysArr   = orderedKeysFromRows(onlyArr).filter(k=>!joinedKeySet.has(k)); // 정렬+차집합
 
         const A = parseInt(nJoined.value,10);
         const B = parseInt(nTotalOther.value,10);
@@ -451,59 +382,53 @@
         if(O > B) throw new Error('중복 인원이 최종 인원보다 클 수 없습니다.');
         const needOnly = B - O;
 
-        if(joinedKeys.size < A) throw new Error(`전체 참여자 부족: ${joinedKeys.size} / 필요 ${A}`);
-        if(onlyKeys.length < needOnly) throw new Error(`정제된 당해 이벤트 참여자 부족: ${onlyKeys.length} / 필요 ${needOnly}`);
+        if(joinedKeysArr.length < A) throw new Error(`전체 참여자 부족: ${joinedKeysArr.length} / 필요 ${A}`);
+        if(onlyKeysArr.length < needOnly) throw new Error(`정제된 당해 이벤트 참여자 부족: ${onlyKeysArr.length} / 필요 ${needOnly}`);
 
         // 샘플링
-        const joinedPick = sampleKeys([...joinedKeys], A, rng);
+        const joinedPick  = sampleKeys(joinedKeysArr, A, rng);
         const overlapPick = O>0 ? sampleKeys(joinedPick, O, rng) : [];
-        const onlyPick = sampleKeys(onlyKeys, needOnly, rng);
-        const finalOther = [...onlyPick, ...overlapPick];
+        const onlyPick    = sampleKeys(onlyKeysArr, needOnly, rng);
+        const finalOther  = [...onlyPick, ...overlapPick];
 
-        const byKey = (arr)=> Object.fromEntries(arr.map(r=>[r._key, r]));
-        const J = byKey(joinedArr);
-        const OJ = byKey([...onlyArr, ...joinedArr]);
+        const byKey = arr => Object.fromEntries(arr.map(r=>[r._key,r]));
+        const J = byKey(joinedArr), OJ = byKey([...onlyArr, ...joinedArr]);
 
         const winnersA = shuffleRows(joinedPick.map(k=>J[k]), rng);
         const winnersB = shuffleRows(finalOther.map(k=>OJ[k]), rng);
 
-        // 검증: 제외자 포함 여부
-        const hitsA = verifyNoExcluded(winnersA, excludeSet);
-        const hitsB = verifyNoExcluded(winnersB, excludeSet);
-        const totalHits = [...hitsA, ...hitsB];
+        // 검증 로그 + 시트
+        const statsA = logExclusionStats({poolName:'전체참여풀(A)', poolRows:joinedArr, winnersRows:winnersA, excludeSet});
+        const statsB = logExclusionStats({poolName:'당해이벤트풀(B)', poolRows:onlyArr, winnersRows:winnersB, excludeSet});
+        const totalHits = winnersA.filter(w=>excludeSet.has(w._key)).concat(winnersB.filter(w=>excludeSet.has(w._key)));
         if(totalHits.length>0){
-          addLog(`⚠️ 검증: 제외자 ${totalHits.length}명 포함됨. 결과 파일에 'excluded_hits(검증)' 시트로 기록합니다.`);
+          addLog(`⚠️ 경고: 최종 당첨자 중 제외자 ${totalHits.length}명 발견 → 결과 파일에 'excluded_hits(검증)' 시트로 저장`);
           XLSX.utils.book_append_sheet(resultsWB, toSheet(totalHits), 'excluded_hits(검증)');
           XLSX.utils.book_append_sheet(resultsWBMasked, toSheetMasked(totalHits), 'excluded_hits(검증)_masked');
         } else {
           addLog('✅ 검증 완료: 제외자 0명 포함.');
         }
 
-        // 기록
+        // 결과
         XLSX.utils.book_append_sheet(resultsWB, toSheet(winnersA), 'winners_A(전체참여)');
         XLSX.utils.book_append_sheet(resultsWB, toSheet(winnersB), 'winners_B(당해이벤트)');
         XLSX.utils.book_append_sheet(resultsWBMasked, toSheetMasked(winnersA), 'winners_A(전체참여_masked)');
         XLSX.utils.book_append_sheet(resultsWBMasked, toSheetMasked(winnersB), 'winners_B(당해이벤트_masked)');
-
         setLog(`이중 추첨 완료(제외 반영): A=${winnersA.length}명, B=${winnersB.length}명\n시드: ${seed}`);
       }
 
-      downloadBtn.disabled = false;
-      downloadMaskedBtn.disabled = false;
+      downloadBtn.disabled = false; downloadMaskedBtn.disabled = false;
     }catch(err){
       resultsWB = null; resultsWBMasked = null;
-      downloadBtn.disabled = true;
-      downloadMaskedBtn.disabled = true;
+      downloadBtn.disabled = true; downloadMaskedBtn.disabled = true;
       setLog('❌ 오류: ' + err.message);
       console.error(err);
     }
   });
 
   // 다운로드
-  function tsName(prefix){
-    const t = new Date(); const pad = n=>String(n).padStart(2,'0');
-    return `${prefix}_${t.getFullYear()}${pad(t.getMonth()+1)}${pad(t.getDate())}_${pad(t.getHours())}${pad(t.getMinutes())}${pad(t.getSeconds())}.xlsx`;
-  }
+  function tsName(prefix){ const t=new Date(), pad=n=>String(n).padStart(2,'0');
+    return `${prefix}_${t.getFullYear()}${pad(t.getMonth()+1)}${pad(t.getDate())}_${pad(t.getHours())}${pad(t.getMinutes())}${pad(t.getSeconds())}.xlsx`; }
   $('#downloadBtn').addEventListener('click', ()=>{ if(resultsWB) XLSX.writeFile(resultsWB, tsName('winners')); });
   $('#downloadMaskedBtn').addEventListener('click', ()=>{ if(resultsWBMasked) XLSX.writeFile(resultsWBMasked, tsName('winners_masked')); });
 })();
