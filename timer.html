@@ -1,178 +1,859 @@
-import React, { useEffect, useMemo, useRef, useState } from "react"; import { motion, AnimatePresence } from "framer-motion"; import { Play, Pause, RotateCcw, Bell, BellOff, Sun, Moon, Settings2, Volume2, VolumeX, Coffee, BookOpenCheck, TimerReset } from "lucide-react"; import { Button } from "@/components/ui/button"; import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"; import { Slider } from "@/components/ui/slider"; import { Switch } from "@/components/ui/switch"; import { Input } from "@/components/ui/input";
-
-// Base64 beep (440Hz + 660Hz quick chirp) const BEEP = "data:audio/wav;base64,UklGRqQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQwAAACAgICAf39/f4CAgICAf39/f4CAgICAf39/f4CAgICAf39/f4CAgICAf39/f4CAgICAf39/f4CAgICAf39/f4CAgICAf39/f4CAgID///8=";
-
-const prettyTime = (secs: number) => { const m = Math.floor(secs / 60) .toString() .padStart(2, "0"); const s = Math.floor(secs % 60) .toString() .padStart(2, "0"); return ${m}:${s}; };
-
-const clamp = (n: number, min: number, max: number) => Math.min(Math.max(n, min), max);
-
-const useLocal = <T,>(key: string, initial: T) => { const [state, setState] = useState<T>(() => { try { const v = localStorage.getItem(key); return v ? (JSON.parse(v) as T) : initial; } catch { return initial; } }); useEffect(() => { try { localStorage.setItem(key, JSON.stringify(state)); } catch {} }, [key, state]); return [state, setState] as const; };
-
-const Ring = ({ progress, size = 260 }: { progress: number; size?: number }) => { const stroke = 14; const r = (size - stroke) / 2; const c = 2 * Math.PI * r; const dash = c * progress; return ( <svg width={size} height={size} className="drop-shadow-md"> <defs> <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"> <stop offset="0%" stopColor="hsl(var(--primary))" /> <stop offset="100%" stopColor="hsl(var(--primary) / 0.6)" /> </linearGradient> </defs> <circle cx={size / 2} cy={size / 2} r={r} stroke="hsl(var(--muted))" strokeWidth={stroke} fill="none" /> <motion.circle cx={size / 2} cy={size / 2} r={r} stroke="url(#grad)" strokeLinecap="round" strokeWidth={stroke} fill="none" initial={{ strokeDasharray: ${0} ${c} }} animate={{ strokeDasharray: ${dash} ${c - dash} }} transition={{ type: "spring", stiffness: 80, damping: 20 }} /> </svg> ); };
-
-const ModePill = ({ active, icon: Icon, label, onClick }: any) => ( <Button variant={active ? "default" : "outline"} size="sm" className="rounded-full" onClick={onClick}> <Icon className="mr-2 h-4 w-4" /> {label} </Button> );
-
-export default function StudyTimer() { // Modes: focus / short / long const [mode, setMode] = useLocal("timer.mode", "focus"); const [focusMin, setFocusMin] = useLocal<number>("timer.focus", 50); const [shortMin, setShortMin] = useLocal<number>("timer.short", 10); const [longMin, setLongMin] = useLocal<number>("timer.long", 20); const [longGap, setLongGap] = useLocal<number>("timer.longgap", 4); // after N focus blocks const [autoNext, setAutoNext] = useLocal<boolean>("timer.autonext", true); const [soundOn, setSoundOn] = useLocal<boolean>("timer.sound", true); const [notiOn, setNotiOn] = useLocal<boolean>("timer.noti", true); const [dark, setDark] = useLocal<boolean>("timer.dark", true);
-
-const totalSecs = useMemo(() => { const m = mode === "focus" ? focusMin : mode === "short" ? shortMin : longMin; return m * 60; }, [mode, focusMin, shortMin, longMin]);
-
-const [remaining, setRemaining] = useLocal<number>("timer.remaining", totalSecs); const [running, setRunning] = useLocal<boolean>("timer.running", false); const [focusCount, setFocusCount] = useLocal<number>("timer.focuscount", 0);
-
-const audioRef = useRef<HTMLAudioElement | null>(null);
-
-// sync remaining when mode durations change useEffect(() => { setRemaining((r) => (r > totalSecs ? totalSecs : r)); }, [totalSecs, setRemaining]);
-
-// tick useEffect(() => { if (!running) return; const id = setInterval(() => { setRemaining((r) => { if (r <= 1) { return 0; } return r - 1; }); }, 1000); return () => clearInterval(id); }, [running, setRemaining]);
-
-// finish handler useEffect(() => { if (remaining === 0) { if (soundOn && audioRef.current) { audioRef.current.currentTime = 0; audioRef.current.play().catch(() => {}); } if (notiOn && "Notification" in window) { if (Notification.permission === "granted") { new Notification("타이머 완료!", { body: mode === "focus" ? "집중 세션 종료, 휴식 가시죠." : "휴식 종료, 다시 집중 GO!" }); } }
-
-// Auto-switch
-  let nextMode = mode;
-  if (mode === "focus") {
-    const nextFocusCount = focusCount + 1;
-    setFocusCount(nextFocusCount);
-    nextMode = nextFocusCount % longGap === 0 ? "long" : "short";
-  } else {
-    nextMode = "focus";
-  }
-
-  if (autoNext) {
-    // set a tiny delay so user sees 00:00
-    setTimeout(() => {
-      switchMode(nextMode, true);
-    }, 600);
-  } else {
-    setRunning(false);
-  }
-}
-// eslint-disable-next-line react-hooks/exhaustive-deps
-
-}, [remaining]);
-
-// desktop notification permission on mount useEffect(() => { if (notiOn && "Notification" in window && Notification.permission === "default") { Notification.requestPermission().catch(() => {}); } }, [notiOn]);
-
-const switchMode = (m: "focus" | "short" | "long", autostart = false) => { setMode(m); const secs = (m === "focus" ? focusMin : m === "short" ? shortMin : longMin) * 60; setRemaining(secs); setRunning(autostart); };
-
-const progress = 1 - remaining / totalSecs;
-
-// keyboard shortcuts useEffect(() => { const onKey = (e: KeyboardEvent) => { if (e.code === "Space") { e.preventDefault(); setRunning((v) => !v); } else if (e.key.toLowerCase() === "r") { reset(); } }; window.addEventListener("keydown", onKey); return () => window.removeEventListener("keydown", onKey); }, []);
-
-const reset = () => { setRemaining(totalSecs); setRunning(false); };
-
-useEffect(() => { document.documentElement.classList.toggle("dark", dark); }, [dark]);
-
-return ( <div className="min-h-screen bg-background text-foreground transition-colors"> <div className="mx-auto max-w-5xl px-4 py-8"> <div className="mb-6 flex items-center justify-between"> <div> <h1 className="text-2xl font-bold">Morning Study Timer</h1> <p className="text-muted-foreground">집중-휴식 리듬을 예쁘게. 스페이스바로 시작/일시정지, R로 리셋.</p> </div> <div className="flex items-center gap-2"> <Button variant="ghost" size="icon" onClick={() => setDark((v) => !v)} aria-label="toggle theme"> {dark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />} </Button> <Button variant="ghost" size="icon" onClick={() => setSoundOn((v) => !v)} aria-label="toggle sound"> {soundOn ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />} </Button> <Button variant="ghost" size="icon" onClick={() => setNotiOn((v) => !v)} aria-label="toggle notifications"> {notiOn ? <Bell className="h-5 w-5" /> : <BellOff className="h-5 w-5" />} </Button> </div> </div>
-
-<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-      {/* Timer Card */}
-      <Card className="lg:col-span-2">
-        <CardHeader className="pb-2">
-          <div className="flex flex-wrap gap-2">
-            <ModePill active={mode === "focus"} icon={BookOpenCheck} label="집중" onClick={() => switchMode("focus")} />
-            <ModePill active={mode === "short"} icon={Coffee} label="짧은 휴식" onClick={() => switchMode("short")} />
-            <ModePill active={mode === "long"} icon={TimerReset} label="긴 휴식" onClick={() => switchMode("long")} />
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col items-center justify-center gap-6 p-2">
-            <div className="relative">
-              <Ring progress={progress} />
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <AnimatePresence mode="wait">
-                  <motion.div key={remaining} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} className="text-6xl font-bold tabular-nums">
-                    {prettyTime(remaining)}
-                  </motion.div>
-                </AnimatePresence>
-                <div className="mt-2 text-sm text-muted-foreground">
-                  {mode === "focus" ? "집중 시간" : mode === "short" ? "짧은 휴식" : "긴 휴식"}
-                </div>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <Button size="lg" onClick={() => setRunning((v) => !v)}>
-                {running ? (
-                  <>
-                    <Pause className="mr-2 h-5 w-5" /> 일시정지
-                  </>
-                ) : (
-                  <>
-                    <Play className="mr-2 h-5 w-5" /> 시작
-                  </>
-                )}
-              </Button>
-              <Button size="lg" variant="outline" onClick={reset}>
-                <RotateCcw className="mr-2 h-5 w-5" /> 리셋
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-        <CardFooter className="justify-center">
-          <div className="flex flex-wrap items-center justify-center gap-2 text-sm">
-            <span className="text-muted-foreground">프리셋:</span>
-            <Button variant="secondary" size="sm" onClick={() => { setFocusMin(25); setShortMin(5); setLongMin(15); setLongGap(4); switchMode("focus"); }}>25/5(15)</Button>
-            <Button variant="secondary" size="sm" onClick={() => { setFocusMin(50); setShortMin(10); setLongMin(20); setLongGap(3); switchMode("focus"); }}>50/10(20)</Button>
-            <Button variant="secondary" size="sm" onClick={() => { setFocusMin(90); setShortMin(15); setLongMin(25); setLongGap(2); switchMode("focus"); }}>90/15(25)</Button>
-          </div>
-        </CardFooter>
-      </Card>
-
-      {/* Settings Card */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2"><Settings2 className="h-5 w-5" /> 설정</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div>
-            <div className="mb-2 flex items-center justify-between">
-              <label className="text-sm text-muted-foreground">집중 (분)</label>
-              <Input type="number" className="w-24" min={5} max={240} value={focusMin} onChange={(e) => setFocusMin(clamp(parseInt(e.target.value || "0"), 5, 240))} />
-            </div>
-            <Slider value={[focusMin]} min={5} max={120} step={5} onValueChange={(v) => setFocusMin(v[0])} />
-          </div>
-          <div>
-            <div className="mb-2 flex items-center justify-between">
-              <label className="text-sm text-muted-foreground">짧은 휴식 (분)</label>
-              <Input type="number" className="w-24" min={1} max={60} value={shortMin} onChange={(e) => setShortMin(clamp(parseInt(e.target.value || "0"), 1, 60))} />
-            </div>
-            <Slider value={[shortMin]} min={1} max={30} step={1} onValueChange={(v) => setShortMin(v[0])} />
-          </div>
-          <div>
-            <div className="mb-2 flex items-center justify-between">
-              <label className="text-sm text-muted-foreground">긴 휴식 (분)</label>
-              <Input type="number" className="w-24" min={5} max={120} value={longMin} onChange={(e) => setLongMin(clamp(parseInt(e.target.value || "0"), 5, 120))} />
-            </div>
-            <Slider value={[longMin]} min={5} max={60} step={5} onValueChange={(v) => setLongMin(v[0])} />
-          </div>
-          <div>
-            <div className="mb-2 flex items-center justify-between">
-              <label className="text-sm text-muted-foreground">긴 휴식 주기 (집중 N회마다)</label>
-              <Input type="number" className="w-24" min={2} max={10} value={longGap} onChange={(e) => setLongGap(clamp(parseInt(e.target.value || "0"), 2, 10))} />
-            </div>
-            <Slider value={[longGap]} min={2} max={8} step={1} onValueChange={(v) => setLongGap(v[0])} />
-          </div>
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="text-sm font-medium">자동 다음 세션</div>
-              <div className="text-xs text-muted-foreground">끝나면 다음 모드로 자동 전환</div>
-            </div>
-            <Switch checked={autoNext} onCheckedChange={setAutoNext} />
-          </div>
-        </CardContent>
-      </Card>
+<!doctype html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>스터디 타이머 Pro</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⏰</text></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+    .timer-display {
+      transition: none;
+    }
+    .slider {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    .slider::-webkit-slider-track {
+      background: #e2e8f0;
+      height: 8px;
+      border-radius: 4px;
+    }
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      background: #3b82f6;
+      cursor: pointer;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .slider::-moz-range-track {
+      background: #e2e8f0;
+      height: 8px;
+      border-radius: 4px;
+      border: none;
+    }
+    .slider::-moz-range-thumb {
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      background: #3b82f6;
+      cursor: pointer;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .dark .slider::-webkit-slider-track {
+      background: #475569;
+    }
+    .dark .slider::-moz-range-track {
+      background: #475569;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 min-h-full transition-colors duration-300">
+  <div class="min-h-full p-6">
+   <div class="max-w-7xl mx-auto"><!-- 헤더 -->
+    <header class="mb-8">
+     <div class="flex items-center justify-between flex-wrap gap-4">
+      <div class="flex items-center gap-6">
+       <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center text-white font-bold text-lg">
+         ⏰
+        </div><span class="text-xl font-bold text-primary-600 dark:text-primary-400"> TimerPro </span>
+       </div>
+       <div>
+        <h1 class="text-4xl font-bold text-slate-900 dark:text-white mb-2">스터디 타이머</h1>
+        <div class="flex items-center gap-3 mb-2">
+         <div id="date-label" class="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">
+         </div>
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 text-sm">집중-휴식 리듬을 예쁘게. 스페이스바로 시작/일시정지, R로 리셋.</p>
+       </div>
+      </div>
+      <div class="flex items-center gap-2"><button id="dark-toggle" class="inline-flex items-center justify-center rounded-xl h-10 w-10 text-primary-600 hover:bg-primary-50 dark:text-primary-400 dark:hover:bg-primary-900/20 transition-all focus:outline-none focus:ring-2 focus:ring-primary-500">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg></button> <button id="sound-toggle" class="inline-flex items-center justify-center rounded-xl h-10 w-10 text-primary-600 hover:bg-primary-50 dark:text-primary-400 dark:hover:bg-primary-900/20 transition-all focus:outline-none focus:ring-2 focus:ring-primary-500">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 14.142M11 5L6 9H2v6h4l5 4V5z"></path>
+        </svg></button> <button id="notification-toggle" class="inline-flex items-center justify-center rounded-xl h-10 w-10 text-primary-600 hover:bg-primary-50 dark:text-primary-400 dark:hover:bg-primary-900/20 transition-all focus:outline-none focus:ring-2 focus:ring-primary-500">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM10.07 2.82l3.12 3.12M7.05 5.84L4.93 7.96M2.82 10.07l3.12 3.12M5.84 16.95l2.12 2.12M10.07 21.18l3.12-3.12M16.95 18.16l2.12-2.12M21.18 13.93l-3.12-3.12M18.16 7.05l-2.12-2.12"></path>
+        </svg></button>
+      </div>
+     </div>
+    </header><!-- 메인 그리드 -->
+    <div class="grid lg:grid-cols-3 gap-6"><!-- 타이머 카드 -->
+     <div class="lg:col-span-2 bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 transition-colors duration-300">
+      <div class="flex flex-col items-center"><!-- 세션 선택 -->
+       <div id="session-buttons" class="flex flex-wrap gap-2 mb-8 justify-center"><!-- 세션 버튼들이 여기에 동적으로 추가됩니다 -->
+       </div><!-- 원형 진행 링 -->
+       <div class="relative mb-8">
+        <svg width="280" height="280" class="transform -rotate-90"><!-- 배경 원 --> <circle cx="140" cy="140" r="120" stroke="currentColor" stroke-width="12" fill="none" class="text-slate-200 dark:text-slate-700" /> <!-- 진행 원 --> <circle id="progress-circle" cx="140" cy="140" r="120" stroke="currentColor" stroke-width="12" fill="none" stroke-linecap="round" class="text-primary-500 transition-all duration-500" stroke-dasharray="0 753.98" />
+        </svg><!-- 중앙 시간 표시 -->
+        <div class="absolute inset-0 flex flex-col items-center justify-center">
+         <div id="timer-display" class="text-6xl font-bold text-slate-900 dark:text-white tabular-nums timer-display">
+          25:00
+         </div>
+         <div id="session-label" class="text-lg font-medium mt-2 text-primary-600 dark:text-primary-400">
+          집중
+         </div>
+        </div>
+       </div><!-- 컨트롤 버튼 -->
+       <div class="flex gap-4"><button id="play-pause-btn" class="inline-flex items-center justify-center rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 h-11 px-6 py-2 bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500 min-w-[120px]">
+         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h8m-9 4h10a1 1 0 001-1V7a1 1 0 00-1-1H7a1 1 0 00-1 1v10a1 1 0 001 1z"></path>
+         </svg> 시작 </button> <button id="reset-btn" class="inline-flex items-center justify-center rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 h-10 w-10 border-2 border-primary-300 text-primary-600 hover:bg-primary-50 dark:border-primary-600 dark:text-primary-400 dark:hover:bg-primary-900/20 focus:ring-primary-500">
+         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+         </svg></button>
+       </div><!-- 통계 -->
+       <div class="mt-8 text-center">
+        <div class="text-sm text-slate-600 dark:text-slate-400">
+         완료한 집중 세션
+        </div>
+        <div id="focus-count" class="text-3xl font-bold text-slate-900 dark:text-white mt-1">
+         0
+        </div>
+       </div>
+      </div>
+     </div><!-- 설정 카드 -->
+     <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6 transition-colors duration-300">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-6">설정</h2><!-- 세션 관리 -->
+      <div class="mb-6">
+       <div class="flex items-center justify-between mb-3"><label class="text-sm font-medium text-slate-700 dark:text-slate-300"> 세션 관리 </label> <button id="add-session-btn" class="inline-flex items-center justify-center rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 h-9 px-4 text-sm text-primary-600 hover:bg-primary-50 dark:text-primary-400 dark:hover:bg-primary-900/20 focus:ring-primary-500">
+         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+         </svg> 세션 추가 </button>
+       </div>
+       <div id="session-list" class="space-y-2 max-h-40 overflow-y-auto"><!-- 세션 목록이 여기에 동적으로 추가됩니다 -->
+       </div>
+      </div><!-- 프리셋 -->
+      <div class="mb-6">
+       <div class="flex items-center justify-between mb-3"><label class="text-sm font-medium text-slate-700 dark:text-slate-300"> 프리셋 </label> <button id="add-preset-btn" class="inline-flex items-center justify-center rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 h-9 px-4 text-sm text-primary-600 hover:bg-primary-50 dark:text-primary-400 dark:hover:bg-primary-900/20 focus:ring-primary-500">
+         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+         </svg> 추가 </button>
+       </div>
+       <div class="flex flex-col gap-2"><button class="preset-btn inline-flex items-center justify-center rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 h-9 px-4 text-sm border-2 border-primary-300 text-primary-600 hover:bg-primary-50 dark:border-primary-600 dark:text-primary-400 dark:hover:bg-primary-900/20 focus:ring-primary-500 justify-start" data-preset="25,5,15"> 포모도로 25 / 5 / 15 </button> <button class="preset-btn inline-flex items-center justify-center rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 h-9 px-4 text-sm border-2 border-primary-300 text-primary-600 hover:bg-primary-50 dark:border-primary-600 dark:text-primary-400 dark:hover:bg-primary-900/20 focus:ring-primary-500 justify-start" data-preset="50,10,20"> 집중형 50 / 10 / 20 </button> <button class="preset-btn inline-flex items-center justify-center rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 h-9 px-4 text-sm border-2 border-primary-300 text-primary-600 hover:bg-primary-50 dark:border-primary-600 dark:text-primary-400 dark:hover:bg-primary-900/20 focus:ring-primary-500 justify-start" data-preset="90,15,25"> 딥워크 90 / 15 / 25 </button>
+        <div id="custom-presets"><!-- 커스텀 프리셋이 여기에 추가됩니다 -->
+        </div>
+       </div>
+      </div><!-- 긴 휴식 주기 설정 -->
+      <div class="mb-6"><label class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block"> 긴 휴식 주기: <span id="long-gap-value">4</span>회마다 </label> <input type="range" id="long-gap-slider" min="2" max="10" step="1" value="4" class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg slider">
+      </div><!-- 토글 설정 -->
+      <div class="space-y-3 pt-4 border-t border-slate-200 dark:border-slate-700">
+       <div class="flex items-center justify-between"><label class="text-sm font-medium text-slate-700 dark:text-slate-300"> 자동 다음 세션 </label> <button id="auto-next-toggle" class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 bg-primary-500"> <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-6"></span> </button>
+       </div>
+      </div>
+     </div>
+    </div><!-- 푸터 -->
+    <footer class="mt-12 text-center">
+     <p class="text-sm text-slate-500 dark:text-slate-400">© 2025 Team A4 📃</p>
+    </footer>
+   </div>
+  </div><!-- 모달들 --> <!-- 프리셋 추가 모달 -->
+  <div id="preset-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+   <div class="fixed inset-0 bg-black/50" onclick="closePresetModal()"></div>
+   <div class="relative bg-white dark:bg-slate-800 rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+    <div class="p-6">
+     <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">커스텀 프리셋 추가</h3>
+     <div class="space-y-4">
+      <div><label class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block"> 프리셋 이름 </label> <input id="preset-name" type="text" placeholder="예: 나만의 집중법" class="flex h-11 w-full rounded-xl border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-2 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500">
+      </div>
+      <div class="grid grid-cols-3 gap-3">
+       <div><label class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block"> 집중 (분) </label> <input id="preset-focus" type="number" min="1" max="120" value="25" class="flex h-11 w-full rounded-xl border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-2 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500">
+       </div>
+       <div><label class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block"> 짧은 휴식 (분) </label> <input id="preset-short" type="number" min="1" max="30" value="5" class="flex h-11 w-full rounded-xl border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-2 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500">
+       </div>
+       <div><label class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block"> 긴 휴식 (분) </label> <input id="preset-long" type="number" min="1" max="60" value="15" class="flex h-11 w-full rounded-xl border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-2 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500">
+       </div>
+      </div>
+     </div>
+     <div class="flex gap-3 mt-6"><button onclick="closePresetModal()" class="inline-flex items-center justify-center rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 h-11 px-6 py-2 border-2 border-primary-300 text-primary-600 hover:bg-primary-50 dark:border-primary-600 dark:text-primary-400 dark:hover:bg-primary-900/20 focus:ring-primary-500 flex-1"> 취소 </button> <button onclick="addCustomPreset()" class="inline-flex items-center justify-center rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 h-11 px-6 py-2 bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500 flex-1"> 추가 </button>
+     </div>
     </div>
-
-    <p className="mt-8 text-center text-xs text-muted-foreground">
-      ⌨️ 스페이스바: 시작/일시정지 • R: 리셋 • 로컬 저장으로 설정 유지 • 데스크톱 알림 사용 가능
-    </p>
+   </div>
+  </div><!-- 세션 추가 모달 -->
+  <div id="session-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+   <div class="fixed inset-0 bg-black/50" onclick="closeSessionModal()"></div>
+   <div class="relative bg-white dark:bg-slate-800 rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+    <div class="p-6">
+     <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">커스텀 세션 추가</h3>
+     <div class="space-y-4">
+      <div><label class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block"> 세션 이름 </label> <input id="session-name" type="text" placeholder="예: 딥워크, 명상, 운동" class="flex h-11 w-full rounded-xl border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-2 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500">
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+       <div><label class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block"> 시간 (분) </label> <input id="session-duration" type="number" min="1" max="180" value="25" class="flex h-11 w-full rounded-xl border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-2 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500">
+       </div>
+       <div><label class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block"> 유형 </label> <select id="session-type" class="flex h-11 w-full rounded-xl border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-2 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"> <option value="work">작업</option> <option value="break">휴식</option> </select>
+       </div>
+      </div>
+      <div><label class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block"> 색상 </label>
+       <div class="grid grid-cols-7 gap-2"><button onclick="selectSessionColor('primary')" class="session-color-btn w-8 h-8 rounded-full border-2 transition-all bg-primary-500 border-slate-400 dark:border-slate-300 scale-110" data-color="primary"></button> <button onclick="selectSessionColor('emerald')" class="session-color-btn w-8 h-8 rounded-full border-2 transition-all bg-emerald-500 border-slate-200 dark:border-slate-600" data-color="emerald"></button> <button onclick="selectSessionColor('blue')" class="session-color-btn w-8 h-8 rounded-full border-2 transition-all bg-blue-500 border-slate-200 dark:border-slate-600" data-color="blue"></button> <button onclick="selectSessionColor('purple')" class="session-color-btn w-8 h-8 rounded-full border-2 transition-all bg-purple-500 border-slate-200 dark:border-slate-600" data-color="purple"></button> <button onclick="selectSessionColor('orange')" class="session-color-btn w-8 h-8 rounded-full border-2 transition-all bg-orange-500 border-slate-200 dark:border-slate-600" data-color="orange"></button> <button onclick="selectSessionColor('pink')" class="session-color-btn w-8 h-8 rounded-full border-2 transition-all bg-pink-500 border-slate-200 dark:border-slate-600" data-color="pink"></button> <button onclick="selectSessionColor('indigo')" class="session-color-btn w-8 h-8 rounded-full border-2 transition-all bg-indigo-500 border-slate-200 dark:border-slate-600" data-color="indigo"></button>
+       </div>
+      </div>
+     </div>
+     <div class="flex gap-3 mt-6"><button onclick="closeSessionModal()" class="inline-flex items-center justify-center rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 h-11 px-6 py-2 border-2 border-primary-300 text-primary-600 hover:bg-primary-50 dark:border-primary-600 dark:text-primary-400 dark:hover:bg-primary-900/20 focus:ring-primary-500 flex-1"> 취소 </button> <button onclick="addCustomSession()" class="inline-flex items-center justify-center rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 h-11 px-6 py-2 bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500 flex-1"> 추가 </button>
+     </div>
+    </div>
+   </div>
   </div>
+  <script>
+    // 전역 변수
+    let currentMode = 0;
+    let isRunning = false;
+    let remaining = 25 * 60;
+    let focusCount = 0;
+    let longGap = 4;
+    let autoNext = true;
+    let sound = true;
+    let notification = false;
+    let dark = false;
+    let timerInterval = null;
+    let selectedSessionColor = 'primary';
 
-  <audio ref={audioRef} src={BEEP} preload="auto" />
+    // 기본 세션 데이터
+    let sessions = [
+      { id: 0, name: '집중', duration: 25, color: 'primary', type: 'work' },
+      { id: 1, name: '짧은 휴식', duration: 5, color: 'emerald', type: 'break' },
+      { id: 2, name: '긴 휴식', duration: 15, color: 'blue', type: 'break' }
+    ];
 
-  {/* Theme container */}
-  <style>{`
-    :root { color-scheme: light; }
-    .dark { color-scheme: dark; }
-  `}</style>
-</div>
+    let customPresets = [];
 
-); }
+    // 색상 매핑
+    const colorClasses = {
+      primary: 'text-primary-500',
+      emerald: 'text-emerald-500',
+      blue: 'text-blue-500',
+      purple: 'text-purple-500',
+      orange: 'text-orange-500',
+      pink: 'text-pink-500',
+      indigo: 'text-indigo-500'
+    };
+
+    // localStorage 함수들
+    function saveToStorage() {
+      localStorage.setItem('timer-data', JSON.stringify({
+        currentMode,
+        focusCount,
+        longGap,
+        autoNext,
+        sound,
+        notification,
+        dark,
+        sessions,
+        customPresets
+      }));
+    }
+
+    function loadFromStorage() {
+      const data = localStorage.getItem('timer-data');
+      if (data) {
+        const parsed = JSON.parse(data);
+        currentMode = parsed.currentMode || 0;
+        focusCount = parsed.focusCount || 0;
+        longGap = parsed.longGap || 4;
+        autoNext = parsed.autoNext !== undefined ? parsed.autoNext : true;
+        sound = parsed.sound !== undefined ? parsed.sound : true;
+        notification = parsed.notification || false;
+        dark = parsed.dark || false;
+        sessions = parsed.sessions || sessions;
+        customPresets = parsed.customPresets || [];
+      }
+    }
+
+    // 날짜 표시 함수
+    function updateDateLabel() {
+      const now = new Date();
+      const options = { 
+        year: 'numeric', 
+        month: '2-digit', 
+        day: '2-digit',
+        weekday: 'long'
+      };
+      const dateStr = now.toLocaleDateString('ko-KR', options)
+        .replace(/\./g, '-')
+        .replace(/-$/, '')
+        .replace(' ', ' ');
+      
+      document.getElementById('date-label').textContent = dateStr;
+    }
+
+    // 다크 모드 토글
+    function toggleDark() {
+      dark = !dark;
+      document.documentElement.classList.toggle('dark', dark);
+      saveToStorage();
+    }
+
+    // 사운드 토글
+    function toggleSound() {
+      sound = !sound;
+      saveToStorage();
+    }
+
+    // 알림 토글
+    function toggleNotification() {
+      notification = !notification;
+      if (notification && 'Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+      saveToStorage();
+    }
+
+    // 자동 다음 세션 토글
+    function toggleAutoNext() {
+      autoNext = !autoNext;
+      const toggle = document.getElementById('auto-next-toggle');
+      const span = toggle.querySelector('span');
+      
+      if (autoNext) {
+        toggle.classList.add('bg-primary-500');
+        toggle.classList.remove('bg-slate-300', 'dark:bg-slate-600');
+        span.classList.add('translate-x-6');
+        span.classList.remove('translate-x-1');
+      } else {
+        toggle.classList.remove('bg-primary-500');
+        toggle.classList.add('bg-slate-300', 'dark:bg-slate-600');
+        span.classList.remove('translate-x-6');
+        span.classList.add('translate-x-1');
+      }
+      
+      saveToStorage();
+    }
+
+    // 비프 사운드 재생
+    function playBeep() {
+      if (!sound) return;
+      try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = 800;
+        oscillator.type = 'sine';
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+        
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + 0.3);
+      } catch (e) {
+        console.error('Audio error:', e);
+      }
+    }
+
+    // 알림 표시
+    function showNotification(title, body) {
+      if (!notification || !('Notification' in window)) return;
+      if (Notification.permission === 'granted') {
+        new Notification(title, { body, icon: '⏰' });
+      }
+    }
+
+    // 세션 시간 가져오기
+    function getDuration(sessionId) {
+      const session = sessions.find(s => s.id === sessionId);
+      return session ? session.duration * 60 : 25 * 60;
+    }
+
+    // 모드 변경
+    function changeMode(newMode) {
+      currentMode = newMode;
+      remaining = getDuration(newMode);
+      isRunning = false;
+      updateDisplay();
+      updateSessionButtons();
+      saveToStorage();
+    }
+
+    // 타이머 시작/일시정지
+    function toggleTimer() {
+      isRunning = !isRunning;
+      
+      if (isRunning) {
+        timerInterval = setInterval(() => {
+          remaining--;
+          if (remaining <= 0) {
+            completeTimer();
+          }
+          updateDisplay();
+        }, 1000);
+      } else {
+        if (timerInterval) {
+          clearInterval(timerInterval);
+        }
+      }
+      
+      updatePlayPauseButton();
+    }
+
+    // 타이머 리셋
+    function resetTimer() {
+      isRunning = false;
+      remaining = getDuration(currentMode);
+      if (timerInterval) {
+        clearInterval(timerInterval);
+      }
+      updateDisplay();
+      updatePlayPauseButton();
+    }
+
+    // 타이머 완료
+    function completeTimer() {
+      isRunning = false;
+      if (timerInterval) {
+        clearInterval(timerInterval);
+      }
+      
+      playBeep();
+      
+      const currentSession = sessions.find(s => s.id === currentMode);
+      let nextSessionId = sessions[0].id;
+      let message = '';
+      
+      if (currentSession?.type === 'work') {
+        focusCount++;
+        document.getElementById('focus-count').textContent = focusCount;
+        
+        // 휴식 세션 찾기
+        const breakSessions = sessions.filter(s => s.type === 'break');
+        if (breakSessions.length > 0) {
+          if (focusCount % longGap === 0) {
+            // 긴 휴식 찾기
+            const longBreak = breakSessions.find(s => s.name.includes('긴')) || 
+                             breakSessions.reduce((prev, curr) => prev.duration > curr.duration ? prev : curr);
+            nextSessionId = longBreak.id;
+            message = `${longBreak.name} 시간입니다!`;
+          } else {
+            // 짧은 휴식 찾기
+            const shortBreak = breakSessions.find(s => s.name.includes('짧은')) || breakSessions[0];
+            nextSessionId = shortBreak.id;
+            message = `${shortBreak.name} 시간입니다!`;
+          }
+        }
+      } else {
+        // 휴식 후에는 작업 세션으로
+        const workSessions = sessions.filter(s => s.type === 'work');
+        if (workSessions.length > 0) {
+          nextSessionId = workSessions[0].id;
+          message = `${workSessions[0].name} 시간입니다!`;
+        }
+      }
+      
+      showNotification('타이머 완료', message);
+      
+      if (autoNext) {
+        setTimeout(() => {
+          currentMode = nextSessionId;
+          remaining = getDuration(nextSessionId);
+          isRunning = true;
+          updateDisplay();
+          updateSessionButtons();
+          updatePlayPauseButton();
+          
+          timerInterval = setInterval(() => {
+            remaining--;
+            if (remaining <= 0) {
+              completeTimer();
+            }
+            updateDisplay();
+          }, 1000);
+        }, 600);
+      } else {
+        currentMode = nextSessionId;
+        remaining = getDuration(nextSessionId);
+        updateDisplay();
+        updateSessionButtons();
+        updatePlayPauseButton();
+      }
+      
+      saveToStorage();
+    }
+
+    // 디스플레이 업데이트
+    function updateDisplay() {
+      const minutes = Math.floor(remaining / 60);
+      const seconds = remaining % 60;
+      const timeStr = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      
+      document.getElementById('timer-display').textContent = timeStr;
+      
+      const currentSession = sessions.find(s => s.id === currentMode) || sessions[0];
+      document.getElementById('session-label').textContent = currentSession.name;
+      
+      // 진행률 업데이트
+      const progress = 1 - (remaining / getDuration(currentMode));
+      const circumference = 753.98;
+      const progressCircle = document.getElementById('progress-circle');
+      progressCircle.style.strokeDasharray = `${circumference * progress} ${circumference}`;
+      
+      // 색상 업데이트
+      const isLastTenSeconds = remaining <= 10 && remaining > 0;
+      if (isLastTenSeconds) {
+        progressCircle.className = 'text-red-500 transition-all duration-500';
+        document.getElementById('session-label').className = 'text-lg font-medium mt-2 text-red-500 dark:text-red-400';
+      } else {
+        progressCircle.className = `${colorClasses[currentSession.color]} transition-all duration-500`;
+        document.getElementById('session-label').className = `text-lg font-medium mt-2 ${colorClasses[currentSession.color]}`;
+      }
+    }
+
+    // 재생/일시정지 버튼 업데이트
+    function updatePlayPauseButton() {
+      const btn = document.getElementById('play-pause-btn');
+      const svg = btn.querySelector('svg');
+      const text = btn.querySelector('svg').nextSibling;
+      
+      if (isRunning) {
+        svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+        btn.childNodes[2].textContent = '일시정지';
+      } else {
+        svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h8m-9 4h10a1 1 0 001-1V7a1 1 0 00-1-1H7a1 1 0 00-1 1v10a1 1 0 001 1z"></path>';
+        btn.childNodes[2].textContent = '시작';
+      }
+    }
+
+    // 세션 버튼 업데이트
+    function updateSessionButtons() {
+      const container = document.getElementById('session-buttons');
+      container.innerHTML = '';
+      
+      sessions.forEach(session => {
+        const button = document.createElement('button');
+        button.className = `inline-flex items-center justify-center rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 h-9 px-4 text-sm ${
+          currentMode === session.id 
+            ? 'bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500' 
+            : 'border-2 border-primary-300 text-primary-600 hover:bg-primary-50 dark:border-primary-600 dark:text-primary-400 dark:hover:bg-primary-900/20 focus:ring-primary-500'
+        }`;
+        button.textContent = session.name;
+        button.disabled = isRunning;
+        button.onclick = () => changeMode(session.id);
+        container.appendChild(button);
+      });
+    }
+
+    // 세션 목록 업데이트
+    function updateSessionList() {
+      const container = document.getElementById('session-list');
+      container.innerHTML = '';
+      
+      sessions.forEach(session => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center gap-2 p-2 bg-slate-50 dark:bg-slate-700 rounded-lg';
+        
+        div.innerHTML = `
+          <div class="flex-1">
+            <div class="text-sm font-medium text-slate-900 dark:text-white">
+              ${session.name}
+            </div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">
+              ${session.duration}분 • ${session.type === 'work' ? '작업' : '휴식'}
+            </div>
+          </div>
+          ${sessions.length > 1 ? `
+            <button onclick="deleteSession(${session.id})" class="inline-flex items-center justify-center rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 h-9 px-4 text-sm text-red-500 hover:text-red-600 px-2">
+              ×
+            </button>
+          ` : ''}
+        `;
+        
+        container.appendChild(div);
+      });
+    }
+
+    // 세션 삭제
+    function deleteSession(id) {
+      if (sessions.length <= 1) return;
+      sessions = sessions.filter(s => s.id !== id);
+      if (currentMode === id) {
+        currentMode = sessions[0].id;
+        remaining = getDuration(currentMode);
+      }
+      updateSessionButtons();
+      updateSessionList();
+      updateDisplay();
+      saveToStorage();
+    }
+
+    // 프리셋 적용
+    function applyPreset(focus, short, long) {
+      sessions = [
+        { id: 0, name: '집중', duration: focus, color: 'primary', type: 'work' },
+        { id: 1, name: '짧은 휴식', duration: short, color: 'emerald', type: 'break' },
+        { id: 2, name: '긴 휴식', duration: long, color: 'blue', type: 'break' }
+      ];
+      
+      const currentSession = sessions.find(s => s.id === currentMode);
+      if (currentSession) {
+        remaining = currentSession.duration * 60;
+      } else {
+        currentMode = 0;
+        remaining = focus * 60;
+      }
+      
+      updateSessionButtons();
+      updateSessionList();
+      updateDisplay();
+      saveToStorage();
+    }
+
+    // 모달 함수들
+    function openPresetModal() {
+      document.getElementById('preset-modal').classList.remove('hidden');
+      document.getElementById('preset-modal').classList.add('flex');
+    }
+
+    function closePresetModal() {
+      document.getElementById('preset-modal').classList.add('hidden');
+      document.getElementById('preset-modal').classList.remove('flex');
+    }
+
+    function openSessionModal() {
+      document.getElementById('session-modal').classList.remove('hidden');
+      document.getElementById('session-modal').classList.add('flex');
+    }
+
+    function closeSessionModal() {
+      document.getElementById('session-modal').classList.add('hidden');
+      document.getElementById('session-modal').classList.remove('flex');
+    }
+
+    // 세션 색상 선택
+    function selectSessionColor(color) {
+      selectedSessionColor = color;
+      document.querySelectorAll('.session-color-btn').forEach(btn => {
+        if (btn.dataset.color === color) {
+          btn.classList.add('border-slate-400', 'dark:border-slate-300', 'scale-110');
+          btn.classList.remove('border-slate-200', 'dark:border-slate-600');
+        } else {
+          btn.classList.remove('border-slate-400', 'dark:border-slate-300', 'scale-110');
+          btn.classList.add('border-slate-200', 'dark:border-slate-600');
+        }
+      });
+    }
+
+    // 커스텀 프리셋 추가
+    function addCustomPreset() {
+      const name = document.getElementById('preset-name').value.trim();
+      const focus = parseInt(document.getElementById('preset-focus').value);
+      const short = parseInt(document.getElementById('preset-short').value);
+      const long = parseInt(document.getElementById('preset-long').value);
+      
+      if (!name) return;
+      
+      const preset = {
+        id: Date.now(),
+        name,
+        focus,
+        short,
+        long
+      };
+      
+      customPresets.push(preset);
+      updateCustomPresets();
+      saveToStorage();
+      closePresetModal();
+      
+      // 입력 필드 리셋
+      document.getElementById('preset-name').value = '';
+      document.getElementById('preset-focus').value = '25';
+      document.getElementById('preset-short').value = '5';
+      document.getElementById('preset-long').value = '15';
+    }
+
+    // 커스텀 세션 추가
+    function addCustomSession() {
+      const name = document.getElementById('session-name').value.trim();
+      const duration = parseInt(document.getElementById('session-duration').value);
+      const type = document.getElementById('session-type').value;
+      
+      if (!name) return;
+      
+      const session = {
+        id: Math.max(...sessions.map(s => s.id), -1) + 1,
+        name,
+        duration,
+        color: selectedSessionColor,
+        type
+      };
+      
+      sessions.push(session);
+      updateSessionButtons();
+      updateSessionList();
+      saveToStorage();
+      closeSessionModal();
+      
+      // 입력 필드 리셋
+      document.getElementById('session-name').value = '';
+      document.getElementById('session-duration').value = '25';
+      document.getElementById('session-type').value = 'work';
+      selectSessionColor('primary');
+    }
+
+    // 커스텀 프리셋 업데이트
+    function updateCustomPresets() {
+      const container = document.getElementById('custom-presets');
+      container.innerHTML = '';
+      
+      customPresets.forEach(preset => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center gap-2';
+        
+        div.innerHTML = `
+          <button onclick="applyPreset(${preset.focus}, ${preset.short}, ${preset.long})" class="inline-flex items-center justify-center rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 h-9 px-4 text-sm border-2 border-primary-300 text-primary-600 hover:bg-primary-50 dark:border-primary-600 dark:text-primary-400 dark:hover:bg-primary-900/20 focus:ring-primary-500 justify-start flex-1">
+            ${preset.name} ${preset.focus} / ${preset.short} / ${preset.long}
+          </button>
+          <button onclick="deleteCustomPreset(${preset.id})" class="inline-flex items-center justify-center rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 h-9 px-4 text-sm text-red-500 hover:text-red-600 px-2">
+            ×
+          </button>
+        `;
+        
+        container.appendChild(div);
+      });
+    }
+
+    // 커스텀 프리셋 삭제
+    function deleteCustomPreset(id) {
+      customPresets = customPresets.filter(p => p.id !== id);
+      updateCustomPresets();
+      saveToStorage();
+    }
+
+    // 긴 휴식 주기 슬라이더 업데이트
+    function updateLongGapSlider() {
+      const slider = document.getElementById('long-gap-slider');
+      const value = document.getElementById('long-gap-value');
+      
+      slider.addEventListener('input', (e) => {
+        longGap = parseInt(e.target.value);
+        value.textContent = longGap;
+        saveToStorage();
+      });
+    }
+
+    // 키보드 이벤트
+    function setupKeyboardEvents() {
+      document.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') {
+          e.preventDefault();
+          toggleTimer();
+        } else if (e.code === 'KeyR') {
+          e.preventDefault();
+          resetTimer();
+        }
+      });
+    }
+
+    // 초기화
+    function init() {
+      loadFromStorage();
+      updateDateLabel();
+      
+      // 다크 모드 적용
+      document.documentElement.classList.toggle('dark', dark);
+      
+      // 자동 다음 세션 토글 상태 설정
+      const toggle = document.getElementById('auto-next-toggle');
+      const span = toggle.querySelector('span');
+      
+      if (autoNext) {
+        toggle.classList.add('bg-primary-500');
+        toggle.classList.remove('bg-slate-300', 'dark:bg-slate-600');
+        span.classList.add('translate-x-6');
+        span.classList.remove('translate-x-1');
+      } else {
+        toggle.classList.remove('bg-primary-500');
+        toggle.classList.add('bg-slate-300', 'dark:bg-slate-600');
+        span.classList.remove('translate-x-6');
+        span.classList.add('translate-x-1');
+      }
+      
+      // 긴 휴식 주기 슬라이더 설정
+      document.getElementById('long-gap-slider').value = longGap;
+      document.getElementById('long-gap-value').textContent = longGap;
+      
+      // 집중 세션 카운트 설정
+      document.getElementById('focus-count').textContent = focusCount;
+      
+      // UI 업데이트
+      updateDisplay();
+      updateSessionButtons();
+      updateSessionList();
+      updateCustomPresets();
+      updateLongGapSlider();
+      setupKeyboardEvents();
+      
+      // 이벤트 리스너 설정
+      document.getElementById('dark-toggle').onclick = toggleDark;
+      document.getElementById('sound-toggle').onclick = toggleSound;
+      document.getElementById('notification-toggle').onclick = toggleNotification;
+      document.getElementById('play-pause-btn').onclick = toggleTimer;
+      document.getElementById('reset-btn').onclick = resetTimer;
+      document.getElementById('auto-next-toggle').onclick = toggleAutoNext;
+      document.getElementById('add-preset-btn').onclick = openPresetModal;
+      document.getElementById('add-session-btn').onclick = openSessionModal;
+      
+      // 프리셋 버튼 이벤트
+      document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.onclick = () => {
+          const [focus, short, long] = btn.dataset.preset.split(',').map(Number);
+          applyPreset(focus, short, long);
+        };
+      });
+      
+      // 엔터키로 모달 추가
+      document.getElementById('preset-name').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') addCustomPreset();
+      });
+      
+      document.getElementById('session-name').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') addCustomSession();
+      });
+    }
+
+    // 페이지 로드 시 초기화
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99a7dbdab1a1ea33',t:'MTc2MjQ2NjM3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
