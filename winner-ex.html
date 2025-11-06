@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>이벤트 당첨자 추첨기</title>
+<title>당첨자 추첨기 · 로컬 웹</title>
 <meta name="color-scheme" content="light dark">
 <style>
   :root{
@@ -42,6 +42,8 @@
   .pill{display:flex;align-items:center;gap:8px;justify-content:center}
   .pill input[type="file"]{display:none}
   .pill .fake{display:inline-flex;gap:8px;align-items:center}
+  .section-title{font-weight:800;font-size:13px;color:var(--accent);letter-spacing:.08em;margin:10px 0 6px}
+  .subcard{border:1px dashed var(--border);border-radius:14px;padding:14px}
 </style>
 <!-- SheetJS -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -52,59 +54,69 @@
   <div class="wrap">
     <header>
       <div>
-        <div class="kicker">Event Winners</div>
+        <div class="kicker">EVENT WINNERS</div>
         <h1>이벤트 당첨자 추첨기</h1>
       </div>
       <div class="badge">Client-only · Privacy-safe</div>
     </header>
 
-    <!-- 업로드 -->
+    <!-- 업로드: 참여자 / 제외자 구역 분리 -->
     <section class="card">
-      <div class="kicker">Upload</div>
+      <div class="kicker">UPLOAD</div>
+
       <div class="grid2">
-        <div>
+        <!-- 참여자 구역 -->
+        <div class="subcard">
+          <div class="section-title">참여자 리스트 파일 선택</div>
           <div id="drop" class="drop">
             <strong>엑셀 파일 드래그&드롭</strong><br/>
             <span class="hint">또는 아래에서 파일 선택</span>
           </div>
           <label style="margin-top:10px">
-            <span>참여자 리스트 파일 선택</span>
-            <span class="pill"><label class="fake btn secondary"><input type="file" id="fileInput" accept=".xlsx,.xls" />파일 선택</label></span>
+            <span>참여자 엑셀 선택</span>
+            <span class="pill">
+              <label class="fake btn secondary">
+                <input type="file" id="fileInput" accept=".xlsx,.xls" />파일 선택
+              </label>
+            </span>
           </label>
 
-          <!-- NEW: exclude_list 업로드 -->
-          <div id="dropEx" class="drop" style="margin-top:12px">
-            <strong>제외자 엑셀 드래그&드롭</strong><br/>
-            <span class="hint">시트명은 exclude_list, 헤더 포함 [이름, id, 전화번호]</span>
-          </div>
-          <label style="margin-top:10px">
-            <span>제외자 엑셀 선택 (선택)</span>
-            <span class="pill"><label class="fake btn secondary"><input type="file" id="fileInputEx" accept=".xlsx,.xls" />파일 선택</label></span>
-          </label>
-        </div>
-
-        <div>
-          <div class="switch">
+          <div class="switch" style="margin-top:10px">
             <input type="checkbox" id="headerless">
             <label for="headerless" style="margin:0">첫 행에 열머리글 없음(참여자만: 이름, id, 전화번호 순)</label>
           </div>
-          <div class="hint">기본은 “헤더 있음”입니다. 참여자 시트가 헤더 없을 때만 체크하세요. (제외자 파일은 헤더 필수)</div>
-
-          <div class="row" style="margin-top:12px">
+          <div class="row" style="margin-top:10px">
             <label>전체 참여자 시트명
-              <input type="text" id="sheetJoined" value="joined_all" />
+              <input type="text" id="sheetJoined" value="joined_all" placeholder="예: joined_all 또는 sheet1" />
             </label>
             <label>당해 이벤트 참여자 시트명
-              <input type="text" id="sheetOnly" value="only_joined" />
+              <input type="text" id="sheetOnly" value="only_joined" placeholder="예: only_joined" />
             </label>
           </div>
+          <div class="hint">시트명은 입력한 값과 **정확히 일치**하는 시트를 사용합니다. 예: <b>sheet1</b>라고 입력하면 sheet1을 찾습니다.</div>
+        </div>
 
-          <!-- NEW: exclude 시트명 -->
-          <label style="margin-top:12px">제외자 시트명
-            <input type="text" id="sheetExclude" value="exclude_list" />
+        <!-- 제외자 구역 -->
+        <div class="subcard">
+          <div class="section-title">제외자 리스트 파일 선택</div>
+          <div id="dropEx" class="drop">
+            <strong>제외자 엑셀 드래그&드롭</strong><br/>
+            <span class="hint">선택사항 · 헤더 포함 [이름, id, 전화번호]</span>
+          </div>
+          <label style="margin-top:10px">
+            <span>제외자 엑셀 선택(선택)</span>
+            <span class="pill">
+              <label class="fake btn secondary">
+                <input type="file" id="fileInputEx" accept=".xlsx,.xls" />파일 선택
+              </label>
+            </span>
           </label>
 
-          <label style="margin-top:12px">랜덤 시드 (0~10000)
+          <label style="margin-top:10px">제외자 시트명
+            <input type="text" id="sheetExclude" value="exclude_list" placeholder="예: exclude_list" />
+          </label>
+
+          <label style="margin-top:10px">랜덤 시드 (0~10000)
             <input type="number" id="seed" min="0" max="10000" placeholder="비우면 자동 랜덤" />
           </label>
           <div class="hint">💡 시드값은 추첨 결과를 고정하기 위한 숫자입니다. 같은 데이터 + 같은 시드 = 같은 결과.</div>
@@ -114,7 +126,7 @@
 
     <!-- 모드 -->
     <section class="card">
-      <div class="kicker">Mode</div>
+      <div class="kicker">MODE</div>
       <div class="radio-row">
         <label><input type="radio" name="mode" value="dual" checked> 이중 추첨(중복 가능)</label>
         <label><input type="radio" name="mode" value="single"> 단일 추첨(한 시트에서 N명)</label>
@@ -140,7 +152,7 @@
       <div id="singleConfig" style="display:none;margin-top:12px">
         <div class="row">
           <label>시트명
-            <input type="text" id="sheetSingle" value="joined_all" />
+            <input type="text" id="sheetSingle" value="joined_all" placeholder="예: joined_all 또는 sheet1" />
           </label>
           <label>추첨 인원
             <input type="number" id="nSingle" value="100" min="1" />
@@ -160,7 +172,7 @@
 
     <!-- 로그 -->
     <section class="card">
-      <div class="kicker">Log</div>
+      <div class="kicker">LOG</div>
       <div id="log" class="log">준비됨.</div>
     </section>
 
@@ -172,61 +184,50 @@
   const $ = s => document.querySelector(s);
   const logBox = $('#log');
 
-  const fileInput = $('#fileInput');          // 참여자 파일
+  // 파일 입력
+  const fileInput = $('#fileInput');
   const drop = $('#drop');
-  const fileInputEx = $('#fileInputEx');      // NEW: 제외 파일
+  const fileInputEx = $('#fileInputEx');
   const dropEx = $('#dropEx');
 
+  // 설정
   const headerless = $('#headerless');
   const sheetJoined = $('#sheetJoined');
   const sheetOnly = $('#sheetOnly');
-  const sheetExclude = $('#sheetExclude');    // NEW
+  const sheetExclude = $('#sheetExclude');
   const seedInput = $('#seed');
 
-  const runBtn = $('#runBtn');
-  const downloadBtn = $('#downloadBtn');
-  const downloadMaskedBtn = $('#downloadMaskedBtn');
-
+  // 모드/수량
   const modeRadios = document.getElementsByName('mode');
   const dualConfig = $('#dualConfig');
   const singleConfig = $('#singleConfig');
-
   const nJoined = $('#nJoined');
   const nTotalOther = $('#nTotalOther');
   const nOverlap = $('#nOverlap');
-
   const sheetSingle = $('#sheetSingle');
   const nSingle = $('#nSingle');
+
+  // 버튼
+  const runBtn = $('#runBtn');
+  const downloadBtn = $('#downloadBtn');
+  const downloadMaskedBtn = $('#downloadMaskedBtn');
 
   let resultsWB = null;
   let resultsWBMasked = null;
 
   function setLog(msg){ logBox.textContent = msg; }
   function addLog(msg){ logBox.textContent += (logBox.textContent? "\n":"") + msg; }
+  function getMode(){ return [...modeRadios].find(r=>r.checked).value; }
 
-  // Drag & Drop (참여자)
-  ;['dragenter','dragover'].forEach(evt=>{
-    drop.addEventListener(evt,(e)=>{ e.preventDefault(); drop.classList.add('drag'); });
-  });
-  ;['dragleave','drop'].forEach(evt=>{
-    drop.addEventListener(evt,(e)=>{ e.preventDefault(); drop.classList.remove('drag'); });
-  });
-  drop.addEventListener('drop', (e)=>{
-    const f = e.dataTransfer.files?.[0];
-    if(f){ fileInput.files = e.dataTransfer.files; addLog(`참여자 파일 선택: ${f.name}`); }
-  });
+  // DnD: 참여자
+  ;['dragenter','dragover'].forEach(evt=>drop.addEventListener(evt,(e)=>{e.preventDefault();drop.classList.add('drag');}));
+  ;['dragleave','drop'].forEach(evt=>drop.addEventListener(evt,(e)=>{e.preventDefault();drop.classList.remove('drag');}));
+  drop.addEventListener('drop',(e)=>{ const f=e.dataTransfer.files?.[0]; if(f){ fileInput.files=e.dataTransfer.files; addLog(`참여자 파일 선택: ${f.name}`); }});
 
-  // Drag & Drop (제외자) - NEW
-  ;['dragenter','dragover'].forEach(evt=>{
-    dropEx.addEventListener(evt,(e)=>{ e.preventDefault(); dropEx.classList.add('drag'); });
-  });
-  ;['dragleave','drop'].forEach(evt=>{
-    dropEx.addEventListener(evt,(e)=>{ e.preventDefault(); dropEx.classList.remove('drag'); });
-  });
-  dropEx.addEventListener('drop', (e)=>{
-    const f = e.dataTransfer.files?.[0];
-    if(f){ fileInputEx.files = e.dataTransfer.files; addLog(`제외자 파일 선택: ${f.name}`); }
-  });
+  // DnD: 제외자
+  ;['dragenter','dragover'].forEach(evt=>dropEx.addEventListener(evt,(e)=>{e.preventDefault();dropEx.classList.add('drag');}));
+  ;['dragleave','drop'].forEach(evt=>dropEx.addEventListener(evt,(e)=>{e.preventDefault();dropEx.classList.remove('drag');}));
+  dropEx.addEventListener('drop',(e)=>{ const f=e.dataTransfer.files?.[0]; if(f){ fileInputEx.files=e.dataTransfer.files; addLog(`제외자 파일 선택: ${f.name}`); }});
 
   // 모드 토글
   [...modeRadios].forEach(r => r.addEventListener('change', ()=>{
@@ -234,8 +235,8 @@
     if(mode==='dual'){ dualConfig.style.display=''; singleConfig.style.display='none'; }
     else { dualConfig.style.display='none'; singleConfig.style.display=''; }
   }));
-  function getMode(){ return [...modeRadios].find(r=>r.checked).value; }
 
+  // 시드
   function resolveSeed(){
     let s = seedInput.value.trim();
     if(s === ''){
@@ -248,7 +249,7 @@
     return v;
   }
 
-  // ---- 마스킹 ----
+  // 마스킹
   function maskName(name){
     if(!name) return '';
     const s = String(name);
@@ -283,7 +284,7 @@
     return XLSX.utils.json_to_sheet(data);
   }
 
-  // ---- 읽기/키/유틸 ----
+  // 읽기
   function readSheet(ws, hasHeader){
     const rows = XLSX.utils.sheet_to_json(ws, {header: 1, raw:false, defval:''});
     const out = [];
@@ -295,26 +296,16 @@
       if(idxName<0 || idxId<0 || idxPhone<0) throw new Error('헤더가 있는 경우, 컬럼명은 최소 [이름, id, 전화번호]가 있어야 합니다.');
       for(let i=1;i<rows.length;i++){
         const r = rows[i]||[];
-        out.push({
-          이름: String(r[idxName]||'').trim() || undefined,
-          id: String(r[idxId]||'').trim() || undefined,
-          전화번호: String(r[idxPhone]||'').trim() || undefined,
-        });
+        out.push({이름:String(r[idxName]||'').trim()||undefined, id:String(r[idxId]||'').trim()||undefined, 전화번호:String(r[idxPhone]||'').trim()||undefined});
       }
     } else {
       for(const r of rows){
         if(!r) continue;
-        out.push({
-          이름: String((r[0]??'')).trim() || undefined,
-          id: String((r[1]??'')).trim() || undefined,
-          전화번호: String((r[2]??'')).trim() || undefined,
-        });
+        out.push({이름:String((r[0]??'')).trim()||undefined, id:String((r[1]??'')).trim()||undefined, 전화번호:String((r[2]??'')).trim()||undefined});
       }
     }
     return out;
   }
-
-  // NEW: 제외자 읽기(헤더 필수)
   function readExcludeSheet(ws){
     const rows = XLSX.utils.sheet_to_json(ws, {header: 1, raw:false, defval:''});
     const out = [];
@@ -325,15 +316,12 @@
     if(idxName<0 || idxId<0 || idxPhone<0) throw new Error('exclude_list 시트에는 [이름, id, 전화번호] 헤더가 필요합니다.');
     for(let i=1;i<rows.length;i++){
       const r = rows[i]||[];
-      out.push({
-        이름: String(r[idxName]||'').trim() || undefined,
-        id: String(r[idxId]||'').trim() || undefined,
-        전화번호: String(r[idxPhone]||'').trim() || undefined,
-      });
+      out.push({이름:String(r[idxName]||'').trim()||undefined, id:String(r[idxId]||'').trim()||undefined, 전화번호:String(r[idxPhone]||'').trim()||undefined});
     }
     return out;
   }
 
+  // 키/유틸
   function makeKey(o){
     if(o.id) return `id|${o.id}`;
     if(o.전화번호) return `phone|${o.전화번호}`;
@@ -366,20 +354,27 @@
     return a;
   }
 
-  // ---- 실행 ----
+  function verifyNoExcluded(winners, excludeSet){
+    const hits = winners.filter(w => excludeSet.has(w._key));
+    return hits; // 0이면 통과
+  }
+
+  // 실행
   $('#runBtn').addEventListener('click', async ()=>{
     try{
       setLog('실행 중…');
       downloadBtn.disabled = true;
       downloadMaskedBtn.disabled = true;
-      resultsWB = null; resultsWBMasked = null;
+      resultsWB = XLSX.utils.book_new();
+      resultsWBMasked = XLSX.utils.book_new();
 
       if(!fileInput.files[0]) throw new Error('참여자 엑셀 파일을 선택하세요.');
       const buf = await fileInput.files[0].arrayBuffer();
       const wb = XLSX.read(buf, {type:'array'});
 
-      // NEW: 제외자 파일 로딩(선택)
+      // 제외 로드(선택)
       let excludeSet = new Set();
+      let excludeRows = [];
       if(fileInputEx.files[0]){
         const bufEx = await fileInputEx.files[0].arrayBuffer();
         const wbEx = XLSX.read(bufEx, {type:'array'});
@@ -388,6 +383,7 @@
         const exArrRaw = readExcludeSheet(wsEx);
         const exUniq = uniqueByKey(exArrRaw);
         excludeSet = new Set(exUniq.map(r=>r._key));
+        excludeRows = exUniq; // 검증시 사용
         addLog(`제외자 ${excludeSet.size}명 로드됨.`);
       } else {
         addLog('제외자 파일 미선택: 제외 없이 진행합니다.');
@@ -397,9 +393,6 @@
       const seed = resolveSeed();
       const rng = new Math.seedrandom(String(seed));
 
-      resultsWB = XLSX.utils.book_new();
-      resultsWBMasked = XLSX.utils.book_new();
-
       const applyExclude = (arr)=> arr.filter(r=>!excludeSet.has(r._key));
 
       if(getMode()==='single'){
@@ -408,13 +401,23 @@
         if(!ws) throw new Error(`시트 없음: ${sname}`);
         let arr = uniqueByKey(readSheet(ws, hasHeader));
         const before = arr.length;
-        arr = applyExclude(arr);                           // NEW: 제외 적용
+        arr = applyExclude(arr);
         const after = arr.length;
         addLog(`단일모드: 제외 적용 ${before - after}명 제외됨. (잔여 ${after})`);
 
         const n = parseInt(nSingle.value,10);
         const pick = sampleKeys(arr.map(r=>r._key), n, rng);
         const winners = shuffleRows(arr.filter(r=>pick.includes(r._key)), rng);
+
+        // 검증(제외자 포함 여부)
+        const hits = verifyNoExcluded(winners, excludeSet);
+        if(hits.length>0){
+          addLog(`⚠️ 검증: 제외자 ${hits.length}명 포함됨. 결과 파일에 'excluded_hits(검증)' 시트로 기록합니다.`);
+          XLSX.utils.book_append_sheet(resultsWB, toSheet(hits), 'excluded_hits(검증)');
+          XLSX.utils.book_append_sheet(resultsWBMasked, toSheetMasked(hits), 'excluded_hits(검증)_masked');
+        } else {
+          addLog('✅ 검증 완료: 제외자 0명 포함.');
+        }
 
         XLSX.utils.book_append_sheet(resultsWB, toSheet(winners), 'winners_single');
         XLSX.utils.book_append_sheet(resultsWBMasked, toSheetMasked(winners), 'winners_single(masked)');
@@ -426,21 +429,21 @@
         if(!wsJ) throw new Error(`시트 없음: ${sheetJoined.value}`);
         if(!wsO) throw new Error(`시트 없음: ${sheetOnly.value}`);
 
-        // 원본 읽기
+        // 원본
         let joinedArr = uniqueByKey(readSheet(wsJ, hasHeader));
         let onlyArr = uniqueByKey(readSheet(wsO, hasHeader));
 
-        // NEW: 제외 적용
+        // 제외 적용
         const beforeJ = joinedArr.length;
         const beforeO = onlyArr.length;
         joinedArr = applyExclude(joinedArr);
         onlyArr   = applyExclude(onlyArr);
         addLog(`이중모드: 제외 적용 joined_all ${beforeJ - joinedArr.length}명, only_joined ${beforeO - onlyArr.length}명 제외됨.`);
 
-        // 키 세트 구성
+        // 키 세트
         const joinedKeys = new Set(joinedArr.map(r=>r._key));
         const onlyKeysRaw = new Set(onlyArr.map(r=>r._key));
-        const onlyKeys = [...onlyKeysRaw].filter(k=>!joinedKeys.has(k)); // 기존 정책: joined와 겹치지 않는 only만
+        const onlyKeys = [...onlyKeysRaw].filter(k=>!joinedKeys.has(k)); // 정책 유지
 
         const A = parseInt(nJoined.value,10);
         const B = parseInt(nTotalOther.value,10);
@@ -448,7 +451,6 @@
         if(O > B) throw new Error('중복 인원이 최종 인원보다 클 수 없습니다.');
         const needOnly = B - O;
 
-        // 수량 검증(제외 반영 후 기준)
         if(joinedKeys.size < A) throw new Error(`전체 참여자 부족: ${joinedKeys.size} / 필요 ${A}`);
         if(onlyKeys.length < needOnly) throw new Error(`정제된 당해 이벤트 참여자 부족: ${onlyKeys.length} / 필요 ${needOnly}`);
 
@@ -458,51 +460,52 @@
         const onlyPick = sampleKeys(onlyKeys, needOnly, rng);
         const finalOther = [...onlyPick, ...overlapPick];
 
-        const actualOverlap = new Set(joinedPick.filter(k=>finalOther.includes(k)));
-        if(actualOverlap.size !== O) throw new Error(`중복자 수 불일치: ${actualOverlap.size} / 목표 ${O}`);
-
         const byKey = (arr)=> Object.fromEntries(arr.map(r=>[r._key, r]));
         const J = byKey(joinedArr);
         const OJ = byKey([...onlyArr, ...joinedArr]);
 
         const winnersA = shuffleRows(joinedPick.map(k=>J[k]), rng);
         const winnersB = shuffleRows(finalOther.map(k=>OJ[k]), rng);
-        const overlaps = shuffleRows([...actualOverlap].map(k=>J[k]), rng);
 
-        // 결과 작성
+        // 검증: 제외자 포함 여부
+        const hitsA = verifyNoExcluded(winnersA, excludeSet);
+        const hitsB = verifyNoExcluded(winnersB, excludeSet);
+        const totalHits = [...hitsA, ...hitsB];
+        if(totalHits.length>0){
+          addLog(`⚠️ 검증: 제외자 ${totalHits.length}명 포함됨. 결과 파일에 'excluded_hits(검증)' 시트로 기록합니다.`);
+          XLSX.utils.book_append_sheet(resultsWB, toSheet(totalHits), 'excluded_hits(검증)');
+          XLSX.utils.book_append_sheet(resultsWBMasked, toSheetMasked(totalHits), 'excluded_hits(검증)_masked');
+        } else {
+          addLog('✅ 검증 완료: 제외자 0명 포함.');
+        }
+
+        // 기록
         XLSX.utils.book_append_sheet(resultsWB, toSheet(winnersA), 'winners_A(전체참여)');
         XLSX.utils.book_append_sheet(resultsWB, toSheet(winnersB), 'winners_B(당해이벤트)');
-        if(O>0) XLSX.utils.book_append_sheet(resultsWB, toSheet(overlaps), 'overlaps(중복자)');
-
         XLSX.utils.book_append_sheet(resultsWBMasked, toSheetMasked(winnersA), 'winners_A(전체참여_masked)');
         XLSX.utils.book_append_sheet(resultsWBMasked, toSheetMasked(winnersB), 'winners_B(당해이벤트_masked)');
-        if(O>0) XLSX.utils.book_append_sheet(resultsWBMasked, toSheetMasked(overlaps), 'overlaps(중복자_masked)');
 
-        setLog(`이중 추첨 완료(제외 반영): A=${winnersA.length}명, B=${winnersB.length}명 (중복 ${overlaps.length}명)\n시드: ${seed}`);
+        setLog(`이중 추첨 완료(제외 반영): A=${winnersA.length}명, B=${winnersB.length}명\n시드: ${seed}`);
       }
 
       downloadBtn.disabled = false;
       downloadMaskedBtn.disabled = false;
     }catch(err){
       resultsWB = null; resultsWBMasked = null;
-      downloadBtn.disabled = true; downloadMaskedBtn.disabled = true;
+      downloadBtn.disabled = true;
+      downloadMaskedBtn.disabled = true;
       setLog('❌ 오류: ' + err.message);
       console.error(err);
     }
   });
 
+  // 다운로드
   function tsName(prefix){
     const t = new Date(); const pad = n=>String(n).padStart(2,'0');
     return `${prefix}_${t.getFullYear()}${pad(t.getMonth()+1)}${pad(t.getDate())}_${pad(t.getHours())}${pad(t.getMinutes())}${pad(t.getSeconds())}.xlsx`;
   }
-  $('#downloadBtn').addEventListener('click', ()=>{
-    if(!resultsWB) return;
-    XLSX.writeFile(resultsWB, tsName('winners'));
-  });
-  $('#downloadMaskedBtn').addEventListener('click', ()=>{
-    if(!resultsWBMasked) return;
-    XLSX.writeFile(resultsWBMasked, tsName('winners_masked'));
-  });
+  $('#downloadBtn').addEventListener('click', ()=>{ if(resultsWB) XLSX.writeFile(resultsWB, tsName('winners')); });
+  $('#downloadMaskedBtn').addEventListener('click', ()=>{ if(resultsWBMasked) XLSX.writeFile(resultsWBMasked, tsName('winners_masked')); });
 })();
 </script>
 </body>
