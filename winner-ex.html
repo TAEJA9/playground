@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>이벤트 당첨자 추첨기기</title>
+<title>이벤트 당첨자 추첨기</title>
 <meta name="color-scheme" content="light dark">
 <style>
   :root{
@@ -53,7 +53,7 @@
     <header>
       <div>
         <div class="kicker">Event Winners</div>
-        <h1>당첨자 추첨기 · 로컬 웹</h1>
+        <h1>이벤트 당첨자 추첨기</h1>
       </div>
       <div class="badge">Client-only · Privacy-safe</div>
     </header>
@@ -64,21 +64,21 @@
       <div class="grid2">
         <div>
           <div id="drop" class="drop">
-            <strong>참여자 엑셀 파일 드래그&드롭</strong><br/>
+            <strong>엑셀 파일 드래그&드롭</strong><br/>
             <span class="hint">또는 아래에서 파일 선택</span>
           </div>
           <label style="margin-top:10px">
-            <span>참여자 엑셀 선택</span>
+            <span>참여자 리스트 파일 선택</span>
             <span class="pill"><label class="fake btn secondary"><input type="file" id="fileInput" accept=".xlsx,.xls" />파일 선택</label></span>
           </label>
 
           <!-- NEW: exclude_list 업로드 -->
           <div id="dropEx" class="drop" style="margin-top:12px">
-            <strong>제외자(exclude_list) 엑셀 드래그&드롭</strong><br/>
-            <span class="hint">선택사항 · 헤더 포함 [이름, id, 전화번호], 시트명은 기본 exclude_list</span>
+            <strong>제외자 엑셀 드래그&드롭</strong><br/>
+            <span class="hint">시트명은 exclude_list, 헤더 포함 [이름, id, 전화번호]</span>
           </div>
           <label style="margin-top:10px">
-            <span>제외자 엑셀 선택(선택)</span>
+            <span>제외자 엑셀 선택 (선택)</span>
             <span class="pill"><label class="fake btn secondary"><input type="file" id="fileInputEx" accept=".xlsx,.xls" />파일 선택</label></span>
           </label>
         </div>
