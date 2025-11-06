@@ -75,7 +75,7 @@ const CARD_DATA = [
     title:"문제은행 파일 검사기",
     desc:"문제은행 파일 검사, 이제 웹으로 진행해 보세요! 눈 빠지는 파일명 오류 찾기 고민 해결!!",
     href:"https://taeja9.github.io/playground/set_checker/checker.html",
-    cats:[automation],
+    cats:["automation"],
     isActive:true,
     author: "정연"
    },
@@ -293,6 +293,7 @@ function init(){
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
 
 
 
