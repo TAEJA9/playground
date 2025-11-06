@@ -60,6 +60,17 @@ const CARD_DATA = [
    },
 
  {
+    icon:"🎲",
+    title:"LuckyDraw",
+    desc:"행운의 로또 번호 추첨기! 이곳에서 경제적 자유를 누려 보세요!!!!",
+    href:"https://luckydraw-webapp.web.app/",
+    cats:["fun"],
+    isActive:true,
+    author: "진우"
+   },
+
+   
+ {
     icon:"💯",
     title:"문제은행 파일 검사기",
     desc:"열심히 개발 중입니다..",
@@ -282,6 +293,7 @@ function init(){
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
 
 
 
