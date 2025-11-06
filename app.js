@@ -5,7 +5,7 @@ const CARD_DATA = [
   {
     icon: "🎯",
     title: "이벤트 당첨자 추첨기",
-    desc: "엑셀만 업로드하면 끝! 시드 번호를 입력하여 동일한 추첨 결과 재현! 추가 추첨 혜택도 한 번에~ 지금 바로 추첨해 보세요!",
+    desc: "엑셀만 업로드하면 끝! 시드 번호를 입력하여 동일한 추첨 결과 재현! 추가 추첨 혜택도 한 번에~ 당첨자 제외 목록 기능 추가! 지금 바로 추첨해 보세요!",
     href: "https://taeja9.github.io/playground/winner.html",
     cats: ["event"],
     isActive: true,
@@ -293,6 +293,7 @@ function init(){
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
 
 
 
