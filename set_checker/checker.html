@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>YCloud 문제은행 파일 검사기 (웹버전)</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+<style>
+:root{--bg:#0f172a;--panel:#1f2937;--ink:#e5e7eb;--ink-dim:#94a3b8;--accent:#60a5fa;--card:#111827;--rowh:36px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,system-ui,Segoe UI,Roboto,sans-serif}
+header{padding:20px 16px;border-bottom:1px solid #334155}
+h1{font-size:20px;margin:0 0 8px}
+.caption{color:var(--ink-dim)}
+main{max-width:1100px;margin:0 auto;padding:20px 16px}
+.panel{background:var(--panel);border:1px solid #334155;border-radius:12px;padding:16px;margin-bottom:16px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.card{background:var(--card);border:1px solid #334155;border-radius:12px;padding:12px;min-width:160px}
+.card .k{color:var(--ink-dim);font-size:12px}
+.card .v{font-size:24px;font-weight:700;margin-top:4px}
+.btn{all:unset;display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#0b1220;font-weight:700;padding:10px 14px;border-radius:10px;cursor:pointer}
+.btn.secondary{background:#334155;color:#e5e7eb}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.field{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input[type="text"]{flex:1;min-width:260px;padding:10px 12px;border-radius:10px;border:1px solid #334155;background:#0b1220;color:#e5e7eb}
+textarea{width:100%;min-height:160px;border-radius:10px;border:1px solid #334155;background:#0b1220;color:#e5e7eb;padding:10px 12px}
+.codebox{position:relative;background:#0b1220;border:1px solid #334155;border-radius:10px;padding:10px;overflow:auto}
+.grid{overflow:auto;border:1px solid #334155;border-radius:12px}
+.grid-sets{max-height: calc(var(--rowh)*21 + 44px)}   /* 약 20행 + 헤더 높이 */
+.grid-issues{max-height: calc(var(--rowh)*21 + 44px)}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:720px}
+th,td{padding:8px 12px;border-bottom:1px solid #334155;text-align:left;white-space:nowrap;line-height:var(--rowh)}
+thead th{position:sticky;top:0;background:#334155;color:#e2e8f0}
+footer{padding:12px 16px;color:#94a3b8;border-top:1px solid #334155;text-align:right}
+code.inline{background:#0b1220;padding:2px 6px;border-radius:6px;border:1px solid #334155}
+.muted{color:#94a3b8}
+</style>
+</head>
+<body>
+<header>
+  <h1>📘 YCloud 문제은행 파일 검사기 (웹버전)</h1>
+  <div class="caption">HWP/HWPX 전용 · 사운드 MP3/WAV · 파일명 “붙여넣기” 검사</div>
+</header>
+
+<main>
+  <!-- 1) 경로 → PowerShell 명령 생성 + 자동 클립보드 복사 -->
+  <section class="panel">
+    <h3 style="margin:4px 0 12px">1) 상위 폴더 경로 입력 → PowerShell 명령 만들기</h3>
+    <div class="field">
+      <input id="path-input" type="text" placeholder='예) C:\Users\정연\Documents\문제은행' />
+      <button id="btn-build" class="btn">명령 생성</button>
+      <button id="btn-copy" class="btn secondary" title="복사">복사</button>
+    </div>
+    <div class="codebox" style="margin-top:10px">
+      <pre id="ps-cmd" style="margin:0;white-space:pre-wrap"># 상단에서 '명령 생성'을 눌러 주세요.</pre>
+    </div>
+    <p class="muted" style="margin-top:10px">
+      💡 실행하면 **파일명 목록이 자동으로 클립보드에 복사**됩니다. 콘솔에서 긁을 필요 X.<br/>
+      우선 <code class="inline">quest / answer / sound</code>를 재귀 스캔하고 없으면 상위 폴더를 재귀 스캔합니다.
+    </p>
+  </section>
+
+  <!-- 2) 붙여넣기 입력 -->
+  <section class="panel">
+    <h3 style="margin:4px 0 12px">2) PowerShell 실행 후, 아래에 붙여넣기(Ctrl+V 또는 버튼)</h3>
+    <div class="field" style="margin-bottom:8px">
+      <button id="btn-paste" class="btn secondary">클립보드에서 붙여넣기</button>
+      <span class="muted">또는 직접 붙여넣기</span>
+    </div>
+    <textarea id="paste-area" placeholder="여기에 파일명 목록을 줄바꿈으로 붙여넣으세요.&#10;예)&#10;010000_0001Q_객_중.hwpx&#10;010000_0001A_객_중.hwpx&#10;020000_0004M_객_하_ynnn.mp3"></textarea>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+      <button id="btn-run" class="btn">검사 시작 🚀</button>
+      <button id="btn-dl-issues" class="btn secondary" disabled>이슈 CSV 다운로드</button>
+      <button id="btn-dl-sets" class="btn secondary" disabled>세트 요약 CSV 다운로드</button>
+    </div>
+  </section>
+
+  <!-- 요약 카드 -->
+  <section class="row" style="margin-bottom:8px">
+    <div class="card"><div class="k">총 파일</div><div class="v" id="m-total-files">-</div></div>
+    <div class="card"><div class="k">총 세트</div><div class="v" id="m-total-sets">-</div></div>
+    <div class="card"><div class="k">이슈 수</div><div class="v" id="m-total-issues">-</div></div>
+  </section>
+
+  <!-- 테이블 -->
+  <section class="panel">
+    <h3 style="margin:0 0 10px">🧩 세트 요약</h3>
+    <div class="grid grid-sets"><table id="tbl-sets">
+      <thead><tr>
+        <th>세트 키</th><th>Q개수</th><th>A개수</th><th>M개수</th>
+        <th>G그룹</th><th>듣/말</th><th>상태</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </section>
+
+  <section class="panel">
+    <h3 style="margin:0 0 10px">⚠️ 이슈 상세</h3>
+    <div class="grid grid-issues"><table id="tbl-issues">
+      <thead><tr>
+        <th>#</th><th>세트 키</th><th>분류</th><th>상세</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </section>
+</main>
+
+<footer>ⓒ Jeongyeon. 2025</footer>
+
+<script>
+/* -------------------- PowerShell 명령 생성 + 자동복사 -------------------- */
+const pathInput = document.getElementById('path-input');
+const btnBuild = document.getElementById('btn-build');
+const btnCopy  = document.getElementById('btn-copy');
+const psCmd    = document.getElementById('ps-cmd');
+
+function buildPS() {
+  const raw = (pathInput.value || '').trim();
+  const template = (P) => `$P="${P}";
+$t=Get-ChildItem -LiteralPath "$P\\quest","$P\\answer","$P\\sound" -Recurse -File -ErrorAction SilentlyContinue;
+if(-not $t){ $t=Get-ChildItem -LiteralPath $P -Recurse -File }
+$names = $t | Select-Object -ExpandProperty Name
+try { $names | Set-Clipboard } catch { ($names -join "\`r\`n") | clip }
+"클립보드에 $($names.Count)개 파일명을 복사했습니다."`;
+  if (!raw) { psCmd.textContent = template('C:\\Users\\me\\Documents\\문제은행'); return; }
+  const P = raw.replaceAll('/', '\\');
+  psCmd.textContent = template(P);
+}
+btnBuild.addEventListener('click', buildPS);
+btnCopy.addEventListener('click', async () => {
+  await navigator.clipboard.writeText(psCmd.textContent);
+  btnCopy.textContent = "복사됨!";
+  setTimeout(()=>btnCopy.textContent="복사",1200);
+});
+buildPS();
+
+/* -------------------- 붙여넣기/표 렌더 공통 -------------------- */
+const btnPaste   = document.getElementById('btn-paste');
+const area       = document.getElementById('paste-area');
+const btnRun     = document.getElementById('btn-run');
+const btnDlIssues= document.getElementById('btn-dl-issues');
+const btnDlSets  = document.getElementById('btn-dl-sets');
+
+btnPaste.addEventListener('click', async () => {
+  try { area.value = await navigator.clipboard.readText(); }
+  catch(e){ alert('클립보드 읽기 실패: ' + e); }
+});
+
+function setMetrics(totalFiles, totalSets, totalIssues) {
+  document.getElementById('m-total-files').innerText  = String(totalFiles);
+  document.getElementById('m-total-sets').innerText   = String(totalSets);
+  document.getElementById('m-total-issues').innerText = String(totalIssues);
+}
+
+function renderTable(id, rows, cols) {
+  const tbody = document.querySelector(`#${id} tbody`);
+  while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
+  for (const r of rows) {
+    const tr = document.createElement('tr');
+    for (const c of cols) {
+      const td = document.createElement('td');
+      td.textContent = (r[c] ?? '').toString();
+      tr.appendChild(td);
+    }
+    tbody.appendChild(tr);
+  }
+}
+
+function toCSV(rows, cols) {
+  const esc = s => {
+    const v = String(s ?? '').replace(/"/g,'""');
+    return (v.includes(',') || v.includes('"') || v.includes('\n')) ? `"${v}"` : v;
+  };
+  const lines = [cols.join(',')];
+  for (const r of rows) lines.push(cols.map(c => esc(r[c])).join(','));
+  return lines.join('\n');
+}
+
+/* -------------------- 검사 로직 (JS) -------------------- */
+const VALID_QA = new Set(['.hwp','.hwpx']);
+const VALID_M  = new Set(['.mp3','.wav']);
+const LISTEN   = new Set(['ynnn','yynn','nynn']);
+const LEADING_RE = /^(\d{6}_\d{4})([QAM])(.*)$/i;
+const G_RE       = /_G(\d{2})(?:_|\.|$)/i;
+const SKILL_RE   = /_([yn]{4})(?:_|\.|$)/i;
+
+function parseName(base) {
+  const m = base.match(LEADING_RE);
+  if (!m) return null;
+  const prefix = m[1], qa = m[2].toUpperCase(), tail = m[3];
+  const g = (G_RE.exec(tail) || [])[1] || null;
+  const skill = (SKILL_RE.exec(base) || [])[1]?.toLowerCase() || null;
+
+  // === 세트키 생성 규칙 ===
+  // 1) 매칭은 skill 제외(set_key)
+  // 2) 표시용은 skill 포함(display_key)
+  const baseNoExt = base.replace(/\.[^.]+$/,'');
+  const afterPrefix = baseNoExt.slice((prefix + qa).length).replace(/^_/,''); // Q/A/M 제거 후 나머지
+  const setKey = `${prefix}_${afterPrefix}`       // 우선 포함한 상태로 만들고
+                    .replace(/_([yn]{4})$/i,'')   // 끝에 skill 있으면 제거
+                    .replace(/_$/,'');            // 맨끝 _ 제거
+
+  // 표시용: skill이 하나면 _ynnn, 여러 개면 _(ynnn|ynyn)
+  let displayKey = setKey;
+  if (skill) displayKey = `${setKey}_${skill}`;
+
+  return { prefix, qa, gnum:g, skill, set_key:setKey, display_base:displayKey };
+}
+
+function getExt(name){ const i=name.lastIndexOf('.'); return (i>=0)? name.slice(i).toLowerCase() : ''; }
+
+function scanFromLines(lines, isLang=true){
+  const names = Array.from(new Set(lines.filter(Boolean)));
+  const sets = new Map(), parsed = new Map(), issues = [];
+
+  for (const base of names){
+    const info = parseName(base);
+    if (!info) continue;
+    parsed.set(base, info);
+    const sk = info.set_key;
+    if (!sets.has(sk)) sets.set(sk, {Q:new Set(),A:new Set(),M:new Set(),skills:new Set(),gnums:new Set(),files:new Set(),display_samples:[]});
+    const d = sets.get(sk);
+    d[info.qa].add(base); d.files.add(base);
+    if (info.skill) d.skills.add(info.skill);
+    if (info.gnum) d.gnums.add(info.gnum);
+    if (d.display_samples.length<3) d.display_samples.push(info.display_base);
+  }
+
+  // 확장자 검증
+  for (const [sk, d] of sets) {
+    for (const qf of d.Q) if (!VALID_QA.has(getExt(qf))) issues.push({set_key:sk, category:'확장자 오류', detail:`Q 확장자 ${getExt(qf)} 허용 안 됨`});
+    for (const af of d.A) if (!VALID_QA.has(getExt(af))) issues.push({set_key:sk, category:'확장자 오류', detail:`A 확장자 ${getExt(af)} 허용 안 됨`});
+    for (const mf of d.M) if (!VALID_M.has(getExt(mf))) issues.push({set_key:sk, category:'확장자 오류', detail:`M 확장자 ${getExt(mf)} 허용 안 됨`});
+  }
+
+  const setRows = [];
+  for (const [sk, d] of sets) {
+    const qn=d.Q.size, an=d.A.size, mn=d.M.size;
+    const gnums=[...d.gnums].sort();
+    const listen = [...d.skills].some(s=>LISTEN.has(s));
+    const status = new Set();
+
+    // 세트 내 skill 불일치 → 상태 플래그 + 표시 키에 (..|..) 붙여줌
+    let displayKey = sk;
+    const skillsSorted = [...d.skills].sort();
+    if (skillsSorted.length===1){
+      displayKey = `${sk}_${skillsSorted[0]}`;
+    } else if (skillsSorted.length>1){
+      displayKey = `${sk}_(${skillsSorted.join('|')})`;
+      issues.push({set_key: sk, category:'규칙 위반', detail:`세트 내 skill 코드 불일치: ${skillsSorted.join(', ')}`});
+      status.add('skill 불일치');
+    }
+
+    if (gnums.length===0){
+      if (qn===0){ issues.push({set_key:sk, category:'누락', detail:'Q 파일 없음'}); status.add('Q 없음'); }
+      if (an===0){ issues.push({set_key:sk, category:'누락', detail:'A 파일 없음'}); status.add('A 없음'); }
+      if (isLang && listen && mn===0){ issues.push({set_key:sk, category:'누락', detail:'듣/말인데 M 없음'}); status.add('M 없음(듣/말)'); }
+    } else {
+      const byG = new Map();
+      for (const f of d.files){
+        const info = parsed.get(f); if(!info || !info.gnum) continue;
+        if (!byG.has(info.gnum)) byG.set(info.gnum, {Q:new Set(),A:new Set(),M:new Set(),skills:new Set()});
+        const b = byG.get(info.gnum);
+        b[info.qa].add(f); if(info.skill) b.skills.add(info.skill);
+      }
+      for (const [g, comp] of byG){
+        if (g==='00'){
+          if (comp.A.size>0){ issues.push({set_key:sk, category:'규칙 위반', detail:'G00에는 A 파일이 없어야 함'}); status.add('G00에 A 존재'); }
+          if (isLang && [...comp.skills].some(s=>LISTEN.has(s)) && comp.M.size===0){
+            issues.push({set_key:sk, category:'누락', detail:'G00 듣/말인데 M 없음'}); status.add('G00 M 없음(듣/말)');
+          }
+        } else {
+          if (comp.Q.size===0){ issues.push({set_key:sk, category:'누락', detail:`G${g} Q 없음`}); status.add(`G${g} Q 없음`); }
+          if (comp.A.size===0){ issues.push({set_key:sk, category:'누락', detail:`G${g} A 없음`}); status.add(`G${g} A 없음`); }
+          if (isLang && [...comp.skills].some(s=>LISTEN.has(s)) && comp.M.size===0){
+            issues.push({set_key:sk, category:'누락', detail:`G${g} 듣/말인데 M 없음`}); status.add(`G${g} M 없음(듣/말)`);
+          }
+        }
+      }
+    }
+
+    setRows.push({
+      set_key: sk,                             // 내부용 원본 키
+      set_key_display: displayKey,             // 화면 표기에 skill 포함
+      q_count: qn, a_count: an, m_count: mn,
+      g_groups: gnums.join(','),
+      listen_speak: listen ? 'Y' : 'N',
+      status: status.size? [...status].sort().join('; ') : 'OK'
+    });
+  }
+
+  return { summary:{ total_files:names.length, total_sets:sets.size }, sets:setRows, issues };
+}
+
+/* -------------------- 실행 -------------------- */
+btnRun.addEventListener('click', () => {
+  const lines = area.value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+  const res = scanFromLines(lines, true);
+
+  setMetrics(res.summary.total_files, res.summary.total_sets, res.issues.length);
+
+  // 세트 키는 표시용 컬럼으로 교체
+  const setCols = ['set_key_display','q_count','a_count','m_count','g_groups','listen_speak','status'];
+  renderTable('tbl-sets', res.sets, setCols);
+
+  const issueRows = res.issues.map((it,i)=>({ '#': i+1, ...it }));
+  renderTable('tbl-issues', issueRows, ['#','set_key','category','detail']);
+
+  btnDlIssues.disabled = false;
+  btnDlSets.disabled = false;
+
+  btnDlIssues.onclick = () => {
+    const csv = toCSV(res.issues, ['set_key','category','detail']);
+    const a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+    a.download = 'issues.csv'; a.click();
+  };
+  btnDlSets.onclick = () => {
+    const csv = toCSV(res.sets, setCols);
+    const a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+    a.download = 'sets_summary.csv'; a.click();
+  };
+});
+</script>
+</body>
+</html>
