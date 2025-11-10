@@ -391,26 +391,35 @@ function init(){
 
     elSubmit.btnSubmit.disabled = true;
 
-    try {
-      const res = await fetch(GAS_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const data = await res.json().catch(()=> ({}));
-      if (data && data.ok) {
-        showSubmitMsg("제출 완료! 검토 후 반영하겠습니다 🙌", true);
-        setTimeout(closeSubmitModal, 1200);
-      } else {
-        throw new Error(data?.error || "서버 오류");
-      }
-    } catch (err) {
-      console.error(err);
-      showSubmitMsg("제출 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.", false);
-    } finally {
-      elSubmit.btnSubmit.disabled = false;
-    }
+try {
+  // ✅ 프리플라이트(OPTIONS) 없이 보내기: URL-encoded + no-cors
+  const params = new URLSearchParams({
+    name: payload.name,
+    desc: payload.desc,
+    link: payload.link,
+    author: payload.author,
+    cat: payload.cat,
+    ua: payload.ua,
+    location: payload.location,
   });
+
+  await fetch(GAS_ENDPOINT, {
+    method: "POST",
+    mode: "no-cors", // 응답 본문은 못 읽지만, 요청은 정상 전달됨
+    headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+    body: params.toString(),
+  });
+
+  // 응답을 읽을 수 없으니 낙관적 UX로 처리
+  showSubmitMsg("제출 완료! 검토 후 반영하겠습니다 🙌", true);
+  setTimeout(closeSubmitModal, 1200);
+} catch (err) {
+  console.error(err);
+  showSubmitMsg("제출 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.", false);
+} finally {
+  elSubmit.btnSubmit.disabled = false;
+}
+
 
   // ===== ESC 키로 모달 닫기 =====
   document.addEventListener("keydown", (e) => {
@@ -421,6 +430,7 @@ function init(){
 
 
 document.addEventListener("DOMContentLoaded", init);
+
 
 
 
