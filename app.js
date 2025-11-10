@@ -146,8 +146,15 @@ function labelCat(c){
   return map[c] || c;
 }
 function escapeHtml(s){
-  return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&gt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  return String(s).replace(/[&<>"']/g, m => ({
+    '&':'&amp;',
+    '<':'&lt;',   // 👈 여기!
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[m]));
 }
+
 
 /* =========================
    등록 모달 유틸
@@ -405,8 +412,16 @@ function init(){
     }
   });
 
+  // ===== ESC 키로 모달 닫기 =====
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && elSubmit?.modal && !elSubmit.modal.classList.contains("hidden")) {
+      closeSubmitModal();
+    }
+  });
+
 
 document.addEventListener("DOMContentLoaded", init);
+
 
 
 
