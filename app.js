@@ -108,6 +108,25 @@ const el = {
   pager: document.getElementById("pager"),
 };
 
+// ===== 등록 신청 모달 요소 =====
+const elSubmit = {
+  modal: document.getElementById("submitModal"),
+  open: document.getElementById("btnOpenSubmit"),
+  close: document.getElementById("btnCloseSubmit"),
+  cancel: document.getElementById("btnCancelSubmit"),
+  form: document.getElementById("submitForm"),
+  btnSubmit: document.getElementById("btnDoSubmit"),
+  msg: document.getElementById("submitMsg"),
+};
+
+
+/* =========================
+   서버 엔드포인트 설정
+========================= */
+
+// ✅ 여기에 네 Apps Script 웹앱 URL 넣기
+const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycby1SKSYKPzP3Jq00cI_vQiKVvaq-MGpBkqIlnn08e7b2bMJVIXbgx5ZgB5iAbTYsXE7/exec";
+
 /* =========================
    유틸 (수정 없음)
 ========================= */
@@ -129,6 +148,36 @@ function labelCat(c){
 function escapeHtml(s){
   return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&gt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
+
+/* =========================
+   등록 모달 유틸
+========================= */
+function openSubmitModal() {
+  if (!elSubmit.modal) return;
+  elSubmit.modal.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+}
+
+function closeSubmitModal() {
+  if (!elSubmit.modal) return;
+  elSubmit.modal.classList.add("hidden");
+  document.body.style.overflow = "";
+  if (elSubmit.form) elSubmit.form.reset();
+  if (elSubmit.msg) {
+    elSubmit.msg.classList.add("hidden");
+    elSubmit.msg.textContent = "";
+    elSubmit.msg.classList.remove("text-green-400", "text-red-400");
+  }
+}
+
+function showSubmitMsg(text, ok) {
+  if (!elSubmit.msg) return;
+  elSubmit.msg.textContent = text;
+  elSubmit.msg.classList.remove("hidden");
+  elSubmit.msg.classList.toggle("text-green-400", !!ok);
+  elSubmit.msg.classList.toggle("text-red-400", !ok);
+}
+
 
 /* =========================
    카테고리 자동 생성 (수정 없음)
@@ -292,7 +341,73 @@ function init(){
   });
 }
 
+  /* ===== 등록 신청 모달 이벤트 바인딩 ===== */
+  // 열기 버튼
+  elSubmit.open?.addEventListener("click", openSubmitModal);
+  // 닫기 버튼들
+  elSubmit.close?.addEventListener("click", closeSubmitModal);
+  elSubmit.cancel?.addEventListener("click", closeSubmitModal);
+  // 배경 클릭 시 닫기
+  elSubmit.modal?.addEventListener("click", (e) => {
+    if (e.target === elSubmit.modal) closeSubmitModal();
+  });
+
+  // 제출 버튼 (폼 전송)
+  elSubmit.form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // GAS 엔드포인트 확인
+    if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("XXXX")) {
+      showSubmitMsg("서버가 설정되지 않았습니다. GAS_ENDPOINT를 확인하세요.", false);
+      return;
+    }
+
+    const fd = new FormData(elSubmit.form);
+    const payload = {
+      name: (fd.get("name") || "").trim(),
+      desc: (fd.get("desc") || "").trim(),
+      link: (fd.get("link") || "").trim(),
+      author: (fd.get("author") || "").trim(),
+      cat: (fd.get("cat") || "").trim(),
+      ua: navigator.userAgent,
+      location: window.location.href,
+    };
+
+    // 필수값 검사
+    if (!payload.name || !payload.desc || !payload.link || !payload.author) {
+      showSubmitMsg("필수 항목을 모두 입력해 주세요.", false);
+      return;
+    }
+
+    try { new URL(payload.link); } 
+    catch { showSubmitMsg("링크(URL)가 올바르지 않습니다.", false); return; }
+
+    elSubmit.btnSubmit.disabled = true;
+
+    try {
+      const res = await fetch(GAS_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(()=> ({}));
+      if (data && data.ok) {
+        showSubmitMsg("제출 완료! 검토 후 반영하겠습니다 🙌", true);
+        setTimeout(closeSubmitModal, 1200);
+      } else {
+        throw new Error(data?.error || "서버 오류");
+      }
+    } catch (err) {
+      console.error(err);
+      showSubmitMsg("제출 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.", false);
+    } finally {
+      elSubmit.btnSubmit.disabled = false;
+    }
+  });
+
+
 document.addEventListener("DOMContentLoaded", init);
+
 
 
 
