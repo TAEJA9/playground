@@ -125,7 +125,7 @@ const elSubmit = {
 ========================= */
 
 // ✅ 여기에 네 Apps Script 웹앱 URL 넣기
-const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycby1SKSYKPzP3Jq00cI_vQiKVvaq-MGpBkqIlnn08e7b2bMJVIXbgx5ZgB5iAbTYsXE7/exec";
+const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwHdx0G0epm54ktMhDCbB0owwhYb5U6H_J-cCaD6VLs3IKsf8rDgMucPrx8P6W3MNcT/exec";
 
 /* =========================
    유틸 (수정 없음)
@@ -421,6 +421,7 @@ function init(){
 
 
 document.addEventListener("DOMContentLoaded", init);
+
 
 
 
