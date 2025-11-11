@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="ko" class="scroll-smooth">
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>멍BTI – 내 취향 강아지 찾기</title>
+  <meta name="description" content="품종 검색, 예쁜 사진 보기, 원산지/성격/수명까지 한 번에. 더 똑똑하고 더 예쁜 강아지 품종 검색기." />
+
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <meta name="theme-color" content="#16a34a" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#15803d" media="(prefers-color-scheme: dark)" />
+
+  <script>
+    // Tailwind config for custom palette + font
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Pretendard", "ui-sans-serif", "system-ui"],
+          },
+          colors: {
+            brand: {
+              50:  '#effdf5', 100: '#d9fbeb', 200: '#b5f6d6', 300: '#82ecbb', 400: '#4fdd9d',
+              500: '#22c87d', 600: '#16a34a', 700: '#15803d', 800: '#166534', 900: '#14532d',
+            },
+          },
+          boxShadow: {
+            soft: '0 10px 30px rgba(0, 0, 0, 0.08)',
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    /* Smooth outline */
+    :focus-visible { outline: 3px solid rgba(34, 200, 125, .45); outline-offset: 2px; }
+    /* Hide datalist chevron in Safari */
+    input::-webkit-calendar-picker-indicator { display: none !important; }
+    /* 추천 목록 스타일 */
+    #recommendation-list {
+        z-index: 20;
+        position: absolute;
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    #recommendation-list li {
+        transition: background-color 0.1s;
+    }
+  </style>
+
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="min-h-screen bg-gradient-to-b from-white to-emerald-50/50 dark:from-slate-900 dark:to-slate-900 text-slate-800 dark:text-slate-100">
+  <header class="sticky top-0 z-30 backdrop-blur supports-[backdrop-filter]:bg-white/60 bg-white/80 dark:bg-slate-900/70 border-b border-slate-200/60 dark:border-slate-700">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="flex h-16 items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-brand-500/15 text-brand-600 dark:text-brand-400">🐾</span>
+          <span class="font-extrabold tracking-tight text-xl">멍BTI</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="theme-toggle" class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800" aria-label="테마 전환">
+            다크모드
+          </button>
+          <a href="#main" class="rounded-lg px-3 py-2 text-sm font-medium text-white bg-brand-600 hover:bg-brand-700 shadow">바로 시작</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="mx-auto max-w-6xl px-4 sm:px-6 pt-10 sm:pt-14">
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h1 class="text-4xl sm:text-5xl font-black leading-tight tracking-tight">
+          내 취향 강아지,
+          <span class="text-brand-600">예쁘게</span> 찾자 ✨
+        </h1>
+        <p class="mt-4 text-lg text-slate-600 dark:text-slate-300">
+          품종을 검색하면 고화질 사진과 함께
+          <span class="font-semibold">원산지 · 성격 · 수명 · 체중</span> 정보를 한 번에 보여줘요.
+          한국어·영어 모두 검색 가능!
+        </p>
+        <div class="mt-6 flex flex-wrap gap-2" aria-label="인기 품종 바로가기">
+          <button class="chip" data-chip="골든 리트리버">골든 리트리버</button>
+          <button class="chip" data-chip="진돗개">진돗개</button>
+          <button class="chip" data-chip="말티즈">말티즈</button>
+          <button class="chip" data-chip="푸들">푸들</button>
+          <button class="chip" data-chip="아프간 하운드">아프간 하운드</button>
+        </div>
+      </div>
+      <div class="relative">
+        <div class="aspect-[4/3] rounded-2xl bg-white dark:bg-slate-800 shadow-soft border border-slate-100 dark:border-slate-700 p-3">
+          <div id="hero-preview" class="h-full w-full rounded-xl bg-gradient-to-br from-brand-100 to-emerald-100 dark:from-slate-800 dark:to-slate-700 flex items-center justify-center text-brand-700 dark:text-brand-300">
+            <div class="text-center">
+              <div class="text-5xl">🐶</div>
+              <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">품종을 검색해 보세요</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main id="main" class="mx-auto max-w-6xl px-4 sm:px-6 py-10">
+    <div class="rounded-2xl bg-white dark:bg-slate-900 shadow-soft border border-slate-100 dark:border-slate-800 p-5 sm:p-6">
+      <div class="grid md:grid-cols-[1fr_auto] gap-3 md:gap-4 items-end">
+        <div>
+          <label for="breed-input" class="block text-sm font-semibold text-slate-700 dark:text-slate-200">강아지 품종 검색 (한글 또는 영어)</label>
+          <div class="relative mt-2">
+            <input id="breed-input" list="breed-list" type="text" placeholder="예: 골든 리트리버, 진돗개, Shiba Inu" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/80 px-4 py-3 pr-10 text-base shadow-inner placeholder:text-slate-400 focus-visible:outline-none" autocomplete="off" />
+            <datalist id="breed-list"></datalist>
+            <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-slate-400">⌘K</div>
+          </div>
+          <ul id="recommendation-list" class="mt-2 hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow absolute w-full max-w-[calc(100%_-_1.5rem)] md:max-w-[calc(66.666667%_-_0.75rem)] lg:max-w-[calc(50%_-_0.75rem)]">
+          </ul>
+        </div>
+        <div class="flex gap-2 md:gap-3">
+          <button id="generate-btn" class="inline-flex items-center justify-center rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold px-5 py-3 disabled:opacity-40 disabled:cursor-not-allowed">
+            <span id="button-text">선택한 품종 사진 보기</span>
+          </button>
+          <button id="another-photo-btn" class="inline-flex items-center justify-center rounded-xl bg-slate-900/90 hover:bg-slate-900 text-white font-semibold px-4 py-3 disabled:opacity-40 disabled:cursor-not-allowed">다른 사진</button>
+        </div>
+      </div>
+      <p class="mt-3 text-xs text-slate-500">Tip: 리스트에서 선택하거나, 최소 두 글자 이상 입력하면 유사 품종을 추천합니다.</p>
+    </div>
+
+    <div class="mt-6 grid lg:grid-cols-2 gap-6">
+      <section class="rounded-2xl bg-white dark:bg-slate-900 shadow-soft border border-slate-100 dark:border-slate-800 overflow-hidden">
+        <header class="flex items-center justify-between px-5 py-3 border-b border-slate-100 dark:border-slate-800">
+          <h2 class="text-lg font-bold">사진 미리보기</h2>
+          <span id="selected-breed-badge" class="text-xs px-2 py-1 rounded-md bg-brand-600/10 text-brand-700 dark:text-brand-300 hidden"></span>
+        </header>
+        <div id="image-container" class="p-4 min-h-[22rem] flex items-center justify-center">
+          <div class="text-center text-slate-500">
+            <div class="text-5xl">📷</div>
+            <p class="mt-2">품종을 선택하면 여기에 사진이 나타납니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="rounded-2xl bg-white dark:bg-slate-900 shadow-soft border border-slate-100 dark:border-slate-800 overflow-hidden">
+        <header class="px-5 py-3 border-b border-slate-100 dark:border-slate-800">
+          <h2 class="text-lg font-bold">상세 정보</h2>
+        </header>
+        <div id="detail-content" class="p-5 text-sm">
+          <p class="text-slate-500">검색된 품종의 원산지, 성격, 수명, 체중 정보가 여기에 나타납니다.</p>
+        </div>
+      </section>
+    </div>
+
+    <div id="error-container" class="mt-4"></div>
+  </main>
+
+  <footer class="border-t border-slate-200 dark:border-slate-800 py-6 text-center text-sm text-slate-500 w-full max-w-6xl mx-auto px-4 sm:px-6">
+    © Jeongyeon. 2025 <span class="ml-1">🐾</span>
+  </footer>
+
+  <script>
+    // =====================
+    // Constants & Globals
+    // =====================
+    // ⭐ ⭐ ⭐여기에 네 Apps Script 웹 앱 URL을 붙여넣으세요! ⭐ ⭐ ⭐
+    const BASE_API_URL = 'https://script.google.com/macros/s/AKfycbyfmU_ehgxcIV_z5_jnncANal0VmIZhlRQw5o7O1hbY0Utrk4C044UY-kOraKyGWr8/exec';
+    
+    // The Dog API 엔드포인트는 Apps Script에 숨겨져 있음
+    let allBreedsDataByName = {};
+    let allBreedNames = [];
+    let currentSelectedBreedId = null;
+    let currentSelectedBreedName = '';
+
+    const KOREAN_TO_ENGLISH_MAP = {
+      "진돗개": "Jindo", "시바견": "Shiba Inu", "골든 리트리버": "Golden Retriever", "푸들": "Poodle",
+      "시츄": "Shih Tzu", "치와와": "Chihuahua", "말티즈": "Maltese", "비숑": "Bichon Frise",
+      "닥스훈트": "Dachshund", "프렌치 불독": "French Bulldog", "불독": "Bulldog", "비글": "Beagle"
+    };
+
+    // =====================
+    // DOM Helpers (도우미 함수)
+    // (showToast, renderRecommendations, setLoading, qs, qsa는 그대로 유지)
+    // =====================
+    const qs  = (sel, el=document) => el.querySelector(sel);
+    const qsa = (sel, el=document) => [...el.querySelectorAll(sel)];
+
+    function showToast(msg, type='info') {
+      const wrap = document.createElement('div');
+      wrap.className = 'fixed inset-x-0 top-4 z-50 flex justify-center px-4';
+      const base = 'max-w-lg w-full rounded-xl shadow-2xl px-4 py-3 text-sm border transition-transform duration-300 transform translate-y-0 opacity-100';
+      const tone = type === 'error'
+        ? 'bg-red-50 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-200 dark:border-red-800'
+        : 'bg-slate-900 text-white border-slate-800';
+      wrap.innerHTML = `<div class="${base} ${tone}">${msg}</div>`;
+      document.body.appendChild(wrap);
+      setTimeout(() => wrap.querySelector('div').classList.add('translate-y-[-20px]', 'opacity-0'), 2000);
+      setTimeout(() => wrap.remove(), 2300);
+    }
+
+    function renderRecommendations(items) {
+      const list = qs('#recommendation-list');
+      list.innerHTML = '';
+      if (!items.length) { list.classList.add('hidden'); return; }
+      
+      items.slice(0, 6).forEach(({ name, display }) => {
+        const li = document.createElement('li');
+        li.className = 'px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer text-sm first:rounded-t-xl last:rounded-b-xl';
+        li.textContent = display;
+        li.dataset.englishName = name;
+        li.addEventListener('click', () => {
+          qs('#breed-input').value = name;
+          list.classList.add('hidden');
+          fetchDogImageAndDetails(false);
+        });
+        list.appendChild(li);
+      });
+      list.classList.remove('hidden');
+    }
+
+    function setLoading(targetEl, text='불러오는 중...') {
+      targetEl.innerHTML = `
+        <div class="w-full flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 p-4">
+          <svg class="animate-spin h-6 w-6 mb-2 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"></circle><path class="opacity-75" d="M4 12a8 8 0 018-8" stroke-width="4"></path></svg>
+          <p class="text-sm">${text}</p>
+        </div>`;
+    }
+
+
+    // =====================
+    // Fetch Breeds (품종 목록 로드) - Apps Script URL 사용
+    // =====================
+    async function fetchBreeds() {
+      if (BASE_API_URL === 'YOUR_GAS_WEB_APP_URL_HERE') {
+          qs('#error-container').innerHTML = `<div class="rounded-xl bg-red-50 text-red-700 border border-red-200 px-4 py-3 text-sm">⚠️ **BASE_API_URL**을 실제 Apps Script 웹 앱 주소로 변경해주세요.</div>`;
+          return;
+      }
+
+      const datalistElement = qs('#breed-list');
+      const generateBtn = qs('#generate-btn');
+      
+      try {
+        // ⭐ Apps Script URL 사용: /breeds 경로 요청
+        const response = await fetch(`${BASE_API_URL}?path=breeds`);
+        const breeds = await response.json();
+        
+        if (breeds.error) throw new Error(breeds.error);
+        
+        datalistElement.innerHTML = '';
+        allBreedsDataByName = {};
+        allBreedNames = [];
+        breeds.forEach(breed => {
+          allBreedsDataByName[breed.name] = breed;
+          allBreedNames.push(breed.name.toLowerCase());
+          const option = document.createElement('option');
+          option.value = breed.name;
+          datalistElement.appendChild(option);
+        });
+        generateBtn.disabled = false;
+      } catch (e) {
+        showToast('품종 목록 로드 실패. Apps Script 배포 상태를 확인해 주세요.', 'error');
+        console.error(e);
+      }
+    }
+
+    // =====================
+    // Search UX (검색 UI 로직) - (이전과 동일)
+    // =====================
+    qs('#breed-input').addEventListener('input', (e) => {
+      const input = e.target.value.trim();
+      const lower = input.toLowerCase();
+      const recommendations = [];
+      const recList = qs('#recommendation-list');
+
+      if (input.length < 2) { recList.classList.add('hidden'); return; }
+      
+      const mapped = KOREAN_TO_ENGLISH_MAP[input];
+      if (mapped && allBreedsDataByName[mapped]) {
+        recommendations.push({ name: mapped, display: `${input} (${mapped})` });
+      }
+      
+      allBreedNames.forEach(n => {
+        if (n.includes(lower) && !recommendations.some(m => m.name.toLowerCase() === n)) {
+          recommendations.push({ name: n, display: n });
+        }
+      });
+      
+      renderRecommendations(recommendations);
+    });
+
+    qs('#breed-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); fetchDogImageAndDetails(false); }
+      if (e.key === 'Escape') { qs('#recommendation-list').classList.add('hidden'); }
+    });
+
+    qsa('.chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        qs('#breed-input').value = btn.dataset.chip;
+        fetchDogImageAndDetails(false);
+      });
+    });
+
+    (function initTheme(){
+      const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && isDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+    qs('#theme-toggle').addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      const darkOn = document.documentElement.classList.contains('dark');
+      localStorage.setItem('theme', darkOn ? 'dark' : 'light');
+    });
+
+    // =====================
+    // Fetch Image & Details (핵심 로직) - Apps Script URL 사용
+    // =====================
+    async function fetchDogImageAndDetails(isAnotherPhotoRequest = false) {
+      const input = qs('#breed-input').value.trim();
+      const englishBreedName = KOREAN_TO_ENGLISH_MAP[input] || input;
+      const imageContainer   = qs('#image-container');
+      const detailContent    = qs('#detail-content');
+      const anotherBtn       = qs('#another-photo-btn');
+      const selectedBadge    = qs('#selected-breed-badge');
+
+      // (로딩 및 오류 처리 코드)
+      
+      const selectedBreed = allBreedsDataByName[englishBreedName];
+      if (!englishBreedName || !selectedBreed) {
+        if (!isAnotherPhotoRequest) {
+            // ... (오류 메시지 표시 로직)
+        }
+        anotherBtn.disabled = true;
+        selectedBadge.classList.add('hidden');
+        return;
+      }
+
+      currentSelectedBreedId = selectedBreed.id;
+      currentSelectedBreedName = selectedBreed.name;
+      selectedBadge.textContent = selectedBreed.name;
+      selectedBadge.classList.remove('hidden');
+
+      qs('#generate-btn').disabled = true;
+      anotherBtn.disabled = true;
+      setLoading(imageContainer, '이미지를 불러오는 중...');
+      if (!isAnotherPhotoRequest) setLoading(detailContent, '정보를 불러오는 중...');
+
+      try {
+        // ⭐ Apps Script URL 사용: /search 경로와 breed_id 파라미터 요청
+        const url = `${BASE_API_URL}?path=search&breed_id=${currentSelectedBreedId}`;
+        
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`API 오류: ${res.status}`);
+        const data = await res.json();
+        
+        if (data.error) throw new Error(data.error); // Apps Script에서 넘어온 서버 오류 처리
+        
+        const imageUrl = data[0] && data[0].url; // The Dog API 응답 형식 사용
+        
+        // (이미지 표시 로직)
+        if (imageUrl) {
+          imageContainer.innerHTML = `<img src="${imageUrl}" alt="${selectedBreed.name} 이미지" class="w-full h-auto max-h-[28rem] object-cover rounded-xl"/>`;
+          qs('#hero-preview').innerHTML = `<img src="${imageUrl}" alt="${selectedBreed.name}" class="w-full h-full object-cover rounded-xl"/>`;
+        } else {
+          imageContainer.innerHTML = '<div class="text-slate-500">이미지를 찾지 못했습니다.</div>';
+          throw new Error('선택한 품종의 이미지를 찾지 못했습니다.');
+        }
+
+        // (상세 정보 표시 로직 - 이전과 동일)
+        if (!isAnotherPhotoRequest) {
+          const rows = [
+            { k: '품종 이름', v: selectedBreed.name }, { k: '원산지', v: selectedBreed.origin || '정보 없음' },
+            { k: '수명', v: selectedBreed.life_span || '정보 없음' }, { k: '성격', v: selectedBreed.temperament || '정보 없음' },
+            { k: '무게', v: (selectedBreed.weight && selectedBreed.weight.metric ? selectedBreed.weight.metric + ' kg' : '정보 없음') },
+            { k: '키', v: (selectedBreed.height && selectedBreed.height.metric ? selectedBreed.height.metric + ' cm' : '정보 없음') },
+          ];
+          detailContent.innerHTML = `
+            <dl class="divide-y divide-slate-200 dark:divide-slate-800">
+              ${rows.map(r => `<div class="py-3 grid grid-cols-3 gap-3"><dt class="col-span-1 text-slate-500 font-medium">${r.k}</dt><dd class="col-span-2">${r.v}</dd></div>`).join('')}
+            </dl>`;
+        }
+      } catch (err) {
+        // (오류 처리 로직)
+      } finally {
+        qs('#generate-btn').disabled = false;
+        anotherBtn.disabled = false;
+      }
+    }
+
+    // =====================
+    // Wire buttons & Init
+    // =====================
+    qs('#generate-btn').addEventListener('click', () => fetchDogImageAndDetails(false));
+    qs('#another-photo-btn').addEventListener('click', () => {
+      if (currentSelectedBreedId) fetchDogImageAndDetails(true);
+      else showToast('먼저 품종을 선택해주세요.', 'error');
+    });
+
+    fetchBreeds();
+  </script>
+ </body>
+</html>
