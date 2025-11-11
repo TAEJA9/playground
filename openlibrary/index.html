@@ -153,8 +153,7 @@ async function geminiOneLine({ title, authors }){
     '',
     `제목: ${title}`,
     `저자: ${authors}`
-  ].join('
-');
+  ].join('');
 
   const body = {
     model: 'gemini-1.5-flash',
