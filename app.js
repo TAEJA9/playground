@@ -80,6 +80,16 @@ const CARD_DATA = [
     author: "정연"
    },
 
+    {
+    icon:"🐶",
+    title:"멍BTI",
+    desc:"내 취향에 맞는 멈머 사진을 구경해 보세요. 멈머로 행복 충전! ",
+    href:"https://taeja9.github.io/playground/meongbti.html",
+    cats:["fun"],
+    isActive:true,
+    author: "정연"
+   },
+
    
   { icon:"🤖", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, author: null },
   { icon:"✨", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, author: null },
@@ -421,6 +431,7 @@ function init(){
 
 
 document.addEventListener("DOMContentLoaded", init);
+
 
 
 
