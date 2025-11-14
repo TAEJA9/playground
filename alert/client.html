@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <title>✅ 현재 상태 확인</title> <style>
+    body { 
+      font-family: 'Malgun Gothic', sans-serif; 
+      transition: background-color 0.5s; 
+      text-align: center; 
+      color: #333;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: white; /* 기본 배경색을 흰색으로 */
+    }
+    
+    /* 피해! (하얀 화면) 상태일 때 스타일 - 거의 변화 없음 */
+    .alert-mode {
+      background-color: white !important; /* 배경은 항상 흰색 유지 */
+      color: black !important;           
+      animation: none;                   
+    }
+    
+    /* H1 태그 삭제했으므로, 이제 주요 메시지에 집중 */
+    #status-display { 
+      font-size: 80px; 
+      font-weight: bold; 
+      padding: 30px; 
+      border-radius: 15px;
+      background-color: #f0f0f0; /* 평소에는 연한 회색 박스 */
+      color: black;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      min-width: 400px; /* 최소 너비 지정 */
+    }
+    
+    /* 피해 모드일 때 상태 표시 글씨 스타일 */
+    .alert-mode #status-display {
+      background-color: white; /* 배경 흰색 */
+      color: #e53935; /* 메시지 글씨는 경고 레드로 */
+      box-shadow: none; /* 그림자 없애서 더 평범하게 */
+      border: 2px dashed #e53935; /* 경고 느낌의 점선 테두리 추가 */
+    }
+    
+    #timestamp { 
+        margin-top: 15px; 
+        font-size: 16px; 
+        color: #666; /* 조금 더 어두운 회색 */
+    }
+  </style>
+</head>
+<body>
+  <div id="status-display">현재 상태 확인 중...</div>
+  <div id="timestamp"></div>
+
+  <audio id="alert-sound" src="https://www.soundjay.com/misc/sounds/bell-ringing-01.mp3" preload="auto"></audio> 
+  
+  <script>
+    // ***** 🚨 여기에 네가 배포한 GAS 웹 앱 URL을 넣어줘! 🚨 *****
+    const GAS_WEB_APP_URL = "여기에_배포된_GAS_기본_URL을_넣으세요"; 
+    // 예: "https://script.google.com/macros/s/AKfyc.../exec";
+
+    // 1초마다 서버 상태를 확인하는 함수
+    function checkStatus() {
+        fetch(GAS_WEB_APP_URL)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(updateUI)
+            .catch(error => {
+                document.getElementById('status-display').textContent = '⚠️ 통신 오류!';
+                document.getElementById('timestamp').textContent = 'Error: ' + error.message;
+                console.error('Error fetching status:', error);
+            });
+    }
+    
+    // UI 업데이트 함수
+    function updateUI(data) {
+        const statusDisplay = document.getElementById('status-display');
+        const body = document.body;
+        const sound = document.getElementById('alert-sound');
+        
+        statusDisplay.textContent = data.status || '상태 없음';
+        document.getElementById('timestamp').textContent = '최근 업데이트: ' + data.timestamp;
+
+        // "피해!" 상태일 때 특수 동작 (하얀 화면 + 경고음)
+        if (data.status === '피해!') {
+            body.classList.add('alert-mode'); 
+            
+            if (sound.paused) {
+                sound.loop = true;
+                sound.play().catch(e => console.log('소리 재생 실패: 사용자 상호작용 필요.', e)); 
+            }
+        } else {
+            body.classList.remove('alert-mode');
+            sound.pause();
+            sound.currentTime = 0;
+        }
+    }
+    
+    window.onload = function() {
+        alert("알림을 활성화하고 소리를 허용하려면 페이지를 한 번 클릭해 주세요.");
+        
+        checkStatus();
+        setInterval(checkStatus, 1000);
+    };
+  </script>
+</body>
+</html>
