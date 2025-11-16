@@ -1,0 +1,1005 @@
+<!doctype html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentence Prompt Builder - AI 기반 영어 문장 생성 도구</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #ffffff;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e5e7eb;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #059669;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #374151;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #059669;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+            padding: 8rem 0 6rem;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: #059669;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .cta-button {
+            background: #059669;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: #047857;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(5, 150, 105, 0.3);
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #1f2937;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: #6b7280;
+            text-align: center;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #059669;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: #4b5563;
+        }
+
+        .about-features {
+            list-style: none;
+        }
+
+        .about-features li {
+            padding: 0.5rem 0;
+            color: #4b5563;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .about-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #059669;
+            font-weight: bold;
+        }
+
+        /* Tech Stack */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .tech-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .tech-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+
+        .tech-card p {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        /* Architecture Flow */
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .flow-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .flow-step::after {
+            content: "→";
+            position: absolute;
+            right: -1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #059669;
+            font-weight: bold;
+        }
+
+        .flow-step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            background: #059669;
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.25rem;
+            margin: 0 auto 1rem;
+        }
+
+        .flow-step h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+
+        .flow-step p {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #059669;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+
+        .feature-card p {
+            color: #6b7280;
+        }
+
+        /* Getting Started */
+        .getting-started-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .step-list {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #059669;
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .step-list h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.875rem;
+            margin: 0.5rem 0;
+            overflow-x: auto;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 2rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #059669, #10b981);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 5rem;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4rem;
+            height: 4rem;
+            background: white;
+            border: 3px solid #059669;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(5, 150, 105, 0.2);
+        }
+
+        .timeline-icon {
+            font-size: 1.5rem;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #059669;
+        }
+
+        .timeline-content p {
+            color: #4b5563;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-details {
+            list-style: none;
+            padding: 0;
+        }
+
+        .timeline-details li {
+            padding: 0.5rem 0;
+            color: #6b7280;
+            font-size: 0.875rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .timeline-details li:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-details strong {
+            color: #374151;
+            font-weight: 600;
+        }
+
+        /* Future Work */
+        .future-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .future-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .future-item h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #059669;
+        }
+
+        .future-item p {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1f2937;
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-link {
+            color: #d1d5db;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: #10b981;
+        }
+
+        .github-icon {
+            font-size: 1.125rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.125rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .flow-step::after {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            /* Timeline mobile adjustments */
+            .timeline::before {
+                left: 1rem;
+            }
+
+            .timeline-item {
+                padding-left: 3rem;
+            }
+
+            .timeline-marker {
+                width: 2rem;
+                height: 2rem;
+                left: 0;
+            }
+
+            .timeline-icon {
+                font-size: 1rem;
+            }
+
+            .timeline-content {
+                padding: 1.5rem;
+            }
+
+            /* Footer mobile adjustments */
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body><!-- Navigation -->
+  <nav class="navbar">
+   <div class="nav-container">
+    <div class="logo">
+     Sentence Prompt Builder
+    </div>
+    <ul class="nav-links">
+     <li><a href="#about">About</a></li>
+     <li><a href="#tech">Tech Stack</a></li>
+     <li><a href="#architecture">Architecture</a></li>
+     <li><a href="#features">Features</a></li>
+     <li><a href="#how-built">How Built</a></li>
+     <li><a href="#getting-started">Getting Started</a></li>
+    </ul>
+   </div>
+  </nav><!-- Hero Section -->
+  <section class="hero">
+   <div class="hero-container">
+    <h1 id="hero-title">Sentence Prompt Builder</h1>
+    <p id="hero-subtitle">영어 교육용 문장 생성을 위한 AI 프롬프트 자동화 도구</p>
+    <div class="badges"><span class="badge">Teacher Friendly</span> <span class="badge">Editor Friendly</span> <span class="badge">AI Powered</span>
+    </div><button class="cta-button" onclick="requestDemo()">데모 요청하기</button>
+   </div>
+  </section><!-- About Section -->
+  <section id="about" class="section">
+   <div class="container">
+    <h2 class="section-title">About</h2>
+    <div class="about-content">
+     <div class="about-text">
+      <h3>왜 이 도구를 만들었나요?</h3>
+      <p>영어 교육 현장에서 양질의 문장을 만드는 것은 시간이 많이 걸리는 작업입니다. 문법 패턴에 맞으면서도 학습자 수준에 적절한 문장을 찾고, 이를 바탕으로 새로운 문장을 생성하는 과정을 자동화하여 교사와 편집자의 업무 효율성을 높이고자 했습니다.</p>
+      <h3>어떤 현장에서 도움이 될까요?</h3>
+      <ul class="about-features">
+       <li>교과서 문장 제작 및 검토</li>
+       <li>학습지 및 워크북 문항 개발</li>
+       <li>평가 문항 및 예시 문장 생성</li>
+       <li>레벨별 맞춤 문장 제작</li>
+       <li>문법 패턴별 예문 수집</li>
+      </ul>
+     </div>
+     <div class="about-visual">
+      <div style="background: linear-gradient(135deg, #059669, #10b981); height: 300px; border-radius: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem;">
+       📚✨
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Tech Stack Section -->
+  <section id="tech" class="section">
+   <div class="container">
+    <h2 class="section-title">Tech Stack</h2>
+    <p class="section-subtitle">현대적이고 효율적인 기술 스택으로 구성된 안정적인 시스템</p>
+    <div class="tech-grid">
+     <div class="tech-card">
+      <div class="tech-icon">
+       🐍
+      </div>
+      <h3>Python Flask</h3>
+      <p>가볍고 유연한 웹 프레임워크로 빠른 API 개발</p>
+     </div>
+     <div class="tech-card">
+      <div class="tech-icon">
+       🗄️
+      </div>
+      <h3>ChromaDB</h3>
+      <p>벡터 데이터베이스로 의미 기반 문장 검색 지원</p>
+     </div>
+     <div class="tech-card">
+      <div class="tech-icon">
+       🧠
+      </div>
+      <h3>Sentence Transformers</h3>
+      <p>all-MiniLM-L6-v2 모델로 고품질 문장 임베딩</p>
+     </div>
+     <div class="tech-card">
+      <div class="tech-icon">
+       ✨
+      </div>
+      <h3>Google Gemini</h3>
+      <p>gemini-2.5-flash로 자연스러운 문장 생성</p>
+     </div>
+     <div class="tech-card">
+      <div class="tech-icon">
+       📊
+      </div>
+      <h3>CSV Database</h3>
+      <p>간편한 문장 DB 관리 및 벡터 변환</p>
+     </div>
+     <div class="tech-card">
+      <div class="tech-icon">
+       🌐
+      </div>
+      <h3>Pure Frontend</h3>
+      <p>HTML, CSS, JavaScript와 Pretendard 폰트</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Architecture Section -->
+  <section id="architecture" class="section">
+   <div class="container">
+    <h2 class="section-title">Architecture &amp; Flow</h2>
+    <p class="section-subtitle">4단계 자동화 프로세스로 효율적인 문장 생성</p>
+    <div class="flow-steps">
+     <div class="flow-step">
+      <div class="step-number">
+       1
+      </div>
+      <h3>사용자 입력</h3>
+      <p>문법 패턴, 레벨, 토픽, 원하는 느낌을 웹페이지에서 선택/입력</p>
+     </div>
+     <div class="flow-step">
+      <div class="step-number">
+       2
+      </div>
+      <h3>벡터 검색</h3>
+      <p>ChromaDB에서 조건에 맞는 예시 문장을 의미 기반으로 검색</p>
+     </div>
+     <div class="flow-step">
+      <div class="step-number">
+       3
+      </div>
+      <h3>프롬프트 생성</h3>
+      <p>찾은 예시를 바탕으로 강한 지시가 포함된 프롬프트 자동 생성</p>
+     </div>
+     <div class="flow-step">
+      <div class="step-number">
+       4
+      </div>
+      <h3>Gemini 응답</h3>
+      <p>생성된 프롬프트로 영어 문장 10개 + 한국어 해석 10개 출력</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Features Section -->
+  <section id="features" class="section">
+   <div class="container">
+    <h2 class="section-title">Key Features</h2>
+    <div class="features-grid">
+     <div class="feature-card">
+      <h3>🔍 로컬 문장 DB 기반 검색</h3>
+      <p>사내 문장 데이터베이스를 벡터화하여 의미 기반으로 관련 예시 문장을 빠르게 찾아줍니다.</p>
+     </div>
+     <div class="feature-card">
+      <h3>⚡ 프롬프트 자동 생성</h3>
+      <p>검색된 예시 문장들을 바탕으로 LLM에 최적화된 강한 지시 프롬프트를 자동으로 생성합니다.</p>
+     </div>
+     <div class="feature-card">
+      <h3>🤖 Gemini API 연동</h3>
+      <p>"Gemini로 문장 생성하기" 버튼으로 바로 API를 호출하여 즉시 결과를 확인할 수 있습니다.</p>
+     </div>
+     <div class="feature-card">
+      <h3>📋 영어/한국어 2열 뷰</h3>
+      <p>생성된 문장과 해석을 깔끔한 테이블 형태로 정리하여 교육 자료로 바로 활용 가능합니다.</p>
+     </div>
+     <div class="feature-card">
+      <h3>📝 프롬프트 복사 기능</h3>
+      <p>생성된 프롬프트를 복사하여 다른 LLM(ChatGPT 등)에서도 동일하게 사용할 수 있습니다.</p>
+     </div>
+     <div class="feature-card">
+      <h3>🎯 맞춤형 조건 설정</h3>
+      <p>문법 패턴, 난이도 레벨, 주제, 문체 등 다양한 조건으로 원하는 문장을 정확히 생성합니다.</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- How It Was Built Section -->
+  <section id="how-built" class="section">
+   <div class="container">
+    <h2 class="section-title">How It Was Built</h2>
+    <p class="section-subtitle">6단계 개발 과정을 통한 체계적인 구축 스토리</p>
+    <div class="timeline">
+     <div class="timeline-item">
+      <div class="timeline-marker">
+       <div class="timeline-icon">
+        📊
+       </div>
+      </div>
+      <div class="timeline-content">
+       <h3>1. 데이터 준비</h3>
+       <p>기존 사내 영어 문장 CSV를 수집하여 체계적으로 정리했습니다.</p>
+       <ul class="timeline-details">
+        <li><strong>컬럼 구조:</strong> id, unit, text, level, grammar_pattern, topic</li>
+        <li><strong>데이터 규모:</strong> 초급~고급까지 문장 800+개 구축</li>
+        <li><strong>품질 관리:</strong> 레벨별, 문법 패턴별 균등 분포 확보</li>
+       </ul>
+      </div>
+     </div>
+     <div class="timeline-item">
+      <div class="timeline-marker">
+       <div class="timeline-icon">
+        🧠
+       </div>
+      </div>
+      <div class="timeline-content">
+       <h3>2. 벡터 DB 구축</h3>
+       <p>의미 기반 검색을 위한 벡터 데이터베이스를 구축했습니다.</p>
+       <ul class="timeline-details">
+        <li><strong>임베딩:</strong> sentence-transformers 모델로 문장을 벡터화</li>
+        <li><strong>저장소:</strong> ChromaDB PersistentClient로 로컬 DB 생성</li>
+        <li><strong>메타데이터:</strong> 검색용 필드(문법/레벨/토픽)를 metadata로 저장</li>
+       </ul>
+      </div>
+     </div>
+     <div class="timeline-item">
+      <div class="timeline-marker">
+       <div class="timeline-icon">
+        ⚙️
+       </div>
+      </div>
+      <div class="timeline-content">
+       <h3>3. 백엔드 구축</h3>
+       <p>Flask 기반의 효율적인 API 서버를 개발했습니다.</p>
+       <ul class="timeline-details">
+        <li><strong>검색 API:</strong> /api/search로 벡터 검색 수행</li>
+        <li><strong>프롬프트 생성:</strong> 예시 문장 기반 자동 프롬프트 생성</li>
+        <li><strong>LLM 연동:</strong> /api/generate에서 Gemini API로 문장 10개 + 해석 10개 생성</li>
+       </ul>
+      </div>
+     </div>
+     <div class="timeline-item">
+      <div class="timeline-marker">
+       <div class="timeline-icon">
+        🎨
+       </div>
+      </div>
+      <div class="timeline-content">
+       <h3>4. 프론트엔드 구성</h3>
+       <p>사용자 친화적인 인터페이스를 설계하고 구현했습니다.</p>
+       <ul class="timeline-details">
+        <li><strong>검색 UI:</strong> 문법/레벨/토픽/느낌 입력 인터페이스 구현</li>
+        <li><strong>프롬프트 UI:</strong> 자동 생성된 프롬프트 복사 기능 제작</li>
+        <li><strong>결과 표시:</strong> 영문/해석 2열 테이블로 깔끔한 결과 출력</li>
+        <li><strong>디자인:</strong> Apple 스타일 감성의 그라디언트/카드 UI 적용</li>
+       </ul>
+      </div>
+     </div>
+     <div class="timeline-item">
+      <div class="timeline-marker">
+       <div class="timeline-icon">
+        💻
+       </div>
+      </div>
+      <div class="timeline-content">
+       <h3>5. 로컬 개발 환경</h3>
+       <p>안정적인 개발 및 실행 환경을 구성했습니다.</p>
+       <ul class="timeline-details">
+        <li><strong>환경 설정:</strong> Python 가상 환경 생성 및 의존성 관리</li>
+        <li><strong>DB 초기화:</strong> build_vector_db.py 실행으로 벡터 DB 생성</li>
+        <li><strong>서버 실행:</strong> python app.py로 간편한 웹앱 실행</li>
+       </ul>
+      </div>
+     </div>
+     <div class="timeline-item">
+      <div class="timeline-marker">
+       <div class="timeline-icon">
+        🚀
+       </div>
+      </div>
+      <div class="timeline-content">
+       <h3>6. 배포 방향성</h3>
+       <p>확장 가능한 배포 전략을 수립했습니다.</p>
+       <ul class="timeline-details">
+        <li><strong>프론트엔드:</strong> GitHub Pages로 공개 가능한 정적 사이트</li>
+        <li><strong>백엔드:</strong> 현재 로컬용, 향후 Cloud Run/Heroku/Render 배포 예정</li>
+        <li><strong>확장성:</strong> 마이크로서비스 아키텍처로 단계적 확장 가능</li>
+       </ul>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Getting Started Section -->
+  <section id="getting-started" class="section">
+   <div class="container">
+    <h2 class="section-title">Getting Started</h2>
+    <div class="getting-started-content">
+     <ol class="step-list">
+      <li><h4>가상 환경 생성 및 활성화</h4><pre class="code-block"><code>python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate</code></pre></li>
+      <li><h4>필요한 패키지 설치</h4><pre class="code-block"><code>pip install -r requirements.txt</code></pre></li>
+      <li><h4>문장 DB 준비 및 벡터 데이터베이스 구축</h4><p>CSV 파일을 준비한 후 벡터 데이터베이스를 생성합니다.</p><pre class="code-block"><code>python build_vector_db.py</code></pre></li>
+      <li><h4>Flask 서버 실행</h4><pre class="code-block"><code>python app.py</code></pre></li>
+      <li><h4>브라우저에서 접속</h4><p>웹 브라우저에서 <code>http://localhost:5000</code>으로 접속하여 도구를 사용합니다.</p></li>
+     </ol>
+    </div>
+   </div>
+  </section><!-- Future Work Section -->
+  <section class="section">
+   <div class="container">
+    <h2 class="section-title">Future Work</h2>
+    <p class="section-subtitle">더 나은 사용자 경험을 위한 지속적인 개선 계획</p>
+    <div class="future-list">
+     <div class="future-item">
+      <h4>문장 직접 수정 &amp; 저장</h4>
+      <p>생성된 문장을 웹에서 바로 수정하고 개인 문장 컬렉션으로 저장하는 기능</p>
+     </div>
+     <div class="future-item">
+      <h4>문법 패턴 확장</h4>
+      <p>더 다양한 문법 패턴과 세분화된 레벨 시스템으로 정교한 문장 생성</p>
+     </div>
+     <div class="future-item">
+      <h4>사용자별 프리셋</h4>
+      <p>자주 사용하는 설정을 프리셋으로 저장하여 빠른 문장 생성 지원</p>
+     </div>
+     <div class="future-item">
+      <h4>다중 LLM 지원</h4>
+      <p>ChatGPT, Claude 등 다양한 LLM API 연동으로 선택의 폭 확대</p>
+     </div>
+     <div class="future-item">
+      <h4>배치 생성 기능</h4>
+      <p>여러 조건을 한 번에 설정하여 대량의 문장을 효율적으로 생성</p>
+     </div>
+     <div class="future-item">
+      <h4>품질 평가 시스템</h4>
+      <p>생성된 문장의 품질을 자동으로 평가하고 개선 제안 제공</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Footer -->
+  <footer class="footer">
+   <div class="container">
+    <div class="footer-content">
+     <p id="footer-text">ⓒ 2025. Jeongyeon</p>
+     <div class="footer-links"><a href="https://github.com" target="_blank" rel="noopener noreferrer" class="footer-link"> <span class="github-icon">⭐</span> GitHub </a>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script>
+        // Configuration object
+        const defaultConfig = {
+            hero_title: "Sentence Prompt Builder",
+            hero_subtitle: "영어 교육용 문장 생성을 위한 AI 프롬프트 자동화 도구",
+            demo_email: "sfedu2019@gmail.com",
+            footer_text: "ⓒ 2025. Jeongyeon"
+        };
+
+        // Demo request function
+        function requestDemo() {
+            const email = window.elementSdk?.config?.demo_email || defaultConfig.demo_email;
+            const subject = encodeURIComponent("Sentence Prompt Builder 데모 요청");
+            const body = encodeURIComponent(`안녕하세요,
+
+아래 양식을 작성하여 메일을 보내 주세요. 확인 후에 보여 드리겠습니다! 😎
+
+- 이름 : 
+- 소속 : 
+- 요청 사유 : 
+
+
+감사합니다.`);
+            
+            const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+            window.open(mailtoLink, '_blank');
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Element SDK implementation
+        async function onConfigChange(config) {
+            const heroTitle = document.getElementById('hero-title');
+            const heroSubtitle = document.getElementById('hero-subtitle');
+            const footerText = document.getElementById('footer-text');
+
+            if (heroTitle) {
+                heroTitle.textContent = config.hero_title || defaultConfig.hero_title;
+            }
+            if (heroSubtitle) {
+                heroSubtitle.textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+            }
+            if (footerText) {
+                footerText.textContent = config.footer_text || defaultConfig.footer_text;
+            }
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["hero_title", config.hero_title || defaultConfig.hero_title],
+                ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
+                ["demo_email", config.demo_email || defaultConfig.demo_email],
+                ["footer_text", config.footer_text || defaultConfig.footer_text]
+            ]);
+        }
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99f7be45124e5141',t:'MTc2MzMwNDAyNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
