@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sentence Prompt Builder - AI 기반 영어 문장 생성 도구</title>
-  <script src="/_sdk/element_sdk.js"></script>
   <style>
         body {
             box-sizing: border-box;
@@ -323,58 +322,7 @@
             color: #6b7280;
         }
 
-        /* Getting Started */
-        .getting-started-content {
-            background: white;
-            padding: 3rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
 
-        .step-list {
-            list-style: none;
-            counter-reset: step-counter;
-        }
-
-        .step-list li {
-            counter-increment: step-counter;
-            margin-bottom: 2rem;
-            position: relative;
-            padding-left: 3rem;
-        }
-
-        .step-list li::before {
-            content: counter(step-counter);
-            position: absolute;
-            left: 0;
-            top: 0;
-            background: #059669;
-            color: white;
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .step-list h4 {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #1f2937;
-        }
-
-        .code-block {
-            background: #1f2937;
-            color: #f9fafb;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-            font-size: 0.875rem;
-            margin: 0.5rem 0;
-            overflow-x: auto;
-        }
 
         /* Timeline Styles */
         .timeline {
@@ -586,6 +534,7 @@
     </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
   <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
  </head>
  <body><!-- Navigation -->
@@ -600,14 +549,13 @@
      <li><a href="#architecture">Architecture</a></li>
      <li><a href="#features">Features</a></li>
      <li><a href="#how-built">How Built</a></li>
-     <li><a href="#getting-started">Getting Started</a></li>
     </ul>
    </div>
   </nav><!-- Hero Section -->
   <section class="hero">
    <div class="hero-container">
-    <h1 id="hero-title">Sentence Prompt Builder</h1>
-    <p id="hero-subtitle">영어 교육용 문장 생성을 위한 AI 프롬프트 자동화 도구</p>
+    <h1>Sentence Prompt Builder</h1>
+    <p>영어 교육용 문장 생성을 위한 AI 프롬프트 자동화 도구</p>
     <div class="badges"><span class="badge">Teacher Friendly</span> <span class="badge">Editor Friendly</span> <span class="badge">AI Powered</span>
     </div><button class="cta-button" onclick="requestDemo()">데모 요청하기</button>
    </div>
@@ -619,6 +567,8 @@
      <div class="about-text">
       <h3>왜 이 도구를 만들었나요?</h3>
       <p>영어 교육 현장에서 양질의 문장을 만드는 것은 시간이 많이 걸리는 작업입니다. 문법 패턴에 맞으면서도 학습자 수준에 적절한 문장을 찾고, 이를 바탕으로 새로운 문장을 생성하는 과정을 자동화하여 교사와 편집자의 업무 효율성을 높이고자 했습니다.</p>
+     </div>
+     <div class="about-text">
       <h3>어떤 현장에서 도움이 될까요?</h3>
       <ul class="about-features">
        <li>교과서 문장 제작 및 검토</li>
@@ -627,11 +577,6 @@
        <li>레벨별 맞춤 문장 제작</li>
        <li>문법 패턴별 예문 수집</li>
       </ul>
-     </div>
-     <div class="about-visual">
-      <div style="background: linear-gradient(135deg, #059669, #10b981); height: 300px; border-radius: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem;">
-       📚✨
-      </div>
      </div>
     </div>
    </div>
@@ -857,21 +802,6 @@
      </div>
     </div>
    </div>
-  </section><!-- Getting Started Section -->
-  <section id="getting-started" class="section">
-   <div class="container">
-    <h2 class="section-title">Getting Started</h2>
-    <div class="getting-started-content">
-     <ol class="step-list">
-      <li><h4>가상 환경 생성 및 활성화</h4><pre class="code-block"><code>python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate</code></pre></li>
-      <li><h4>필요한 패키지 설치</h4><pre class="code-block"><code>pip install -r requirements.txt</code></pre></li>
-      <li><h4>문장 DB 준비 및 벡터 데이터베이스 구축</h4><p>CSV 파일을 준비한 후 벡터 데이터베이스를 생성합니다.</p><pre class="code-block"><code>python build_vector_db.py</code></pre></li>
-      <li><h4>Flask 서버 실행</h4><pre class="code-block"><code>python app.py</code></pre></li>
-      <li><h4>브라우저에서 접속</h4><p>웹 브라우저에서 <code>http://localhost:5000</code>으로 접속하여 도구를 사용합니다.</p></li>
-     </ol>
-    </div>
-   </div>
   </section><!-- Future Work Section -->
   <section class="section">
    <div class="container">
@@ -908,24 +838,16 @@ source venv/bin/activate  # Windows: venv\Scripts\activate</code></pre></li>
   <footer class="footer">
    <div class="container">
     <div class="footer-content">
-     <p id="footer-text">ⓒ 2025. Jeongyeon</p>
+     <p>ⓒ 2025. Jeongyeon</p>
      <div class="footer-links"><a href="https://github.com" target="_blank" rel="noopener noreferrer" class="footer-link"> <span class="github-icon">⭐</span> GitHub </a>
      </div>
     </div>
    </div>
   </footer>
   <script>
-        // Configuration object
-        const defaultConfig = {
-            hero_title: "Sentence Prompt Builder",
-            hero_subtitle: "영어 교육용 문장 생성을 위한 AI 프롬프트 자동화 도구",
-            demo_email: "sfedu2019@gmail.com",
-            footer_text: "ⓒ 2025. Jeongyeon"
-        };
-
         // Demo request function
         function requestDemo() {
-            const email = window.elementSdk?.config?.demo_email || defaultConfig.demo_email;
+            const email = "sfedu2019@gmail.com";
             const subject = encodeURIComponent("Sentence Prompt Builder 데모 요청");
             const body = encodeURIComponent(`안녕하세요,
 
@@ -955,51 +877,6 @@ source venv/bin/activate  # Windows: venv\Scripts\activate</code></pre></li>
                 }
             });
         });
-
-        // Element SDK implementation
-        async function onConfigChange(config) {
-            const heroTitle = document.getElementById('hero-title');
-            const heroSubtitle = document.getElementById('hero-subtitle');
-            const footerText = document.getElementById('footer-text');
-
-            if (heroTitle) {
-                heroTitle.textContent = config.hero_title || defaultConfig.hero_title;
-            }
-            if (heroSubtitle) {
-                heroSubtitle.textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
-            }
-            if (footerText) {
-                footerText.textContent = config.footer_text || defaultConfig.footer_text;
-            }
-        }
-
-        function mapToCapabilities(config) {
-            return {
-                recolorables: [],
-                borderables: [],
-                fontEditable: undefined,
-                fontSizeable: undefined
-            };
-        }
-
-        function mapToEditPanelValues(config) {
-            return new Map([
-                ["hero_title", config.hero_title || defaultConfig.hero_title],
-                ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
-                ["demo_email", config.demo_email || defaultConfig.demo_email],
-                ["footer_text", config.footer_text || defaultConfig.footer_text]
-            ]);
-        }
-
-        // Initialize Element SDK
-        if (window.elementSdk) {
-            window.elementSdk.init({
-                defaultConfig,
-                onConfigChange,
-                mapToCapabilities,
-                mapToEditPanelValues
-            });
-        }
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99f7be45124e5141',t:'MTc2MzMwNDAyNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99f7e27bf19e5141',t:'MTc2MzMwNTUwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
