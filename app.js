@@ -90,7 +90,16 @@ const CARD_DATA = [
     author: "정연"
    },
    
-   
+ {
+    icon:"📷",
+    title:"The GRAND Image Festivalr",
+    desc:"2025 온라인 사진전",
+    href:"https://taeja9.github.io/playground/grandimagefestival/index.html",
+    cats:["event"],
+    isActive:true,
+    author: "정연"
+   },
+      
     {
     icon:"🐶",
     title:"멍BTI",
@@ -442,6 +451,7 @@ function init(){
 
 
 document.addEventListener("DOMContentLoaded", init);
+
 
 
 
