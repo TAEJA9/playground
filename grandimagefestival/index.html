@@ -208,6 +208,10 @@
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyzIX76xN4sel_Onttg_xlNrARV71H-2R5lwwPlyXlVzhs_8HeFIO044okCBtd6gU7bFQ/exec"; 
         // ==========================================
 
+        // 🔥 [설정] 영상 자동 재생 여부 (true: 켜기, false: 끄기)
+        const AUTO_PLAY_VIDEO = true; 
+        // 주의: 브라우저 정책상 소리가 켜진 자동 재생은 차단될 수 있으므로 음소거(mute)와 함께 작동합니다.
+
         // --- 데이터 및 상태 ---
         let photos = [];
         let guestbookEntries = [];
@@ -587,4 +591,5 @@
         });
     </script>
 </body>
+
 </html>
