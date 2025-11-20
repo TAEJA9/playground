@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- 설정 파일 로드 -->
+    <script src="config.js"></script>
     <style>
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #111; color: #eee; }
         .modal-bg { background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
@@ -27,7 +29,6 @@
             <h1 class="text-2xl font-bold mb-6 text-white">Admin Login</h1>
             <input type="password" id="admin-pw" placeholder="비밀번호" class="w-full p-3 mb-4 rounded bg-gray-700 border border-gray-600 text-white focus:border-blue-500 outline-none">
             <button onclick="checkLogin()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded font-bold transition">Login</button>
-            <p id="login-msg" class="text-blue-400 text-xs mt-2 hidden animate-pulse">로그인 확인 중...</p>
         </div>
     </div>
 
@@ -37,13 +38,13 @@
         <!-- 사이드바 -->
         <aside class="w-64 bg-gray-900 border-r border-gray-800 flex-shrink-0 flex flex-col">
             <div class="p-6 border-b border-gray-800">
-                <h1 class="text-2xl font-bold text-white tracking-wider">The GRAND Image Festival</h1>
+                <h1 class="text-2xl font-bold text-white tracking-wider">MOMENT</h1>
                 <p class="text-xs text-gray-500 mt-1">Admin Dashboard</p>
             </div>
             
             <nav class="flex-grow p-4 space-y-2">
                 <button onclick="showSection('photos')" id="nav-photos" class="nav-item w-full text-left px-4 py-3 rounded transition hover:bg-gray-800 flex items-center gap-3 active">
-                    <i class="fas fa-images w-5 text-center"></i> 사진 관리
+                    <i class="fas fa-images w-5 text-center"></i> 사진/영상 관리
                 </button>
                 <button onclick="showSection('guestbook')" id="nav-guestbook" class="nav-item w-full text-left px-4 py-3 rounded transition hover:bg-gray-800 flex items-center gap-3">
                     <i class="fas fa-comment-alt w-5 text-center"></i> 방명록 관리
@@ -62,19 +63,20 @@
         <!-- 메인 콘텐츠 영역 -->
         <main class="flex-1 overflow-y-auto bg-[#111] p-8 relative">
             
-            <!-- 1. 사진 관리 섹션 -->
+            <!-- 1. 사진/영상 관리 섹션 -->
             <section id="section-photos" class="space-y-6">
                 <div class="flex justify-between items-center border-b border-gray-800 pb-4">
-                    <h2 class="text-2xl font-bold"><i class="fas fa-images mr-2 text-blue-500"></i>사진 관리</h2>
+                    <h2 class="text-2xl font-bold"><i class="fas fa-images mr-2 text-blue-500"></i>사진 & 영상 관리</h2>
                     <button onclick="openAddModal()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-bold flex items-center gap-2">
-                        <i class="fas fa-plus"></i> 사진 추가
+                        <i class="fas fa-plus"></i> 추가하기
                     </button>
                 </div>
                 <div class="overflow-x-auto bg-gray-800 rounded-lg border border-gray-700">
                     <table class="w-full text-left border-collapse">
                         <thead class="bg-gray-700/50 text-gray-400 text-sm">
                             <tr>
-                                <th class="p-4 w-20">Preview</th>
+                                <th class="p-4 w-20">Type</th>
+                                <th class="p-4">Preview</th>
                                 <th class="p-4">제목</th>
                                 <th class="p-4">카테고리</th>
                                 <th class="p-4 text-right">관리</th>
@@ -84,7 +86,7 @@
                             <!-- JS로 렌더링 -->
                         </tbody>
                     </table>
-                    <div id="photo-empty" class="hidden p-8 text-center text-gray-500">등록된 사진이 없습니다.</div>
+                    <div id="photo-empty" class="hidden p-8 text-center text-gray-500">등록된 게시물이 없습니다.</div>
                 </div>
             </section>
 
@@ -105,7 +107,6 @@
                     <h2 class="text-2xl font-bold"><i class="fas fa-tags mr-2 text-yellow-500"></i>카테고리 관리</h2>
                 </div>
                 
-                <!-- 카테고리 추가 폼 -->
                 <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 flex gap-4 items-end">
                     <div class="flex-1">
                         <label class="block text-gray-400 text-xs mb-1">카테고리 ID (영문 소문자)</label>
@@ -118,7 +119,6 @@
                     <button onclick="addCategory()" class="bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-2 rounded font-bold text-sm h-[38px]">추가</button>
                 </div>
 
-                <!-- 카테고리 리스트 -->
                 <div class="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
                     <table class="w-full text-left">
                          <thead class="bg-gray-700/50 text-gray-400 text-sm">
@@ -138,14 +138,21 @@
         </main>
     </div>
 
-    <!-- 사진 추가 모달 -->
+    <!-- 사진/영상 추가 모달 -->
     <div id="add-modal" class="fixed inset-0 modal-bg z-[60] hidden flex items-center justify-center">
         <div class="bg-gray-800 p-8 rounded-lg shadow-2xl w-full max-w-md border border-gray-700">
-            <h3 class="text-xl font-bold text-white mb-6">새 사진 등록</h3>
+            <h3 class="text-xl font-bold text-white mb-6">새 게시물 등록</h3>
             <div class="space-y-4">
                 <div>
-                    <label class="block text-gray-400 text-xs mb-1">이미지 URL (구글 드라이브 가능)</label>
-                    <input type="text" id="new-url" class="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white text-sm focus:border-blue-500 outline-none">
+                    <label class="block text-gray-400 text-xs mb-1">유형 (Type)</label>
+                    <select id="new-type" class="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white text-sm focus:border-blue-500 outline-none">
+                        <option value="image">사진 (Image)</option>
+                        <option value="video">동영상 (Video)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-400 text-xs mb-1">구글 드라이브 링크 (URL)</label>
+                    <input type="text" id="new-url" class="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white text-sm focus:border-blue-500 outline-none" placeholder="공유 링크 붙여넣기">
                 </div>
                 <div>
                     <label class="block text-gray-400 text-xs mb-1">제목</label>
@@ -171,26 +178,20 @@
 
     <script>
         // ==========================================
-        // 🚨 여기에 배포한 구글 웹 앱 URL을 꼭 붙여넣으세요! (https://script.google.com/...)
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyzIX76xN4sel_Onttg_xlNrARV71H-2R5lwwPlyXlVzhs_8HeFIO044okCBtd6gU7bFQ/exec"; 
+        // 🚨 여기에 배포한 구글 웹 앱 URL을 꼭 붙여넣으세요!
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyDVccdnRq-lPwZqJpqb3dCBxmuvdor8MTDwUdL62_iHm_ia-Qx8PYbz4Ltj_Pb-zfV6w/exec"; 
         // ==========================================
 
-        // --- 상태 ---
         let photos = [];
         let guestbook = [];
         let categories = [];
 
-        // --- 로그인 로직 ---
+        // --- 로그인 ---
         async function checkLogin() {
             const pw = document.getElementById('admin-pw').value;
-            const msg = document.getElementById('login-msg');
-            
             if (!pw) return;
-
-            msg.classList.remove('hidden');
             
             try {
-                // 서버에 비밀번호 확인 요청
                 const response = await fetch(WEB_APP_URL, {
                     method: 'POST',
                     body: JSON.stringify({ action: 'verifyAdmin', data: { pw: pw } })
@@ -206,22 +207,18 @@
                 }
             } catch (err) {
                 console.error(err);
-                alert('서버 통신 오류가 발생했습니다.');
-            } finally {
-                msg.classList.add('hidden');
+                alert('서버 통신 오류');
             }
         }
-
-        function logout() { location.reload(); }
         document.getElementById('admin-pw').addEventListener('keypress', (e) => { if(e.key === 'Enter') checkLogin(); });
+        function logout() { location.reload(); }
 
-        // --- API 통신 ---
+        // --- API ---
         async function loadAllData() {
             if (!WEB_APP_URL || WEB_APP_URL.includes('여기에')) {
-                alert("HTML 파일 코드 상단의 WEB_APP_URL 변수에 배포된 주소를 넣어주세요!");
+                alert("WEB_APP_URL을 설정해주세요!");
                 return;
             }
-
             const loading = document.getElementById('loading');
             loading.style.display = 'block';
 
@@ -236,7 +233,7 @@
                 renderAll();
             } catch (error) {
                 console.error(error);
-                alert('데이터를 불러오지 못했습니다.');
+                alert('데이터 로드 실패');
             } finally {
                 loading.style.display = 'none';
             }
@@ -245,7 +242,6 @@
         async function sendData(action, payload) {
             const loading = document.getElementById('loading');
             loading.style.display = 'block';
-            
             try {
                 await fetch(WEB_APP_URL, {
                     method: 'POST',
@@ -254,7 +250,7 @@
                 await loadAllData();
             } catch (error) {
                 console.error("전송 실패:", error);
-                alert("처리에 실패했습니다.");
+                alert("처리 실패");
             } finally {
                 loading.style.display = 'none';
             }
@@ -275,7 +271,6 @@
             return link;
         }
 
-        // 1. 사진
         function renderPhotos() {
             const list = document.getElementById('photo-list');
             const emptyMsg = document.getElementById('photo-empty');
@@ -290,10 +285,18 @@
             list.innerHTML = photos.map(p => {
                 const cat = categories.find(c => c.id === p.category);
                 const catName = cat ? cat.name : p.category;
+                const isVideo = p.type === 'video';
+                const typeIcon = isVideo ? '<i class="fas fa-video text-blue-400"></i>' : '<i class="fas fa-image text-green-400"></i>';
 
                 return `
                 <tr class="hover:bg-gray-700/50 transition group">
-                    <td class="p-4"><img src="${getDriveImage(p.url)}" class="w-16 h-12 object-cover rounded border border-gray-600"></td>
+                    <td class="p-4 text-xl">${typeIcon}</td>
+                    <td class="p-4">
+                        <div class="relative w-16 h-12">
+                            <img src="${getDriveImage(p.url)}" class="w-full h-full object-cover rounded border border-gray-600" onerror="this.src='https://via.placeholder.com/150?text=No+Img'">
+                            ${isVideo ? '<div class="absolute inset-0 flex items-center justify-center bg-black/50"><i class="fas fa-play text-white text-xs"></i></div>' : ''}
+                        </div>
+                    </td>
                     <td class="p-4 font-medium text-white">${p.title}</td>
                     <td class="p-4 text-gray-400 text-xs"><span class="bg-gray-700 px-2 py-1 rounded">${catName}</span></td>
                     <td class="p-4 text-right">
@@ -303,41 +306,29 @@
             `}).join('');
         }
 
-        // 2. 방명록
         function renderGuestbook() {
             const list = document.getElementById('guestbook-list');
             const emptyMsg = document.getElementById('guestbook-empty');
-
             if(guestbook.length === 0) {
                 list.innerHTML = '';
                 emptyMsg.classList.remove('hidden');
                 return;
             }
             emptyMsg.classList.add('hidden');
-
-            list.innerHTML = guestbook.map(g => {
-                const isPinned = String(g.pinned).toUpperCase() === 'TRUE';
-                return `
+            list.innerHTML = guestbook.map(g => `
                 <div class="bg-gray-800 p-4 rounded border border-gray-700 flex flex-col relative">
                     <div class="flex justify-between items-start mb-2">
-                        <div>
-                            <span class="font-bold text-white block">${g.name}</span>
-                            <span class="text-xs text-gray-500">${g.date}</span>
-                        </div>
-                        <button onclick="togglePin(${g.id})" class="${isPinned ? 'text-red-500' : 'text-gray-500 hover:text-red-500'} transition">
-                            <i class="fas fa-thumbtack"></i>
-                        </button>
+                        <div><span class="font-bold text-white block">${g.name}</span><span class="text-xs text-gray-500">${g.date}</span></div>
+                        ${g.pinned == true || g.pinned == 'TRUE' ? '<i class="fas fa-thumbtack text-red-500"></i>' : ''}
                     </div>
                     <p class="text-sm text-gray-300 bg-gray-700/30 p-2 rounded mb-2 flex-grow">${g.msg}</p>
                     <button onclick="deleteGuestbook(${g.id})" class="self-end text-xs text-red-400 hover:text-red-200"><i class="fas fa-trash mr-1"></i>삭제</button>
                 </div>
-            `}).join('');
+            `).join('');
         }
 
-        // 3. 카테고리
         function renderCategories() {
             const list = document.getElementById('category-list');
-            
             list.innerHTML = categories.map(c => `
                 <tr class="hover:bg-gray-700/50 transition">
                     <td class="p-4 font-mono text-blue-400">${c.id}</td>
@@ -347,23 +338,21 @@
                     </td>
                 </tr>
             `).join('');
-
             const select = document.getElementById('new-category');
             select.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
         }
 
-        // --- 기능 동작 ---
-        function showSection(sectionId) {
-            ['photos', 'guestbook', 'categories'].forEach(id => {
-                document.getElementById(`section-${id}`).classList.add('hidden');
-                document.getElementById(`nav-${id}`).classList.remove('active');
-                document.getElementById(`nav-${id}`).classList.remove('bg-blue-600', 'text-white');
+        // --- 액션 ---
+        function showSection(id) {
+            ['photos', 'guestbook', 'categories'].forEach(s => {
+                document.getElementById(`section-${s}`).classList.add('hidden');
+                document.getElementById(`nav-${s}`).classList.remove('active');
+                document.getElementById(`nav-${s}`).classList.remove('bg-blue-600', 'text-white');
             });
-            document.getElementById(`section-${sectionId}`).classList.remove('hidden');
-            document.getElementById(`nav-${sectionId}`).classList.add('active');
+            document.getElementById(`section-${id}`).classList.remove('hidden');
+            document.getElementById(`nav-${id}`).classList.add('active');
         }
 
-        // 사진
         function openAddModal() {
             document.getElementById('add-modal').classList.remove('hidden');
             document.getElementById('new-url').value = '';
@@ -374,6 +363,7 @@
         function closeAddModal() { document.getElementById('add-modal').classList.add('hidden'); }
         
         async function savePhoto() {
+            const type = document.getElementById('new-type').value;
             const url = document.getElementById('new-url').value;
             const title = document.getElementById('new-title').value;
             const desc = document.getElementById('new-desc').value;
@@ -383,51 +373,23 @@
 
             await sendData('addPhoto', {
                 id: Date.now(),
-                url, title, description: desc, category,
-                likes: 0
+                type, url, title, description: desc, category
             });
             closeAddModal();
             showSection('photos');
         }
         
-        async function deletePhoto(id) {
-            if(confirm('정말 삭제하시겠습니까?')) {
-                await sendData('deletePhoto', { id: id });
-            }
-        }
-
-        // 방명록
-        async function deleteGuestbook(id) {
-            if(confirm('이 메시지를 삭제하시겠습니까?')) {
-                await sendData('deleteGuestbook', { id: id });
-            }
-        }
-        async function togglePin(id) {
-            await sendData('togglePin', { id: id });
-        }
-
-        // 카테고리
+        async function deletePhoto(id) { if(confirm('삭제하시겠습니까?')) await sendData('deletePhoto', { id: id }); }
+        async function deleteGuestbook(id) { if(confirm('삭제하시겠습니까?')) await sendData('deleteGuestbook', { id: id }); }
         async function addCategory() {
-            const idInput = document.getElementById('cat-id-input');
-            const nameInput = document.getElementById('cat-name-input');
-            
-            const id = idInput.value.trim().toLowerCase();
-            const name = nameInput.value.trim();
-
-            if(!id || !name) { alert('ID와 이름을 모두 입력해주세요.'); return; }
-            if(categories.some(c => c.id === id)) { alert('이미 존재하는 ID입니다.'); return; }
-            if(id === 'all') { alert("'all'은 사용할 수 없는 ID입니다."); return; }
-
+            const id = document.getElementById('cat-id-input').value.trim().toLowerCase();
+            const name = document.getElementById('cat-name-input').value.trim();
+            if(!id || !name) return alert('입력 확인');
             await sendData('addCategory', { id, name });
-            idInput.value = '';
-            nameInput.value = '';
+            document.getElementById('cat-id-input').value = '';
+            document.getElementById('cat-name-input').value = '';
         }
-
-        async function deleteCategory(id) {
-            if(confirm(`'${id}' 카테고리를 삭제하시겠습니까?`)) {
-                await sendData('deleteCategory', { id: id });
-            }
-        }
+        async function deleteCategory(id) { if(confirm('삭제?')) await sendData('deleteCategory', { id: id }); }
     </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeongyeon's Photo Exhibition</title>
+    <title>The GRAND Contents Festival</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
@@ -188,8 +188,12 @@
     <div id="image-modal" class="fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
         <button onclick="closeModal()" class="absolute top-6 right-6 text-white/70 hover:text-white text-4xl z-[60] focus:outline-none"><i class="fas fa-times"></i></button>
         <button onclick="changeImage(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-5xl p-4 focus:outline-none z-[60] hidden md:block"><i class="fas fa-chevron-left"></i></button>
-        <div class="relative max-w-[90vw] max-h-[85vh] flex flex-col items-center">
-            <img id="modal-img" src="" alt="크게 보기" class="max-w-full max-h-[80vh] object-contain shadow-2xl rounded-sm">
+        <div class="relative max-w-[90vw] max-h-[85vh] w-full flex flex-col items-center p-4">
+            <!-- 컨텐츠 영역 (이미지 or 비디오) -->
+            <div id="modal-content" class="flex items-center justify-center w-full h-full max-h-[80vh]">
+                <!-- JS로 내용이 채워짐 -->
+            </div>
+            
             <div class="mt-4 text-center">
                 <h3 id="modal-title" class="text-xl font-bold text-white serif tracking-wider"></h3>
                 <p id="modal-desc" class="text-gray-400 text-sm mt-1"></p>
@@ -212,11 +216,11 @@
         const bgColors = ['bg-yellow-200', 'bg-blue-200', 'bg-green-200', 'bg-pink-200', 'bg-purple-200'];
 
         // --- 페이지네이션 설정 ---
-        const ITEMS_PER_PAGE = 6; // 한 페이지당 보여줄 사진 수
+        const ITEMS_PER_PAGE = 6; 
         let currentPage = 1;
 
 
-        // --- 시크릿 게이트 (서버 인증 방식) ---
+        // --- 시크릿 게이트 ---
         async function checkAccess() {
             const input = document.getElementById('gate-pw');
             const val = input.value.trim();
@@ -226,12 +230,10 @@
             const body = document.getElementById('main-body');
 
             if (!val) return;
-
             errorMsg.classList.add('hidden');
             checkingMsg.classList.remove('hidden');
             
             try {
-                // 서버에 비밀번호 확인 요청
                 const response = await fetch(WEB_APP_URL, {
                     method: 'POST',
                     body: JSON.stringify({ action: 'verifyAccess', data: { key: val } })
@@ -259,10 +261,7 @@
                 checkingMsg.classList.add('hidden');
             }
         }
-
-        document.getElementById('gate-pw').addEventListener('keypress', (e) => {
-            if(e.key === 'Enter') checkAccess();
-        });
+        document.getElementById('gate-pw').addEventListener('keypress', (e) => { if(e.key === 'Enter') checkAccess(); });
 
 
         // --- API 통신 함수 ---
@@ -273,12 +272,10 @@
             }
 
             try {
-                // 캐시 방지용 timestamp 추가
                 const response = await fetch(`${WEB_APP_URL}?action=getAll&t=${new Date().getTime()}`);
                 const data = await response.json();
                 
                 photos = data.photos || [];
-                // 1. 데이터 로드 후 랜덤 섞기
                 shuffleArray(photos);
 
                 guestbookEntries = data.guestbook || [];
@@ -287,7 +284,7 @@
                 console.log("Loaded Data:", data);
 
                 renderCategories();
-                renderGallery(currentCategory); // 페이지네이션 적용된 렌더링
+                renderGallery(currentCategory); 
                 renderGuestbook();
 
             } catch (error) {
@@ -296,7 +293,6 @@
             }
         }
 
-        // --- 랜덤 섞기 유틸리티 (Fisher-Yates Shuffle) ---
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -308,7 +304,6 @@
         async function sendData(action, payload) {
             const loading = document.getElementById('loading');
             loading.style.display = 'block';
-            
             try {
                 await fetch(WEB_APP_URL, {
                     method: 'POST',
@@ -330,6 +325,14 @@
             }
             return link;
         }
+        
+        function getDriveVideoUrl(link) {
+            // 드라이브 뷰 링크를 프리뷰(임베드용) 링크로 변환
+            if (link && link.includes('drive.google.com')) {
+                return link.replace('/view', '/preview');
+            }
+            return link;
+        }
 
         // --- UI 렌더링 ---
 
@@ -345,14 +348,12 @@
         }
 
         function renderGallery(filter = 'all') {
-            // 1. 필터링
             const filteredPhotos = filter === 'all' ? photos : photos.filter(p => p.category === filter);
-            
             const grid = document.getElementById('gallery-grid');
             const paginationContainer = document.getElementById('pagination-container');
             
             if(photos.length === 0) {
-                grid.innerHTML = '<div class="col-span-full text-center text-gray-500 pt-10">사진이 없습니다. 관리자 페이지에서 추가해주세요.<br>(추가했는데 안 보이면 구글 시트의 헤더가 id, url 등으로 정확한지 확인하세요)</div>';
+                grid.innerHTML = '<div class="col-span-full text-center text-gray-500 pt-10">사진이 없습니다. 관리자 페이지에서 추가해주세요.</div>';
                 paginationContainer.innerHTML = '';
                 return;
             }
@@ -363,30 +364,33 @@
                  return;
             }
 
-            // 2. 페이지네이션 계산
+            // 페이지네이션
             const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
             const endIndex = startIndex + ITEMS_PER_PAGE;
             const paginatedItems = filteredPhotos.slice(startIndex, endIndex);
 
-            // 3. 그리드 렌더링 (페이지에 해당하는 아이템만)
             grid.innerHTML = ''; 
             paginatedItems.forEach(photo => {
                 const imageUrl = getDriveImage(photo.url);
                 const catName = getCategoryName(photo.category);
+                const isVideo = photo.type === 'video';
                 
                 const card = document.createElement('div');
                 card.className = 'photo-card bg-gray-800 rounded-lg overflow-hidden flex flex-col h-full relative';
                 
                 const imgTag = imageUrl ? 
-                    `<img src="${imageUrl}" alt="${photo.title}" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://via.placeholder.com/400x300?text=Image+Error'">` :
-                    `<div class="w-full h-full flex items-center justify-center bg-gray-700 text-gray-500">이미지 주소 없음</div>`;
+                    `<img src="${imageUrl}" alt="${photo.title}" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://via.placeholder.com/400x300?text=Video'">` :
+                    `<div class="w-full h-full flex items-center justify-center bg-gray-700 text-gray-500">이미지 없음</div>`;
+
+                // 비디오일 경우 재생 아이콘 오버레이 추가
+                const overlay = isVideo ? 
+                    `<div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition"><i class="fas fa-play-circle text-white text-5xl opacity-80 group-hover:opacity-100 transform group-hover:scale-110 transition"></i></div>` :
+                    `<div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"><span class="text-white text-lg font-light border border-white px-4 py-1 rounded-full">크게 보기</span></div>`;
 
                 card.innerHTML = `
                     <div class="relative group cursor-pointer overflow-hidden aspect-[4/3]" onclick="openModal(${photo.id})">
                         ${imgTag}
-                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                            <span class="text-white text-lg font-light border border-white px-4 py-1 rounded-full">크게 보기</span>
-                        </div>
+                        ${overlay}
                     </div>
                     <div class="p-5 flex flex-col flex-grow">
                         <div class="flex justify-between items-start mb-2">
@@ -405,18 +409,15 @@
                 grid.appendChild(card);
             });
 
-            // 4. 페이지네이션 버튼 렌더링
             renderPagination(filteredPhotos.length);
             updateCategoryStyles(filter);
         }
 
-        // 페이지네이션 버튼 그리기 함수
         function renderPagination(totalItems) {
             const container = document.getElementById('pagination-container');
             container.innerHTML = '';
-
             const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-            if (totalPages <= 1) return; // 1페이지 이하면 버튼 안 보여줌
+            if (totalPages <= 1) return;
 
             for (let i = 1; i <= totalPages; i++) {
                 const btn = document.createElement('button');
@@ -425,7 +426,6 @@
                 btn.onclick = () => {
                     currentPage = i;
                     renderGallery(currentCategory);
-                    // 페이지 이동 시 상단으로 스크롤 (선택 사항)
                     document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
                 };
                 container.appendChild(btn);
@@ -439,7 +439,7 @@
 
         function filterGallery(category) { 
             currentCategory = category;
-            currentPage = 1; // 카테고리 변경 시 1페이지로 초기화
+            currentPage = 1;
             renderGallery(category); 
         }
         
@@ -473,11 +473,7 @@
         async function addGuestbookEntry() {
             const nameInput = document.getElementById('guest-name');
             const msgInput = document.getElementById('guest-msg');
-            
-            if (!nameInput.value.trim() || !msgInput.value.trim()) {
-                alert("이름과 내용을 모두 입력해주세요!");
-                return;
-            }
+            if (!nameInput.value.trim() || !msgInput.value.trim()) return alert("내용 입력!");
 
             const newEntry = {
                 id: Date.now(),
@@ -488,7 +484,6 @@
                 rotate: Math.floor(Math.random() * 6) - 3,
                 color: bgColors[Math.floor(Math.random() * bgColors.length)]
             };
-
             guestbookEntries.unshift(newEntry);
             renderGuestbook();
             nameInput.value = '';
@@ -499,7 +494,6 @@
         function renderGuestbook() {
             const board = document.getElementById('guestbook-board');
             board.innerHTML = '';
-            
             const sortedEntries = [...guestbookEntries].sort((a, b) => {
                 const aPinned = String(a.pinned).toUpperCase() === 'TRUE';
                 const bPinned = String(b.pinned).toUpperCase() === 'TRUE';
@@ -530,12 +524,17 @@
         let currentModalIndex = 0;
         function closeModal() {
             const modal = document.getElementById('image-modal');
+            const content = document.getElementById('modal-content');
+            content.innerHTML = ''; // 내용 비우기 (영상 정지)
+            
             modal.classList.add('opacity-0');
             setTimeout(() => { modal.classList.add('hidden'); document.body.style.overflow = 'auto'; }, 300);
         }
+        
         function openModal(photoId) {
-            // 모달 열 때는 전체(혹은 필터된) 리스트에서 찾아야 하니 셔플된 photos 혹은 filteredPhotos 기준으로 동작
-            // 여기서는 현재 화면에 보이는(필터링된) 사진들 기준으로 탐색
+            // 현재 보고 있는(페이지네이션 된) 리스트가 아니라 전체(필터링된) 리스트에서 찾아야 함
+            // 그래야 모달에서 좌우로 넘길 때 페이지 상관없이 넘어갈 수 있음
+            // 셔플된 순서 그대로 유지됨
             const filteredPhotos = currentCategory === 'all' ? photos : photos.filter(p => p.category === currentCategory);
             
             const index = filteredPhotos.findIndex(p => p.id === photoId);
@@ -548,13 +547,29 @@
             setTimeout(() => modal.classList.remove('opacity-0'), 10);
             document.body.style.overflow = 'hidden';
         }
+        
         function updateImageModalContent() {
             const filteredPhotos = currentCategory === 'all' ? photos : photos.filter(p => p.category === currentCategory);
             const photo = filteredPhotos[currentModalIndex];
-            document.getElementById('modal-img').src = getDriveImage(photo.url);
+            const contentDiv = document.getElementById('modal-content');
+            
+            // 내용 초기화
+            contentDiv.innerHTML = '';
+
+            if (photo.type === 'video') {
+                // 비디오일 경우 iframe 생성
+                const videoUrl = getDriveVideoUrl(photo.url);
+                contentDiv.innerHTML = `<iframe src="${videoUrl}" width="100%" height="100%" style="border:none; aspect-ratio: 16/9;" allow="autoplay; fullscreen"></iframe>`;
+            } else {
+                // 이미지일 경우 img 태그 생성
+                const imgUrl = getDriveImage(photo.url);
+                contentDiv.innerHTML = `<img src="${imgUrl}" alt="${photo.title}" class="max-w-full max-h-[80vh] object-contain shadow-2xl rounded-sm">`;
+            }
+
             document.getElementById('modal-title').innerText = photo.title;
             document.getElementById('modal-desc').innerText = photo.description;
         }
+        
         function changeImage(dir) {
             const filteredPhotos = currentCategory === 'all' ? photos : photos.filter(p => p.category === currentCategory);
             currentModalIndex += dir;
@@ -562,6 +577,7 @@
             else if (currentModalIndex < 0) currentModalIndex = filteredPhotos.length - 1;
             updateImageModalContent();
         }
+        
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeModal();
             if (!document.getElementById('image-modal').classList.contains('hidden')) {
