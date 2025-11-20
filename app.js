@@ -92,8 +92,8 @@ const CARD_DATA = [
    
  {
     icon:"📷",
-    title:"The GRAND Image Festival",
-    desc:"2025 온라인 사진전",
+    title:"The GRAND Contents Festival",
+    desc:"올해를 빛낸 당신의 콘텐츠를 자랑해 보세요!",
     href:"https://taeja9.github.io/playground/grandimagefestival/index.html",
     cats:["event"],
     isActive:true,
@@ -451,6 +451,7 @@ function init(){
 
 
 document.addEventListener("DOMContentLoaded", init);
+
 
 
 
