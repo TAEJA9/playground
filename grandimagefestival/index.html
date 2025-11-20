@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeongyeon's Photo Exhibition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #1a1a1a;
+            color: #f3f4f6;
+        }
+        .serif {
+            font-family: 'Noto Serif KR', serif;
+        }
+        
+        .photo-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .photo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        
+        .guestbook-bg {
+            background-image: radial-gradient(#333 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-color: #262626;
+        }
+        .guestbook-container {
+            height: 800px; 
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
+        .sticky-note {
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+        }
+        .sticky-note:hover {
+            transform: scale(1.05) rotate(0deg) !important;
+            z-index: 10;
+            box-shadow: 5px 10px 15px rgba(0,0,0,0.4);
+        }
+        .sticky-note.pinned {
+            z-index: 5;
+            border: 2px solid #ff4444;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #555; 
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #777; 
+        }
+
+        /* 접속 제한 게이트 스타일 */
+        #access-gate {
+            background-color: #000;
+            background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        #access-gate::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+        }
+        
+        /* 로딩 인디케이터 */
+        #loading {
+            display: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col overflow-hidden" id="main-body">
+
+    <!-- 접속 제한 게이트 -->
+    <div id="access-gate" class="fixed inset-0 z-[100] flex flex-col items-center justify-center text-white px-4">
+        <div class="relative z-10 text-center max-w-md w-full bg-black/60 p-8 rounded-lg border border-gray-700 backdrop-blur-md shadow-2xl">
+            <h2 class="text-4xl font-bold serif mb-2 tracking-widest">PRIVATE EXHIBITION</h2>
+            <p class="text-gray-400 mb-8 text-sm">관계자 외 출입금지</p>
+            
+            <div class="space-y-4">
+                <p class="text-sm font-light">관리자에게 받으신 비밀번호를 입력하세요.</p>
+                <input type="password" id="gate-pw" class="w-full bg-gray-800/80 border border-gray-600 rounded p-3 text-center text-white tracking-widest focus:outline-none focus:border-white transition" placeholder="PASSWORD">
+                <button onclick="checkAccess()" class="w-full bg-white text-black font-bold py-3 rounded hover:bg-gray-200 transition">입장하기</button>
+                <p id="gate-error" class="text-red-500 text-xs mt-2 hidden font-bold">비밀번호가 일치하지 않습니다.</p>
+                <p id="gate-checking" class="text-blue-400 text-xs mt-2 hidden animate-pulse">확인 중...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 로딩 표시 -->
+    <div id="loading" class="fixed top-4 right-4 z-[60] bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg text-sm font-bold animate-pulse">
+        <i class="fas fa-spinner fa-spin mr-2"></i> 저장 중...
+    </div>
+
+    <!-- 헤더 -->
+    <header class="py-12 text-center border-b border-gray-800 bg-black/30 backdrop-blur-sm sticky top-0 z-40">
+        <h1 class="text-4xl md:text-5xl font-bold serif mb-2 text-white tracking-widest cursor-pointer" onclick="location.reload()">The GRAND Image Festival</h1>
+        <p class="text-gray-400 text-sm md:text-base font-light">천하제일 온라인 사진전</p>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        
+        <!-- 카테고리 탭 -->
+        <div class="flex justify-center gap-4 mb-12 flex-wrap" id="category-container">
+            <div class="text-gray-500">카테고리 로딩 중...</div>
+        </div>
+
+        <!-- 사진 갤러리 그리드 -->
+        <div id="gallery-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20 min-h-[200px]">
+            <div class="col-span-full text-center text-gray-500 pt-10">데이터를 불러오는 중입니다...</div>
+        </div>
+
+        <hr class="border-gray-800 my-16">
+
+        <!-- 방명록 섹션 -->
+        <section id="guestbook" class="mb-20">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl serif mb-3">Guestbook</h2>
+                <p class="text-gray-400">자유롭게 감상평을 남겨주세요.</p>
+            </div>
+
+            <div class="max-w-xl mx-auto mb-12 bg-gray-800 p-6 rounded-lg shadow-lg">
+                <div class="flex flex-col gap-4">
+                    <input type="text" id="guest-name" placeholder="이름 (Name)" class="p-3 rounded bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-white transition">
+                    <textarea id="guest-msg" rows="3" placeholder="어떤 사진이 좋았나요? (Message)" class="p-3 rounded bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-white transition"></textarea>
+                    <button onclick="addGuestbookEntry()" class="bg-white text-black font-bold py-3 rounded hover:bg-gray-200 transition">게시물 붙이기</button>
+                </div>
+            </div>
+
+            <div id="guestbook-board" class="guestbook-container guestbook-bg p-8 rounded-xl flex flex-wrap content-start gap-6 justify-center relative">
+                <!-- 방명록 렌더링 -->
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-8 text-center text-gray-500 text-sm border-t border-gray-800 relative">
+        <p>&copy; Jeongyeon. 2025</p>
+        <a href="admin.html" class="absolute bottom-8 right-8 text-gray-700 hover:text-gray-400 text-xs border border-gray-800 px-2 py-1 rounded hover:border-gray-600 transition">Admin Page</a>
+    </footer>
+
+    <!-- 이미지 확대보기 모달 -->
+    <div id="image-modal" class="fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <button onclick="closeModal()" class="absolute top-6 right-6 text-white/70 hover:text-white text-4xl z-[60] focus:outline-none"><i class="fas fa-times"></i></button>
+        <button onclick="changeImage(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-5xl p-4 focus:outline-none z-[60] hidden md:block"><i class="fas fa-chevron-left"></i></button>
+        <div class="relative max-w-[90vw] max-h-[85vh] flex flex-col items-center">
+            <img id="modal-img" src="" alt="크게 보기" class="max-w-full max-h-[80vh] object-contain shadow-2xl rounded-sm">
+            <div class="mt-4 text-center">
+                <h3 id="modal-title" class="text-xl font-bold text-white serif tracking-wider"></h3>
+                <p id="modal-desc" class="text-gray-400 text-sm mt-1"></p>
+            </div>
+        </div>
+        <button onclick="changeImage(1)" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-5xl p-4 focus:outline-none z-[60] hidden md:block"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <script>
+        // ==========================================
+        // 🚨 여기에 배포한 구글 웹 앱 URL을 꼭 붙여넣으세요! (https://script.google.com/...)
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyzIX76xN4sel_Onttg_xlNrARV71H-2R5lwwPlyXlVzhs_8HeFIO044okCBtd6gU7bFQ/exec"; 
+        // ==========================================
+
+        // --- 데이터 및 상태 ---
+        let photos = [];
+        let guestbookEntries = [];
+        let categories = [];
+        let currentCategory = 'all';
+        const bgColors = ['bg-yellow-200', 'bg-blue-200', 'bg-green-200', 'bg-pink-200', 'bg-purple-200'];
+
+
+        // --- 시크릿 게이트 (서버 인증 방식) ---
+        async function checkAccess() {
+            const input = document.getElementById('gate-pw');
+            const val = input.value.trim();
+            const errorMsg = document.getElementById('gate-error');
+            const checkingMsg = document.getElementById('gate-checking');
+            const gate = document.getElementById('access-gate');
+            const body = document.getElementById('main-body');
+
+            if (!val) return;
+
+            errorMsg.classList.add('hidden');
+            checkingMsg.classList.remove('hidden');
+            
+            try {
+                // 서버에 비밀번호 확인 요청
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'verifyAccess', data: { key: val } })
+                });
+                const result = await response.json();
+
+                if (result.result === 'success') {
+                    gate.style.opacity = '0';
+                    gate.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => {
+                        gate.style.display = 'none';
+                        body.classList.remove('overflow-hidden');
+                        loadData();
+                    }, 500);
+                } else {
+                    throw new Error('Wrong password');
+                }
+            } catch (err) {
+                errorMsg.classList.remove('hidden');
+                input.value = '';
+                input.focus();
+                input.classList.add('border-red-500');
+                setTimeout(() => input.classList.remove('border-red-500'), 500);
+            } finally {
+                checkingMsg.classList.add('hidden');
+            }
+        }
+
+        document.getElementById('gate-pw').addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') checkAccess();
+        });
+
+
+        // --- API 통신 함수 ---
+        async function loadData() {
+            if(!WEB_APP_URL || WEB_APP_URL.includes('여기에')) {
+                alert("HTML 파일 코드 상단의 WEB_APP_URL 변수에 배포된 주소를 넣어주세요!");
+                return;
+            }
+
+            try {
+                // 캐시 방지용 timestamp 추가
+                const response = await fetch(`${WEB_APP_URL}?action=getAll&t=${new Date().getTime()}`);
+                const data = await response.json();
+                
+                photos = data.photos || [];
+                guestbookEntries = data.guestbook || [];
+                categories = data.categories || [];
+
+                // 데이터 디버깅 (개발자 도구 콘솔에서 확인 가능)
+                console.log("Loaded Data:", data);
+
+                renderCategories();
+                renderGallery(currentCategory);
+                renderGuestbook();
+
+            } catch (error) {
+                console.error("데이터 로드 실패:", error);
+                alert("데이터를 불러오는데 실패했습니다. (URL과 배포 상태를 확인하세요)");
+            }
+        }
+
+        async function sendData(action, payload) {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: action, data: payload })
+                });
+            } catch (error) {
+                console.error("전송 실패:", error);
+                alert("저장에 실패했습니다.");
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // --- 유틸리티 ---
+        function getDriveImage(link) {
+            if (link && link.includes('drive.google.com')) {
+                const idMatch = link.match(/\/d\/(.+?)\//);
+                if (idMatch) return `https://lh3.googleusercontent.com/d/${idMatch[1]}=w1000`;
+            }
+            return link;
+        }
+
+        // --- UI 렌더링 ---
+
+        function renderCategories() {
+            const container = document.getElementById('category-container');
+            let html = `<button onclick="filterGallery('all')" class="category-btn px-6 py-2 rounded-full border border-gray-600 hover:bg-white hover:text-black transition-all active bg-white text-black" data-category="all">전체보기</button>`;
+            
+            categories.forEach(cat => {
+                html += `<button onclick="filterGallery('${cat.id}')" class="category-btn px-6 py-2 rounded-full border border-gray-600 hover:bg-white hover:text-black transition-all text-gray-300" data-category="${cat.id}">${cat.name}</button>`;
+            });
+            container.innerHTML = html;
+            updateCategoryStyles(currentCategory);
+        }
+
+        function renderGallery(filter = 'all') {
+            currentCategory = filter;
+            const grid = document.getElementById('gallery-grid');
+            
+            if(photos.length === 0) {
+                grid.innerHTML = '<div class="col-span-full text-center text-gray-500 pt-10">사진이 없습니다. 관리자 페이지에서 추가해주세요.<br>(추가했는데 안 보이면 구글 시트의 헤더가 id, url 등으로 정확한지 확인하세요)</div>';
+                return;
+            }
+            grid.innerHTML = ''; 
+            
+            const filteredPhotos = filter === 'all' ? [...photos] : photos.filter(p => p.category === filter);
+
+            if (filteredPhotos.length === 0 && photos.length > 0) {
+                 grid.innerHTML = '<div class="col-span-full text-center text-gray-500 pt-10">이 카테고리에는 아직 사진이 없습니다.</div>';
+                 return;
+            }
+
+            filteredPhotos.forEach(photo => {
+                const imageUrl = getDriveImage(photo.url);
+                const catName = getCategoryName(photo.category);
+                
+                const card = document.createElement('div');
+                card.className = 'photo-card bg-gray-800 rounded-lg overflow-hidden flex flex-col h-full relative';
+                
+                const imgTag = imageUrl ? 
+                    `<img src="${imageUrl}" alt="${photo.title}" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://via.placeholder.com/400x300?text=Image+Error'">` :
+                    `<div class="w-full h-full flex items-center justify-center bg-gray-700 text-gray-500">이미지 주소 없음</div>`;
+
+                card.innerHTML = `
+                    <div class="relative group cursor-pointer overflow-hidden aspect-[4/3]" onclick="openModal(${photo.id})">
+                        ${imgTag}
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                            <span class="text-white text-lg font-light border border-white px-4 py-1 rounded-full">크게 보기</span>
+                        </div>
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-white serif">${photo.title || '제목 없음'}</h3>
+                            <button onclick="toggleLike(event, ${photo.id})" class="like-btn transition transform text-gray-400 hover:text-white focus:outline-none">
+                                <i class="far fa-heart text-2xl"></i>
+                            </button>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2 flex-grow">${photo.description || ''}</p>
+                        <div class="flex justify-between items-center text-xs text-gray-500 pt-4 border-t border-gray-700 mt-auto">
+                            <span class="uppercase tracking-wider">${catName}</span>
+                            <span><i class="fas fa-heart mr-1"></i> <span id="like-count-${photo.id}">${photo.likes || 0}</span>명이 좋아함</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            updateCategoryStyles(filter);
+        }
+
+        function getCategoryName(id) {
+            const cat = categories.find(c => c.id === id);
+            return cat ? cat.name : id;
+        }
+
+        function filterGallery(category) { renderGallery(category); }
+        
+        function updateCategoryStyles(activeCategory) {
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if(btn.dataset.category === activeCategory) {
+                    btn.classList.remove('text-gray-300', 'bg-transparent');
+                    btn.classList.add('bg-white', 'text-black');
+                } else {
+                    btn.classList.add('text-gray-300', 'bg-transparent');
+                    btn.classList.remove('bg-white', 'text-black');
+                }
+            });
+        }
+
+        async function toggleLike(event, id) {
+            event.stopPropagation();
+            const btn = event.currentTarget;
+            const icon = btn.querySelector('i');
+            const countSpan = document.getElementById(`like-count-${id}`);
+            
+            if (!icon.classList.contains('fas')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas', 'text-red-500');
+                btn.classList.add('text-red-500', 'scale-110');
+                countSpan.innerText = parseInt(countSpan.innerText) + 1;
+                await sendData('toggleLike', { id: id, increment: 1 });
+            } 
+        }
+
+        async function addGuestbookEntry() {
+            const nameInput = document.getElementById('guest-name');
+            const msgInput = document.getElementById('guest-msg');
+            
+            if (!nameInput.value.trim() || !msgInput.value.trim()) {
+                alert("이름과 내용을 모두 입력해주세요!");
+                return;
+            }
+
+            const newEntry = {
+                id: Date.now(),
+                name: nameInput.value.trim(),
+                msg: msgInput.value.trim(),
+                date: new Date().toLocaleDateString(),
+                pinned: false,
+                rotate: Math.floor(Math.random() * 6) - 3,
+                color: bgColors[Math.floor(Math.random() * bgColors.length)]
+            };
+
+            guestbookEntries.unshift(newEntry);
+            renderGuestbook();
+            nameInput.value = '';
+            msgInput.value = '';
+            await sendData('addGuestbook', newEntry);
+        }
+
+        function renderGuestbook() {
+            const board = document.getElementById('guestbook-board');
+            board.innerHTML = '';
+            
+            const sortedEntries = [...guestbookEntries].sort((a, b) => {
+                const aPinned = String(a.pinned).toUpperCase() === 'TRUE';
+                const bPinned = String(b.pinned).toUpperCase() === 'TRUE';
+                if (aPinned && !bPinned) return -1;
+                if (!aPinned && bPinned) return 1;
+                return 0;
+            });
+
+            sortedEntries.forEach(entry => {
+                const isPinned = String(entry.pinned).toUpperCase() === 'TRUE';
+                const pinColor = isPinned ? 'text-red-500' : 'text-gray-400 hover:text-red-500';
+                const borderClass = isPinned ? 'pinned' : '';
+                const note = document.createElement('div');
+                note.className = `sticky-note w-64 h-auto ${entry.color} text-gray-900 p-4 shadow-lg flex flex-col relative group flex-shrink-0 ${borderClass}`;
+                note.style.transform = `rotate(${entry.rotate}deg)`;
+                note.innerHTML = `
+                    <div class="font-bold mb-2 border-b border-black border-opacity-10 pb-1 flex justify-between items-center">
+                        <span>${entry.name}</span>
+                        <button onclick="alert('핀 고정은 관리자만 가능합니다.')" class="${pinColor} transition-colors focus:outline-none"><i class="fas fa-thumbtack"></i></button>
+                    </div>
+                    <p class="text-sm flex-grow font-handwriting break-words">${entry.msg}</p>
+                    <div class="text-xs text-gray-500 mt-2 text-right">${entry.date}</div>
+                `;
+                board.appendChild(note);
+            });
+        }
+
+        let currentModalIndex = 0;
+        function closeModal() {
+            const modal = document.getElementById('image-modal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => { modal.classList.add('hidden'); document.body.style.overflow = 'auto'; }, 300);
+        }
+        function openModal(photoId) {
+            const filteredPhotos = currentCategory === 'all' ? photos : photos.filter(p => p.category === currentCategory);
+            const index = filteredPhotos.findIndex(p => p.id === photoId);
+            if(index === -1) return;
+            currentModalIndex = index;
+            updateImageModalContent();
+            const modal = document.getElementById('image-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function updateImageModalContent() {
+            const filteredPhotos = currentCategory === 'all' ? photos : photos.filter(p => p.category === currentCategory);
+            const photo = filteredPhotos[currentModalIndex];
+            document.getElementById('modal-img').src = getDriveImage(photo.url);
+            document.getElementById('modal-title').innerText = photo.title;
+            document.getElementById('modal-desc').innerText = photo.description;
+        }
+        function changeImage(dir) {
+            const filteredPhotos = currentCategory === 'all' ? photos : photos.filter(p => p.category === currentCategory);
+            currentModalIndex += dir;
+            if (currentModalIndex >= filteredPhotos.length) currentModalIndex = 0;
+            else if (currentModalIndex < 0) currentModalIndex = filteredPhotos.length - 1;
+            updateImageModalContent();
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+            if (!document.getElementById('image-modal').classList.contains('hidden')) {
+                if (e.key === 'ArrowLeft') changeImage(-1);
+                if (e.key === 'ArrowRight') changeImage(1);
+            }
+        });
+    </script>
+</body>
+</html>
