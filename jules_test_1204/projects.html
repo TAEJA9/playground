@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Projects</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Fixed Header -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">MyPortfolio</a>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="projects.html" class="active">Projects</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <button id="theme-toggle" aria-label="Toggle Dark Mode">
+                    <span class="icon-sun">☀️</span>
+                    <span class="icon-moon">🌙</span>
+                </button>
+                <button id="menu-toggle" aria-label="Toggle Menu" class="menu-toggle">
+                    ☰
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="section">
+            <div class="container">
+                <h1 class="section-title">My Projects</h1>
+                <p class="section-subtitle">A selection of my recent work.</p>
+                
+                <div class="projects-grid">
+                    <!-- Project Cards will be statically defined here for simplicity, though JS could populate them -->
+                    
+                    <!-- Card 1 -->
+                    <article class="project-card" data-id="1">
+                        <div class="card-image placeholder"></div>
+                        <div class="card-content">
+                            <h3>E-Commerce Dashboard</h3>
+                            <p>A comprehensive dashboard for managing online stores with real-time analytics.</p>
+                            <button class="btn-text open-modal">Read More &rarr;</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 2 -->
+                    <article class="project-card" data-id="2">
+                        <div class="card-image placeholder"></div>
+                        <div class="card-content">
+                            <h3>Task Management App</h3>
+                            <p>A productivity tool designed to help teams collaborate and track progress efficiently.</p>
+                            <button class="btn-text open-modal">Read More &rarr;</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 3 -->
+                    <article class="project-card" data-id="3">
+                        <div class="card-image placeholder"></div>
+                        <div class="card-content">
+                            <h3>Portfolio Template</h3>
+                            <p>A clean, responsive portfolio website template for developers and designers.</p>
+                            <button class="btn-text open-modal">Read More &rarr;</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 4 -->
+                    <article class="project-card" data-id="4">
+                        <div class="card-image placeholder"></div>
+                        <div class="card-content">
+                            <h3>Weather Forecast API</h3>
+                            <p>An interface that visualizes weather data from global meteorological stations.</p>
+                            <button class="btn-text open-modal">Read More &rarr;</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 5 -->
+                    <article class="project-card" data-id="5">
+                        <div class="card-image placeholder"></div>
+                        <div class="card-content">
+                            <h3>Social Media Bot</h3>
+                            <p>Automated script for content scheduling and engagement analysis.</p>
+                            <button class="btn-text open-modal">Read More &rarr;</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 6 -->
+                    <article class="project-card" data-id="6">
+                        <div class="card-image placeholder"></div>
+                        <div class="card-content">
+                            <h3>Fitness Tracker</h3>
+                            <p>Mobile-first application to log workouts and monitor health metrics.</p>
+                            <button class="btn-text open-modal">Read More &rarr;</button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Structure -->
+    <div id="project-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modal-title">Project Title</h2>
+            <div id="modal-image" class="modal-image-placeholder"></div>
+            <p id="modal-description">Detailed description goes here.</p>
+            <div class="modal-tags" id="modal-tags">
+                <!-- Tags will be injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <p>&copy; 2023 Alex Dev. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" aria-label="GitHub">GitHub</a>
+                <a href="#" aria-label="LinkedIn">LinkedIn</a>
+                <a href="#" aria-label="Twitter">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
