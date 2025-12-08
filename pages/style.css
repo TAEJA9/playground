@@ -51,15 +51,15 @@ body {
 }
 
 .book-cover {
-    width: 160px;
+    width: 180px;
     height: auto;
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* 그림자 약간 부드럽게 조절 */
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 .book-title {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 800;
     color: var(--dark-navy);
     margin-bottom: 30px;
@@ -197,4 +197,5 @@ body {
     opacity: 0.9;
 
 }
+
 
