@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>교재 자료실</title>
+    
+    <link rel="icon" href="favicon.png" type="image/png">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <img src="" alt="교재 표지" class="book-cover" id="bookImage">
+            
+            <h1 class="book-title" id="bookTitle"></h1>
+
+            <a href="#" class="btn-download-all" id="downloadAllLink" target="_blank">
+                <span>교재 전체 파일 다운로드</span>
+                <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            </a>
+        </header>
+
+        <section class="list-section">
+            <div class="list-header">개별 다운로드 (총<span id="totalCount">0</span>개)</div>
+            <ul class="file-list" id="fileListContainer">
+                </ul>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <img src="/logo.png" alt="회사 로고" class="footer-logo">
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

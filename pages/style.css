@@ -1,0 +1,200 @@
+/* 브랜드 컬러 */
+:root {
+    --bg-yellow: #FFD400;
+    --point-red: #E64B3C;
+    --point-blue: #2B5BB7;
+    --dark-navy: #2F323E;
+    --card-bg: #ffffff;
+    --hover-red: #c93b2d;
+    --text-gray: #666;
+    --list-item-bg: #f3f5f7;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background-color: var(--bg-yellow);
+    display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    align-items: center;
+    color: var(--dark-navy);
+}
+
+/* 메인 컨테이너 */
+.container {
+    width: 100%;
+    max-width: 500px; /* PC에서 너무 퍼지지 않게 폭 제한 */
+    /* 배경색 삭제 (투명) */
+    /* 그림자 삭제 */
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* 푸터를 아래로 밀어내기 위해 공간 차지 */
+    padding: 0 20px; /* 모바일 양옆 여백 */
+    margin-bottom: 40px;
+}
+
+/* 상단 헤더 */
+.header {
+    text-align: center;
+    /* 이미지 위쪽 여백 추가! */
+    padding-top: 30px; 
+    padding-bottom: 30px;
+}
+
+.book-cover {
+    width: 160px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* 그림자 약간 부드럽게 조절 */
+    margin-bottom: 25px;
+}
+
+.book-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--dark-navy);
+    margin-bottom: 30px;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+}
+
+/* 전체 다운로드 버튼 */
+.btn-download-all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: var(--point-red);
+    color: #fff;
+    padding: 18px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 17px;
+    transition: all 0.2s ease;
+    box-shadow: 0 5px 15px rgba(230, 75, 60, 0.3);
+    gap: 10px;
+}
+
+.btn-download-all:hover {
+    background-color: var(--hover-red);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(230, 75, 60, 0.4);
+}
+
+.btn-download-all svg {
+    fill: #fff;
+    width: 24px;
+    height: 24px;
+}
+
+/* 📌 중요: 개별 다운로드 리스트에만 흰색 박스 적용 */
+.list-section {
+    background-color: #fff; /* 흰색 배경 */
+    border-radius: 24px;   /* 둥근 모서리 */
+    padding: 25px 25px;    /* 내부 여백 */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); /* 그림자 */
+    margin-bottom: 20px;
+}
+
+.list-header {
+    font-size: 15px;
+    color: var(--text-gray);
+    margin-bottom: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 5px;
+}
+
+.list-header::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    background-color: var(--point-blue);
+    border-radius: 50%;
+}
+
+.file-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.file-item {
+    background-color: var(--list-item-bg);
+    border: none;
+    border-radius: 30px;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.file-item:hover {
+    background-color: #eaecee;
+}
+
+.file-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark-navy);
+    padding-left: 10px;
+}
+
+.btn-icon-download {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    border: none;
+    border-radius: 50%;
+    color: var(--dark-navy);
+    transition: all 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.file-item:hover .btn-icon-download {
+    background-color: var(--point-blue);
+    color: #fff;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(43, 91, 183, 0.2);
+}
+
+.btn-icon-download svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+/* 📌 푸터 수정: 가로로 꽉 차게 */
+.footer {
+    width: 100%;           /* 전체 너비 사용 */
+    background-color: #000; /* 완전 검정 */
+    padding: 20px 20px;
+    text-align: center;
+    margin-top: auto;      /* 내용이 적어도 항상 맨 아래에 위치 */
+}
+
+.footer-logo {
+    height: 24px;
+    width: auto;
+    opacity: 0.9;
+}
