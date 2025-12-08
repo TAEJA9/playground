@@ -110,12 +110,21 @@ const CARD_DATA = [
     author: "정연"
    },
 
+    {
+    icon:"📚",
+    title:"교재 자료실",
+    desc:"몹시 간단한 QR코드 스캔하면 나오는 교재 자료실 페이지",
+    href:"https://taeja9.github.io/playground/pages/index.html",
+    cats:["automation"],
+    isActive:true,
+    author: "정연"
+   },
+
    
   { icon:"🤖", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, author: null },
   { icon:"✨", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, author: null },
   { icon:"🚀", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, author: null },
-  { icon:"💡", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, author: null },
-  { icon:"🎨", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, author: null },
+   { icon:"🎨", title:"Coming Soon", desc:"곧 공개됩니다", href:"#", cats:[], isActive:false, author: null },
 ];
 
 /* =========================
@@ -451,6 +460,7 @@ function init(){
 
 
 document.addEventListener("DOMContentLoaded", init);
+
 
 
 
