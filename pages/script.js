@@ -15,7 +15,13 @@ const fileList = [
     { name: "Course 3", url: "https://example.com/file3.mp3" },
     { name: "Course 4", url: "https://example.com/file4.mp3" },
     { name: "Course 5", url: "https://example.com/file5.mp3" },
-    { name: "Special Course", url: "https://example.com/special.mp3" }
+    { name: "Special Course", url: "https://example.com/special.mp3" },
+    { name: "Course 6", url: "https://example.com/file1.mp3" },
+    { name: "Course 7", url: "https://example.com/file2.mp3" },
+    { name: "Course 8", url: "https://example.com/file3.mp3" },
+    { name: "Course 9", url: "https://example.com/file4.mp3" },
+    { name: "Course 10", url: "https://example.com/file5.mp3" },
+    { name: "Special Course 2", url: "https://example.com/special.mp3" }
 ];
 
 // ============================================================
@@ -44,4 +50,5 @@ document.addEventListener('DOMContentLoaded', () => {
         
         listContainer.appendChild(li);
     });
+
 });
