@@ -34,9 +34,7 @@ body {
 /* 메인 컨테이너 */
 .container {
     width: 100%;
-    max-width: 500px; /* PC에서 너무 퍼지지 않게 폭 제한 */
-    /* 배경색 삭제 (투명) */
-    /* 그림자 삭제 */
+    max-width: 600px; /* PC에서 너무 퍼지지 않게 폭 제한 */
     display: flex;
     flex-direction: column;
     flex: 1; /* 푸터를 아래로 밀어내기 위해 공간 차지 */
@@ -197,4 +195,5 @@ body {
     height: 24px;
     width: auto;
     opacity: 0.9;
+
 }
