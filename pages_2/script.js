@@ -14,38 +14,23 @@ const bookData = {
   // 전체 다운로드 ZIP 경로
   downloadAllUrl: "#",
 
-  // 개별 자료 (Lesson 단위, 파일 유형만 표시)
+  // 개별 자료 (Lesson 1 ~ Lesson 15)
   files: [
-    {
-      id: 1,
-      name: "Lesson 1",
-      type: "PDF",
-      url: "#"
-    },
-    {
-      id: 2,
-      name: "Lesson 2",
-      type: "HWP",
-      url: "#"
-    },
-    {
-      id: 3,
-      name: "Lesson 3",
-      type: "PPTX",
-      url: "#"
-    },
-    {
-      id: 4,
-      name: "Lesson 4",
-      type: "PDF",
-      url: "#"
-    },
-    {
-      id: 5,
-      name: "Lesson 5",
-      type: "PDF",
-      url: "#"
-    }
+    { id: 1,  name: "Lesson 1",  type: "PDF",  url: "#" },
+    { id: 2,  name: "Lesson 2",  type: "HWP",  url: "#" },
+    { id: 3,  name: "Lesson 3",  type: "PPTX", url: "#" },
+    { id: 4,  name: "Lesson 4",  type: "PDF",  url: "#" },
+    { id: 5,  name: "Lesson 5",  type: "PDF",  url: "#" },
+    { id: 6,  name: "Lesson 6",  type: "HWP",  url: "#" },
+    { id: 7,  name: "Lesson 7",  type: "PDF",  url: "#" },
+    { id: 8,  name: "Lesson 8",  type: "PPTX", url: "#" },
+    { id: 9,  name: "Lesson 9",  type: "PDF",  url: "#" },
+    { id: 10, name: "Lesson 10", type: "HWP",  url: "#" },
+    { id: 11, name: "Lesson 11", type: "PDF",  url: "#" },
+    { id: 12, name: "Lesson 12", type: "PPTX", url: "#" },
+    { id: 13, name: "Lesson 13", type: "PDF",  url: "#" },
+    { id: 14, name: "Lesson 14", type: "HWP",  url: "#" },
+    { id: 15, name: "Lesson 15", type: "PDF",  url: "#" }
   ]
 };
 

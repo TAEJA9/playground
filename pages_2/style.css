@@ -78,6 +78,7 @@ body {
   max-width: 1040px;
   width: 100%;
   padding: 24px 28px 28px;
+  /* 기본은 block, 데스크톱에서만 flex로 변경 */
 }
 
 /* 상단 교재 영역 */
@@ -144,7 +145,7 @@ body {
   margin-top: 6px;
 }
 
-/* 전체 다운로드 버튼 */
+/* 전체 다운로드 버튼 (PC 기준 왼쪽 정렬) */
 .book-info .btn--primary {
   margin-top: 16px;
   align-self: flex-start;
@@ -181,7 +182,7 @@ body {
   color: var(--color-text-sub);
 }
 
-/* ========== 파일 리스트 ========== */
+/* ========== 파일 리스트 (기본: 일반 리스트, 스크롤 X) ========== */
 .file-list {
   list-style: none;
   padding: 0;
@@ -226,7 +227,7 @@ body {
   flex-shrink: 0;
 }
 
-/* ========== 버튼 ========== */
+/* ========== 버튼 공통 ========== */
 .btn {
   border: none;
   outline: none;
@@ -242,14 +243,15 @@ body {
   text-decoration: none;
   line-height: 1;
   white-space: nowrap;
-  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+  transition: background-color 0.15s ease, color 0.15s ease,
+    box-shadow 0.15s ease, transform 0.05s ease;
 }
 
 .btn:active {
   transform: translateY(1px);
 }
 
-/* 전체 다운로드 버튼 (더 크게) */
+/* 전체 다운로드 버튼 */
 .btn--primary {
   background-color: var(--color-action-red);
   color: #ffffff;
@@ -303,11 +305,7 @@ body {
   width: auto;
 }
 
-.site-footer__copy {
-  /* 데스크톱에서는 그냥 오른쪽에 자연스럽게 */
-}
-
-/* ========== 반응형 ========== */
+/* ========== 모바일 (≤768px) ========== */
 @media (max-width: 768px) {
   .main {
     padding: 20px 12px 28px;
@@ -329,14 +327,15 @@ body {
     font-size: 22px;
   }
 
-  /* 전체 다운로드 버튼 모바일에서 가운데 정렬 */
+  /* 모바일: 전체 다운로드 버튼 가운데 정렬 */
   .book-info .btn--primary {
-    width: auto;              /* 100% → 자동 너비 */
-    margin: 14px auto 0 auto; /* 자동 margin으로 가운데 */
     display: block;
+    margin: 16px auto 0 auto;
+    width: auto;
+    justify-content: center;
   }
 
-  /* 모바일: 다운로드 버튼은 여전히 오른쪽 */
+  /* 모바일: 텍스트 + 버튼 가로배치 유지, 버튼은 오른쪽 */
   .file-item {
     align-items: flex-start;
   }
@@ -350,8 +349,7 @@ body {
     justify-content: center;
   }
 
-  /* ✅ 모바일 푸터: 로고와 카피는 같은 줄,
-     카피만 오른쪽으로 밀기 */
+  /* 모바일: 푸터 로고 + 카피 한 줄, 카피만 오른쪽 정렬 */
   .site-footer__inner {
     flex-direction: row;
     align-items: center;
@@ -363,3 +361,24 @@ body {
   }
 }
 
+/* ========== 데스크톱 (넓은 화면)에서만 개별 다운로드 영역 스크롤 ========== */
+@media (min-width: 1024px) {
+  .card {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 140px); /* 헤더+푸터 여백 고려한 대략값 */
+  }
+
+  .card__bottom {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* flex 자식이 제대로 줄어들 수 있게 */
+  }
+
+  .file-list {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 6px; /* 스크롤바 공간 조금 여유 */
+  }
+}
