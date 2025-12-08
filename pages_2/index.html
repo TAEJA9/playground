@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>교재 자료 다운로드 | YBM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 필요하면 구글 폰트 사용 (선택) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- 상단 헤더 영역 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <span class="site-header__brand-badge">YBM</span>
+      <span class="site-header__text">교재 자료 다운로드</span>
+    </div>
+  </header>
+
+  <!-- 메인 콘텐츠 -->
+  <main class="main">
+    <section class="card" aria-labelledby="book-title">
+      <!-- 상단: 교재 정보 영역 -->
+      <div class="card__top">
+        <div class="book-cover">
+          <img id="book-cover" src="" alt="교재 표지 이미지" />
+        </div>
+
+        <div class="book-info">
+          <p class="book-info__series" id="book-series">시리즈명</p>
+          <h1 class="book-info__title" id="book-title">교재 제목</h1>
+          <p class="book-info__meta" id="book-meta">학년 · 과목</p>
+          <p class="book-info__updated" id="book-updated">자료 업데이트: YYYY-MM-DD</p>
+
+          <button type="button" class="btn btn--primary" id="btn-download-all">
+            전체 자료 한 번에 받기
+          </button>
+        </div>
+      </div>
+
+      <!-- 파란색 구분선 -->
+      <div class="card__divider" aria-hidden="true"></div>
+
+      <!-- 하단: 자료 목록 영역 -->
+      <div class="card__bottom">
+        <div class="file-list-header">
+          <h2 class="file-list-header__title">자료 목록</h2>
+          <span class="file-list-header__count" id="file-count">0개 자료</span>
+        </div>
+
+        <ul class="file-list" id="file-list" aria-label="다운로드 가능한 자료 목록">
+          <!-- JS에서 자동 생성 -->
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <span class="site-footer__logo">
+        <!-- 👉 로고 이미지 경로만 바꿔서 쓰시면 됩니다 -->
+        <img src="logo.png" alt="로고" class="site-footer__logo-img">
+      </span>
+      <span class="site-footer__copy">© YBM. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

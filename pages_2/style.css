@@ -1,0 +1,385 @@
+/* ========== 공통 색상 변수 ========== */
+:root {
+  --color-main-yellow: #FFD400; /* 브랜드 분위기 */
+  --color-action-red: #E64B3C;  /* 주요 액션 */
+  --color-accent-blue: #2B5BB7; /* 포인트/구분선 */
+  --color-accent-navy: #2F323E; /* 진한 포인트 */
+  --color-base-white: #FFFFFF;
+  --color-text-main: #222222;
+  --color-text-sub: #555555;
+  --color-border-light: #E5E5E5;
+  --shadow-card: 0 18px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* ========== 기본 리셋 ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: var(--color-main-yellow);
+  color: var(--color-text-main);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========== 상단 헤더 ========== */
+.site-header {
+  background: linear-gradient(90deg, var(--color-accent-navy), var(--color-accent-blue));
+  color: #ffffff;
+  padding: 12px 16px;
+}
+
+.site-header__inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-header__brand-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  background-color: var(--color-base-white);
+  color: var(--color-accent-navy);
+}
+
+.site-header__text {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* ========== 메인 레이아웃 ========== */
+.main {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 32px 16px 40px;
+}
+
+/* ========== 카드(흰색 박스) ========== */
+.card {
+  background-color: var(--color-base-white);
+  border-radius: 18px;
+  box-shadow: var(--shadow-card);
+  max-width: 1040px;
+  width: 100%;
+  padding: 24px 28px 28px;
+}
+
+/* 상단 교재 정보 영역 */
+.card__top {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.book-cover {
+  flex: 0 0 220px;
+  max-width: 220px;
+}
+
+.book-cover img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  object-fit: cover;
+}
+
+/* 표지 이미지가 없을 때를 대비한 상태 */
+.book-cover--empty {
+  background-color: #f2f2f2;
+  border-radius: 12px;
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-sub);
+  font-size: 14px;
+}
+
+/* 교재 텍스트 정보 */
+.book-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.book-info__series {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-accent-blue);
+  letter-spacing: 0.04em;
+}
+
+.book-info__title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.book-info__meta {
+  font-size: 14px;
+  color: var(--color-text-sub);
+}
+
+.book-info__updated {
+  font-size: 13px;
+  color: #888888;
+  margin-top: 4px;
+}
+
+/* 전체 다운로드 버튼 좀 더 크게 */
+.book-info .btn--primary {
+  margin-top: 18px;
+  align-self: flex-start;
+}
+
+/* 파란 구분선 - 더 두껍게 */
+.card__divider {
+  margin: 28px 0 20px;
+  height: 8px; /* 기존 3px → 8px로 업그레이드 */
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-accent-blue), var(--color-accent-navy));
+}
+
+/* 하단 목록 */
+.card__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.file-list-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.file-list-header__title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.file-list-header__count {
+  font-size: 13px;
+  color: var(--color-text-sub);
+}
+
+/* 개별 파일 리스트 */
+.file-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  gap: 16px;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.file-item__left {
+  flex: 1;
+  min-width: 0;
+}
+
+.file-item__name {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.file-item__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--color-text-sub);
+}
+
+.file-item__tag {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background-color: rgba(43, 91, 183, 0.08);
+  color: var(--color-accent-blue);
+  font-weight: 500;
+}
+
+.file-item__type,
+.file-item__size {
+  position: relative;
+  padding-left: 10px;
+}
+
+.file-item__type::before,
+.file-item__size::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+}
+
+/* 오른쪽 버튼 영역 */
+.file-item__right {
+  flex-shrink: 0;
+}
+
+/* ========== 버튼 스타일 ========== */
+.btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+  text-decoration: none;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* 주요 액션 버튼 (전체 다운로드) - 더 크고 강조 */
+.btn--primary {
+  background-color: var(--color-action-red);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 12px 26px; /* 기존보다 여유 있게 */
+  box-shadow: 0 12px 26px rgba(230, 75, 60, 0.38);
+}
+
+.btn--primary:hover {
+  background-color: #d43f32;
+}
+
+/* 개별 다운로드 버튼 - 깔끔한 테두리형 */
+.btn--ghost {
+  border: 1px solid var(--color-accent-blue);
+  background-color: #ffffff;
+  color: var(--color-accent-blue);
+  font-weight: 500;
+}
+
+.btn--ghost:hover {
+  background-color: rgba(43, 91, 183, 0.06);
+}
+
+.btn__icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* ========== 푸터 ========== */
+.site-footer {
+  background-color: var(--color-accent-navy);
+  color: #f5f5f5;
+  padding: 14px 16px;
+}
+
+.site-footer__inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12px;
+  align-items: center;
+}
+
+.site-footer__logo {
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-footer__logo-img {
+  max-height: 20px; /* 로고 이미지 높이만 조절하면 됨 */
+  height: auto;
+  width: auto;
+}
+
+/* ========== 반응형 ========== */
+@media (max-width: 768px) {
+  .main {
+    padding: 20px 12px 28px;
+  }
+
+  .card {
+    padding: 18px 16px 20px;
+  }
+
+  .card__top {
+    flex-direction: column;
+  }
+
+  .book-cover {
+    flex: 0 0 auto;
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  .book-info__title {
+    font-size: 20px;
+  }
+
+  /* 모바일에서 전체 다운로드 버튼은 꽉 차게 */
+  .book-info .btn--primary {
+    align-self: stretch;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .file-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .file-item__right {
+    width: 100%;
+  }
+
+  .file-item__right .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .site-footer__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
