@@ -72,7 +72,7 @@ body {
 
 /* ========== 카드 ========== */
 .card {
-  background-color: var(--color-base-white);
+  background: linear-gradient(180deg, #ffffff 0%, #f9fafc 100%);
   border-radius: 18px;
   box-shadow: var(--shadow-card);
   max-width: 1040px;
@@ -382,3 +382,4 @@ body {
     padding-right: 6px; /* 스크롤바 공간 조금 여유 */
   }
 }
+
