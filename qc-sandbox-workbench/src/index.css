@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-gray-900 font-sans tracking-wide;
+    /* Dot grid pattern */
+    background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Make text bold (800 or higher) for key text elements.
+     We can apply this utility class where needed, or set a global default if desired,
+     but usually "key text elements" implies headers/buttons, not paragraphs.
+     The requirement says "All key text elements should use Bold weight (800 or higher)".
+  */
+}
