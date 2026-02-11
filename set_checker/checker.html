@@ -33,10 +33,14 @@ main{max-width:1100px;margin:0 auto;padding:20px 16px}
 input[type="text"]{flex:1;min-width:260px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--ink)}
 textarea{width:100%;min-height:160px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--ink);padding:10px 12px}
 .codebox{position:relative;background:transparent;border:1px dashed var(--border);border-radius:10px;padding:10px;overflow:auto}
-.grid{overflow:auto;border:1px solid var(--border);border-radius:12px}
+
+.grid{overflow:auto;border:1px solid var(--border);border-radius:12px; background: var(--card);}
+.grid-sets { max-height: 300px; }
+.grid-issues { max-height: 600px; }
+
 table{width:100%;border-collapse:collapse;font-size:14px;min-width:720px}
 th,td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap;line-height:var(--rowh)}
-thead th{position:sticky;top:0;background:var(--thead);color:var(--ink)}
+thead th{position:sticky;top:0;background:var(--thead);color:var(--ink);z-index:1}
 footer{padding:12px 16px;color:var(--ink-dim);border-top:1px solid var(--border);text-align:right}
 
 .sound-rule-panel { background: rgba(96, 165, 250, 0.1); border: 2px solid var(--accent); }
@@ -44,6 +48,11 @@ footer{padding:12px 16px;color:var(--ink-dim);border-top:1px solid var(--border)
 .sound-tag-container { display: flex; gap: 8px; flex-wrap: wrap; }
 .sound-tag { background: var(--accent); color: var(--btn-ink); padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 14px; }
 .ps-hint { font-size: 12px; color: var(--ink-dim); background: rgba(255,255,255,0.05); padding: 8px; border-radius: 6px; margin-top: 8px; }
+
+.tr-error { background: rgba(239, 68, 68, 0.05); }
+/* 체크된 이슈 스타일링 */
+.tr-checked { opacity: 0.4; text-decoration: line-through; background: transparent !important; }
+input[type="checkbox"] { cursor: pointer; width: 16px; height: 16px; }
 </style>
 </head>
 <body>
@@ -51,10 +60,10 @@ footer{padding:12px 16px;color:var(--ink-dim);border-top:1px solid var(--border)
   <div style="display:flex;align-items:center;justify-content:space-between;position:relative">
     <div>
       <h1>Y클라우드 문제은행 파일 검사기 (웹버전)</h1>
-      <div class="caption">HWP/HWPX 전용 · 사운드 MP3/WAV · 파일명 “붙여넣기” 검사</div>
+      <div class="caption">HWP/HWPX 전용 · 사운드 MP3 · 파일명 “붙여넣기” 검사</div>
     </div>
     <div class="top-right">
-      <button id="btn-reset" class="btn secondary">다시 하기</button>
+      <button id="btn-reset" class="btn secondary">다시하기</button>
       <button id="btn-theme" class="btn secondary">다크 ↔ 라이트</button>
       <span class="badge">ⓒ Jeongyeon. 2026</span>
     </div>
@@ -107,17 +116,23 @@ footer{padding:12px 16px;color:var(--ink-dim);border-top:1px solid var(--border)
   </section>
 
   <section class="panel">
-    <h3 style="margin:0 0 10px">🧩 세트 요약</h3>
-    <div class="grid"><table id="tbl-sets">
+    <h3 style="margin:0 0 10px">🧩 세트 요약 (문제 있는 항목 우선)</h3>
+    <div class="grid grid-sets"><table id="tbl-sets">
       <thead><tr><th>세트 키</th><th>Q개수</th><th>A개수</th><th>M개수</th><th>G그룹</th><th>듣/말</th><th>상태</th></tr></thead>
       <tbody></tbody>
     </table></div>
   </section>
 
   <section class="panel">
-    <h3 style="margin:0 0 10px">⚠️ 이슈 상세</h3>
-    <div class="grid"><table id="tbl-issues">
-      <thead><tr><th>#</th><th>세트 키(+코드)</th><th>분류</th><th>상세</th></tr></thead>
+    <h3 style="margin:0 0 10px">⚠️ 이슈 상세 (수정 후 체크하세요)</h3>
+    <div class="grid grid-issues"><table id="tbl-issues">
+      <thead><tr>
+        <th style="width:40px">확인</th>
+        <th style="width:40px">#</th>
+        <th>세트 키(+코드)</th>
+        <th>분류</th>
+        <th>상세</th>
+      </tr></thead>
       <tbody></tbody>
     </table></div>
   </section>
@@ -135,7 +150,6 @@ const SKILL_RE   = /_([yn]{4})(?:_|\.|$)/i;
 const SOUND_REQUIRED_LIST = new Set(['yyyy','yyyn','yyny','yynn','ynyy','ynyn','ynny','ynnn','nynn']);
 const isSoundRequired = (skill) => skill && SOUND_REQUIRED_LIST.has(skill.toLowerCase());
 
-/* 테마 적용 */
 const root = document.documentElement;
 document.getElementById('btn-theme').addEventListener('click', () => {
   const next = (root.getAttribute('data-theme') || 'dark') === 'dark' ? 'light' : 'dark';
@@ -143,7 +157,6 @@ document.getElementById('btn-theme').addEventListener('click', () => {
   localStorage.setItem('ycloud_theme', next);
 });
 
-/* PowerShell 명령 생성 */
 document.getElementById('btn-build').addEventListener('click', () => {
   const raw = (document.getElementById('path-input').value || '').trim();
   const P = raw.replaceAll('/', '\\') || 'C:\\작업\\경로';
@@ -168,32 +181,40 @@ document.getElementById('btn-paste').addEventListener('click', async () => {
   catch(e){ alert('클립보드 권한이 필요합니다.'); }
 });
 
-/* 다시 하기 (초기화 로직) */
 document.getElementById('btn-reset').addEventListener('click', () => {
-  // 입력 필드 초기화
   document.getElementById('path-input').value = '';
   document.getElementById('paste-area').value = '';
   document.getElementById('ps-cmd').textContent = "# 상단에서 '명령 생성'을 눌러 주세요.";
-  
-  // 요약 카드 초기화
   document.getElementById('m-total-files').innerText = '-';
   document.getElementById('m-total-sets').innerText = '-';
   document.getElementById('m-total-issues').innerText = '-';
-  
-  // 테이블 내용 초기화
   document.querySelector('#tbl-sets tbody').innerHTML = '';
   document.querySelector('#tbl-issues tbody').innerHTML = '';
-  
-  // 버튼 비활성화
   document.getElementById('btn-dl-issues').disabled = true;
   document.getElementById('btn-dl-sets').disabled = true;
 });
 
-function renderTable(id, rows, cols) {
+function renderTable(id, rows, cols, isIssueTable = false) {
   const tbody = document.querySelector(`#${id} tbody`);
   tbody.innerHTML = '';
   rows.forEach(r => {
     const tr = document.createElement('tr');
+    
+    if(!isIssueTable && r.status && r.status !== 'OK') tr.className = 'tr-error';
+
+    // 이슈 상세 테이블이면 체크박스 먼저 추가
+    if(isIssueTable) {
+      const tdCheck = document.createElement('td');
+      const chk = document.createElement('input');
+      chk.type = 'checkbox';
+      chk.addEventListener('change', () => {
+        if(chk.checked) tr.classList.add('tr-checked');
+        else tr.classList.remove('tr-checked');
+      });
+      tdCheck.appendChild(chk);
+      tr.appendChild(tdCheck);
+    }
+
     cols.forEach(c => {
       const td = document.createElement('td');
       td.textContent = r[c] ?? '';
@@ -224,7 +245,7 @@ function scanFromLines(lines) {
     parsed.set(base, { qa, gnum: g, skill });
   });
 
-  const setRows = [];
+  let setRows = [];
   sets.forEach((d, sk) => {
     const status = new Set();
     const skillsArr = [...d.skills].sort();
@@ -250,12 +271,9 @@ function scanFromLines(lines) {
       });
       byG.forEach((comp, g) => {
         let gMissing = [];
-        const gSkills = [...comp.skills].sort();
-        const gListen = gSkills.some(s => isSoundRequired(s));
-        const gIssueKey = gSkills.length > 0 ? `${sk}_G${g}_${gSkills.join('|')}` : `${sk}_G${g}`;
-        
+        const gListen = [...comp.skills].some(s => isSoundRequired(s));
         if (g === '00') {
-          if (comp.A > 0) { issues.push({set_key:gIssueKey, category:'규칙 위반', detail:'G00에 A 존재'}); status.add('G00 오류'); }
+          if (comp.A > 0) { issues.push({set_key:`${sk}_G${g}`, category:'규칙 위반', detail:'G00에 A 존재'}); status.add('G00 오류'); }
           if (gListen && comp.M === 0) gMissing.push('M');
         } else {
           if (comp.Q === 0) gMissing.push('Q');
@@ -263,7 +281,7 @@ function scanFromLines(lines) {
           if (gListen && comp.M === 0) gMissing.push('M');
         }
         if (gMissing.length > 0) {
-          issues.push({set_key: gIssueKey, category: '파일 구성 미비', detail: `G${g}:${gMissing.join('/')} 누락`});
+          issues.push({set_key: `${sk}_G${g}`, category: '파일 구성 미비', detail: `G${g}:${gMissing.join('/')} 누락`});
           status.add(`G${g} 누락`);
         }
       });
@@ -277,6 +295,13 @@ function scanFromLines(lines) {
       status: status.size ? [...status].join('; ') : 'OK'
     });
   });
+
+  setRows.sort((a, b) => {
+    if (a.status !== 'OK' && b.status === 'OK') return -1;
+    if (a.status === 'OK' && b.status !== 'OK') return 1;
+    return 0;
+  });
+
   return { summary: { total_files: names.length, total_sets: sets.size }, sets: setRows, issues };
 }
 
@@ -287,8 +312,10 @@ document.getElementById('btn-run').addEventListener('click', () => {
   document.getElementById('m-total-files').innerText = res.summary.total_files;
   document.getElementById('m-total-sets').innerText = res.summary.total_sets;
   document.getElementById('m-total-issues').innerText = res.issues.length;
+  
   renderTable('tbl-sets', res.sets, ['set_key_display','q_count','a_count','m_count','g_groups','listen_speak','status']);
-  renderTable('tbl-issues', res.issues.map((it, i) => ({ '#': i+1, ...it })), ['#','set_key','category','detail']);
+  renderTable('tbl-issues', res.issues.map((it, i) => ({ '#': i+1, ...it })), ['#','set_key','category','detail'], true);
+  
   document.getElementById('btn-dl-issues').disabled = false;
   document.getElementById('btn-dl-sets').disabled = false;
   document.getElementById('btn-dl-issues').onclick = () => {
