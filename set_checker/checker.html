@@ -30,22 +30,20 @@ main{max-width:1100px;margin:0 auto;padding:20px 16px}
 .card .v{font-size:24px;font-weight:700;margin-top:4px}
 .btn{all:unset;display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--btn-ink);font-weight:700;padding:10px 14px;border-radius:10px;cursor:pointer}
 .btn.secondary{background:transparent;color:var(--ink);border:1px solid var(--border)}
-.btn.ghost{background:transparent;color:var(--ink-dim)}
-.btn:disabled{opacity:.6;cursor:not-allowed}
-.field{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 input[type="text"]{flex:1;min-width:260px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--ink)}
 textarea{width:100%;min-height:160px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--ink);padding:10px 12px}
 .codebox{position:relative;background:transparent;border:1px dashed var(--border);border-radius:10px;padding:10px;overflow:auto}
 .grid{overflow:auto;border:1px solid var(--border);border-radius:12px}
-.grid-sets{max-height: calc(var(--rowh)*21 + 44px)}
-.grid-issues{max-height: calc(var(--rowh)*21 + 44px)}
 table{width:100%;border-collapse:collapse;font-size:14px;min-width:720px}
 th,td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap;line-height:var(--rowh)}
 thead th{position:sticky;top:0;background:var(--thead);color:var(--ink)}
 footer{padding:12px 16px;color:var(--ink-dim);border-top:1px solid var(--border);text-align:right}
-code.inline{background:transparent;padding:2px 6px;border-radius:6px;border:1px solid var(--border)}
-.muted{color:var(--ink-dim)}
-hr.soft{border:none;border-top:1px solid var(--border);margin:10px 0}
+
+.sound-rule-panel { background: rgba(96, 165, 250, 0.1); border: 2px solid var(--accent); }
+.sound-rule-title { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.sound-tag-container { display: flex; gap: 8px; flex-wrap: wrap; }
+.sound-tag { background: var(--accent); color: var(--btn-ink); padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 14px; }
+.ps-hint { font-size: 12px; color: var(--ink-dim); background: rgba(255,255,255,0.05); padding: 8px; border-radius: 6px; margin-top: 8px; }
 </style>
 </head>
 <body>
@@ -56,39 +54,35 @@ hr.soft{border:none;border-top:1px solid var(--border);margin:10px 0}
       <div class="caption">HWP/HWPX 전용 · 사운드 MP3/WAV · 파일명 “붙여넣기” 검사</div>
     </div>
     <div class="top-right">
-      <button id="btn-reset" class="btn secondary" title="다시 하기">다시 하기</button>
-      <button id="btn-theme" class="btn secondary" title="다크/라이트 전환">다크 ↔ 라이트</button>
-      <span class="badge">ⓒ Jeongyeon. 2025</span>
+      <button id="btn-reset" class="btn secondary">다시 하기</button>
+      <button id="btn-theme" class="btn secondary">다크 ↔ 라이트</button>
+      <span class="badge">ⓒ Jeongyeon. 2026</span>
     </div>
   </div>
 </header>
 
 <main>
-  <!-- 1) 상위 폴더 경로 → PowerShell 명령 생성 + 자동 클립보드 복사 -->
   <section class="panel">
     <h3 style="margin:0 0 8px">1) 상위 폴더 경로 입력 → PowerShell 명령 만들기</h3>
     <div class="field">
       <input id="path-input" type="text" placeholder='예) C:\Users\정연\Documents\문제은행' />
       <button id="btn-build" class="btn">명령 생성</button>
-      <button id="btn-copy" class="btn secondary" title="명령 복사">복사</button>
+      <button id="btn-copy" class="btn secondary">복사</button>
     </div>
     <div class="codebox" style="margin-top:10px">
       <pre id="ps-cmd" style="margin:0;white-space:pre-wrap"># 상단에서 '명령 생성'을 눌러 주세요.</pre>
     </div>
-    <p class="muted" style="margin-top:10px">
-      💡 실행하면 파일명 목록이 자동으로 클립보드에 복사됩니다. 콘솔에서 긁을 필요가 없어요.<br/>
-      우선 <code class="inline">quest / answer / sound</code>를 재귀 스캔하고 없으면 상위 폴더를 재귀 스캔합니다.
-    </p>
   </section>
 
-  <!-- 2) 붙여넣기 입력 -->
   <section class="panel">
-    <h3 style="margin:0 0 8px">2) PowerShell 실행 후, 아래에 붙여넣기(Ctrl+V 또는 버튼)</h3>
-    <div class="field" style="margin-bottom:8px">
-      <button id="btn-paste" class="btn secondary">클립보드에서 붙여넣기</button>
-      <span class="muted">또는 직접 붙여넣기</span>
+    <h3 style="margin:0 0 8px">2) PowerShell 실행 후, 아래에 붙여넣기</h3>
+    <div class="ps-hint">
+        💡 <strong>PowerShell 빨리 여는 법:</strong> <code>Win + R</code> 키 누르고 <code>powershell</code> 입력 후 엔터!
     </div>
-    <textarea id="paste-area" placeholder="여기에 파일명 목록을 줄바꿈으로 붙여넣으세요.&#10;예)&#10;010000_0001Q_객_중.hwpx&#10;010000_0001A_객_중.hwpx&#10;020000_0004M_객_하_ynnn.mp3"></textarea>
+    <div class="field" style="margin:12px 0 8px">
+      <button id="btn-paste" class="btn secondary">클립보드에서 붙여넣기</button>
+    </div>
+    <textarea id="paste-area" placeholder="여기에 파일명 목록을 붙여넣으세요."></textarea>
     <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
       <button id="btn-run" class="btn">검사 시작 🚀</button>
       <button id="btn-dl-issues" class="btn secondary" disabled>이슈 CSV 다운로드</button>
@@ -96,31 +90,34 @@ hr.soft{border:none;border-top:1px solid var(--border);margin:10px 0}
     </div>
   </section>
 
-  <!-- 요약 카드 -->
   <section class="row" style="margin-bottom:8px">
     <div class="card"><div class="k">총 파일</div><div class="v" id="m-total-files">-</div></div>
     <div class="card"><div class="k">총 세트</div><div class="v" id="m-total-sets">-</div></div>
     <div class="card"><div class="k">이슈 수</div><div class="v" id="m-total-issues">-</div></div>
   </section>
 
-  <!-- 테이블 -->
+  <section class="panel sound-rule-panel">
+    <div class="sound-rule-title">🔊 사운드 파일(M) 필수 포함 Skill 코드</div>
+    <div class="sound-tag-container">
+        <span class="sound-tag">yyyy</span><span class="sound-tag">yyyn</span><span class="sound-tag">yyny</span><span class="sound-tag">yynn</span>
+        <span class="sound-tag">ynyy</span><span class="sound-tag">ynyn</span><span class="sound-tag">ynny</span><span class="sound-tag">ynnn</span>
+        <span class="sound-tag">nynn</span>
+    </div>
+    <p style="font-size: 13px; margin: 12px 0 0 0; color: var(--ink-dim);">* 위 코드가 파일명 끝에 포함되어 있다면 반드시 사운드 파일이 존재해야 합니다.</p>
+  </section>
+
   <section class="panel">
     <h3 style="margin:0 0 10px">🧩 세트 요약</h3>
-    <div class="grid grid-sets"><table id="tbl-sets">
-      <thead><tr>
-        <th>세트 키</th><th>Q개수</th><th>A개수</th><th>M개수</th>
-        <th>G그룹</th><th>듣/말</th><th>상태</th>
-      </tr></thead>
+    <div class="grid"><table id="tbl-sets">
+      <thead><tr><th>세트 키</th><th>Q개수</th><th>A개수</th><th>M개수</th><th>G그룹</th><th>듣/말</th><th>상태</th></tr></thead>
       <tbody></tbody>
     </table></div>
   </section>
 
   <section class="panel">
     <h3 style="margin:0 0 10px">⚠️ 이슈 상세</h3>
-    <div class="grid grid-issues"><table id="tbl-issues">
-      <thead><tr>
-        <th>#</th><th>세트 키</th><th>분류</th><th>상세</th>
-      </tr></thead>
+    <div class="grid"><table id="tbl-issues">
+      <thead><tr><th>#</th><th>세트 키(+코드)</th><th>분류</th><th>상세</th></tr></thead>
       <tbody></tbody>
     </table></div>
   </section>
@@ -129,216 +126,176 @@ hr.soft{border:none;border-top:1px solid var(--border);margin:10px 0}
 <footer>모든 데이터는 브라우저 내에서만 처리됩니다.</footer>
 
 <script>
-/* -------------------- Theme toggle -------------------- */
+const VALID_QA = new Set(['.hwp','.hwpx']);
+const VALID_M  = new Set(['.mp3','.wav']);
+const LEADING_RE = /^(\d{6}_\d{4})([QAM])(.*)$/i;
+const G_RE       = /_G(\d{2})(?:_|\.|$)/i;
+const SKILL_RE   = /_([yn]{4})(?:_|\.|$)/i;
+
+const SOUND_REQUIRED_LIST = new Set(['yyyy','yyyn','yyny','yynn','ynyy','ynyn','ynny','ynnn','nynn']);
+const isSoundRequired = (skill) => skill && SOUND_REQUIRED_LIST.has(skill.toLowerCase());
+
+/* 테마 적용 */
 const root = document.documentElement;
-const btnTheme = document.getElementById('btn-theme');
-function applyTheme(t){ root.setAttribute('data-theme', t); localStorage.setItem('ycloud_theme', t); }
-btnTheme.addEventListener('click', () => {
-  const cur = root.getAttribute('data-theme') || 'dark';
-  applyTheme(cur === 'dark' ? 'light' : 'dark');
+document.getElementById('btn-theme').addEventListener('click', () => {
+  const next = (root.getAttribute('data-theme') || 'dark') === 'dark' ? 'light' : 'dark';
+  root.setAttribute('data-theme', next);
+  localStorage.setItem('ycloud_theme', next);
 });
-(function initTheme(){
-  const saved = localStorage.getItem('ycloud_theme');
-  if(saved) applyTheme(saved);
-})();
 
-/* -------------------- Reset -------------------- */
-const btnReset = document.getElementById('btn-reset');
-btnReset.addEventListener('click', resetAll);
-function resetAll(){
-  document.getElementById('paste-area').value = '';
-  setMetrics('-', '-', '-');
-  renderTable('tbl-sets', [], ['set_key_display','q_count','a_count','m_count','g_groups','listen_speak','status']);
-  renderTable('tbl-issues', [], ['#','set_key','category','detail']);
-  btnDlIssues.disabled = true; btnDlSets.disabled = true;
-}
-
-/* -------------------- PowerShell 명령 생성 + 자동복사 -------------------- */
-const pathInput = document.getElementById('path-input');
-const btnBuild = document.getElementById('btn-build');
-const btnCopy  = document.getElementById('btn-copy');
-const psCmd    = document.getElementById('ps-cmd');
-
-function buildPS() {
-  const raw = (pathInput.value || '').trim();
-  const template = (P) => `$P="${P}";
+/* PowerShell 명령 생성 */
+document.getElementById('btn-build').addEventListener('click', () => {
+  const raw = (document.getElementById('path-input').value || '').trim();
+  const P = raw.replaceAll('/', '\\') || 'C:\\작업\\경로';
+  document.getElementById('ps-cmd').textContent = `$P="${P}";
 $t=Get-ChildItem -LiteralPath "$P\\quest","$P\\answer","$P\\sound" -Recurse -File -ErrorAction SilentlyContinue;
 if(-not $t){ $t=Get-ChildItem -LiteralPath $P -Recurse -File }
 $names = $t | Select-Object -ExpandProperty Name
 try { $names | Set-Clipboard } catch { ($names -join "\`r\`n") | clip }
 "클립보드에 $($names.Count)개 파일명을 복사했습니다."`;
-  if (!raw) { psCmd.textContent = template('C:\\Users\\me\\Documents\\문제은행'); return; }
-  const P = raw.replaceAll('/', '\\'); psCmd.textContent = template(P);
-}
-btnBuild.addEventListener('click', buildPS);
-btnCopy.addEventListener('click', async () => {
-  await navigator.clipboard.writeText(psCmd.textContent);
-  btnCopy.textContent = "복사됨!";
-  setTimeout(()=>btnCopy.textContent="복사",1200);
-});
-buildPS();
-
-/* -------------------- 붙여넣기/표 렌더 공통 -------------------- */
-const btnPaste   = document.getElementById('btn-paste');
-const area       = document.getElementById('paste-area');
-const btnRun     = document.getElementById('btn-run');
-const btnDlIssues= document.getElementById('btn-dl-issues');
-const btnDlSets  = document.getElementById('btn-dl-sets');
-
-btnPaste.addEventListener('click', async () => {
-  try { area.value = await navigator.clipboard.readText(); }
-  catch(e){ alert('클립보드 읽기 실패: ' + e); }
 });
 
-function setMetrics(totalFiles, totalSets, totalIssues) {
-  document.getElementById('m-total-files').innerText  = String(totalFiles);
-  document.getElementById('m-total-sets').innerText   = String(totalSets);
-  document.getElementById('m-total-issues').innerText = String(totalIssues);
-}
+document.getElementById('btn-copy').addEventListener('click', async () => {
+  const cmdText = document.getElementById('ps-cmd').textContent;
+  if(cmdText.startsWith('#')) return;
+  await navigator.clipboard.writeText(cmdText);
+  document.getElementById('btn-copy').textContent = "복사됨!";
+  setTimeout(()=>document.getElementById('btn-copy').textContent="복사",1200);
+});
+
+document.getElementById('btn-paste').addEventListener('click', async () => {
+  try { document.getElementById('paste-area').value = await navigator.clipboard.readText(); }
+  catch(e){ alert('클립보드 권한이 필요합니다.'); }
+});
+
+/* 다시 하기 (초기화 로직) */
+document.getElementById('btn-reset').addEventListener('click', () => {
+  // 입력 필드 초기화
+  document.getElementById('path-input').value = '';
+  document.getElementById('paste-area').value = '';
+  document.getElementById('ps-cmd').textContent = "# 상단에서 '명령 생성'을 눌러 주세요.";
+  
+  // 요약 카드 초기화
+  document.getElementById('m-total-files').innerText = '-';
+  document.getElementById('m-total-sets').innerText = '-';
+  document.getElementById('m-total-issues').innerText = '-';
+  
+  // 테이블 내용 초기화
+  document.querySelector('#tbl-sets tbody').innerHTML = '';
+  document.querySelector('#tbl-issues tbody').innerHTML = '';
+  
+  // 버튼 비활성화
+  document.getElementById('btn-dl-issues').disabled = true;
+  document.getElementById('btn-dl-sets').disabled = true;
+});
 
 function renderTable(id, rows, cols) {
   const tbody = document.querySelector(`#${id} tbody`);
-  while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
-  for (const r of rows) {
+  tbody.innerHTML = '';
+  rows.forEach(r => {
     const tr = document.createElement('tr');
-    for (const c of cols) {
+    cols.forEach(c => {
       const td = document.createElement('td');
-      td.textContent = (r[c] ?? '').toString();
+      td.textContent = r[c] ?? '';
       tr.appendChild(td);
-    }
+    });
     tbody.appendChild(tr);
-  }
+  });
 }
 
-function toCSV(rows, cols) {
-  const esc = s => {
-    const v = String(s ?? '').replace(/"/g,'""');
-    return (v.includes(',') || v.includes('"') || v.includes('\n')) ? `"${v}"` : v;
-  };
-  const lines = [cols.join(',')];
-  for (const r of rows) lines.push(cols.map(c => esc(r[c])).join(','));
-  return lines.join('\n');
-}
-function downloadCSV(filename, csvText){
-  // UTF-8 BOM 추가해서 엑셀 한글 깨짐 방지
-  const blob = new Blob(['\ufeff', csvText], {type:'text/csv;charset=utf-8;'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = filename; a.click();
-  URL.revokeObjectURL(url);
-}
-
-/* -------------------- 검사 로직 (JS) -------------------- */
-const VALID_QA = new Set(['.hwp','.hwpx']);
-const VALID_M  = new Set(['.mp3','.wav']);
-const LISTEN   = new Set(['ynnn','yynn','nynn']);
-const LEADING_RE = /^(\d{6}_\d{4})([QAM])(.*)$/i;
-const G_RE       = /_G(\d{2})(?:_|\.|$)/i;
-const SKILL_RE   = /_([yn]{4})(?:_|\.|$)/i;
-
-function parseName(base) {
-  const m = base.match(LEADING_RE);
-  if (!m) return null;
-  const prefix = m[1], qa = m[2].toUpperCase(), tail = m[3];
-  const g = (G_RE.exec(tail) || [])[1] || null;
-  const skill = (SKILL_RE.exec(base) || [])[1]?.toLowerCase() || null;
-
-  // 매칭용 setKey(끝의 skill 제거), 표기용 displayKey(가능하면 skill 포함/혼재시 (..|..))
-  const baseNoExt = base.replace(/\.[^.]+$/,'');
-  const afterPrefix = baseNoExt.slice((prefix + qa).length).replace(/^_/,'');
-  const setKey = `${prefix}_${afterPrefix}`.replace(/_([yn]{4})$/i,'').replace(/_$/,'');
-  let displayKey = setKey; if (skill) displayKey = `${setKey}_${skill}`;
-  return { prefix, qa, gnum:g, skill, set_key:setKey, display_base:displayKey };
-}
-function getExt(name){ const i=name.lastIndexOf('.'); return (i>=0)? name.slice(i).toLowerCase() : ''; }
-
-function scanFromLines(lines, isLang=true){
+function scanFromLines(lines) {
   const names = Array.from(new Set(lines.filter(Boolean)));
   const sets = new Map(), parsed = new Map(), issues = [];
-  for (const base of names){
-    const info = parseName(base); if (!info) continue;
-    parsed.set(base, info);
-    const sk = info.set_key;
-    if (!sets.has(sk)) sets.set(sk, {Q:new Set(),A:new Set(),M:new Set(),skills:new Set(),gnums:new Set(),files:new Set()});
-    const d = sets.get(sk);
-    d[info.qa].add(base); d.files.add(base);
-    if (info.skill) d.skills.add(info.skill);
-    if (info.gnum) d.gnums.add(info.gnum);
-  }
 
-  for (const [sk, d] of sets) {
-    for (const qf of d.Q) if (!VALID_QA.has(getExt(qf))) issues.push({set_key:sk, category:'확장자 오류', detail:`Q 확장자 ${getExt(qf)} 허용 안 됨`});
-    for (const af of d.A) if (!VALID_QA.has(getExt(af))) issues.push({set_key:sk, category:'확장자 오류', detail:`A 확장자 ${getExt(af)} 허용 안 됨`});
-    for (const mf of d.M) if (!VALID_M.has(getExt(mf))) issues.push({set_key:sk, category:'확장자 오류', detail:`M 확장자 ${getExt(mf)} 허용 안 됨`});
-  }
+  names.forEach(base => {
+    const m = base.match(LEADING_RE);
+    if (!m) return;
+    const prefix = m[1], qa = m[2].toUpperCase(), tail = m[3];
+    const g = (G_RE.exec(tail) || [])[1] || null;
+    const skill = (SKILL_RE.exec(base) || [])[1]?.toLowerCase() || null;
+    const baseNoExt = base.replace(/\.[^.]+$/,'');
+    const setKey = `${prefix}_${baseNoExt.slice((prefix + qa).length).replace(/^_/,'').replace(/_([yn]{4})$/i,'').replace(/_$/,'')}`;
+    
+    if (!sets.has(setKey)) sets.set(setKey, {Q:new Set(), A:new Set(), M:new Set(), skills:new Set(), gnums:new Set(), files:new Set()});
+    const d = sets.get(setKey);
+    d[qa].add(base); d.files.add(base);
+    if (skill) d.skills.add(skill);
+    if (g) d.gnums.add(g);
+    parsed.set(base, { qa, gnum: g, skill });
+  });
 
   const setRows = [];
-  for (const [sk, d] of sets) {
-    const qn=d.Q.size, an=d.A.size, mn=d.M.size;
-    const gnums=[...d.gnums].sort();
-    const listen = [...d.skills].some(s=>LISTEN.has(s));
+  sets.forEach((d, sk) => {
     const status = new Set();
+    const skillsArr = [...d.skills].sort();
+    const listen = skillsArr.some(s => isSoundRequired(s));
+    const issueKey = skillsArr.length > 0 ? `${sk}_${skillsArr.length > 1 ? '('+skillsArr.join('|')+')' : skillsArr[0]}` : sk;
 
-    let displayKey = sk;
-    const skillsSorted = [...d.skills].sort();
-    if (skillsSorted.length===1)      displayKey = `${sk}_${skillsSorted[0]}`;
-    else if (skillsSorted.length>1) { displayKey = `${sk}_(${skillsSorted.join('|')})`; status.add('skill 불일치');
-      issues.push({set_key: sk, category:'규칙 위반', detail:`세트 내 skill 코드 불일치: ${skillsSorted.join(', ')}`}); }
-
-    if (gnums.length===0){
-      if (qn===0){ issues.push({set_key:sk, category:'누락', detail:'Q 파일 없음'}); status.add('Q 없음'); }
-      if (an===0){ issues.push({set_key:sk, category:'누락', detail:'A 파일 없음'}); status.add('A 없음'); }
-      if (isLang && listen && mn===0){ issues.push({set_key:sk, category:'누락', detail:'듣/말인데 M 없음'}); status.add('M 없음(듣/말)'); }
+    if (d.gnums.size === 0) {
+      let missing = [];
+      if (d.Q.size === 0) missing.push('Q');
+      if (d.A.size === 0) missing.push('A');
+      if (listen && d.M.size === 0) missing.push('M(사운드)');
+      if (missing.length > 0) {
+        issues.push({set_key: issueKey, category: '파일 구성 미비', detail: `${missing.join('/')} 누락`});
+        status.add(`${missing.join('/')} 누락`);
+      }
     } else {
       const byG = new Map();
-      for (const f of d.files){
-        const info = parsed.get(f); if(!info || !info.gnum) continue;
-        if (!byG.has(info.gnum)) byG.set(info.gnum, {Q:new Set(),A:new Set(),M:new Set(),skills:new Set()});
-        const b = byG.get(info.gnum);
-        b[info.qa].add(f); if(info.skill) b.skills.add(info.skill);
-      }
-      for (const [g, comp] of byG){
-        if (g==='00'){
-          if (comp.A.size>0){ issues.push({set_key:sk, category:'규칙 위반', detail:'G00에는 A 파일이 없어야 함'}); status.add('G00에 A 존재'); }
-          if (isLang && [...comp.skills].some(s=>LISTEN.has(s)) && comp.M.size===0){
-            issues.push({set_key:sk, category:'누락', detail:'G00 듣/말인데 M 없음'}); status.add('G00 M 없음(듣/말)'); }
+      d.files.forEach(f => {
+        const p = parsed.get(f); if(!p.gnum) return;
+        if(!byG.has(p.gnum)) byG.set(p.gnum, {Q:0, A:0, M:0, skills:new Set()});
+        const gInfo = byG.get(p.gnum);
+        gInfo[p.qa]++; if(p.skill) gInfo.skills.add(p.skill);
+      });
+      byG.forEach((comp, g) => {
+        let gMissing = [];
+        const gSkills = [...comp.skills].sort();
+        const gListen = gSkills.some(s => isSoundRequired(s));
+        const gIssueKey = gSkills.length > 0 ? `${sk}_G${g}_${gSkills.join('|')}` : `${sk}_G${g}`;
+        
+        if (g === '00') {
+          if (comp.A > 0) { issues.push({set_key:gIssueKey, category:'규칙 위반', detail:'G00에 A 존재'}); status.add('G00 오류'); }
+          if (gListen && comp.M === 0) gMissing.push('M');
         } else {
-          if (comp.Q.size===0){ issues.push({set_key:sk, category:'누락', detail:`G${g} Q 없음`}); status.add(`G${g} Q 없음`); }
-          if (comp.A.size===0){ issues.push({set_key:sk, category:'누락', detail:`G${g} A 없음`}); status.add(`G${g} A 없음`); }
-          if (isLang && [...comp.skills].some(s=>LISTEN.has(s)) && comp.M.size===0){
-            issues.push({set_key:sk, category:'누락', detail:`G${g} 듣/말인데 M 없음`}); status.add(`G${g} M 없음(듣/말)`); }
+          if (comp.Q === 0) gMissing.push('Q');
+          if (comp.A === 0) gMissing.push('A');
+          if (gListen && comp.M === 0) gMissing.push('M');
         }
-      }
+        if (gMissing.length > 0) {
+          issues.push({set_key: gIssueKey, category: '파일 구성 미비', detail: `G${g}:${gMissing.join('/')} 누락`});
+          status.add(`G${g} 누락`);
+        }
+      });
     }
 
     setRows.push({
-      set_key: sk,
-      set_key_display: displayKey,
-      q_count: qn, a_count: an, m_count: mn,
-      g_groups: gnums.join(','),
+      set_key_display: issueKey,
+      q_count: d.Q.size, a_count: d.A.size, m_count: d.M.size,
+      g_groups: [...d.gnums].sort().join(','),
       listen_speak: listen ? 'Y' : 'N',
-      status: status.size? [...status].sort().join('; ') : 'OK'
+      status: status.size ? [...status].join('; ') : 'OK'
     });
-  }
-
-  return { summary:{ total_files:names.length, total_sets:sets.size }, sets:setRows, issues };
+  });
+  return { summary: { total_files: names.length, total_sets: sets.size }, sets: setRows, issues };
 }
 
-/* -------------------- 실행 -------------------- */
-btnRun.addEventListener('click', () => {
-  const lines = area.value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
-  const res = scanFromLines(lines, true);
-
-  setMetrics(res.summary.total_files, res.summary.total_sets, res.issues.length);
-
-  const setCols = ['set_key_display','q_count','a_count','m_count','g_groups','listen_speak','status'];
-  renderTable('tbl-sets', res.sets, setCols);
-  const issueRows = res.issues.map((it,i)=>({ '#': i+1, ...it }));
-  renderTable('tbl-issues', issueRows, ['#','set_key','category','detail']);
-
-  btnDlIssues.disabled = false; btnDlSets.disabled = false;
-  btnDlIssues.onclick = () => downloadCSV('issues.csv', toCSV(res.issues, ['set_key','category','detail']));
-  btnDlSets.onclick   = () => downloadCSV('sets_summary.csv', toCSV(res.sets, setCols));
+document.getElementById('btn-run').addEventListener('click', () => {
+  const lines = document.getElementById('paste-area').value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+  if(lines.length === 0) return alert('검사할 파일명이 없습니다.');
+  const res = scanFromLines(lines);
+  document.getElementById('m-total-files').innerText = res.summary.total_files;
+  document.getElementById('m-total-sets').innerText = res.summary.total_sets;
+  document.getElementById('m-total-issues').innerText = res.issues.length;
+  renderTable('tbl-sets', res.sets, ['set_key_display','q_count','a_count','m_count','g_groups','listen_speak','status']);
+  renderTable('tbl-issues', res.issues.map((it, i) => ({ '#': i+1, ...it })), ['#','set_key','category','detail']);
+  document.getElementById('btn-dl-issues').disabled = false;
+  document.getElementById('btn-dl-sets').disabled = false;
+  document.getElementById('btn-dl-issues').onclick = () => {
+    const csv = '\ufeff세트 키,분류,상세\n' + res.issues.map(i => `"${i.set_key}","${i.category}","${i.detail}"`).join('\n');
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'issues.csv'; a.click();
+  };
 });
 </script>
 </body>
