@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Y클라우드 CMS 대량등록 마스터</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@latest/dist/web/static/pretendard.css" />
+
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
+<style>
+  :root {
+    --bg:#f8fafc; --fg:#1e293b; --muted:#64748b; --accent:#3b82f6; --card:#ffffff; --line:#e2e8f0;
+    --ok:#22c55e; --warn:#f59e0b; --danger:#ef4444;
+    --thead:#f1f5f9;
+    --input-bg:#ffffff; --input-border:#cbd5e1;
+    --header-bg:rgba(255,255,255,0.8);
+    --shadow:0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+  }
+
+  [data-theme="dark"] {
+    --bg:#0f172a; --fg:#f1f5f9; --muted:#94a3b8; --accent:#60a5fa; --card:#1e293b; --line:#334155;
+    --ok:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --thead:#334155;
+    --input-bg:#0f172a; --input-border:#334155;
+    --header-bg:rgba(15,23,42,0.8);
+    --shadow:0 10px 15px -3px rgba(0,0,0,0.5);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:"Pretendard", sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  header {
+    padding:16px 24px; border-bottom:1px solid var(--line); background:var(--header-bg);
+    position:sticky; top:0; z-index:100; backdrop-filter:blur(12px);
+  }
+  .header-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content: space-between; }
+  h1 { margin:0; font-size:18px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+  
+  .container { max-width:1200px; margin:24px auto; padding:0 20px; display: grid; gap: 24px; }
+  
+  /* 영역 높이 일치를 위해 stretch 사용 */
+  .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; }
+  
+  .step { 
+    background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px; box-shadow:var(--shadow);
+    display: flex; flex-direction: column; /* 내부 요소 확장을 위해 flex 설정 */
+  }
+  .step-title { display:flex; align-items:center; gap:10px; margin:0 0 16px; font-size:16px; font-weight: 700; color:var(--accent); }
+  .badge {
+    width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center;
+    background:var(--accent); color:#fff; border-radius:6px; font-weight:800; font-size:12px;
+  }
+
+  input[type="text"], select, textarea {
+    width:100%; background:var(--input-bg); color:var(--fg);
+    border:1px solid var(--input-border); border-radius:10px; padding:10px 12px;
+    font-size: 14px; transition: border-color 0.2s;
+  }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+
+  /* 1번 영역 textarea가 남는 공간을 다 채우도록 설정 */
+  textarea#raw { flex-grow: 1; min-height: 350px; resize:none; font-family: monospace; font-size: 12px; }
+
+  .hint { font-size:12px; color:var(--muted); margin-top:6px; line-height: 1.4; }
+  .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap:16px; flex-grow: 1; }
+  
+  .col-group { 
+    display: flex; flex-direction: column; gap: 10px; 
+    border: 1px solid var(--line); padding: 14px; border-radius: 12px; 
+    background: rgba(0,0,0,0.02); justify-content: center;
+  }
+  
+  .row { display:flex; gap:10px; align-items:center; }
+  button {
+    background:var(--accent); color:#ffffff; border:0; border-radius:10px; padding:12px 20px; font-weight:700; cursor:pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: opacity 0.2s;
+  }
+  button:hover { opacity: 0.9; }
+  button.ghost { background:transparent; color:var(--accent); border:1px solid var(--accent); }
+  button.ok { background:var(--ok); }
+  button.secondary { background: var(--muted); }
+
+  /* AI Playground 전용 스타일 */
+  button.ai-btn { background: #8b5cf6; color: white; border: none; }
+  button.ai-btn:hover { background: #7c3aed; }
+
+  .preview-container { grid-column: span 2; }
+  .table-wrapper { overflow-x: auto; border-radius: 12px; border: 1px solid var(--line); min-height: 100px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; background: var(--card); }
+  th, td { border-bottom:1px solid var(--line); padding:12px; text-align:left; }
+  thead th { background:var(--thead); font-weight: 700; color: var(--muted); }
+
+  .appendix { background: color-mix(in srgb, var(--accent) 5%, var(--card)); border: 1px dashed var(--accent); margin-top: 20px; }
+  .ps-code { background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 10px; font-family: 'Consolas', monospace; font-size: 13px; position: relative; margin-top: 12px; word-break: break-all; }
+
+  footer { padding:40px 20px; color:var(--muted); text-align:center; font-size: 13px; }
+
+  @media (max-width:980px) { .main-grid { grid-template-columns:1fr; } .preview-container { grid-column: auto; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1>🚀 Y클라우드 CMS 마스터</h1>
+    <div class="row">
+      <button class="ghost" id="themeBtn">테마 전환</button>
+      <button class="ghost" id="btnResetHeader">초기화</button>
+      <button class="ai-btn" id="btnPlayground">AI Playground</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="main-grid">
+    <section class="step">
+      <h2 class="step-title"><span class="badge">1</span> 결과 데이터 입력</h2>
+      <textarea id="raw" placeholder="대량등록 결과를 여기에 붙여넣으세요..."></textarea>
+      <div style="margin-top:12px;">
+        <label class="hint">레코드 분리 기준</label>
+        <select id="recSep" style="margin-top:4px;">
+          <option value="newline" selected>줄바꿈 기준 (기본)</option>
+          <option value="number">번호 기준 (1;, 2;, ...)</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="step">
+      <h2 class="step-title"><span class="badge">2</span> 출력 형식 설정</h2>
+      <div style="margin-bottom:16px;">
+        <label class="hint">링크 기본 URL</label>
+        <input id="baseUrl" type="text" value="https://www.ybmcloud.com/viewer?contentId=" />
+      </div>
+
+      <div class="grid-2">
+        <div class="col-group">
+          <select id="colA" onchange="autoHeader(this, 'headA')">
+            <option value="filename_noext" selected>파일명(확장자 제외)</option>
+            <option value="filename_ext">파일명(확장자 포함)</option>
+            <option value="link">링크(자동)</option>
+            <option value="content_id">개체ID</option>
+            <option value="custom">직접입력</option>
+          </select>
+          <input id="headA" type="text" value="파일명" placeholder="엑셀 헤더명" />
+          <input type="text" id="customA" placeholder="직접 입력될 값" style="display:none;">
+        </div>
+        
+        <div class="col-group">
+          <select id="colB" onchange="autoHeader(this, 'headB')">
+            <option value="link" selected>링크(자동)</option>
+            <option value="filename_noext">파일명(확장자 제외)</option>
+            <option value="content_id">개체ID</option>
+            <option value="custom">직접입력</option>
+          </select>
+          <input id="headB" type="text" value="링크" placeholder="엑셀 헤더명" />
+          <input type="text" id="customB" placeholder="직접 입력될 값" style="display:none;">
+        </div>
+
+        <div class="col-group">
+          <select id="colC" onchange="autoHeader(this, 'headC')">
+            <option value="content_id" selected>개체ID</option>
+            <option value="link">링크(자동)</option>
+            <option value="custom">직접입력</option>
+          </select>
+          <input id="headC" type="text" value="개체ID" placeholder="엑셀 헤더명" />
+          <input type="text" id="customC" placeholder="직접 입력될 값" style="display:none;">
+        </div>
+
+        <div class="col-group">
+          <select id="colD" onchange="autoHeader(this, 'headD')">
+            <option value="empty" selected>사용 안 함</option>
+            <option value="status">등록상태</option>
+            <option value="idx">인덱스</option>
+            <option value="custom">직접입력</option>
+          </select>
+          <input id="headD" type="text" value="" placeholder="엑셀 헤더명(선택)" />
+          <input type="text" id="customD" placeholder="직접 입력될 값" style="display:none;">
+        </div>
+      </div>
+      
+      <div style="margin-top:20px; display:flex; gap:8px;">
+        <button id="btnPreview" class="secondary" style="flex:1;">미리보기</button>
+        <button id="btnDownloadXLSX" class="ok" style="flex:2;">엑셀 다운로드</button>
+      </div>
+    </section>
+
+    <section class="step preview-container">
+      <h2 class="step-title"><span class="badge">3</span> 변환 미리보기 (상위 20개)</h2>
+      <div id="preview" class="table-wrapper">
+        <div style="padding:40px; text-align:center; color:var(--muted);">데이터를 입력하고 미리보기를 눌러주세요.</div>
+      </div>
+    </section>
+
+    <section class="step appendix" style="grid-column: span 2;">
+      <h2 class="step-title">📎 부록: PowerShell 명령 생성기</h2>
+      <p class="hint">로컬 폴더 내의 파일명 목록을 클립보드로 복사하는 명령어를 생성합니다.</p>
+      
+      <div class="row" style="margin-top:15px;">
+        <div style="flex:1;">
+          <label class="hint">대상 폴더 경로 (클릭 시 전체 선택)</label>
+          <input type="text" id="psFolder" 
+                 placeholder="예: C:\Users\YBM\자료폴더" 
+                 onclick="this.select()" 
+                 oninput="updatePS()" />
+        </div>
+        <button id="btnCopyPS" style="align-self: flex-end;">명령어 복사</button>
+      </div>
+
+      <div class="ps-code" id="psResult">
+        Get-ChildItem "폴더 경로를 입력하세요" -Recurse -File | Select-Object -ExpandProperty Name | Set-Clipboard
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<footer>
+  ⓒ Jeongyeon. 2026 • YBM Cloud CMS Helper
+</footer>
+
+<script>
+  const el = (id)=>document.getElementById(id);
+  const themeBtn = el('themeBtn');
+  const root = document.documentElement;
+
+  // --- Theme ---
+  themeBtn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    themeBtn.textContent = next === 'dark' ? '라이트 모드' : '다크 모드';
+  });
+
+  // --- AI Playground 연결 ---
+  el('btnPlayground').addEventListener('click', () => {
+    location.href = 'https://taeja9.github.io/playground/';
+  });
+
+  // --- Auto Header Logic ---
+  function autoHeader(selectEl, targetInputId) {
+    const input = el(targetInputId);
+    const selectedText = selectEl.options[selectEl.selectedIndex].text;
+    
+    if (selectEl.value === 'empty') {
+      input.value = '';
+    } else if (selectEl.value === 'custom') {
+      input.value = '커스텀';
+    } else {
+      input.value = selectedText.split('(')[0];
+    }
+    
+    const customInputId = 'custom' + targetInputId.replace('head', '');
+    el(customInputId).style.display = selectEl.value === 'custom' ? 'block' : 'none';
+  }
+
+  // --- PowerShell Generator ---
+  function updatePS() {
+    const path = el('psFolder').value;
+    const displayPath = path || "폴더 경로를 입력하세요";
+    const cmd = `Get-ChildItem "${displayPath}" -Recurse -File | Select-Object -ExpandProperty Name | Set-Clipboard`;
+    el('psResult').textContent = cmd;
+  }
+
+  el('btnCopyPS').addEventListener('click', () => {
+    const code = el('psResult').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+      const btn = el('btnCopyPS');
+      const originalText = btn.textContent;
+      btn.textContent = "복사 완료!";
+      btn.style.background = "var(--ok)";
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.background = "var(--accent)";
+      }, 2000);
+    });
+  });
+
+  // --- Core Logic ---
+  const raw = el('raw'), recSep = el('recSep'), baseUrl = el('baseUrl');
+  const headA = el('headA'), headB = el('headB'), headC = el('headC'), headD = el('headD');
+  const colA = el('colA'), colB = el('colB'), colC = el('colC'), colD = el('colD');
+  const customA = el('customA'), customB = el('customB'), customC = el('customC'), customD = el('customD');
+
+  function parseRows() {
+    const text = raw.value.trim();
+    if(!text) return [];
+    let recs = [];
+    if(recSep.value === 'newline') {
+      recs = text.split(/\n+/).filter(Boolean);
+    } else {
+      const re = /(\d+;[\s\S]*?)(?=(?:\s*\d+;)|$)/g;
+      let m;
+      while ((m = re.exec(text)) !== null) recs.push(m[1].trim());
+    }
+    
+    return recs.map(r => {
+      const cells = r.split(';');
+      if(cells.length < 4) return null;
+      const parts = cells.map(s=>s.trim());
+      const filename = parts.pop();
+      const content_id = parts.pop();
+      const status = parts.pop();
+      const idx = parts.pop();
+      return { idx, status, content_id, filename };
+    }).filter(Boolean);
+  }
+
+  function getVal(row, mode, custom) {
+    if(!row) return '';
+    switch(mode) {
+      case 'filename_ext': return row.filename;
+      case 'filename_noext': return row.filename.replace(/\.[^/.]+$/, '');
+      case 'link': return baseUrl.value + row.content_id;
+      case 'content_id': return row.content_id;
+      case 'status': return row.status;
+      case 'idx': return row.idx;
+      case 'custom': return custom.value;
+      default: return '';
+    }
+  }
+
+  function buildData() {
+    const rows = parseRows();
+    const data = [[headA.value, headB.value, headC.value, headD.value]];
+    rows.forEach(r => {
+      data.push([
+        getVal(r, colA.value, customA),
+        getVal(r, colB.value, customB),
+        getVal(r, colC.value, customC),
+        getVal(r, colD.value, customD)
+      ]);
+    });
+    return data;
+  }
+
+  el('btnPreview').addEventListener('click', () => {
+    const data = buildData();
+    if(data.length <= 1) { el('preview').innerHTML = '<div style="padding:40px; text-align:center; color:var(--muted);">데이터를 올바르게 입력해주세요.</div>'; return; }
+    let html = '<table><thead><tr>' + data[0].map(h=>`<th>${h}</th>`).join('') + '</tr></thead><tbody>';
+    data.slice(1, 21).forEach(row => {
+      html += '<tr>' + row.map(v=>`<td>${v}</td>`).join('') + '</tr>';
+    });
+    el('preview').innerHTML = html + '</tbody></table>';
+  });
+
+  el('btnDownloadXLSX').addEventListener('click', () => {
+    const data = buildData();
+    if(data.length <= 1) return alert('데이터가 없습니다.');
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Result");
+    XLSX.writeFile(wb, "ybm_cms_result.xlsx");
+  });
+
+  el('btnResetHeader').addEventListener('click', () => {
+    if(confirm('모든 설정을 초기화할까요?')) location.reload();
+  });
+</script>
+</body>
+</html>
