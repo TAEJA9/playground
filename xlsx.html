@@ -44,12 +44,11 @@
   
   .container { max-width:1200px; margin:24px auto; padding:0 20px; display: grid; gap: 24px; }
   
-  /* 영역 높이 일치를 위해 stretch 사용 */
   .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; }
   
   .step { 
     background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px; box-shadow:var(--shadow);
-    display: flex; flex-direction: column; /* 내부 요소 확장을 위해 flex 설정 */
+    display: flex; flex-direction: column;
   }
   .step-title { display:flex; align-items:center; gap:10px; margin:0 0 16px; font-size:16px; font-weight: 700; color:var(--accent); }
   .badge {
@@ -64,7 +63,6 @@
   }
   input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
 
-  /* 1번 영역 textarea가 남는 공간을 다 채우도록 설정 */
   textarea#raw { flex-grow: 1; min-height: 350px; resize:none; font-family: monospace; font-size: 12px; }
 
   .hint { font-size:12px; color:var(--muted); margin-top:6px; line-height: 1.4; }
@@ -86,7 +84,6 @@
   button.ok { background:var(--ok); }
   button.secondary { background: var(--muted); }
 
-  /* AI Playground 전용 스타일 */
   button.ai-btn { background: #8b5cf6; color: white; border: none; }
   button.ai-btn:hover { background: #7c3aed; }
 
@@ -214,7 +211,7 @@
       </div>
 
       <div class="ps-code" id="psResult">
-        Get-ChildItem "폴더 경로를 입력하세요" -Recurse -File | Select-Object -ExpandProperty Name | Set-Clipboard
+        Get-ChildItem -LiteralPath "폴더 경로를 입력하세요" -Recurse -File | Select-Object -ExpandProperty Name | Set-Clipboard
       </div>
     </section>
   </div>
@@ -259,11 +256,12 @@
     el(customInputId).style.display = selectEl.value === 'custom' ? 'block' : 'none';
   }
 
-  // --- PowerShell Generator ---
+  // --- PowerShell Generator (LiteralPath 적용) ---
   function updatePS() {
     const path = el('psFolder').value;
     const displayPath = path || "폴더 경로를 입력하세요";
-    const cmd = `Get-ChildItem "${displayPath}" -Recurse -File | Select-Object -ExpandProperty Name | Set-Clipboard`;
+    // -LiteralPath를 추가하여 대괄호([]) 문제를 해결함
+    const cmd = `Get-ChildItem -LiteralPath "${displayPath}" -Recurse -File | Select-Object -ExpandProperty Name | Set-Clipboard`;
     el('psResult').textContent = cmd;
   }
 
@@ -355,7 +353,7 @@
     const ws = XLSX.utils.aoa_to_sheet(data);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Result");
-    XLSX.writeFile(wb, "ybm_cms_result.xlsx");
+    XLSX.writeFile(wb, "cms_result.xlsx");
   });
 
   el('btnResetHeader').addEventListener('click', () => {
@@ -364,4 +362,3 @@
 </script>
 </body>
 </html>
-
