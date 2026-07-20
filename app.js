@@ -129,6 +129,16 @@ const CARD_DATA = [
     type: "report"
   },
   {
+    icon: "💡",
+    title: "2026 Gemini Playground (사례 및 AX Idea)",
+    desc: "2026 Gemini Playground 현장 세션 정리 및 실무 도입 사례, AX Idea 분석 자료 페이지 (요약 슬라이드 포함)",
+    href: "https://taeja9.github.io/playground/works/gemini-playground-2026/index.html",
+    cats: ["report"],
+    isActive: true,
+    author: "정연",
+    type: "report"
+  },
+  {
     icon: "🐳",
     title: "AI 필기인식 서비스 비교 분석 결과",
     desc: "AI 필기인식 서비스 비교 항목 선정부터 분석 결과까지 완전 시각화 미쳤지 모야",
