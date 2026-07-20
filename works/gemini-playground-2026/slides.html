@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>2026 Gemini Playground — 요약 슬라이드</title>
+<link rel="icon" type="image/png" href="google-favicon.png" />
+<style>
+  :root {
+    --bg: #f5f7fb; --surface: #ffffff; --surface-2: #f0f3f9;
+    --line: #e2e7f0; --line-strong: #d3dae6;
+    --text: #1f2430; --text-2: #3b4252; --muted: #6b7385;
+    --g-blue: #1a73e8; --g-red: #ea4335; --g-yellow: #f9ab00; --g-green: #1e8e3e; --g-teal: #12a4a4;
+    --shadow: 0 10px 40px rgba(20,30,60,.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
+    background:
+      radial-gradient(1000px 600px at 100% -8%, #e9f0ff 0%, transparent 55%),
+      radial-gradient(800px 500px at -10% 0%, #eafaf0 0%, transparent 50%),
+      var(--bg);
+    color: var(--text); overflow: hidden; -webkit-font-smoothing: antialiased;
+  }
+
+  /* top bar */
+  .topbar { position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 30;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 22px; }
+  .brand { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--text-2); }
+  .brand .dots { display: inline-flex; gap: 4px; }
+  .brand .dots i { width: 8px; height: 8px; border-radius: 50%; display: block; }
+  .brand .dots i:nth-child(1){ background: var(--g-blue); } .brand .dots i:nth-child(2){ background: var(--g-red); }
+  .brand .dots i:nth-child(3){ background: var(--g-yellow); } .brand .dots i:nth-child(4){ background: var(--g-green); }
+  .home { font-size: 12.5px; font-weight: 700; color: var(--muted); text-decoration: none; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+  .home:hover { color: var(--g-blue); border-color: var(--g-blue); }
+
+  /* deck */
+  .deck { position: fixed; inset: 52px 0 0 0; display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .slide {
+    position: absolute; width: min(960px, 94vw); max-height: calc(100vh - 120px);
+    background: var(--surface); border: 1px solid var(--line); border-radius: 22px;
+    box-shadow: var(--shadow); padding: 48px 56px;
+    opacity: 0; visibility: hidden; transform: translateY(10px) scale(.99);
+    transition: opacity .32s ease, transform .32s ease, visibility .32s;
+    overflow: auto;
+  }
+  .slide.active { opacity: 1; visibility: visible; transform: none; }
+  .slide::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px; border-radius: 22px 22px 0 0;
+    background: linear-gradient(90deg, var(--g-blue), var(--g-green)); }
+
+  .kicker { display: inline-block; font-size: 12.5px; font-weight: 800; letter-spacing: .6px; color: var(--g-blue);
+    background: #eef4ff; border: 1px solid #d3e2fb; padding: 5px 13px; border-radius: 999px; margin-bottom: 18px; }
+  .slide h1 { font-size: clamp(30px, 5vw, 50px); line-height: 1.15; letter-spacing: -0.02em; font-weight: 800; }
+  .slide h1 .grad { background: linear-gradient(90deg, var(--g-blue), var(--g-green)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .slide h2 { font-size: clamp(24px, 3.6vw, 36px); line-height: 1.2; letter-spacing: -0.01em; font-weight: 800; margin-bottom: 22px; }
+  .slide .lead { font-size: clamp(16px, 2.1vw, 20px); color: var(--muted); margin-top: 16px; }
+  .quote { font-size: clamp(24px, 3.4vw, 38px); font-weight: 800; line-height: 1.25; letter-spacing: -0.01em; }
+  .quote .hl { color: var(--g-blue); }
+  .meta { margin-top: 26px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .meta span { font-size: 13px; color: var(--text-2); background: var(--surface-2); border: 1px solid var(--line); padding: 6px 13px; border-radius: 999px; }
+  .hint { margin-top: 30px; font-size: 13px; color: var(--muted); }
+  .hint kbd { font: inherit; font-size: 12px; background: var(--surface-2); border: 1px solid var(--line-strong); border-bottom-width: 2px; border-radius: 6px; padding: 1px 7px; }
+
+  /* content blocks */
+  .rows { display: grid; gap: 12px; margin-top: 6px; }
+  .row { display: grid; grid-template-columns: 150px 1fr; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); align-items: baseline; }
+  .row:first-child { border-top: none; }
+  .row .k { font-size: 14px; font-weight: 800; color: var(--muted); }
+  .row .v { font-size: clamp(15px, 1.9vw, 18px); color: var(--text-2); }
+
+  .points { display: grid; gap: 14px; margin-top: 8px; }
+  .point { display: flex; gap: 14px; align-items: flex-start; }
+  .point .n { flex: 0 0 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 15px; }
+  .point .tx { font-size: clamp(16px, 2vw, 20px); color: var(--text-2); padding-top: 3px; }
+  .point .tx b { color: var(--text); }
+  .n1{background:var(--g-blue);} .n2{background:var(--g-green);} .n3{background:var(--g-yellow);} .n4{background:var(--g-teal);} .n5{background:var(--g-red);}
+
+  .statgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 6px; }
+  .stat { background: var(--surface-2); border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; }
+  .stat .num { font-size: clamp(30px, 4.4vw, 46px); font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+  .stat .num.b{color:var(--g-blue);} .stat .num.g{color:var(--g-green);} .stat .num.y{color:var(--g-yellow);} .stat .num.r{color:var(--g-red);}
+  .stat .lbl { font-size: 13.5px; color: var(--muted); margin-top: 10px; }
+
+  .agentlist { display: grid; gap: 11px; margin-top: 4px; }
+  .agent { border: 1px solid var(--line); border-radius: 13px; padding: 13px 16px; background: var(--surface-2); }
+  .agent .ah { font-size: clamp(15px, 1.9vw, 17px); font-weight: 800; margin-bottom: 7px; }
+  .agent .ah small { font-weight: 600; font-size: 12px; color: var(--muted); }
+  .agent .ab { display: flex; gap: 9px; align-items: baseline; font-size: clamp(13px, 1.55vw, 15px); color: var(--text-2); margin-top: 4px; }
+  .agent .ab .tag { flex: 0 0 auto; font-size: 10.5px; font-weight: 800; letter-spacing: .2px; padding: 2px 9px; border-radius: 999px; transform: translateY(-1px); }
+  .agent .ab .need { background: #fdeceb; color: var(--g-red); }
+  .agent .ab .eff { background: #e6f5f5; color: #0c7d7d; }
+
+  .axis { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 6px; }
+  .axcard { background: var(--surface-2); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+  .axcard .btag { display: inline-block; font-size: 11px; font-weight: 800; color: #fff; padding: 3px 10px; border-radius: 999px; margin-bottom: 8px; }
+  .bt-a{background:var(--g-blue);} .bt-b{background:var(--g-green);} .bt-c{background:var(--g-yellow);} .bt-d{background:var(--g-teal);}
+  .axcard .at { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+  .axcard .ad { font-size: 13px; color: var(--muted); }
+
+  /* nav */
+  .nav { position: fixed; top: 50%; transform: translateY(-50%); z-index: 25;
+    width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--line-strong);
+    background: var(--surface); color: var(--g-blue); font-size: 24px; font-weight: 800; cursor: pointer;
+    box-shadow: var(--shadow); display: grid; place-items: center; transition: background .15s, color .15s, transform .15s; }
+  .nav:hover { background: var(--g-blue); color: #fff; }
+  .nav:disabled { opacity: .35; cursor: default; }
+  .nav.prev { left: 20px; } .nav.next { right: 20px; }
+
+  .footer { position: fixed; bottom: 16px; left: 0; right: 0; z-index: 25; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .counter { font-size: 13px; font-weight: 700; color: var(--text-2); background: var(--surface); border: 1px solid var(--line); padding: 5px 14px; border-radius: 999px; box-shadow: var(--shadow); }
+  .dots-nav { display: flex; gap: 7px; }
+  .dots-nav button { width: 9px; height: 9px; border-radius: 50%; border: none; background: var(--line-strong); cursor: pointer; padding: 0; transition: background .15s, transform .15s; }
+  .dots-nav button.on { background: var(--g-blue); transform: scale(1.3); }
+
+  @media (max-width: 640px) {
+    .slide { padding: 30px 24px; }
+    .row { grid-template-columns: 96px 1fr; gap: 10px; }
+    .caseitem { grid-template-columns: 1fr; gap: 4px; }
+    .statgrid, .axis { grid-template-columns: 1fr; }
+    .nav { width: 42px; height: 42px; font-size: 20px; } .nav.prev { left: 8px; } .nav.next { right: 8px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand"><span class="dots"><i></i><i></i><i></i><i></i></span>2026 Gemini Playground · 요약 슬라이드</div>
+    <a class="home" href="index.html">📄 리포트 전체 보기</a>
+  </div>
+
+  <div class="deck" id="deck">
+
+    <!-- 1 -->
+    <section class="slide active">
+      <span class="kicker">2026 GEMINI PLAYGROUND</span>
+      <h1>실무 도입 사례 <span class="grad">요약</span></h1>
+      <p class="lead">비서(Chatbot)를 넘어 <b>에이전틱 시스템(Agentic System)</b>으로 — 현장 11개 세션 한 장 요약.</p>
+      <div class="meta"><span>🗓️ 2026. 7. 14 ~ 16</span><span>🎤 총 11개 세션</span><span>👥 팀 내부 공유용</span></div>
+      <p class="hint">키보드 <kbd>←</kbd> <kbd>→</kbd> 또는 화면 좌우 버튼으로 넘기세요.</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="slide">
+      <span class="kicker">OVERVIEW</span>
+      <h2>행사 개요</h2>
+      <div class="rows">
+        <div class="row"><div class="k">행사명</div><div class="v">2026 Gemini Playground</div></div>
+        <div class="row"><div class="k">일자</div><div class="v">2026년 7월 14일 ~ 16일</div></div>
+        <div class="row"><div class="k">주최</div><div class="v">Google Cloud (AI LiveLabs)</div></div>
+        <div class="row"><div class="k">발표</div><div class="v">3개 그룹 · 총 11개 팀 (채널코퍼레이션 · 대원제약×유클릭스 · 카카오뱅크×메가존 · 카카오헬스케어 · 위버스 · 여기어때 · 컬리 · 카카오 · CJ올리브영 · 파주시청소년재단 · 개인 개발)</div></div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="slide">
+      <span class="kicker">KEY MESSAGE</span>
+      <p class="quote">“도구 배포가 아니라, <span class="hl">시스템 안착</span>이다.”</p>
+      <div class="points" style="margin-top:28px;">
+        <div class="point"><div class="n n1">1</div><div class="tx"><b>모델보다 데이터</b> — 답변을 사내 지식에 그라운딩하고 품질을 자동 검증</div></div>
+        <div class="point"><div class="n n2">2</div><div class="tx">도구가 아니라 <b>‘환경’</b>을 바꿔 현업이 스스로 쓰게 만든다</div></div>
+        <div class="point"><div class="n n3">3</div><div class="tx">AI가 반복을 대신 → <b>사람은 더 본질적인 일에 집중</b></div></div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="slide">
+      <span class="kicker">BACKGROUND</span>
+      <h2>2026년 5대 AI 에이전트 트렌드</h2>
+      <div class="points">
+        <div class="point"><div class="n n1">1</div><div class="tx"><b>모든 직원</b> — 개인마다 전문 에이전트 팀 운용(10배 생산성)</div></div>
+        <div class="point"><div class="n n2">2</div><div class="tx"><b>모든 워크플로우</b> — MCP·A2A로 연결된 ‘디지털 조립 라인’</div></div>
+        <div class="point"><div class="n n3">3</div><div class="tx"><b>고객 응대</b> — 사내 데이터에 그라운딩된 컨시어지형 1:1 경험</div></div>
+        <div class="point"><div class="n n4">4</div><div class="tx"><b>보안</b> — 알림 감시에서 탐지·대응·조치까지 (사람 감독)</div></div>
+        <div class="point"><div class="n n5">5</div><div class="tx"><b>스케일</b> — 인재 업스킬링이 최종 비즈니스 가치를 좌우</div></div>
+      </div>
+      <p class="lead" style="font-size:13px;margin-top:18px;">출처: Google Cloud, <i>AI agent trends 2026 — Customer experience</i></p>
+    </section>
+
+    <!-- 5 -->
+    <section class="slide">
+      <span class="kicker">현장 숫자</span>
+      <h2>발표에서 나온 실제 수치</h2>
+      <div class="statgrid">
+        <div class="stat"><div class="num b">217%</div><div class="lbl">카카오뱅크 — 캠페인 후 쿼리 증가(1월 대비, 3월 78% 사용)</div></div>
+        <div class="stat"><div class="num g">50%+</div><div class="lbl">위버스 — 챗봇이 감당하는 문의 비중(처리 시간 절반↓)</div></div>
+        <div class="stat"><div class="num y">127</div><div class="lbl">여기어때 ‘얍’ — 상용 배포 에이전트 수(MCP 서버 21개)</div></div>
+        <div class="stat"><div class="num r">2,500h</div><div class="lbl">CJ올리브영 — MD 문의 응답에 매월 쓰이던 시간(자동화 타깃)</div></div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="slide">
+      <span class="kicker">그룹 1 · 전사 AI 일상화</span>
+      <h2>업무를 대신 처리하는 에이전트</h2>
+      <div class="agentlist">
+        <div class="agent">
+          <div class="ah">채널코퍼레이션 · 운영 에이전트 COS <small>최시원 대표</small></div>
+          <div class="ab"><span class="tag need">필요성</span> SMB는 데이터를 읽을 인력·비용이 없어 감으로 결정 → 기회 상실</div>
+          <div class="ab"><span class="tag eff">기대효과</span> 데이터팀 없이 실시간 결정 + 이탈 고객을 AI가 자동 회복 → 매출</div>
+        </div>
+        <div class="agent">
+          <div class="ah">대원제약 × 유클릭스 · CTD 어시스턴트 <small>함지의 팀장</small></div>
+          <div class="ab"><span class="tag need">필요성</span> 연구원이 방대한 규제 문서 작성에 시간 과다, 사람별 품질 편차</div>
+          <div class="ab"><span class="tag eff">기대효과</span> 문서 시간 단축 → 본질 연구에 집중, 결과물 품질 표준화</div>
+        </div>
+        <div class="agent">
+          <div class="ah">카카오뱅크 × 메가존 · 마이 에이전트 <small>전예슬·최다인</small></div>
+          <div class="ab"><span class="tag need">필요성</span> 도구를 깔아도 안 쓰면 무용지물, 비개발 직군의 진입 장벽</div>
+          <div class="ab"><span class="tag eff">기대효과</span> 전사 일상화(78% 사용·쿼리 217%↑), 현업이 직접 업무 자동화</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="slide">
+      <span class="kicker">그룹 2 · 프로덕트·플랫폼</span>
+      <h2>제품과 시스템에 심는 에이전트</h2>
+      <div class="agentlist">
+        <div class="agent">
+          <div class="ah">카카오헬스케어 파스타 · 프로액티브 헬스 에이전트 <small>김수제 이사</small></div>
+          <div class="ab"><span class="tag need">필요성</span> 사용자가 기록을 안 하면 서비스가 그를 이해 못 해 곧 이탈</div>
+          <div class="ab"><span class="tag eff">기대효과</span> 기록 부담↓ + 먼저 챙기는 케어로 지속 사용·실제 건강 개선</div>
+        </div>
+        <div class="agent">
+          <div class="ah">위버스 컴퍼니 · 다국어 AI 고객센터 <small>김연철 팀장</small></div>
+          <div class="ab"><span class="tag need">필요성</span> 다국어 문의 폭증, 사람 손 한계, 잘못된 답변(할루시네이션) 위험</div>
+          <div class="ab"><span class="tag eff">기대효과</span> 5개 언어 24h 자율 응대·처리시간 절반↓, 상담사는 깊은 케어에 집중</div>
+        </div>
+        <div class="agent">
+          <div class="ah">여기어때 · 사내 AI 플랫폼 ‘얍’ <small>노수영 팀장</small></div>
+          <div class="ab"><span class="tag need">필요성</span> 팀마다 에이전트 개발 중복, 권한 혼란, 온보딩 비용 급증</div>
+          <div class="ab"><span class="tag eff">기대효과</span> 재사용 가능한 표준 플랫폼(에이전트 127개), 비개발자도 직접 제작</div>
+        </div>
+        <div class="agent">
+          <div class="ah">컬리 · 사내 지식 검색 동료 ‘베필주2’ <small>배필주 엔지니어</small></div>
+          <div class="ab"><span class="tag need">필요성</span> 있는 답을 다시 찾는 낭비, 담당자 부재 시 업무 정지(버스팩터=1)</div>
+          <div class="ab"><span class="tag eff">기대효과</span> 근거·출처와 함께 즉시 검색, 업무 연속성·온보딩까지 확보</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="slide">
+      <span class="kicker">그룹 3 · 신뢰 · 확산 · 개인</span>
+      <h2>신뢰를 지키고, 개인이 바뀐다</h2>
+      <div class="agentlist">
+        <div class="agent">
+          <div class="ah">카카오 · Responsible AI (SynthID) <small>최지은 수석</small></div>
+          <div class="ab"><span class="tag need">필요성</span> AI 생성물 신뢰 위기 + 법적 표시 의무, 보이는 워터마크는 쉽게 제거</div>
+          <div class="ab"><span class="tag eff">기대효과</span> 편집 후에도 AI 여부 검증 → 사용자 신뢰 확보·규제 대응</div>
+        </div>
+        <div class="agent">
+          <div class="ah">CJ올리브영 · MDY <small>김남현 PM</small></div>
+          <div class="ab"><span class="tag need">필요성</span> 도구를 깔아도 지속 사용 실패(월 34%), 지식이 사방에 파편화</div>
+          <div class="ab"><span class="tag eff">기대효과</span> 지식 자산화 → 문의 시간↓, 지속 사용률·MD 역량 표준 ↑</div>
+        </div>
+        <div class="agent">
+          <div class="ah">파주시 청소년재단 · 봉사 코칭 웹앱 <small>인태희 지도사</small></div>
+          <div class="ab"><span class="tag need">필요성</span> 봉사 경험이 ‘시간 증빙’으로만 소비되어 자산으로 남지 않음</div>
+          <div class="ab"><span class="tag eff">기대효과</span> 경험을 직무역량 포트폴리오로 → 청년의 취업 경쟁력</div>
+        </div>
+        <div class="agent">
+          <div class="ah">개인 개발 · 개인비서 ‘루시’ <small>안지원 학생</small></div>
+          <div class="ab"><span class="tag need">필요성</span> 매일 아침 여러 앱을 오가며 파편화된 정보를 직접 찾는 반복 낭비</div>
+          <div class="ab"><span class="tag eff">기대효과</span> 정보가 알아서 도착(모닝브리프) → 시간 절약, 유저→디벨로퍼 전환</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="slide">
+      <span class="kicker">시사점 &amp; AX IDEA</span>
+      <h2>우리가 가져갈 4개 축</h2>
+      <div class="axis">
+        <div class="axcard"><span class="btag bt-a">A · 기술</span><div class="at">지식 그라운딩 + 표준화</div><div class="ad">사내 데이터를 MCP로 규격화, 출처는 코드로 강제</div></div>
+        <div class="axcard"><span class="btag bt-b">B · 서비스</span><div class="at">규칙 + 검색 + 자동 평가</div><div class="ad">규칙 분기·이중 RAG·출력 전 사실성 평가 후 사람 승인</div></div>
+        <div class="axcard"><span class="btag bt-c">C · 조직</span><div class="at">도구가 아니라 ‘환경’</div><div class="ad">앰버서더·해커톤·지식 자산화, 지표는 지속 사용률</div></div>
+        <div class="axcard"><span class="btag bt-d">D · 신뢰·개인</span><div class="at">책임 있는 AI + 업스킬</div><div class="ad">표시·출처·탐지 내장, 반복 하나를 직접 자동화</div></div>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="slide">
+      <span class="kicker">현장 데모존 · HOW IT WORKS</span>
+      <h2>데모존에서 본 아이디어</h2>
+      <div class="agentlist">
+        <div class="agent">
+          <div class="ah">Next in Financial Services <small>KB국민은행 × Google Cloud</small></div>
+          <div class="ab" style="display:block;">음성 톤·대화 맥락에 실시간 반응하는 <b>몰입형 AI 뱅커 아바타</b> — Affective Dialogue 모델 + Genie 비디오 렌더링(24fps 립싱크) + Gemini Enterprise Agent Platform으로 안전 배포.</div>
+        </div>
+        <div class="agent">
+          <div class="ah">Next in Media <small>CJ ENM × Google Cloud</small></div>
+          <div class="ab" style="display:block;">스크립트만 넣으면 <b>영상·음악이 실시간 생성</b> — Gemini API 중심으로 Veo(영상)·Lyria(음악)를 병렬 결합, App Engine·Cloud Run 파이프라인.</div>
+        </div>
+      </div>
+      <p class="lead" style="font-size:13.5px; margin-top:16px;">그 외 — Android XR · Imagine with Gemini(이이남·고요손·CODE KUNST) · Design Workshop · Gemini for Productivity</p>
+    </section>
+
+    <!-- 11 -->
+    <section class="slide">
+      <span class="kicker">CLOSING</span>
+      <p class="quote">우리가 만드는 것은 도구가 아니라,<br/><span class="hl">‘환경’</span>입니다.</p>
+      <p class="lead">모델보다 데이터 · 도구보다 환경 · AI보다 사람.</p>
+      <p class="hint" style="margin-top:34px;">Copyright 2026. YBM AI Lab.</p>
+    </section>
+
+  </div>
+
+  <button class="nav prev" id="prevBtn" aria-label="이전 슬라이드">&#8249;</button>
+  <button class="nav next" id="nextBtn" aria-label="다음 슬라이드">&#8250;</button>
+
+  <div class="footer">
+    <div class="dots-nav" id="dotsNav"></div>
+    <div class="counter" id="counter"></div>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const counter = document.getElementById("counter");
+    const dotsNav = document.getElementById("dotsNav");
+    let idx = 0;
+
+    slides.forEach((_, i) => {
+      const b = document.createElement("button");
+      b.setAttribute("aria-label", `${i + 1}번 슬라이드`);
+      b.addEventListener("click", () => go(i));
+      dotsNav.appendChild(b);
+    });
+    const dots = Array.from(dotsNav.children);
+
+    function render() {
+      slides.forEach((s, i) => s.classList.toggle("active", i === idx));
+      dots.forEach((d, i) => d.classList.toggle("on", i === idx));
+      counter.textContent = `${idx + 1} / ${slides.length}`;
+      prevBtn.disabled = idx === 0;
+      nextBtn.disabled = idx === slides.length - 1;
+    }
+    function go(i) { idx = Math.max(0, Math.min(slides.length - 1, i)); render(); }
+    function next() { go(idx + 1); }
+    function prev() { go(idx - 1); }
+
+    nextBtn.addEventListener("click", next);
+    prevBtn.addEventListener("click", prev);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); next(); }
+      else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); prev(); }
+      else if (e.key === "Home") go(0);
+      else if (e.key === "End") go(slides.length - 1);
+    });
+    // 스와이프 (모바일)
+    let sx = null;
+    document.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; }, { passive: true });
+    document.addEventListener("touchend", (e) => {
+      if (sx === null) return;
+      const dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 50) { dx < 0 ? next() : prev(); }
+      sx = null;
+    }, { passive: true });
+
+    render();
+  </script>
+</body>
+</html>
