@@ -300,12 +300,12 @@ function renderCards(){
     
     // 제작자 배지 HTML
     const authorBadgeHtml = (d.isActive && d.author) ?
-      `<div style="position:absolute;top:16px;right:16px;background:#f5f5f7;border:1px solid #e2e2e5;color:#1d1d1f;border-radius:9999px;padding:3px 10px;font-size:0.72rem;font-weight:600;">${escapeHtml(d.author)}</div>` : '';
+      `<div style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.6);color:#1d1d1f;border-radius:9999px;padding:3px 10px;font-size:0.72rem;font-weight:600;backdrop-filter:blur(4px);">${escapeHtml(d.author)}</div>` : '';
 
     // 타입 배지 HTML (도구 / 리포트 구분)
     const typeBadgeStyles = {
-      tool:   { bg: '#eafaf0', border: '#34c759', color: '#1a7f37', label: '🔧 도구' },
-      report: { bg: '#f0f9ff', border: '#2997ff', color: '#0969da', label: '🧭 works' },
+      tool:   { bg: 'rgba(16,185,129,0.12)', border: 'rgba(16,185,129,0.3)', color: '#059669', label: '🔧 도구' },
+      report: { bg: 'rgba(20,184,166,0.12)', border: 'rgba(20,184,166,0.3)', color: '#0d9488', label: '🧭 works' },
     };
     const tb = typeBadgeStyles[d.type] || typeBadgeStyles.tool;
     const typeBadgeHtml = d.isActive ? `
@@ -316,7 +316,7 @@ function renderCards(){
       </div>` : '';
 
     const body = `
-      <div class="card-hover relative h-full ${d.isActive ? 'bg-white border border-slate-200' : 'bg-slate-50 border border-slate-200 card-disabled'} rounded-xl p-8 flex flex-col shadow-sm hover:shadow-md transition-shadow">
+      <div class="card-hover relative h-full ${d.isActive ? 'bg-white/40 border border-white/50 backdrop-blur-xl saturate-[160%]' : 'bg-white/10 border border-white/30 backdrop-blur-md card-disabled'} rounded-xl p-8 flex flex-col">
         ${authorBadgeHtml}
         ${typeBadgeHtml}
         <div class="text-5xl mb-5 ${d.isActive ? '' : 'opacity-60'}">${d.icon || '🧰'}</div>
