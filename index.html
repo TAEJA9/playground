@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
@@ -6,93 +6,134 @@
 <title>AI Playground</title>
 <link rel="icon" type="image/png" href="favicon.png" />
 
+<!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          carbon: '#1d1d1f',
+          frost: '#f5f5f7',
+          smoke: '#333333',
+          graphite: '#474747',
+          ash: '#707070',
+          mist: '#858585',
+          pebble: '#e2e2e5',
+          applegreen: '#008044',
+          linkgreen: '#15803d',
+        },
+        fontFamily: {
+          sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+        }
+      }
+    }
+  }
+</script>
 
 <link rel="preconnect" href="https://cdn.jsdelivr.net" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard/dist/web/static/pretendard.css" />
 
 <style>
-  html, body { box-sizing: border-box; }
+  html, body {
+    box-sizing: border-box;
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+    -webkit-font-smoothing: antialiased;
+  }
   *, *::before, *::after { box-sizing: inherit; }
-  body { font-family: Pretendard, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial; color:#fff; }
 
-  /* 배경 레이어(스크롤해도 화면 꽉 채움) */
-  .bg-layer { position: fixed; inset: 0; pointer-events:none; }
-  @keyframes aurora { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(80px,40px) scale(1.2)} }
-  .aurora-animation { animation: aurora 12s ease-in-out infinite; }
-  .tech-grid {
-    background-image:
-      linear-gradient(rgba(100,116,139,.10) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(100,116,139,.10) 1px, transparent 1px);
-    background-size: 50px 50px;
+  /* Apple-style negative tracking for large display headers */
+  .tracking-tight-apple {
+    letter-spacing: -0.015em;
   }
 
-  .card-hover { transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
-  .card-hover:hover { transform: translateY(-6px); }
+  .card-hover {
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, box-shadow 0.4s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
+  }
 
-  .btn-cat.active { outline: 2px solid rgb(59 130 246); border-color: rgb(59 130 246); }
+  /* Custom Category Button Active State */
+  .btn-cat.active {
+    background-color: #1d1d1f !important;
+    color: #ffffff !important;
+    border-color: #1d1d1f !important;
+  }
 
-  /* 비활성 카드(Coming Soon) */
-  .card-disabled { opacity:.7; cursor:not-allowed; }
-  .card-disabled .link-row { color:#94a3b8; } /* slate-400 */
-
-  /* 제작자 배지 스타일 */
-  .card-author {
-    position: absolute;
-    /* p-8(32px) 패딩 안쪽으로 1rem(16px) 만큼 들어오게 */
-    top: 16px;
-    right: 16px;
-    /* Tailwind: bg-slate-800/70 backdrop-blur-sm border border-slate-700 rounded-full px-3 py-1 text-xs font-medium text-slate-300 */
-    background-color: rgba(30, 41, 59, 0.7);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgb(51, 65, 85);
-    border-radius: 9999px;
-    padding: 4px 12px;
-    font-size: 0.8rem; /* 12px */
-    font-weight: 500;
-    color: rgb(203, 213, 225);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  .card-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 </style>
 </head>
-<body class="min-h-screen">
-  
-  <div class="bg-layer" style="background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#334155 100%)"></div>
-  <div class="bg-layer">
-    <div class="absolute top-1/2 left-1/2 w-[70vw] h-[70vh] -translate-x-1/2 -translate-y-1/2">
-      <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-20 blur-3xl rounded-full aurora-animation"></div>
-    </div>
+<body class="min-h-screen font-sans bg-frost text-carbon selection:bg-applegreen/20 selection:text-linkgreen">
+
+  <!-- Soft pastel mint/green aura wash for organic feel -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute -top-[20%] -right-[10%] w-[60vw] h-[60vh] rounded-full bg-[#eafaf0] opacity-70 blur-[120px]"></div>
+    <div class="absolute top-[40%] -left-[10%] w-[50vw] h-[50vh] rounded-full bg-[#f0f9ff] opacity-60 blur-[100px]"></div>
   </div>
-  <div class="bg-layer tech-grid"></div>
 
   <div class="relative z-10">
-    <div class="max-w-7xl mx-auto px-4 py-12 md:py-16">
-      <header class="text-center mb-10 md:mb-14">
-        <h1 class="text-4xl md:text-6xl font-bold mb-3 text-white">
+    <!-- Top Global Nav (Apple style header bar) -->
+    <nav class="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b border-pebble">
+      <div class="max-w-7xl mx-auto px-6 h-12 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2 font-bold tracking-tight text-carbon hover:opacity-85 transition-opacity">
+          <span class="text-lg">🧪</span>
+          <span class="text-sm font-semibold tracking-tight-apple">AI Playground</span>
+        </a>
+        <div class="flex items-center gap-4 text-xs font-medium text-ash">
+          <span>Jeongyeon. 2026</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="max-w-6xl mx-auto px-6 py-16 md:py-24">
+      
+      <!-- Typographic Header Block (Apple style) -->
+      <header class="text-center mb-16 md:mb-24 max-w-3xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tight-apple text-carbon mb-6">
           AI Playground
         </h1>
-        <p class="text-slate-300">AI 실험실에 오신 것을 환영합니다!</p>
-        <p class="text-slate-300">AI 실험실 기능들은 소리소문 없이 나타났다 사라질 수 있습니다. 🌬️</p>
+        <p class="text-xl md:text-2xl font-light text-ash leading-relaxed mb-4">
+          AI 실험실에 오신 것을 환영합니다.
+        </p>
+        <p class="text-sm text-mist">
+          이곳의 기능들은 소리소문 없이 나타났다 사라질 수 있습니다. 🌬️
+        </p>
       </header>
 
-      <section class="bg-slate-800/60 border border-slate-700 rounded-2xl shadow-xl p-4 md:p-6 backdrop-blur">
-        <div class="flex flex-col gap-4">
-          <div class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
-            <div class="flex-1">
-              <label class="block text-sm text-slate-300 mb-2">검색</label>
-              <div class="relative">
-                <input id="searchInput" type="text" placeholder="도구 이름, 설명, 제작자 검색..."
-                  class="w-full rounded-xl bg-slate-900/60 border border-slate-700 px-4 py-3 text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                <svg class="w-5 h-5 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-4.35-4.35M10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/>
-                </svg>
-              </div>
+      <!-- Apple-style Filter and Search Section -->
+      <section class="mb-12">
+        <div class="flex flex-col gap-6 bg-white border border-pebble rounded-2xl p-6 md:p-8 shadow-sm">
+          <!-- Search input -->
+          <div class="w-full">
+            <div class="relative">
+              <input id="searchInput" type="text" placeholder="도구 이름, 설명, 제작자 검색..."
+                class="w-full rounded-xl bg-frost border border-pebble px-5 py-3.5 pl-12 text-carbon placeholder:text-mist focus:outline-none focus:ring-2 focus:ring-applegreen focus:bg-white transition-all text-sm md:text-base" />
+              <svg class="w-5 h-5 text-ash absolute left-4 top-1/2 -translate-y-1/2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-4.35-4.35M10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/>
+              </svg>
             </div>
+          </div>
 
-            <div class="flex items-center gap-3">
-              <label class="flex items-center gap-2 text-sm text-slate-300">
-                페이지 크기
-                <select id="pageSize" class="rounded-lg bg-slate-900/60 border border-slate-700 px-2 py-2 text-slate-100">
+          <!-- Divider line -->
+          <div class="h-[1px] bg-pebble w-full"></div>
+
+          <!-- Categories & Page Size -->
+          <div class="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+            <!-- Category buttons -->
+            <div id="catBar" class="flex flex-wrap gap-2"></div>
+
+            <!-- Page Size Selector -->
+            <div class="flex items-center gap-3 shrink-0 self-end sm:self-auto">
+              <label class="flex items-center gap-2 text-xs font-medium text-ash">
+                페이지당 개수
+                <select id="pageSize" class="rounded-lg bg-frost border border-pebble px-3 py-1.5 text-carbon text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-applegreen">
                   <option value="6">6</option>
                   <option value="9" selected>9</option>
                   <option value="12">12</option>
@@ -101,25 +142,25 @@
               </label>
             </div>
           </div>
-
-          <div id="catBar" class="flex flex-wrap gap-2"></div>
         </div>
       </section>
 
+      <!-- Card Grid Section -->
       <section class="mt-8">
         <div id="cardGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch"></div>
-        <div id="pager" class="mt-8 flex items-center justify-center gap-2"></div>
+        
+        <!-- Pagination -->
+        <div id="pager" class="mt-12 flex items-center justify-center gap-2"></div>
       </section>
 
-      <footer class="text-center mt-12">
-        <p class="text-slate-500 text-sm mt-2">ⓒ Jeongyeon. 2025</p>
+      <!-- Footer -->
+      <footer class="mt-24 md:mt-32 pt-8 border-t border-pebble text-center text-xs text-mist">
+        <p>© Jeongyeon. 2026 · All Rights Reserved.</p>
       </footer>
     </div>
   </div>
 
-  <!-- 앱 스크립트 -->
+  <!-- App Script -->
   <script src="app.js"></script>
 </body>
 </html>
-
-

@@ -252,17 +252,17 @@ function renderCategories(){
   counts.set("all", CARD_DATA.length);
 
   el.catBar.innerHTML = cats.map(c => `
-    <button class="btn-cat px-4 py-2 rounded-full border border-slate-600 bg-slate-900/50 hover:border-blue-400 text-sm"
+    <button class="btn-cat px-4 py-2 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-xs font-semibold text-slate-700 transition-all active:scale-95"
             data-cat="${c}">
-      ${labelCat(c)} <span class="opacity-70">(${counts.get(c)})</span>
+      ${labelCat(c)} <span class="text-slate-400 font-normal">(${counts.get(c)})</span>
     </button>
   `).join("");
 
   el.catBar.querySelectorAll(".btn-cat").forEach(btn=>{
-    if(btn.dataset.cat === state.cat) btn.classList.add("active");
+    if(btn.dataset.cat === state.cat) btn.classList.add("bg-slate-900", "text-white", "border-slate-900");
     btn.addEventListener("click", ()=>{
-      el.catBar.querySelectorAll(".btn-cat").forEach(b=>b.classList.remove("active"));
-      btn.classList.add("active");
+      el.catBar.querySelectorAll(".btn-cat").forEach(b=>b.classList.remove("bg-slate-900", "text-white", "border-slate-900"));
+      btn.classList.add("bg-slate-900", "text-white", "border-slate-900");
       state.cat = btn.dataset.cat;
       state.page = 1;
       applyAndRender();
@@ -300,40 +300,35 @@ function renderCards(){
     
     // 제작자 배지 HTML
     const authorBadgeHtml = (d.isActive && d.author) ?
-      `<div class="card-author">${escapeHtml(d.author)}</div>` : '';
+      `<div style="position:absolute;top:16px;right:16px;background:#f5f5f7;border:1px solid #e2e2e5;color:#1d1d1f;border-radius:9999px;padding:3px 10px;font-size:0.72rem;font-weight:600;">${escapeHtml(d.author)}</div>` : '';
 
     // 타입 배지 HTML (도구 / 리포트 구분)
     const typeBadgeStyles = {
-      tool:   { bg: 'rgba(59,130,246,0.18)',  border: 'rgba(59,130,246,0.5)',  color: '#93c5fd', label: '🔧 도구' },
-      report: { bg: 'rgba(139,92,246,0.18)', border: 'rgba(139,92,246,0.5)', color: '#c4b5fd', label: '📄 리포트' },
+      tool:   { bg: '#eafaf0', border: '#34c759', color: '#1a7f37', label: '🔧 도구' },
+      report: { bg: '#f0f9ff', border: '#2997ff', color: '#0969da', label: '🧭 works' },
     };
     const tb = typeBadgeStyles[d.type] || typeBadgeStyles.tool;
     const typeBadgeHtml = d.isActive ? `
       <div style="position:absolute;bottom:20px;right:20px;
         background:${tb.bg};border:1px solid ${tb.border};color:${tb.color};
-        border-radius:9999px;padding:3px 10px;font-size:0.72rem;font-weight:600;
-        backdrop-filter:blur(4px);">
+        border-radius:9999px;padding:3px 10px;font-size:0.72rem;font-weight:600;">
         ${tb.label}
       </div>` : '';
 
-    // 카드 테두리 강조색: 도구=파란색, 리포트=보라색
-    const hoverBorder = d.type === 'report' ? 'hover:border-purple-400' : 'hover:border-blue-400';
-    const activeBorder = d.type === 'report' ? 'border-slate-600' : 'border-slate-600';
-
     const body = `
-      <div class="card-hover relative h-full ${d.isActive ? `bg-slate-800/90 ${activeBorder} ${hoverBorder}` : 'bg-slate-700/50 border-slate-700'} backdrop-blur-sm rounded-2xl p-8 shadow-2xl border flex flex-col ${d.isActive ? '' : 'card-disabled'}">
+      <div class="card-hover relative h-full ${d.isActive ? 'bg-white border border-slate-200' : 'bg-slate-50 border border-slate-200 card-disabled'} rounded-xl p-8 flex flex-col shadow-sm hover:shadow-md transition-shadow">
         ${authorBadgeHtml}
         ${typeBadgeHtml}
-        <div class="text-5xl mb-4 ${d.isActive ? '' : 'opacity-70'}">${d.icon || '🧰'}</div>
-        <h3 class="text-2xl font-bold ${d.isActive ? 'text-white' : 'text-slate-200'} mb-3">
+        <div class="text-5xl mb-5 ${d.isActive ? '' : 'opacity-60'}">${d.icon || '🧰'}</div>
+        <h3 class="text-xl font-bold ${d.isActive ? 'text-slate-900' : 'text-slate-400'} mb-2.5">
           ${escapeHtml(d.title)}
         </h3>
-        <p class="text-slate-300 leading-relaxed flex-1 ${d.isActive ? '' : 'opacity-80'}">
+        <p class="text-sm leading-relaxed ${d.isActive ? 'text-slate-600' : 'text-slate-400'} flex-1">
           ${d.isActive ? escapeHtml(d.desc || '') : 'Coming Soon'}
         </p>
-        <div class="mt-6 inline-flex items-center font-semibold link-row ${d.isActive ? (d.type === 'report' ? 'text-purple-400' : 'text-blue-400') : 'text-slate-400'}">
+        <div class="mt-6 inline-flex items-center font-semibold link-row ${d.isActive ? 'text-linkgreen group-hover:text-applegreen' : 'text-slate-400'} transition-colors">
           <span>${d.isProtected ? '🔒 ' : ''}${d.isActive ? '바로가기' : '준비 중'}</span>
-          <svg class="w-5 h-5 ml-2 ${d.isActive ? 'group-hover:translate-x-1 transition-transform' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4 ml-1.5 ${d.isActive ? 'group-hover:translate-x-1 transition-transform' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${d.isActive ? 'M13 7l5 5m0 0l-5 5m5-5H6' : 'M6 12h12'}"/>
           </svg>
         </div>
@@ -362,13 +357,13 @@ function renderPager(){
   start = Math.max(1, end - maxLen + 1);
 
   let html = `
-    <button data-act="prev" class="px-3 py-2 rounded-lg bg-slate-900/60 border border-slate-700 hover:border-blue-400 ${state.page===1?"opacity-50":""}">&laquo;</button>
+    <button data-act="prev" class="px-3 py-1.5 rounded-lg bg-white border border-pebble hover:border-carbon text-xs font-semibold ${state.page===1?"opacity-40 cursor-not-allowed":""}">&laquo;</button>
   `;
   for (let p = start; p <= end; p++){
-    html += `<button data-page="${p}" class="px-3 py-2 rounded-lg border ${p===state.page ? "bg-blue-600 border-blue-600" : "bg-slate-900/60 border-slate-700 hover:border-blue-400"}">${p}</button>`;
+    html += `<button data-page="${p}" class="px-3 py-1.5 rounded-lg border text-xs font-semibold ${p===state.page ? "bg-carbon text-white border-carbon" : "bg-white border-pebble hover:border-carbon text-carbon"}">${p}</button>`;
   }
   html += `
-    <button data-act="next" class="px-3 py-2 rounded-lg bg-slate-900/60 border border-slate-700 hover:border-blue-400 ${state.page===total?"opacity-50":""}">&raquo;</button>
+    <button data-act="next" class="px-3 py-1.5 rounded-lg bg-white border border-pebble hover:border-carbon text-xs font-semibold ${state.page===total?"opacity-40 cursor-not-allowed":""}">&raquo;</button>
   `;
   el.pager.innerHTML = html;
 
@@ -450,26 +445,26 @@ function createPasswordModal() {
   document.head.appendChild(style);
 
   const modalHtml = `
-    <div id="passwordModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
-      <div id="passwordModalContent" class="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-6 md:p-8 max-w-sm w-full mx-4 shadow-2xl transform scale-95 transition-all duration-300 backdrop-blur-md">
+    <div id="passwordModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/40 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+      <div id="passwordModalContent" class="bg-white/90 border border-pebble rounded-2xl p-6 md:p-8 max-w-sm w-full mx-4 shadow-2xl transform scale-95 transition-all duration-300 backdrop-blur-md">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-xl font-bold text-white flex items-center gap-2">
+          <h3 class="text-xl font-bold text-carbon flex items-center gap-2">
             <span>🔒</span> 비밀번호 입력
           </h3>
-          <button id="closeModalBtn" class="text-slate-400 hover:text-white transition-colors">
+          <button id="closeModalBtn" class="text-ash hover:text-carbon transition-colors">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
           </button>
         </div>
-        <p id="modalCardTitle" class="text-sm text-slate-400 mb-6 font-medium text-center"></p>
+        <p id="modalCardTitle" class="text-sm text-ash mb-6 font-medium text-center"></p>
         <div class="space-y-4">
           <div>
             <input id="modalPasswordInput" type="password" placeholder="비밀번호" 
-              class="w-full rounded-xl bg-slate-950/80 border border-slate-700 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-center tracking-widest text-lg font-bold" />
+              class="w-full rounded-xl bg-frost border border-pebble px-4 py-3 text-carbon placeholder:text-mist focus:outline-none focus:ring-2 focus:ring-applegreen focus:bg-white text-center tracking-widest text-lg font-bold transition-all" />
             <p id="modalErrorMessage" class="text-red-500 text-xs mt-2 hidden text-center">비밀번호가 올바르지 않습니다.</p>
           </div>
-          <button id="submitPasswordBtn" class="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+          <button id="submitPasswordBtn" class="w-full py-3 bg-carbon hover:bg-smoke text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0">
             확인
           </button>
         </div>
