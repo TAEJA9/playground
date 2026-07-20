@@ -1,5 +1,11 @@
+// =====================
+// 🔒 비밀번호 설정
+// isProtected: true인 카드를 클릭할 때 이 비밀번호를 입력해야 합니다
+// =====================
+const SECRET_PASSWORD = "4372"; // ⬅️ 비밀번호 수정 시 여기를 변경
+
 /* =========================
-   데이터 (수정 없음)
+   데이터
 ========================= */
 const CARD_DATA = [
   // =====================
@@ -42,6 +48,7 @@ const CARD_DATA = [
     href: "https://taeja9.github.io/playground/tools/tasty-wk.html",
     cats: ["wk-only"],
     isActive: true,
+    isProtected: true,
     author: "정연",
     type: "tool"
   },
@@ -158,27 +165,8 @@ const el = {
   pager: document.getElementById("pager"),
 };
 
-// ===== 등록 신청 모달 요소 =====
-const elSubmit = {
-  modal: document.getElementById("submitModal"),
-  open: document.getElementById("btnOpenSubmit"),
-  close: document.getElementById("btnCloseSubmit"),
-  cancel: document.getElementById("btnCancelSubmit"),
-  form: document.getElementById("submitForm"),
-  btnSubmit: document.getElementById("btnDoSubmit"),
-  msg: document.getElementById("submitMsg"),
-};
-
-
 /* =========================
-   서버 엔드포인트 설정
-========================= */
-
-// ✅ 여기에 네 Apps Script 웹앱 URL 넣기
-const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwHdx0G0epm54ktMhDCbB0owwhYb5U6H_J-cCaD6VLs3IKsf8rDgMucPrx8P6W3MNcT/exec";
-
-/* =========================
-   유틸 (수정 없음)
+   유틸
 ========================= */
 function uniq(arr){ return [...new Set(arr)]; }
 function flatten(arrs){ return arrs.reduce((a,b)=>a.concat(b),[]); }
@@ -208,37 +196,7 @@ function escapeHtml(s){
 
 
 /* =========================
-   등록 모달 유틸
-========================= */
-function openSubmitModal() {
-  if (!elSubmit.modal) return;
-  elSubmit.modal.classList.remove("hidden");
-  document.body.style.overflow = "hidden";
-}
-
-function closeSubmitModal() {
-  if (!elSubmit.modal) return;
-  elSubmit.modal.classList.add("hidden");
-  document.body.style.overflow = "";
-  if (elSubmit.form) elSubmit.form.reset();
-  if (elSubmit.msg) {
-    elSubmit.msg.classList.add("hidden");
-    elSubmit.msg.textContent = "";
-    elSubmit.msg.classList.remove("text-green-400", "text-red-400");
-  }
-}
-
-function showSubmitMsg(text, ok) {
-  if (!elSubmit.msg) return;
-  elSubmit.msg.textContent = text;
-  elSubmit.msg.classList.remove("hidden");
-  elSubmit.msg.classList.toggle("text-green-400", !!ok);
-  elSubmit.msg.classList.toggle("text-red-400", !ok);
-}
-
-
-/* =========================
-   카테고리 자동 생성 (수정 없음)
+   카테고리 자동 생성
 ========================= */
 function collectCategories(data){
   const cats = uniq(flatten(data.map(d => d.cats || []))).sort();
@@ -332,7 +290,7 @@ function renderCards(){
           ${d.isActive ? escapeHtml(d.desc || '') : 'Coming Soon'}
         </p>
         <div class="mt-6 inline-flex items-center font-semibold link-row ${d.isActive ? (d.type === 'report' ? 'text-purple-400' : 'text-blue-400') : 'text-slate-400'}">
-          <span>${d.isActive ? '바로가기' : '준비 중'}</span>
+          <span>${d.isProtected ? '🔒 ' : ''}${d.isActive ? '바로가기' : '준비 중'}</span>
           <svg class="w-5 h-5 ml-2 ${d.isActive ? 'group-hover:translate-x-1 transition-transform' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${d.isActive ? 'M13 7l5 5m0 0l-5 5m5-5H6' : 'M6 12h12'}"/>
           </svg>
@@ -341,9 +299,10 @@ function renderCards(){
     `;
     return d.isActive
       ? `<a href="${d.href}" target="_blank" rel="noopener noreferrer" class="group block"
-             data-title="${escapeHtml(d.title)}" data-desc="${escapeHtml(d.desc||"")}" data-cat="${(d.cats||[]).join(" ")}">${body}</a>`
+             ${d.isProtected ? 'data-protected="true"' : ''}
+             data-title="${escapeHtml(d.title)}" data-desc="${escapeHtml(d.desc||'')}" data-cat="${(d.cats||[]).join(' ')}">${body}</a>`
       : `<div class="group block" aria-disabled="true"
-             data-title="${escapeHtml(d.title)}" data-desc="${escapeHtml(d.desc||"")}" data-cat="${(d.cats||[]).join(" ")}">${body}</div>`;
+             data-title="${escapeHtml(d.title)}" data-desc="${escapeHtml(d.desc||'')}" data-cat="${(d.cats||[]).join(' ')}">${body}</div>`;
   }).join("");
 }
 
@@ -411,79 +370,21 @@ function init(){
     state.page = 1;
     applyAndRender();
   });
-}
 
-  /* ===== 등록 신청 모달 이벤트 바인딩 ===== */
-  // 열기 버튼
-  elSubmit.open?.addEventListener("click", openSubmitModal);
-  // 닫기 버튼들
-  elSubmit.close?.addEventListener("click", closeSubmitModal);
-  elSubmit.cancel?.addEventListener("click", closeSubmitModal);
-  // 배경 클릭 시 닫기
-  elSubmit.modal?.addEventListener("click", (e) => {
-    if (e.target === elSubmit.modal) closeSubmitModal();
-  });
-
-  // 제출 버튼 (폼 전송)
-  elSubmit.form?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    // GAS 엔드포인트 확인
-    if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("XXXX")) {
-      showSubmitMsg("서버가 설정되지 않았습니다. GAS_ENDPOINT를 확인하세요.", false);
-      return;
-    }
-
-    const fd = new FormData(elSubmit.form);
-    const payload = {
-      name: (fd.get("name") || "").trim(),
-      desc: (fd.get("desc") || "").trim(),
-      link: (fd.get("link") || "").trim(),
-      author: (fd.get("author") || "").trim(),
-      cat: (fd.get("cat") || "").trim(),
-      ua: navigator.userAgent,
-      location: window.location.href,
-    };
-
-    // 필수값 검사
-    if (!payload.name || !payload.desc || !payload.link || !payload.author) {
-      showSubmitMsg("필수 항목을 모두 입력해 주세요.", false);
-      return;
-    }
-
-    try { new URL(payload.link); } 
-    catch { showSubmitMsg("링크(URL)가 올바르지 않습니다.", false); return; }
-
-    elSubmit.btnSubmit.disabled = true;
-
-    try {
-      const res = await fetch(GAS_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const data = await res.json().catch(()=> ({}));
-      if (data && data.ok) {
-        showSubmitMsg("제출 완료! 검토 후 반영하겠습니다 🙌", true);
-        setTimeout(closeSubmitModal, 1200);
-      } else {
-        throw new Error(data?.error || "서버 오류");
+  // 🔒 비밀번호 보호 카드 클릭 핸들러
+  el.grid.addEventListener("click", function(e) {
+    const protectedCard = e.target.closest("a[data-protected='true']");
+    if (protectedCard) {
+      e.preventDefault();
+      const pass = prompt("🔒 비밀번호를 입력하세요:");
+      if (pass === SECRET_PASSWORD) {
+        window.open(protectedCard.href, "_blank", "noopener,noreferrer");
+      } else if (pass !== null && pass !== "") {
+        alert("비밀번호가 틀렸습니다!");
       }
-    } catch (err) {
-      console.error(err);
-      showSubmitMsg("제출 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.", false);
-    } finally {
-      elSubmit.btnSubmit.disabled = false;
     }
   });
-
-  // ===== ESC 키로 모달 닫기 =====
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && elSubmit?.modal && !elSubmit.modal.classList.contains("hidden")) {
-      closeSubmitModal();
-    }
-  });
-
+}
 
 document.addEventListener("DOMContentLoaded", init);
 
