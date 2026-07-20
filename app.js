@@ -56,16 +56,7 @@ const CARD_DATA = [
     type: "tool"
   },
   {
-    icon: "🎲",
-    title: "LuckyDraw",
-    desc: "행운의 로또 번호 추첨기! 이곳에서 경제적 자유를 누려 보세요!!!!",
-    href: "https://luckydraw-webapp.web.app/",
-    cats: ["fun"],
-    isActive: true,
-    author: "진우",
-    type: "tool"
-  },
-  {
+
     icon: "💯",
     title: "문제은행 파일 검사기",
     desc: "문제은행 파일 검사, 이제 웹으로 진행해 보세요! 눈 빠지는 파일명 오류 찾기 고민 해결!!",
