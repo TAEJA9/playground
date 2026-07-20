@@ -183,6 +183,8 @@
   .action-box li { font-size: 14px; color: #16612f; margin-bottom: 5px; }
   .action-box li:last-child { margin-bottom: 0; }
   .action-box li b { color: #0f4a24; }
+  .dive-note { margin-top: 12px; font-size: 13px; color: var(--text-2); background: #eef4ff; border: 1px solid #d3e2fb; border-radius: 10px; padding: 11px 14px; line-height: 1.6; }
+  .dive-note b { color: var(--g-blue); }
 
   /* ---------- Table ---------- */
   .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow-sm); }
@@ -383,7 +385,7 @@
         </div>
 
         <div class="stats">
-          <div class="stat"><div class="num b">217%</div><div class="lbl">카카오뱅크 — ‘마이 에이전트’ 캠페인 후 Gemini Enterprise <b>쿼리 수 증가</b> (1월 대비, 3월엔 78%가 사용)</div></div>
+          <div class="stat"><div class="num b">217%</div><div class="lbl">카카오뱅크 — 캠페인 후 직원들이 AI에 던진 <b>질문(쿼리) 수 증가</b> = 실사용량 3배↑ (1월 대비, 3월엔 78%가 사용)</div></div>
           <div class="stat"><div class="num g">50%+</div><div class="lbl">위버스 — AI 고객센터 오픈 3개월, 챗봇이 감당하는 문의 비중(처리 시간 <b>절반↓</b>)</div></div>
           <div class="stat"><div class="num y">127</div><div class="lbl">여기어때 — 사내 AI 플랫폼 ‘얍’에 상용 배포된 <b>에이전트 수</b> (MCP 서버 21개)</div></div>
           <div class="stat"><div class="num r">2,500h</div><div class="lbl">CJ올리브영 — MD 문의 응답에 매월 쓰이던 시간(자동화 타깃, 평균 대기 45분+)</div></div>
@@ -515,7 +517,7 @@
               <div class="label action">▶ AX Idea</div>
               <p>배포와 동시에 (1) 부서별 앰버서더 선발, (2) 노코드 빌더 교육, (3) 사내 해커톤 + 결과물을 모아 보는 <b>‘에이전트/프롬프트 뱅크’</b>를 연다. 좋은 에이전트의 전제는 ‘잘 정리된 데이터’(예: 업무 분장표 → 담당자 찾기 에이전트)임을 캠페인으로 각인한다.</p>
             </div>
-            <p class="metric">📈 성과 — 쿼리 <b>1월 대비 217%↑</b>, 3월 <b>78%가 사용</b>. 대표 사례: 피그마 코멘트 분석, 팀메이커(담당자 찾기), 기술블로그 메이트(작성 시간 <b>50%↓</b>). 그룹 공유 기능으로 조직 전체 확산.</p>
+            <p class="metric">📈 성과 — 직원들이 AI에 던진 질문(쿼리) 수 <b>1월 대비 217%↑</b>(실사용량 3배↑), 3월 <b>78%가 사용</b>. 대표 사례: 피그마 코멘트 분석, 팀메이커(담당자 찾기), 기술블로그 메이트(작성 시간 <b>50%↓</b>). 그룹 공유 기능으로 조직 전체 확산.</p>
           </div>
         </article>
 
@@ -854,6 +856,7 @@
               <li><b>민감한 데이터는 폐쇄망</b> — 보안이 중요한 데이터는 외부로 나가지 않는 엔터프라이즈 환경에서 처리한다. <i>(대원제약)</i></li>
             </ol>
           </div>
+          <div class="dive-note">🙋 <b>우리 팀 적용 팁</b> — <b>MCP</b>(AI를 사내 시스템에 붙이는 표준 규격)·<b>ADK</b>(구글의 에이전트 개발 키트)로 연결·지식 축적하는 건 <b>개발 조직·파트너의 영역</b>입니다. ‘지식 관리 서비스를 직접 개발’하자는 뜻이 아니라, 같은 효과(회사 자료에 근거한 답변)를 <b>Gemini Enterprise·NotebookLM</b> 같은 완제품에 문서를 넣어 그대로 얻으면 됩니다.</div>
         </div>
 
         <div class="dive">
@@ -872,6 +875,7 @@
               <li><b>스스로 똑똑해지는 시스템</b> — 사람들이 쓸수록 대화 데이터가 쌓이고, 자동으로 분류돼 FAQ가 계속 늘어나게 만든다(사람 승인 필요). <i>(위버스)</i></li>
             </ol>
           </div>
+          <div class="dive-note">🙋 <b>우리 팀 적용 팁</b> — 이 안전장치들을 직접 코딩할 필요는 없습니다. 대외 AI(챗봇 등)를 <b>도입할 때</b> 완제품·빌더가 ‘규칙 처리 · 출처 표시 · 사람 검토’ 기능을 갖췄는지 고르는 <b>체크리스트</b>로 쓰면 됩니다. (Gemini Enterprise·Dialogflow 등엔 기본 내장)</div>
         </div>
 
         <div class="dive">
@@ -890,6 +894,7 @@
               <li><b>지표를 ‘도입률’이 아니라 ‘지속 사용률’로</b> — 한 번 써보고 마는 게 아니라, 한 달 뒤에도 계속 쓰고 있는지를 성공 기준으로 삼는다. <i>(CJ올리브영)</i></li>
             </ol>
           </div>
+          <div class="dive-note">🙋 <b>우리 팀 적용 팁</b> — 이 축은 <b>개발이 전혀 필요 없습니다.</b> 오히려 우리가 당장 시작할 수 있는 영역이에요 — 부서별 앰버서더 지정, 잘 된 프롬프트를 모으는 <b>공유 폴더</b> 만들기, ‘한 달 뒤에도 쓰는가’를 지표로 보기부터.</div>
         </div>
 
         <div class="dive">
@@ -907,6 +912,7 @@
               <li><b>비개발자도 자동화</b> — 코딩을 몰라도 반복 업무 하나 정도는 AI로 자동화(바이브코딩)해, 직접 문제를 해결하는 사람이 된다. <i>(루시·파주)</i></li>
             </ol>
           </div>
+          <div class="dive-note">🙋 <b>우리 팀 적용 팁</b> — 대부분 <b>개발 없이 실천 가능</b>합니다. 워터마크는 구글 생성 도구(Veo·Imagen 등)를 쓰면 <b>자동 삽입(SynthID)</b>되고, ‘딸깍 결과 경계’는 검토 습관, ‘비개발자 자동화’는 바이브코딩(코딩 지식 불필요) 그 자체입니다.</div>
         </div>
 
       </div>
@@ -977,8 +983,8 @@
               <li><b>초당 24프레임</b> 처리로 음성과 립싱크가 정밀하게 동기화되고, 유연·역동적인 안면 애니메이션이 지연 없이 실시간 구현.</li>
               <li><b>단일 API</b>로 일관된 보컬 아이덴티티의 커스텀 아바타가 생성되며, <b>Gemini Enterprise Agent Platform</b>을 거쳐 엔터프라이즈 환경에 안전하게 배포·통제.</li>
             </ol>
-            <div class="hiw-idea">💡 <b>우리 적용 아이디어</b> — 학습자의 발화 톤·감정을 인식해 반응하는 <b>AI 영어회화 튜터 아바타</b>. 자연스러운 립싱크로 스피킹 연습 상대가 되거나, 수강 상담을 24시간 응대하는 대화형 상담원으로 활용.</div>
-            <div class="hiw-tool">🛠 <b>바로 쓸 수 있는 툴</b> — 말하는 아바타 HeyGen·Synthesia + 음성 ElevenLabs + 대화 Gemini (상담 챗봇은 Gemini Enterprise 빌더).</div>
+            <div class="hiw-idea">💡 <b>적용 아이디어</b> — 발화 톤·맥락을 인식해 반응하는 특성을 살려, 수강 상담·학습 문의를 <b>24시간 응대하는 대화형 상담원</b>으로 활용.</div>
+            <div class="hiw-tool">🛠 <b>바로 쓸 수 있는 툴</b> — 대화 Gemini(상담 챗봇은 Gemini Enterprise 빌더) + 음성 ElevenLabs.</div>
           </div></div>
 
           <div class="hiw-card"><div class="hiw-inner">
@@ -990,7 +996,7 @@
               <li>텍스트·이미지·오디오 자산을 <b>Gemini API</b> 중심으로 비디오 생성 모델 <b>Veo</b>, 음악 생성 모델 <b>Lyria</b>와 병렬 결합해 단일 스튜디오(Swarm) 환경 구성.</li>
               <li>다수 동시 접속에도 <b>Firestore·Cloud Storage</b>로 동기화·지연을 통제하고, 컴플라이언스 체크가 백엔드에서 엄격하게 자동 운영.</li>
             </ol>
-            <div class="hiw-idea">💡 <b>우리 적용 아이디어</b> — 교재 지문·강의 스크립트를 넣으면 <b>영상 강의·오디오북·홍보 영상이 자동 생성</b>. Veo(영상)+Lyria(음악·효과음) 결합으로 콘텐츠 제작 시간을 대폭 단축.</div>
+            <div class="hiw-idea">💡 <b>적용 아이디어</b> — 교재 지문·강의 스크립트를 넣으면 <b>영상 강의·오디오북·홍보 영상이 자동 생성</b>. Veo(영상)+Lyria(음악·효과음) 결합으로 콘텐츠 제작 시간을 대폭 단축.</div>
             <div class="hiw-tool">🛠 <b>바로 쓸 수 있는 툴</b> — 영상 Veo·Google Vids + 내레이션 ElevenLabs + 오디오북/요약 NotebookLM (대본은 Gemini).</div>
           </div></div>
 
@@ -1003,8 +1009,8 @@
               <li>원시 이미지 소스는 <b>Gemini 모델</b> 검증을 거쳐 <b>Nano Banana 2</b>로 전송되며, 안면 확장 벡터가 보존된 상태에서 스타일 레이어·시각 스크립트와 합성.</li>
               <li>최종 단계에서 비디오 엔진 <b>Veo 3</b> 프로세스가 병렬 호출되어 프레임 데이터가 지연 없이 인코딩되고, <b>Firestore·Cloud Storage</b> 컴플라이언스 기준에 맞춰 안전하게 저장·통제.</li>
             </ol>
-            <div class="hiw-idea">💡 <b>우리 적용 아이디어</b> — 수강생 <b>수료 인증 아바타·숏폼</b>이나 캐릭터 기반 학습 콘텐츠로 SNS 바이럴 마케팅. 오프라인 이벤트 참여 → 소셜 확산으로 잇는 체험형 프로모션 툴.</div>
-            <div class="hiw-tool">🛠 <b>바로 쓸 수 있는 툴</b> — 이미지 Nano Banana(Gemini) + 아바타·숏폼 HeyGen + 편집 CapCut·Canva.</div>
+            <div class="hiw-idea">💡 <b>적용 아이디어</b> — 캐릭터 기반 학습 콘텐츠나 참여형 이벤트로 SNS 바이럴 마케팅. 오프라인 체험을 소셜 확산으로 잇는 프로모션 툴.</div>
+            <div class="hiw-tool">🛠 <b>바로 쓸 수 있는 툴</b> — 이미지 Nano Banana(Gemini) + 편집 CapCut·Canva.</div>
           </div></div>
 
           <div class="hiw-card"><div class="hiw-inner">
@@ -1016,7 +1022,7 @@
               <li>입력된 페르소나와 Gemini 스크립트가 음성 트랙으로 합성되고, 화자의 미세한 움직임과 제품 이미지가 동기화되어 <b>실제 사람이 말하는 듯한 숏폼 비디오</b>로 즉시 렌더링.</li>
               <li>모델 섭외→촬영→편집으로 이어지던 파편화된 물리적 제작 워크플로우가 클라우드 백엔드의 <b>자동화된 단일 스택</b> 아래 통제되어, 리소스 제약이 해결된 솔루션 아키텍처 구현.</li>
             </ol>
-            <div class="hiw-idea">💡 <b>우리 적용 아이디어</b> — 신간·강좌 <b>홍보 숏폼 영상을 모델·촬영 없이 대량 생성</b>. 타깃별(수험생·직장인·학부모) 페르소나와 대본만 바꿔 A/B 마케팅 소재를 빠르게 확장. <b>(← 문의하신 멀티모달 생성 시스템의 핵심 활용처)</b></div>
+            <div class="hiw-idea">💡 <b>적용 아이디어</b> — 신간·강좌 <b>홍보 숏폼 영상을 모델·촬영 없이 대량 생성</b>. 타깃별(수험생·직장인·학부모) 페르소나와 대본만 바꿔 A/B 마케팅 소재를 빠르게 확장. <b>(← 문의하신 멀티모달 생성 시스템의 핵심 활용처)</b></div>
             <div class="hiw-tool">🛠 <b>바로 쓸 수 있는 툴</b> — 대본 Gemini → 영상 Veo·Google Vids → 화자 아바타 HeyGen → 음성 ElevenLabs → 마무리 CapCut. <b>개발 없이 마케팅 담당 1명이 반나절이면 시제품.</b></div>
           </div></div>
 
@@ -1029,14 +1035,14 @@
               <li>전반적인 워크플로우는 <b>Cloud Run</b>으로 오케스트레이션되며, 백엔드에서 <b>Gemini·Veo 모델</b>이 연동되어 피트니스 데이터가 동적으로 제어.</li>
               <li>생성된 데이터·미디어 파이프라인은 <b>Firestore·Cloud Storage</b>를 거쳐 엔터프라이즈급 보안 프레임워크에서 안전하게 관리·통제·운영.</li>
             </ol>
-            <div class="hiw-idea">💡 <b>우리 적용 아이디어</b> — 카메라로 동작을 인식하는 기술은 <b>발음 시 입모양 교정</b>이나 유아·체험형 학습의 <b>동작 인터랙션</b>에 응용 가능(교육 적합도는 상대적으로 낮아 탐색 단계).</div>
+            <div class="hiw-idea">💡 <b>적용 아이디어</b> — 카메라로 동작을 인식하는 기술은 <b>발음 시 입모양 교정</b>이나 유아·체험형 학습의 <b>동작 인터랙션</b>에 응용 가능(교육 적합도는 상대적으로 낮아 탐색 단계).</div>
             <div class="hiw-tool">🛠 <b>바로 쓸 수 있는 툴</b> — 바로 쓸 완제품은 아직 제한적. 외부 동작인식 학습 솔루션을 검토하는 PoC 단계로.</div>
           </div></div>
 
         </div>
         <div class="hiw-howto">
           <div class="ht">💬 개발자 없이 어떻게 실현하나요?</div>
-          <div class="hd">위 데모존의 서비스는 Google Cloud·파트너가 직접 만든 <b>맞춤 데모(각각 별개 파이프라인)</b>입니다. 이 파이프라인을 우리가 똑같이 만들 필요는 없습니다. 카드의 아이디어는 ‘직접 구현’이 아니라 <b>‘어떤 역량을 확보할지’의 방향</b>이며, 개발자 없이 실현하는 현실적 경로는 3가지입니다.</div>
+          <div class="hd">위 데모존의 서비스는 Google Cloud·파트너가 직접 만든 <b>맞춤 데모(각각 별개 파이프라인)</b>입니다. 이 파이프라인을 우리가 똑같이 만들 필요는 없습니다. 카드의 아이디어는 <b>‘이걸 이렇게 만들자’(설계도)가 아니라 ‘이런 걸 할 수 있으면 좋겠다’(목표)</b>일 뿐이며, 그 목표를 개발자 없이 실현하는 현실적 경로는 3가지입니다.</div>
           <ol>
             <li><b>완제품(SaaS)으로 바로</b> — 아바타 영상(HeyGen·Synthesia), 영상 생성(<b>Veo·Google Vids</b>), 음성(ElevenLabs), 오디오 요약(NotebookLM) 등 이미 나온 툴을 기획·마케팅팀이 그대로 사용. <b>(개발 0)</b></li>
             <li><b>노코드로 가볍게 직접</b> — Gemini Enterprise·AI Studio로 요약·상담 FAQ·퀴즈 생성 같은 <b>간단한</b> 에이전트를 조립(이번 행사의 ‘루시’·파주 사례처럼 비개발자도 가능). <i>단, 멀티모달 영상 파이프라인 같은 건 이 범위 밖.</i></li>
