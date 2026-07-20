@@ -259,10 +259,10 @@ function renderCategories(){
   `).join("");
 
   el.catBar.querySelectorAll(".btn-cat").forEach(btn=>{
-    if(btn.dataset.cat === state.cat) btn.classList.add("bg-slate-900", "text-white", "border-slate-900");
+    if(btn.dataset.cat === state.cat) btn.classList.add("active");
     btn.addEventListener("click", ()=>{
-      el.catBar.querySelectorAll(".btn-cat").forEach(b=>b.classList.remove("bg-slate-900", "text-white", "border-slate-900"));
-      btn.classList.add("bg-slate-900", "text-white", "border-slate-900");
+      el.catBar.querySelectorAll(".btn-cat").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
       state.cat = btn.dataset.cat;
       state.page = 1;
       applyAndRender();

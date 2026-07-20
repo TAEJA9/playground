@@ -114,12 +114,15 @@
     left: 150%;
   }
 
-  /* Custom Category Button Active State */
+  /* Custom Category Button Active State (Using !important to solve Tailwind conflicts) */
   .btn-cat.active {
     background-color: #10b981 !important; /* Green background */
     color: #ffffff !important;
     border-color: #10b981 !important;
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  }
+  .btn-cat.active span {
+    color: rgba(255, 255, 255, 0.75) !important;
   }
 
   .card-disabled {
@@ -138,23 +141,22 @@
   </div>
 
   <div class="relative z-10">
-    <!-- Glass Global Nav (Apple style translucent bar) -->
-    <nav class="sticky top-0 z-40 w-full bg-white/40 backdrop-blur-xl border-b border-white/50">
-      <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
-        <a href="index.html" class="flex items-center gap-2 font-bold tracking-tight text-carbon hover:opacity-80 transition-opacity">
-          <span class="text-xl">🧪</span>
-          <span class="text-base font-bold tracking-tight-apple">AI Playground</span>
-        </a>
-        <div class="flex items-center gap-4 text-xs font-semibold text-ash">
-          <span class="px-2.5 py-1 bg-emerald-50 text-linkgreen border border-emerald-200/60 rounded-full">vibe dev active</span>
-          <span>Jeongyeon. 2026</span>
-        </div>
-      </div>
-    </nav>
-
     <!-- Main Container -->
-    <div class="max-w-6xl mx-auto px-6 py-12">
+    <div class="max-w-6xl mx-auto px-6 py-16 md:py-24">
       
+      <!-- Typographic Header Block (Apple style) -->
+      <header class="text-center mb-16 md:mb-20 max-w-3xl mx-auto">
+        <h1 class="text-5xl md:text-6xl font-bold tracking-tight-apple text-carbon mb-6">
+          AI Playground
+        </h1>
+        <p class="text-lg md:text-xl font-light text-ash leading-relaxed mb-3">
+          AI 실험실에 오신 것을 환영합니다.
+        </p>
+        <p class="text-xs text-mist">
+          이곳의 기능들은 소리소문 없이 나타났다 사라질 수 있습니다. 🌬️
+        </p>
+      </header>
+
       <!-- Apple-style Filter and Search Section (Glassy Surface) -->
       <section class="mb-10">
         <div class="flex flex-col gap-6 bg-white/45 border border-white/60 rounded-2xl p-6 md:p-8 shadow-sm backdrop-blur-xl">
