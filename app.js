@@ -152,7 +152,7 @@ const CARD_DATA = [
     icon: "🏫",
     title: "AI 어학원",
     desc: "AI 휴먼의 1:1 토익 과외 앱 서비스",
-    encryptedHref: "5AYXO/wzes+IQnYv37399oKJJVM/8Lv02ZBP7P3FKXaBX+q8r/yHEvWEp1wVE8V4iOEcd6bV5Iyk0ikDvepdwnC0BSh4rHrt9F56Y9S5Dp8=",
+    encryptedHref: "RLDW51kyD1Fn/e/GluSaJcmdLxdyge556hwR1PgN+OconwSos6UoXJOyfwdiOMLZe2Ag8hSCDEQJYMKYj3fc9gPzolzArMU+1CLrZuUCDg8=",
     cats: ["report"],
     isActive: true,
     isProtected: true,
@@ -404,34 +404,150 @@ function init(){
   });
 
   // 🔒 비밀번호 보호 카드 클릭 핸들러
-  el.grid.addEventListener("click", async function(e) {
+  el.grid.addEventListener("click", function(e) {
     const protectedCard = e.target.closest("a[data-protected='true']");
     if (protectedCard) {
       e.preventDefault();
-      const pass = prompt("🔒 비밀번호를 입력하세요:");
-      if (pass !== null && pass !== "") {
-        const cardTitle = protectedCard.getAttribute("data-title");
-        const card = CARD_DATA.find(d => d.title === cardTitle);
-        if (card) {
-          if (card.encryptedHref) {
-            const decryptedUrl = await decrypt(card.encryptedHref, pass);
-            if (decryptedUrl) {
-              window.open(decryptedUrl, "_blank", "noopener,noreferrer");
-            } else {
-              alert("비밀번호가 틀렸습니다!");
-            }
-          } else {
-            // Fallback for plaintext href cards using the global SECRET_PASSWORD
-            if (pass === SECRET_PASSWORD) {
-              window.open(card.href, "_blank", "noopener,noreferrer");
-            } else {
-              alert("비밀번호가 틀렸습니다!");
-            }
-          }
-        }
+      const cardTitle = protectedCard.getAttribute("data-title");
+      const card = CARD_DATA.find(d => d.title === cardTitle);
+      if (card) {
+        showPasswordModal(card);
       }
     }
   });
+}
+
+/* =========================
+   🔒 비밀번호 입력 모달 UI
+========================= */
+let activeProtectedCard = null;
+
+function createPasswordModal() {
+  if (document.getElementById("passwordModal")) return;
+
+  const style = document.createElement("style");
+  style.innerHTML = `
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    .animate-shake {
+      animation: shake 0.3s ease-in-out;
+    }
+  `;
+  document.head.appendChild(style);
+
+  const modalHtml = `
+    <div id="passwordModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+      <div id="passwordModalContent" class="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-6 md:p-8 max-w-sm w-full mx-4 shadow-2xl transform scale-95 transition-all duration-300 backdrop-blur-md">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-xl font-bold text-white flex items-center gap-2">
+            <span>🔒</span> 비밀번호 입력
+          </h3>
+          <button id="closeModalBtn" class="text-slate-400 hover:text-white transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+        <p id="modalCardTitle" class="text-sm text-slate-400 mb-6 font-medium text-center"></p>
+        <div class="space-y-4">
+          <div>
+            <input id="modalPasswordInput" type="password" placeholder="비밀번호" 
+              class="w-full rounded-xl bg-slate-950/80 border border-slate-700 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-center tracking-widest text-lg font-bold" />
+            <p id="modalErrorMessage" class="text-red-500 text-xs mt-2 hidden text-center">비밀번호가 올바르지 않습니다.</p>
+          </div>
+          <button id="submitPasswordBtn" class="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0">
+            확인
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML("beforeend", modalHtml);
+
+  const modal = document.getElementById("passwordModal");
+  const content = document.getElementById("passwordModalContent");
+  const input = document.getElementById("modalPasswordInput");
+  const closeBtn = document.getElementById("closeModalBtn");
+  const submitBtn = document.getElementById("submitPasswordBtn");
+  const errorMsg = document.getElementById("modalErrorMessage");
+
+  const hideModal = () => {
+    modal.classList.add("opacity-0", "pointer-events-none");
+    modal.classList.remove("opacity-100");
+    content.classList.add("scale-95");
+    content.classList.remove("scale-100");
+    input.value = "";
+    errorMsg.classList.add("hidden");
+    activeProtectedCard = null;
+  };
+
+  const handleVerify = async () => {
+    const password = input.value;
+    if (!password) return;
+
+    if (activeProtectedCard) {
+      if (activeProtectedCard.encryptedHref) {
+        const decryptedUrl = await decrypt(activeProtectedCard.encryptedHref, password);
+        if (decryptedUrl) {
+          hideModal();
+          window.open(decryptedUrl, "_blank", "noopener,noreferrer");
+        } else {
+          showError();
+        }
+      } else {
+        // Fallback for plaintext href cards using the global SECRET_PASSWORD
+        if (password === SECRET_PASSWORD) {
+          hideModal();
+          window.open(activeProtectedCard.href, "_blank", "noopener,noreferrer");
+        } else {
+          showError();
+        }
+      }
+    }
+  };
+
+  const showError = () => {
+    errorMsg.classList.remove("hidden");
+    content.classList.add("animate-shake");
+    input.select();
+    setTimeout(() => {
+      content.classList.remove("animate-shake");
+    }, 300);
+  };
+
+  closeBtn.addEventListener("click", hideModal);
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) hideModal();
+  });
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") handleVerify();
+    if (e.key === "Escape") hideModal();
+  });
+
+  submitBtn.addEventListener("click", handleVerify);
+}
+
+function showPasswordModal(card) {
+  createPasswordModal();
+  activeProtectedCard = card;
+  
+  const modal = document.getElementById("passwordModal");
+  const content = document.getElementById("passwordModalContent");
+  const titleEl = document.getElementById("modalCardTitle");
+  const input = document.getElementById("modalPasswordInput");
+  
+  titleEl.textContent = `"${card.title}" 페이지에 접근하려면 비밀번호가 필요합니다.`;
+  
+  modal.classList.remove("opacity-0", "pointer-events-none");
+  modal.classList.add("opacity-100");
+  content.classList.remove("scale-95");
+  content.classList.add("scale-100");
+  
+  setTimeout(() => input.focus(), 100);
 }
 
 /* =========================
