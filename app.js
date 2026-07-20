@@ -149,6 +149,17 @@ const CARD_DATA = [
     type: "report"
   },
   {
+    icon: "🏫",
+    title: "AI 어학원",
+    desc: "AI 기술을 접목한 미래형 외국어 학습 서비스 프로토타입 및 검토 자료",
+    href: "https://academy-mockup.vercel.app/",
+    cats: ["report"],
+    isActive: true,
+    isProtected: true,
+    author: "유진",
+    type: "report"
+  },
+  {
     icon: "🐳",
     title: "AI 필기인식 서비스 비교 분석 결과",
     desc: "AI 필기인식 서비스 비교 항목 선정부터 분석 결과까지 완전 시각화 미쳤지 모야",
