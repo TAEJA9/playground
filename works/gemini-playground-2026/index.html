@@ -217,6 +217,18 @@
   .hiw-steps li b { color: var(--text); }
   .hiw-more { margin-top: 16px; font-size: 13px; color: var(--muted); background: var(--surface); border: 1px dashed var(--line-strong); border-radius: 12px; padding: 12px 16px; }
   .hiw-more b { color: var(--text-2); }
+  .hiw-idea { margin-top: 14px; background: #fff8e6; border: 1px solid #f3e2b3; border-radius: 12px 12px 0 0; padding: 11px 14px; font-size: 13px; color: #6b5514; line-height: 1.6; border-bottom: none; }
+  .hiw-idea b { color: #8a5a00; }
+  .hiw-tool { background: #fffdf5; border: 1px solid #f3e2b3; border-top: 1px dashed #e6d199; border-radius: 0 0 12px 12px; padding: 9px 14px; font-size: 12.5px; color: #7a6320; line-height: 1.55; }
+  .hiw-tool b { color: #8a5a00; }
+  .hiw-howto { margin-top: 18px; background: #eef4ff; border: 1px solid #d3e2fb; border-radius: 14px; padding: 17px 20px; }
+  .hiw-howto .ht { font-weight: 800; color: var(--g-blue); font-size: 14.5px; margin-bottom: 4px; }
+  .hiw-howto .hd { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+  .hiw-howto ol { margin: 0; padding-left: 22px; }
+  .hiw-howto li { font-size: 13.5px; color: var(--text-2); margin-bottom: 7px; line-height: 1.6; }
+  .hiw-howto li:last-child { margin-bottom: 0; }
+  .hiw-howto li b { color: var(--text); }
+  .hiw-howto .cap { margin-top: 11px; font-size: 12.5px; color: var(--muted); border-top: 1px solid #d3e2fb; padding-top: 10px; }
 
   /* ---------- Modal / Lightbox ---------- */
   .modal { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center;
@@ -828,17 +840,18 @@
         <div class="dive">
           <div class="dive-head">
             <span class="badge tech">A · 기술</span>
-            <h3>사내 지식 ‘그라운딩’ + MCP·ADK 표준화</h3>
+            <h3>AI를 사내 데이터에 어떻게 연결할까</h3>
             <span class="ref">여기어때 · 컬리 · 파스타 · 대원제약</span>
           </div>
-          <p>핵심은 AI 모델이 아니라 <b>‘사내 데이터에 어떻게 붙이느냐’</b>입니다. 표준(MCP/ADK)으로 연결을 규격화하고, 지식 유형별로 저장·검색을 나누며, 출처를 코드로 강제해야 신뢰할 수 있는 답이 나옵니다.</p>
+          <p>AI 모델 자체보다, AI를 <b>회사 데이터에 붙이는 ‘연결 방식’</b>이 더 중요합니다.</p>
           <div class="action-box">
-            <div class="t">▶ 이번 분기 실행</div>
+            <div class="t">▶ 실행 포인트</div>
             <ol>
-              <li>사내 데이터 소스(Jira·위키·DB·메신저)를 <b>MCP 규격</b>으로 노출하고, 게이트웨이 하나로 권한·라우팅을 일원화한다. <i>(여기어때 얍)</i></li>
-              <li>지식 유형별로 저장·검색을 분리한다 — 코드=임베딩, 이력=변경 이유 요약, 관계=표, 문서=기존 검색. <b>정제된 자료만 임베딩</b>. <i>(컬리)</i></li>
-              <li>‘<b>출처 없으면 답변 불가</b>’를 프롬프트가 아니라 <b>코드 파이프라인</b>으로 강제한다. <i>(컬리)</i></li>
-              <li>분산 데이터는 <b>MCP로 통합 맥락화</b>하고, 보안 민감 영역은 Enterprise 폐쇄 환경으로 푼다. <i>(파스타·대원제약)</i></li>
+              <li><b>MCP·ADK 표준화</b> — 슬랙·DB·메신저 같은 여러 사내 시스템을 하나하나 개별로 연결하지 말고, 공통 규격(MCP)으로 통일해서 연결한다. <i>(여기어때)</i></li>
+              <li><b>지식 축적</b> — 대화가 끝나면 핵심을 사용자별로 저장해 다음 대화에서 회상하고, 반복적으로 유효한 판단 기준·선호는 장기 메모리에서 관리한다. <i>(여기어때)</i></li>
+              <li><b>지식 유형별로 저장 방법을 다르게</b> — 코드는 코드대로, ‘왜 바뀌었는지’ 같은 이력은 요약해서, 문서는 기존 검색 방식으로. <i>(컬리)</i></li>
+              <li><b>출처 강제</b> — ‘출처 없으면 답변 못 하게’를 AI에게 프롬프트로 부탁하는 게 아니라, 아예 시스템(코드)으로 막는다. <i>(컬리)</i></li>
+              <li><b>민감한 데이터는 폐쇄망</b> — 보안이 중요한 데이터는 외부로 나가지 않는 엔터프라이즈 환경에서 처리한다. <i>(대원제약)</i></li>
             </ol>
           </div>
         </div>
@@ -846,17 +859,17 @@
         <div class="dive">
           <div class="dive-head">
             <span class="badge svc">B · 서비스</span>
-            <h3>규칙 분기 + 이중 검색 + 자동 평가 플라이휠</h3>
+            <h3>AI 할루시네이션을 어떻게 관리할까</h3>
             <span class="ref">위버스 · CJ올리브영</span>
           </div>
-          <p>할루시네이션은 없앨 수 없으니 <b>구조로 통제</b>합니다. 정확성이 중요한 흐름은 규칙으로, 지식형 질문은 검색으로, 최종 출력은 자동 평가로 거릅니다. 그리고 지식이 스스로 자라게 만듭니다.</p>
+          <p>AI 헛소리(환각)는 완전히 없앨 수 없으니, <b>상황별로 다른 안전장치를 겹겹이</b> 두는 것이 좋습니다.</p>
           <div class="action-box">
-            <div class="t">▶ 이번 분기 실행</div>
+            <div class="t">▶ 실행 포인트</div>
             <ol>
-              <li>결제·환불처럼 <b>정확성이 필요한 플로우는 결정론 분기</b>, 지식형 질문은 <b>이중 RAG</b>(FAQ→지식베이스)로 분리한다. <i>(위버스)</i></li>
-              <li>최종 출력 전 <b>Gen AI Evaluation</b>로 사실성을 자동 평가하고, 기준 미달(예: 90% 미만)이면 사람이 승인/검토(Human-in-the-loop). <i>(위버스)</i></li>
-              <li>답변에 <b>클릭 가능한 출처</b>를 노출하고, 개인정보는 <b>DLP로 실시간 마스킹</b>한다.</li>
-              <li>대화·문서가 쌓이면 지식·FAQ가 스스로 자라는 <b>플라이휠</b>을 만든다(BigQuery ML 임베딩·클러스터링 + 사람 승인). <i>(위버스)</i></li>
+              <li><b>정확성이 중요한 업무(결제·환불)</b> — AI가 알아서 판단하게 두지 말고, 미리 정해진 규칙(if-then 같은 분기)으로 처리한다. <i>(위버스)</i></li>
+              <li><b>단순 지식 질문</b> — 검색 기반(RAG)으로 처리하되, FAQ를 먼저 찾고 없으면 지식베이스로 넘어가는 2단계 검색을 적용한다. <i>(위버스)</i></li>
+              <li><b>최종 답변 전 크로스체크</b> — AI가 만든 답을 또 다른 AI가 “이거 사실 맞아?” 채점하고, 점수가 낮으면 사람이 검토·승인한다. <i>(위버스)</i></li>
+              <li><b>스스로 똑똑해지는 시스템</b> — 사람들이 쓸수록 대화 데이터가 쌓이고, 자동으로 분류돼 FAQ가 계속 늘어나게 만든다(사람 승인 필요). <i>(위버스)</i></li>
             </ol>
           </div>
         </div>
@@ -864,17 +877,17 @@
         <div class="dive">
           <div class="dive-head">
             <span class="badge org">C · 조직</span>
-            <h3>도구가 아니라 ‘환경’ — 앰버서더·변화관리·지식 자산화</h3>
+            <h3>AI를 깔아주는 게 끝이 아니라, 문화가 바뀌어야 한다</h3>
             <span class="ref">카카오뱅크 · CJ올리브영</span>
           </div>
-          <p>좋은 도구를 깔아도 <b>월간 재접속률</b>은 떨어질 수 있습니다. 현업을 키맨으로 세우고, 암묵지를 공유 자산으로 바꾸고, 성공 지표를 ‘도입률’이 아니라 ‘지속 사용률’로 봐야 합니다.</p>
+          <p>좋은 AI 도구를 줘도 <b>직원이 안 쓰면 의미가 없습니다.</b> ‘기술 도입’이 아니라 ‘조직 문화·환경 만들기’가 필요합니다.</p>
           <div class="action-box">
-            <div class="t">▶ 이번 분기 실행</div>
+            <div class="t">▶ 실행 포인트</div>
             <ol>
-              <li>배포와 동시에 부서별 <b>앰버서더 선발</b> + 노코드 빌더 교육을 진행한다. <i>(카카오뱅크)</i></li>
-              <li>사내 <b>해커톤</b> + 결과물을 모아 보는 ‘에이전트/프롬프트 뱅크’를 만들고, 좋은 에이전트는 <b>그룹 공유</b>로 확산한다. <i>(카카오뱅크)</i></li>
-              <li>화려한 에이전트보다 <b>지식 기반부터</b> — 로컬·암묵지를 공유 드라이브로 모으는 변화관리를 반복한다. <i>(CJ올리브영)</i></li>
-              <li>성공 지표를 <b>월간 재접속률/지속 사용률</b>로 정의하고 추적한다. <i>(CJ올리브영)</i></li>
+              <li><b>앰버서더 제도</b> — 각 부서에서 AI를 잘 쓰는 사람을 뽑아 전파자 역할을 맡긴다. <i>(카카오뱅크)</i></li>
+              <li><b>에이전트/프롬프트 뱅크</b> — 사내 해커톤 등에서 나온 좋은 결과물(잘 만든 에이전트)을 모아 공유·재사용한다(구글 에이전트 공유 기능). <i>(카카오뱅크)</i></li>
+              <li><b>암묵지 공유</b> — 개인 머릿속에만 있던 노하우를 공유 드라이브에 모으는 것이, 화려한 에이전트를 만드는 것보다 먼저다. <i>(CJ올리브영)</i></li>
+              <li><b>지표를 ‘도입률’이 아니라 ‘지속 사용률’로</b> — 한 번 써보고 마는 게 아니라, 한 달 뒤에도 계속 쓰고 있는지를 성공 기준으로 삼는다. <i>(CJ올리브영)</i></li>
             </ol>
           </div>
         </div>
@@ -882,16 +895,16 @@
         <div class="dive">
           <div class="dive-head">
             <span class="badge trust">D · 신뢰·개인</span>
-            <h3>책임 있는 AI + ‘유저 → 디벨로퍼’</h3>
+            <h3>책임 있는 AI + 개인의 역할 변화</h3>
             <span class="ref">카카오 Responsible AI · 루시 · 파주</span>
           </div>
-          <p>AI가 발전할수록 가장 중요한 가치는 <b>신뢰</b>이고, 가장 큰 변화는 <b>구성원 개개인이 문제를 직접 푸는 사람</b>이 되는 것입니다.</p>
+          <p>AI가 발전할수록 <b>신뢰</b> 문제가 중요해지고, 일반 구성원도 <b>직접 만들어 쓰는 사람</b>으로 바뀌는 변화가 필요합니다.</p>
           <div class="action-box">
-            <div class="t">▶ 이번 분기 실행</div>
+            <div class="t">▶ 실행 포인트</div>
             <ol>
-              <li>생성형 기능엔 <b>표시·출처·탐지</b>를 처음부터 넣는다 — 표준 워터마킹을 채택하고 편집 후 탐지를 자체 검증. <i>(카카오)</i></li>
-              <li>‘딸깍 결과’를 경계하고 <b>꼬리질문·환각 방지 규칙</b>으로 결과의 진정성을 확보한다. <i>(파주)</i></li>
-              <li>반복 업무 하나를 <b>스케줄 자동화</b>로 밀어내는 것부터 — 비개발자도 바이브코딩으로 직접 만든다. <i>(루시·파주)</i></li>
+              <li><b>워터마킹·출처 표시</b> — AI가 만든 콘텐츠라는 걸 처음부터 표시하고, 나중에 편집됐는지도 자체 검증한다. <i>(카카오)</i></li>
+              <li><b>‘딸깍 결과’ 경계</b> — AI가 한 번에 뱉어준 결과를 그대로 믿지 말고, 꼬리질문을 던져 검증하는 습관을 들인다. <i>(파주)</i></li>
+              <li><b>비개발자도 자동화</b> — 코딩을 몰라도 반복 업무 하나 정도는 AI로 자동화(바이브코딩)해, 직접 문제를 해결하는 사람이 된다. <i>(루시·파주)</i></li>
             </ol>
           </div>
         </div>
@@ -964,6 +977,8 @@
               <li><b>초당 24프레임</b> 처리로 음성과 립싱크가 정밀하게 동기화되고, 유연·역동적인 안면 애니메이션이 지연 없이 실시간 구현.</li>
               <li><b>단일 API</b>로 일관된 보컬 아이덴티티의 커스텀 아바타가 생성되며, <b>Gemini Enterprise Agent Platform</b>을 거쳐 엔터프라이즈 환경에 안전하게 배포·통제.</li>
             </ol>
+            <div class="hiw-idea">💡 <b>우리 적용 아이디어</b> — 학습자의 발화 톤·감정을 인식해 반응하는 <b>AI 영어회화 튜터 아바타</b>. 자연스러운 립싱크로 스피킹 연습 상대가 되거나, 수강 상담을 24시간 응대하는 대화형 상담원으로 활용.</div>
+            <div class="hiw-tool">🛠 <b>바로 쓸 수 있는 툴</b> — 말하는 아바타 HeyGen·Synthesia + 음성 ElevenLabs + 대화 Gemini (상담 챗봇은 Gemini Enterprise 빌더).</div>
           </div></div>
 
           <div class="hiw-card"><div class="hiw-inner">
@@ -975,9 +990,61 @@
               <li>텍스트·이미지·오디오 자산을 <b>Gemini API</b> 중심으로 비디오 생성 모델 <b>Veo</b>, 음악 생성 모델 <b>Lyria</b>와 병렬 결합해 단일 스튜디오(Swarm) 환경 구성.</li>
               <li>다수 동시 접속에도 <b>Firestore·Cloud Storage</b>로 동기화·지연을 통제하고, 컴플라이언스 체크가 백엔드에서 엄격하게 자동 운영.</li>
             </ol>
+            <div class="hiw-idea">💡 <b>우리 적용 아이디어</b> — 교재 지문·강의 스크립트를 넣으면 <b>영상 강의·오디오북·홍보 영상이 자동 생성</b>. Veo(영상)+Lyria(음악·효과음) 결합으로 콘텐츠 제작 시간을 대폭 단축.</div>
+            <div class="hiw-tool">🛠 <b>바로 쓸 수 있는 툴</b> — 영상 Veo·Google Vids + 내레이션 ElevenLabs + 오디오북/요약 NotebookLM (대본은 Gemini).</div>
+          </div></div>
+
+          <div class="hiw-card"><div class="hiw-inner">
+            <span class="hiw-tag">AI 사진관</span><span class="hiw-co">인공지능 사진관 × Google Cloud</span>
+            <div class="hiw-desc">사진을 찍으면 즉시 고객만의 특징을 살린 맞춤형 아바타를 생성하고, 가상 환경의 숏폼 영상으로 즉시 변환해 줍니다. 완성물의 소장과 공유가 직관적으로 연결되어, 오프라인 체험을 소셜 공간으로 확산시키는 강력한 마케팅 툴로 작동합니다.</div>
+            <span class="hiw-pill">How it works</span>
+            <ol class="hiw-steps">
+              <li><b>App Engine</b>의 프론트엔드·백엔드 분리 아키텍처 위에서 고화질 카메라 입력 스택과 실시간 결합되는 시스템으로 구축.</li>
+              <li>원시 이미지 소스는 <b>Gemini 모델</b> 검증을 거쳐 <b>Nano Banana 2</b>로 전송되며, 안면 확장 벡터가 보존된 상태에서 스타일 레이어·시각 스크립트와 합성.</li>
+              <li>최종 단계에서 비디오 엔진 <b>Veo 3</b> 프로세스가 병렬 호출되어 프레임 데이터가 지연 없이 인코딩되고, <b>Firestore·Cloud Storage</b> 컴플라이언스 기준에 맞춰 안전하게 저장·통제.</li>
+            </ol>
+            <div class="hiw-idea">💡 <b>우리 적용 아이디어</b> — 수강생 <b>수료 인증 아바타·숏폼</b>이나 캐릭터 기반 학습 콘텐츠로 SNS 바이럴 마케팅. 오프라인 이벤트 참여 → 소셜 확산으로 잇는 체험형 프로모션 툴.</div>
+            <div class="hiw-tool">🛠 <b>바로 쓸 수 있는 툴</b> — 이미지 Nano Banana(Gemini) + 아바타·숏폼 HeyGen + 편집 CapCut·Canva.</div>
+          </div></div>
+
+          <div class="hiw-card"><div class="hiw-inner">
+            <span class="hiw-tag">AI 광고 크리에이티브</span><span class="hiw-co">Nano Banana × Gemini Omni</span>
+            <div class="hiw-desc">모델 섭외나 촬영 등의 제약 없이, 원하는 페르소나와 대본 설정만으로 숏폼 리뷰 영상을 즉시 완성합니다. 리소스의 한계를 벗어나 비즈니스 목표와 잠재 고객에 맞춘 다채로운 광고 크리에이티브를 쉽고 빠르게 확장할 수 있습니다.</div>
+            <span class="hiw-pill">How it works</span>
+            <ol class="hiw-steps">
+              <li><b>Nano Banana 2와 Gemini Omni</b> 아키텍처 결합으로 텍스트·오디오·비디오 레이어가 단일 파이프라인에서 통합 렌더링되는 멀티모달 생성 시스템으로 구축.</li>
+              <li>입력된 페르소나와 Gemini 스크립트가 음성 트랙으로 합성되고, 화자의 미세한 움직임과 제품 이미지가 동기화되어 <b>실제 사람이 말하는 듯한 숏폼 비디오</b>로 즉시 렌더링.</li>
+              <li>모델 섭외→촬영→편집으로 이어지던 파편화된 물리적 제작 워크플로우가 클라우드 백엔드의 <b>자동화된 단일 스택</b> 아래 통제되어, 리소스 제약이 해결된 솔루션 아키텍처 구현.</li>
+            </ol>
+            <div class="hiw-idea">💡 <b>우리 적용 아이디어</b> — 신간·강좌 <b>홍보 숏폼 영상을 모델·촬영 없이 대량 생성</b>. 타깃별(수험생·직장인·학부모) 페르소나와 대본만 바꿔 A/B 마케팅 소재를 빠르게 확장. <b>(← 문의하신 멀티모달 생성 시스템의 핵심 활용처)</b></div>
+            <div class="hiw-tool">🛠 <b>바로 쓸 수 있는 툴</b> — 대본 Gemini → 영상 Veo·Google Vids → 화자 아바타 HeyGen → 음성 ElevenLabs → 마무리 CapCut. <b>개발 없이 마케팅 담당 1명이 반나절이면 시제품.</b></div>
+          </div></div>
+
+          <div class="hiw-card"><div class="hiw-inner">
+            <span class="hiw-tag">AI 헬스케어</span><span class="hiw-co">AI 피트니스 케어 × Google Cloud</span>
+            <div class="hiw-desc">집에서도 실시간 AI 가이드를 통해 부상 위험 없이 전문적인 헬스케어·피트니스 관리를 이어가는 통합 AI 케어 솔루션입니다. 초개인화로 센터 방문 시간·비용을 획기적으로 줄이며, 어디서나 완벽한 건강 관리가 가능합니다.</div>
+            <span class="hiw-pill">How it works</span>
+            <ol class="hiw-steps">
+              <li>브라우저 환경에서 관절 움직임을 지연 없이 포착하는 <b>MediaPipe 25</b> 아키텍처를 기반으로 구축.</li>
+              <li>전반적인 워크플로우는 <b>Cloud Run</b>으로 오케스트레이션되며, 백엔드에서 <b>Gemini·Veo 모델</b>이 연동되어 피트니스 데이터가 동적으로 제어.</li>
+              <li>생성된 데이터·미디어 파이프라인은 <b>Firestore·Cloud Storage</b>를 거쳐 엔터프라이즈급 보안 프레임워크에서 안전하게 관리·통제·운영.</li>
+            </ol>
+            <div class="hiw-idea">💡 <b>우리 적용 아이디어</b> — 카메라로 동작을 인식하는 기술은 <b>발음 시 입모양 교정</b>이나 유아·체험형 학습의 <b>동작 인터랙션</b>에 응용 가능(교육 적합도는 상대적으로 낮아 탐색 단계).</div>
+            <div class="hiw-tool">🛠 <b>바로 쓸 수 있는 툴</b> — 바로 쓸 완제품은 아직 제한적. 외부 동작인식 학습 솔루션을 검토하는 PoC 단계로.</div>
           </div></div>
 
         </div>
+        <div class="hiw-howto">
+          <div class="ht">💬 개발자 없이 어떻게 실현하나요?</div>
+          <div class="hd">위 데모존의 서비스는 Google Cloud·파트너가 직접 만든 <b>맞춤 데모(각각 별개 파이프라인)</b>입니다. 이 파이프라인을 우리가 똑같이 만들 필요는 없습니다. 카드의 아이디어는 ‘직접 구현’이 아니라 <b>‘어떤 역량을 확보할지’의 방향</b>이며, 개발자 없이 실현하는 현실적 경로는 3가지입니다.</div>
+          <ol>
+            <li><b>완제품(SaaS)으로 바로</b> — 아바타 영상(HeyGen·Synthesia), 영상 생성(<b>Veo·Google Vids</b>), 음성(ElevenLabs), 오디오 요약(NotebookLM) 등 이미 나온 툴을 기획·마케팅팀이 그대로 사용. <b>(개발 0)</b></li>
+            <li><b>노코드로 가볍게 직접</b> — Gemini Enterprise·AI Studio로 요약·상담 FAQ·퀴즈 생성 같은 <b>간단한</b> 에이전트를 조립(이번 행사의 ‘루시’·파주 사례처럼 비개발자도 가능). <i>단, 멀티모달 영상 파이프라인 같은 건 이 범위 밖.</i></li>
+            <li><b>커스텀은 파트너에 의뢰</b> — 데모 같은 통합 파이프라인이 꼭 필요하면 SI 파트너(예: 메가존소프트)나 Google Cloud에 <b>구축을 맡긴다</b>(우리가 만들지 않음).</li>
+          </ol>
+          <div class="cap">👉 우리 팀(개발자 없음) 권장 순서: <b>①·② 먼저 파일럿 → 효과 검증 후 필요할 때만 ③</b>.</div>
+        </div>
+
         <div class="hiw-more">그 외 둘러본 데모존 — <b>Android XR</b>(AI로 새로운 차원을 여는 공간 컴퓨팅 경험) · <b>Imagine with Gemini</b>(이이남 <i>Gemini Omni</i> · 고요손 <i>Nano Banana</i> · CODE KUNST <i>Lyria</i> 미디어 아트) · <b>Design Workshop</b>(Gemini로 공간·이미지 디자인) · <b>Gemini for Productivity</b>.</div>
       </div>
     </div>
@@ -1021,6 +1088,10 @@
       "1zoD9TezY92SCLsHu1L8EK4r83KrvTgmY",
       "1qKyqEeN8fyw7MXvhHIaY6L6JM_exmQWV",
       "1mqtRw76cSB-lPXOW2Zul8lIISFKT8L5T",
+      "1DOrLQK6uDyW8getnNBK_N-skA8UAd6It",
+      "1QdE-byti8LYN72gLbouk5Lg3JI5SC8Vz",
+      "1TRSM4GNZfOhyMRM60xFRK3A8VYO0VVBL",
+      "1teVaIyBtZVNg58oKueLcrur5x7GC_TGl",
     ];
     const thumb = (id, w) => `https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
 
