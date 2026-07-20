@@ -112,87 +112,13 @@
       </section>
 
       <footer class="text-center mt-12">
-        <p class="text-slate-400 text-sm">더 많은 AI 도구들이 준비 중입니다 🔬</p>
         <p class="text-slate-500 text-sm mt-2">ⓒ Jeongyeon. 2025</p>
-        <div class="mt-6">
-  <button id="btnOpenSubmit"
-    class="rounded-lg bg-slate-700/80 hover:bg-slate-600 text-slate-100 px-4 py-2 shadow-md border border-slate-500/60 backdrop-blur-sm transition-all">
-    등록 신청하기
-  </button>
-</div>
-
       </footer>
     </div>
   </div>
 
-  <!-- 등록 신청 모달 -->
-  <div id="submitModal" class="hidden fixed inset-0 z-[60]">
-    <!-- Backdrop -->
-    <div class="absolute inset-0 bg-black/60"></div>
-
-    <!-- Card -->
-    <div class="absolute inset-0 flex items-center justify-center p-4">
-      <div class="w-full max-w-lg bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl p-6">
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="text-xl font-semibold text-white">도구 등록 신청 (준비 중)</h3>
-          <button id="btnCloseSubmit" class="text-slate-300 hover:text-white" aria-label="모달 닫기">✕</button>
-        </div>
-
-        <form id="submitForm" class="space-y-4" novalidate>
-          <div>
-            <label class="block text-sm text-slate-300 mb-1">이름</label>
-            <input name="name" required
-              class="w-full rounded-lg bg-slate-900/60 border border-slate-700 px-3 py-2 text-slate-100 placeholder:text-slate-400"
-              placeholder="홍길동" />
-          </div>
-
-          <div>
-            <label class="block text-sm text-slate-300 mb-1">도구 설명</label>
-            <textarea name="desc" rows="3" required
-              class="w-full rounded-lg bg-slate-900/60 border border-slate-700 px-3 py-2 text-slate-100 placeholder:text-slate-400"
-              placeholder="무엇을 하는 도구인지 간단히 적어주세요"></textarea>
-          </div>
-
-          <div>
-            <label class="block text-sm text-slate-300 mb-1">링크(URL)</label>
-            <input name="link" type="url" required
-              class="w-full rounded-lg bg-slate-900/60 border border-slate-700 px-3 py-2 text-slate-100 placeholder:text-slate-400"
-              placeholder="https://example.com" />
-          </div>
-
-          <div>
-            <label class="block text-sm text-slate-300 mb-1">제작자</label>
-            <input name="author" required
-              class="w-full rounded-lg bg-slate-900/60 border border-slate-700 px-3 py-2 text-slate-100 placeholder:text-slate-400"
-              placeholder="이름 또는 팀명" />
-          </div>
-
-          <div>
-            <label class="block text-sm text-slate-300 mb-1">카테고리(선택)</label>
-            <input name="cat"
-              class="w-full rounded-lg bg-slate-900/60 border border-slate-700 px-3 py-2 text-slate-100 placeholder:text-slate-400"
-              placeholder="event, board 등" />
-          </div>
-
-          <div class="pt-2 flex items-center justify-end gap-2">
-            <button type="button" id="btnCancelSubmit"
-              class="rounded-lg border border-slate-600 px-4 py-2 text-slate-200 hover:bg-slate-700/40">
-              취소
-            </button>
-            <button type="submit" id="btnDoSubmit"
-              class="rounded-lg bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 disabled:opacity-60 disabled:cursor-not-allowed">
-              제출하기
-            </button>
-          </div>
-
-          <p id="submitMsg" class="hidden text-sm mt-2"></p>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- 앱 스크립트: app.js (모달/제출 로직 포함 예정) -->
-  <script src="app2.js"></script>
+  <!-- 앱 스크립트 -->
+  <script src="app.js"></script>
 </body>
 </html>
 
