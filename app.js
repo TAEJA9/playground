@@ -131,7 +131,7 @@ const CARD_DATA = [
   {
     icon: "👤",
     title: "AI 에이전트 검토",
-    desc: "일레븐랩스, 네오나 에이전트, perso interactive의 기능 상세 비교 및 확인 사항 비교용인것이야.",
+    desc: "일레븐랩스, 네오나 에이전트, perso interactive의 기능 상세 비교 및 확인 사항 비교용",
     href: "https://ai-human-delta.vercel.app/",
     cats: ["report"],
     isActive: true,
