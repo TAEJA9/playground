@@ -100,6 +100,22 @@
   .callout p { margin: 0; color: var(--text-2); font-size: 16px; }
   .callout .hl { color: var(--g-blue); font-weight: 800; }
 
+  /* ---------- Why / What / How summary ---------- */
+  .wwh-title { margin: 20px 0 10px; font-size: 15px; font-weight: 800; color: var(--text-2); }
+  .wwh { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .wcol { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; }
+  .wcol .wh { padding: 12px 18px; font-weight: 800; font-size: 15px; color: #fff; display: flex; align-items: baseline; gap: 8px; }
+  .wcol .wh small { font-weight: 700; font-size: 12px; opacity: .85; }
+  .wcol.why .wh { background: var(--g-blue); }
+  .wcol.what .wh { background: var(--g-green); }
+  .wcol.how .wh { background: #e09400; }
+  .wcol .wb { padding: 14px 18px; }
+  .wcol ul { margin: 0; padding-left: 18px; }
+  .wcol li { font-size: 13.5px; color: var(--text-2); margin-bottom: 8px; line-height: 1.55; }
+  .wcol li:last-child { margin-bottom: 0; }
+  .wcol li b { color: var(--text); }
+  @media (max-width: 820px) { .wwh { grid-template-columns: 1fr; } }
+
   /* ---------- Report context (trends + stats) ---------- */
   .report-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 20px; align-items: stretch; }
   .trends { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; box-shadow: var(--shadow-sm); }
@@ -318,6 +334,41 @@
         (2) 도구가 아니라 <b>‘환경’</b>을 바꿔 현업이 스스로 쓰게 하고,
         (3) AI가 반복을 대신해 <b>사람은 더 본질적인 일에 집중</b>하게 만든다는 것입니다.
       </p>
+    </div>
+
+    <h3 class="wwh-title">🧭 한 장 요약 — 왜 · 무엇을 · 어떻게</h3>
+    <div class="wwh">
+      <div class="wcol why">
+        <div class="wh">왜 <small>Why · 하는 이유</small></div>
+        <div class="wb">
+          <ul>
+            <li>AI가 ‘비서’에서 <b>일을 대신하는 에이전틱 시스템</b>으로 전환 (경영진 52%가 이미 운영)</li>
+            <li>업계가 <b>실사용으로 성과</b> — 카뱅 실사용 3배↑ · 위버스 응대 절반↓ · 대원제약 연구시간 회수</li>
+            <li>반복은 AI에게, <b>사람은 기획·창작·고객관계</b>에 집중 → 안 하면 뒤처진다</li>
+          </ul>
+        </div>
+      </div>
+      <div class="wcol what">
+        <div class="wh">무엇을 <small>What · 확보할 역량</small></div>
+        <div class="wb">
+          <ul>
+            <li><b>콘텐츠 제작 자동화</b> — 교재·지문 → 영상강의·오디오북·홍보 숏폼</li>
+            <li><b>사내 지식 활용</b> — 회사 자료에 근거한 Q&amp;A·문의 응대</li>
+            <li><b>고객·수강 24시간 응대</b> 자동화</li>
+            <li><b>전사 일상화</b>(각자 반복업무 자동화) + <b>AI 신뢰</b>(표시·검증)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="wcol how">
+        <div class="wh">어떻게 <small>How · 개발 없이</small></div>
+        <div class="wb">
+          <ul>
+            <li><b>원칙</b> — 데이터에 근거 · 헛소리는 구조로 · 도구보다 문화 · 지표는 지속 사용률</li>
+            <li><b>3경로</b> — 완제품(Veo·NotebookLM·HeyGen) / 노코드(Gemini·AI Studio) / 파트너 의뢰</li>
+            <li><b>순서</b> — 작은 파일럿 1개(예: 신간 홍보 숏폼) → 앰버서더·공유폴더 → 확장</li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <div class="overview-wrap">

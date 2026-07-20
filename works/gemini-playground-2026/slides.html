@@ -92,6 +92,7 @@
   .agent .ab .eff { background: #e6f5f5; color: #0c7d7d; }
 
   .axis { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 6px; }
+  .axis3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 6px; }
   .axcard { background: var(--surface-2); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
   .axcard .btag { display: inline-block; font-size: 11px; font-weight: 800; color: #fff; padding: 3px 10px; border-radius: 999px; margin-bottom: 8px; }
   .bt-a{background:var(--g-blue);} .bt-b{background:var(--g-green);} .bt-c{background:var(--g-yellow);} .bt-d{background:var(--g-teal);}
@@ -125,7 +126,7 @@
     .slide { padding: 30px 24px; }
     .row { grid-template-columns: 96px 1fr; gap: 10px; }
     .caseitem { grid-template-columns: 1fr; gap: 4px; }
-    .statgrid, .axis, .axis2 { grid-template-columns: 1fr; }
+    .statgrid, .axis, .axis2, .axis3 { grid-template-columns: 1fr; }
     .nav { width: 42px; height: 42px; font-size: 20px; } .nav.prev { left: 8px; } .nav.next { right: 8px; }
   }
 </style>
@@ -168,6 +169,29 @@
         <div class="point"><div class="n n1">1</div><div class="tx"><b>모델보다 데이터</b> — 답변을 사내 지식에 그라운딩하고 품질을 자동 검증</div></div>
         <div class="point"><div class="n n2">2</div><div class="tx">도구가 아니라 <b>‘환경’</b>을 바꿔 현업이 스스로 쓰게 만든다</div></div>
         <div class="point"><div class="n n3">3</div><div class="tx">AI가 반복을 대신 → <b>사람은 더 본질적인 일에 집중</b></div></div>
+      </div>
+    </section>
+
+    <!-- 3b -->
+    <section class="slide">
+      <span class="kicker">한 장 요약</span>
+      <h2>왜 · 무엇을 · 어떻게</h2>
+      <div class="axis3">
+        <div class="axcard">
+          <span class="btag bt-a">왜</span>
+          <div class="at">지금 하는 이유</div>
+          <div class="ad">AI가 반복을 대신 → 사람은 <b>본질(기획·창작·고객)</b>에 집중. 업계는 이미 실사용 성과(카뱅 3배↑·위버스 절반↓)</div>
+        </div>
+        <div class="axcard">
+          <span class="btag bt-b">무엇을</span>
+          <div class="at">확보할 역량</div>
+          <div class="ad">콘텐츠 제작 자동화 · 사내 지식 활용 · 24h 응대 · 전사 일상화 · AI 신뢰</div>
+        </div>
+        <div class="axcard">
+          <span class="btag bt-c">어떻게</span>
+          <div class="at">개발 없이 시작</div>
+          <div class="ad">완제품 · 노코드 · 파트너 3경로 → <b>작은 파일럿부터</b>. 지표는 지속 사용률</div>
+        </div>
       </div>
     </section>
 
