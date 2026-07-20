@@ -139,6 +139,16 @@ const CARD_DATA = [
     type: "report"
   },
   {
+    icon: "🧭",
+    title: "당신을 위한 바이브코딩 가이드",
+    desc: "바이브코딩의 기초부터 협업 흐름, 업무 자동화 방법에 대한 가이드를 제공합니다.",
+    href: "https://ai-guide-01.vercel.app/",
+    cats: ["report"],
+    isActive: true,
+    author: "정연",
+    type: "report"
+  },
+  {
     icon: "🐳",
     title: "AI 필기인식 서비스 비교 분석 결과",
     desc: "AI 필기인식 서비스 비교 항목 선정부터 분석 결과까지 완전 시각화 미쳤지 모야",
