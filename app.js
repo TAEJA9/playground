@@ -151,8 +151,8 @@ const CARD_DATA = [
   {
     icon: "🏫",
     title: "AI 어학원",
-    desc: "AI 기술을 접목한 미래형 외국어 학습 서비스 프로토타입 및 검토 자료",
-    href: "https://academy-mockup.vercel.app/",
+    desc: "AI 휴먼의 1:1 토익 과외 앱 서비스",
+    href: "https://aiacademy-mockup.vercel.app/",
     cats: ["report"],
     isActive: true,
     isProtected: true,
