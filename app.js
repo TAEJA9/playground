@@ -120,19 +120,19 @@ const CARD_DATA = [
   // =====================
   {
     icon: "🤖",
-    title: "2026 Gemini Playground 리포트",
-    desc: "2026 Gemini Playground(재미나이 유저톡) 현장 11개 세션 정리. 실제 기업 사례의 배경 → 아키텍처 → 성과 및 AX Idea 포함.",
-    href: "https://taeja9.github.io/playground/gemini-report.html",
+    title: "2026 Gemini Playground",
+    desc: "2026 Gemini Playground 현장 세션 정리 및 실무 도입 사례, AX Idea 분석 자료 페이지 (요약 슬라이드 포함)",
+    href: "https://taeja9.github.io/playground/works/gemini-playground-2026/index.html",
     cats: ["report"],
     isActive: true,
     author: "정연",
     type: "report"
   },
   {
-    icon: "💡",
-    title: "2026 Gemini Playground (사례 및 AX Idea)",
-    desc: "2026 Gemini Playground 현장 세션 정리 및 실무 도입 사례, AX Idea 분석 자료 페이지 (요약 슬라이드 포함)",
-    href: "https://taeja9.github.io/playground/works/gemini-playground-2026/index.html",
+    icon: "👤",
+    title: "AI 에이전트 검토",
+    desc: "일레븐랩스, 네오나 에이전트, perso interactive의 기능 상세 비교 및 확인 사항 비교용인것이야.",
+    href: "https://ai-human-delta.vercel.app/",
     cats: ["report"],
     isActive: true,
     author: "정연",
@@ -187,7 +187,7 @@ function labelCat(c){
     board:"게시판",
     "wk-only": "WK-Only",
     automation: "자동화",
-    report: "결과물",
+    report: "works",
     nlp:"NLP", 
     vision:"Vision", 
     utils:"유틸" 
