@@ -45,7 +45,7 @@ const CARD_DATA = [
     icon: "😽",
     title: "전국투어 맛집 자랑",
     desc: "전국 방방곡곡을 돌아다니는 WK의 맛집 버킷 리스트",
-    href: "https://taeja9.github.io/playground/tools/tasty-wk.html",
+    encryptedHref: "GJomjUej1W4jL972q0yJFgWAem8+GnByZoD581UwGyrshVV4hk2ASagzMC1qWAZiXjT26mKWM8vTmS/NhIdyPpRcRRjLMP81fNs/wahrPG9vbxjKSSq59qi7D6WJW+cy8do7",
     cats: ["wk-only"],
     isActive: true,
     isProtected: true,
@@ -152,7 +152,7 @@ const CARD_DATA = [
     icon: "🏫",
     title: "AI 어학원",
     desc: "AI 휴먼의 1:1 토익 과외 앱 서비스",
-    href: "https://aiacademy-mockup.vercel.app/",
+    encryptedHref: "5AYXO/wzes+IQnYv37399oKJJVM/8Lv02ZBP7P3FKXaBX+q8r/yHEvWEp1wVE8V4iOEcd6bV5Iyk0ikDvepdwnC0BSh4rHrt9F56Y9S5Dp8=",
     cats: ["report"],
     isActive: true,
     isProtected: true,
@@ -328,8 +328,9 @@ function renderCards(){
         </div>
       </div>
     `;
+    const targetHref = d.isProtected ? '#' : d.href;
     return d.isActive
-      ? `<a href="${d.href}" target="_blank" rel="noopener noreferrer" class="group block"
+      ? `<a href="${targetHref}" target="_blank" rel="noopener noreferrer" class="group block"
              ${d.isProtected ? 'data-protected="true"' : ''}
              data-title="${escapeHtml(d.title)}" data-desc="${escapeHtml(d.desc||'')}" data-cat="${(d.cats||[]).join(' ')}">${body}</a>`
       : `<div class="group block" aria-disabled="true"
@@ -403,18 +404,78 @@ function init(){
   });
 
   // 🔒 비밀번호 보호 카드 클릭 핸들러
-  el.grid.addEventListener("click", function(e) {
+  el.grid.addEventListener("click", async function(e) {
     const protectedCard = e.target.closest("a[data-protected='true']");
     if (protectedCard) {
       e.preventDefault();
       const pass = prompt("🔒 비밀번호를 입력하세요:");
-      if (pass === SECRET_PASSWORD) {
-        window.open(protectedCard.href, "_blank", "noopener,noreferrer");
-      } else if (pass !== null && pass !== "") {
-        alert("비밀번호가 틀렸습니다!");
+      if (pass !== null && pass !== "") {
+        const cardTitle = protectedCard.getAttribute("data-title");
+        const card = CARD_DATA.find(d => d.title === cardTitle);
+        if (card) {
+          if (card.encryptedHref) {
+            const decryptedUrl = await decrypt(card.encryptedHref, pass);
+            if (decryptedUrl) {
+              window.open(decryptedUrl, "_blank", "noopener,noreferrer");
+            } else {
+              alert("비밀번호가 틀렸습니다!");
+            }
+          } else {
+            // Fallback for plaintext href cards using the global SECRET_PASSWORD
+            if (pass === SECRET_PASSWORD) {
+              window.open(card.href, "_blank", "noopener,noreferrer");
+            } else {
+              alert("비밀번호가 틀렸습니다!");
+            }
+          }
+        }
       }
     }
   });
+}
+
+/* =========================
+   🔒 복호화 (PBKDF2 + AES-GCM)
+========================= */
+async function decrypt(encryptedBase64, password) {
+  try {
+    const decoder = new TextDecoder();
+    const combined = new Uint8Array(
+      atob(encryptedBase64).split("").map(c => c.charCodeAt(0))
+    );
+    const salt = combined.slice(0, 16);
+    const iv = combined.slice(16, 28);
+    const ciphertext = combined.slice(28);
+    
+    const encoder = new TextEncoder();
+    const passwordKey = await crypto.subtle.importKey(
+      "raw",
+      encoder.encode(password),
+      "PBKDF2",
+      false,
+      ["deriveKey"]
+    );
+    const key = await crypto.subtle.deriveKey(
+      {
+        name: "PBKDF2",
+        salt: salt,
+        iterations: 100000,
+        hash: "SHA-256"
+      },
+      passwordKey,
+      { name: "AES-GCM", length: 256 },
+      false,
+      ["decrypt"]
+    );
+    const decrypted = await crypto.subtle.decrypt(
+      { name: "AES-GCM", iv: iv },
+      key,
+      ciphertext
+    );
+    return decoder.decode(decrypted);
+  } catch (e) {
+    return null;
+  }
 }
 
 document.addEventListener("DOMContentLoaded", init);
