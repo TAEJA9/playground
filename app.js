@@ -173,8 +173,19 @@ const CARD_DATA = [
   { icon: "🤖", title: "Coming Soon", desc: "곧 공개됩니다", href: "#", cats: [], isActive: false, author: null, type: "tool" },
   { icon: "✨", title: "Coming Soon", desc: "곧 공개됩니다", href: "#", cats: [], isActive: false, author: null, type: "tool" },
   { icon: "🚀", title: "Coming Soon", desc: "곧 공개됩니다", href: "#", cats: [], isActive: false, author: null, type: "tool" },
-  { icon: "🎨", title: "Coming Soon", desc: "곧 공개됩니다", href: "#", cats: [], isActive: false, author: null, type: "tool" },
 ];
+
+// 🎲 활성화된 카드만 랜덤 셔플 (Coming Soon 카드는 맨 뒤에 고정)
+(function shuffleActiveCards() {
+  const active = CARD_DATA.filter(d => d.isActive);
+  const inactive = CARD_DATA.filter(d => !d.isActive);
+  for (let i = active.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [active[i], active[j]] = [active[j], active[i]];
+  }
+  CARD_DATA.length = 0;
+  CARD_DATA.push(...active, ...inactive);
+})();
 
 /* =========================
    상태 (수정 없음)
