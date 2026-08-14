@@ -292,6 +292,24 @@ footer{padding:26px 4px;color:rgba(0,0,0,.4);font-size:12px;line-height:1.6}
   .top-link{position:static;margin-bottom:24px}
 }
 
+/* ── 넣을 문장 원문 ── */
+.script{
+  margin-top:12px;
+  padding:18px 20px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--notion-blue);
+  border-radius:var(--radius-card);
+  background:var(--paper);
+  color:var(--charcoal);
+  font-size:14.5px;
+  line-height:1.95;
+  white-space:pre-wrap;
+  word-break:keep-all;
+  user-select:all;
+}
+td.c{text-align:center;vertical-align:middle}
+.key-cell{white-space:nowrap}
+
 /* ── 결과 기록표 ── */
 .sheet td{vertical-align:middle}
 .sheet input[type=checkbox]{width:19px;height:19px;accent-color:var(--notion-blue);cursor:pointer;margin:0}
@@ -335,7 +353,7 @@ footer{padding:26px 4px;color:rgba(0,0,0,.4);font-size:12px;line-height:1.6}
   </header>
 
   <nav class="quick-nav" aria-label="문서 목차">
-    <a href="#start">무엇을 테스트하나</a><a href="#sentence">문장 4개</a><a href="#check">볼 것 5개</a><a href="#howto">업체별 시작</a><a href="#record">결과 기록</a><a href="#judge">판정</a>
+    <a href="#start">무엇을 테스트하나</a><a href="#sentence">문장 4개</a><a href="#howto">테스트 절차</a><a href="#check">평가 기준</a><a href="#record">결과 기록</a><a href="#judge">판정</a>
   </nav>
 
   <section class="section" id="start">
@@ -389,68 +407,129 @@ footer{padding:26px 4px;color:rgba(0,0,0,.4);font-size:12px;line-height:1.6}
   </section>
 
   <section class="section" id="sentence">
-    <div class="section-head"><div><div class="eyebrow">01 · Input</div><h2>넣어 볼 문장 4개</h2><p class="section-desc">실제 수업 스크립트에서 뽑는다. 업체마다 유리한 문장을 고르면 결과가 뒤집힌다.</p></div></div>
+    <div class="section-head"><div><div class="eyebrow">01 · Input</div><h2>넣을 문장 4개</h2><p class="section-desc">아래 문장을 그대로 쓴다. 네 업체에 <strong>똑같은 문장, 똑같은 음성 파일</strong>을 넣어야 비교가 성립한다.</p></div></div>
+
+    <h3 class="sub-h">① 기준선 — 한국어와 짧은 반응</h3>
+    <p class="section-desc">약 15초. 여기서 어색하면 나머지는 볼 필요가 없다. 뒤쪽 짧은 말들은 <strong>0.5초 미만 발화에서 입이 아예 안 열리는지</strong>를 보려고 넣었다. 문장 사이는 한 박자씩 쉰다.</p>
+    <div class="script">자, 이 문제 같이 볼까요?
+사진 속 남자가 무엇을 하고 있는지 먼저 보세요.
+네.
+좋아요.
+맞아요.</div>
+
+    <h3 class="sub-h">② 핵심 — 한 문장 안에서 영어로 바뀜</h3>
+    <p class="section-desc">약 20초. <strong>이 테스트에서 가장 중요한 문장이다.</strong> 한국어와 영어를 여섯 번 오간다. 영어 단어를 일부러 <strong>f · th · r 발음이 들어간 것</strong>으로 골랐다 — 한국어에 없는 소리라 여기서 제일 잘 깨진다.</p>
+    <div class="script">이 문장에서 answer the phone이 정답이에요.
+남자가 전화를 받고 있으니까, pick up the phone도 같은 뜻이죠.
+하지만 hang up은 반대예요. 전화를 끊는다는 뜻이니까요.
+그래서 정답은 answer the phone, 세 번째 보기입니다.</div>
+
+    <h3 class="sub-h">③ 숫자와 보기</h3>
+    <p class="section-desc">약 12초. 수업에서 가장 자주 나오는 말인데 짧고 발음이 튀어서 잘 깨진다.</p>
+    <div class="script">3번 문제입니다.
+보기 A, B, C, D 중에서 골라 보세요.
+정답은 B, 42번 줄에 나와 있어요.</div>
+
+    <h3 class="sub-h">④ 긴 설명 — 30초 이상</h3>
+    <p class="section-desc">약 40초. 시간이 갈수록 <strong>입이 소리보다 점점 밀리는지</strong>를 본다. 짧은 문장만 보면 못 잡는다. 클레온은 이 문장이 여러 조각으로 나뉘어 전송되므로 <strong>이음매에서 끊기는지</strong>도 여기서 확인한다.</p>
+    <div class="script">Part 7 지문은 길어 보이지만 다 읽을 필요가 없어요.
+먼저 질문을 읽고, 무엇을 묻는지 확인한 다음에 지문으로 돌아가는 순서예요.
+예를 들어 What is the purpose of the e-mail? 이라고 물으면,
+목적을 묻는 거니까 지문 맨 앞 두세 줄만 봐도 답이 나오는 경우가 많아요.
+반대로 According to the article, when will the store reopen? 처럼
+구체적인 정보를 물으면, 그때는 키워드를 잡고 지문에서 그 부분만 찾으면 됩니다.
+이렇게 질문 유형에 따라 읽는 방법이 달라지는 거예요.</div>
+  </section>
+
+  <section class="section" id="howto">
+    <div class="section-head"><div><div class="eyebrow">02 · Steps</div><h2>테스트 절차</h2><p class="section-desc">위에서부터 순서대로 하면 된다. 1~2번은 한 번만 하고, 3~5번을 업체마다 반복한다.</p></div></div>
+
     <div class="table-wrap">
       <table>
-        <thead><tr><th>문장</th><th>왜 이걸 보는가</th></tr></thead>
+        <thead><tr><th>단계</th><th>무엇을</th><th>어떻게</th></tr></thead>
         <tbody>
-          <tr><td><strong>① 한국어 설명 + 짧은 반응</strong><br><span class="note">"자, 이 문제 같이 볼까요? … 네, 좋아요."</span></td><td>기준선. 여기서 어색하면 나머지는 볼 필요가 없다. <strong>"네", "좋아요" 같은 짧은 말에서 입이 아예 안 열리는 경우</strong>가 있어 함께 넣는다</td></tr>
-          <tr><td><strong>② 한국어 + 영어 섞인 문장</strong><br><span class="note">"이 문장에서 answer the phone이 정답이에요"</span></td><td><strong>가장 중요하다.</strong> 토익 수업은 한 문장 안에서 언어가 바뀐다. 한국어 기준으로 만들어진 립싱크가 영어 부분에서 어긋나는지 본다</td></tr>
-          <tr><td><strong>③ 숫자와 보기</strong><br><span class="note">"3번 문제, 보기 A, B, C, D 중에서"</span></td><td>수업에서 가장 자주 나오는 말인데 짧고 발음이 튀어서 잘 깨진다</td></tr>
-          <tr><td><strong>④ 30초 이상 긴 설명</strong></td><td>시간이 갈수록 <strong>입이 소리보다 점점 밀리는지</strong>. 짧은 문장만 보면 못 잡는다</td></tr>
+          <tr><td class="c"><strong>1</strong></td><td><strong>음성 만들기</strong><span class="note">한 번만</span></td>
+            <td>ElevenLabs에서 <strong>기존 강사 voice</strong>로 위 문장 4개를 각각 생성해 mp3로 받는다. <strong>voice와 설정을 바꾸지 않는다</strong> — 지금 쓰는 목소리가 그대로 붙는지 보는 것이 목적이다. 파일명은 <code>01.mp3</code> ~ <code>04.mp3</code></td></tr>
+          <tr><td class="c"><strong>2</strong></td><td><strong>형식 변환</strong><span class="note">한 번만</span></td>
+            <td>Anam과 Simli 모두 <strong>PCM 16bit · 16kHz · 모노</strong>만 받는다. 형식이 다르면 립싱크가 어긋나므로 건너뛰지 않는다.<br><code>ffmpeg -i 01.mp3 -f s16le -acodec pcm_s16le -ar 16000 -ac 1 01.raw</code><br>네 파일 모두 같은 방식으로 변환한다</td></tr>
+          <tr><td class="c"><strong>3</strong></td><td><strong>업체 계정 만들고 아바타 띄우기</strong></td>
+            <td>무료 가입 후 <strong>기본 제공(스톡) 아바타</strong>를 고른다. 강사 얼굴은 초상권 계약 전이라 쓰지 않는다. 업체별 진입 방법은 아래 표 참고</td></tr>
+          <tr><td class="c"><strong>4</strong></td><td><strong>음성 넣고 화면 녹화</strong></td>
+            <td>①→②→③→④ 순서로 하나씩 넣고, <strong>재생되는 동안 화면을 녹화</strong>한다. 윈도우 기본 기능 <code>Win + Alt + R</code>로 충분하다. <strong>소리까지 같이 녹화되어야</strong> 나중에 느리게 돌려 볼 수 있다. 문장이 끝난 뒤 <strong>3초 더 녹화</strong>한다 — 끝맺음을 봐야 하기 때문</td></tr>
+          <tr><td class="c"><strong>5</strong></td><td><strong>느리게 돌려 보며 채점</strong></td>
+            <td>녹화 파일을 <strong>0.25배속</strong>으로 재생하며 아래 평가 기준으로 O/X를 매긴다. 보통 속도로는 어지간한 어긋남이 안 보인다. 결과는 이 페이지 <a href="#record">결과 기록</a>표에 바로 체크한다</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-h">업체별 진입 방법</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>업체</th><th>절차</th><th>주의</th></tr></thead>
+        <tbody>
+          <tr><td><strong><a href="https://anam.ai/" target="_blank" rel="noopener">Anam</a></strong><span class="note">무료 약 30분</span></td>
+            <td>무료 가입 → 세션 만들 때 <code>enableAudioPassthrough</code> 를 켠다 → 음성을 넣는다. <a href="https://anam.ai/docs/javascript-sdk/examples/custom-tts" target="_blank" rel="noopener">공식 예제</a>에 ElevenLabs 연동까지 나와 있다</td>
+            <td>이 옵션을 안 켜면 외부 음성을 <strong>아예 받지 않는다.</strong> 안 된다고 판단하기 전에 이것부터 확인</td></tr>
+          <tr><td><strong><a href="https://www.simli.com/" target="_blank" rel="noopener">Simli</a></strong><span class="note">무료 약 50분</span></td>
+            <td>무료 가입 → 2단계에서 만든 파일을 그대로 넣는다. <a href="https://docs.simli.com/api-reference/audio-info" target="_blank" rel="noopener">형식 문서</a></td>
+            <td>Anam과 형식이 같아 파일을 다시 만들 필요가 없다</td></tr>
+          <tr><td><strong><a href="https://www.beyondpresence.ai/" target="_blank" rel="noopener">Beyond Presence</a></strong><span class="note">나중</span></td>
+            <td>LiveKit 또는 Pipecat을 세운 뒤 연결한다</td>
+            <td>앞 두 곳과 달리 개발이 필요하다. <strong>앞 두 곳 결과를 본 뒤 판단</strong>해도 늦지 않다</td></tr>
+          <tr><td><strong><a href="https://www.klleon.io/" target="_blank" rel="noopener">클레온</a></strong><span class="note">문의 먼저</span></td>
+            <td>SDK 키를 요청한다. 함께 물어볼 것 — <strong>① 내장 대화 기능을 안 쓸 때 요금이 내려가는지 ② 넣을 음성의 형식 ③ 강사 아바타 제작 조건</strong></td>
+            <td>회신이 오면 같은 파일로 동일하게 진행한다</td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
   <section class="section" id="check">
-    <div class="section-head"><div><div class="eyebrow">02 · Check</div><h2>볼 것 5개</h2><p class="section-desc">장비도 계측도 필요 없다. 화면 녹화 후 느리게 돌려 보면서 O/X로 적는다.</p></div></div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>항목</th><th>보는 방법</th><th>X 판정</th></tr></thead>
-        <tbody>
-          <tr><td><strong>입과 소리가 맞나</strong></td><td>재생 속도를 <strong>0.25배</strong>로 낮춰서 본다. 보통 속도로는 어지간한 오차가 안 보인다</td><td>입이 소리보다 눈에 띄게 늦거나 빠름</td></tr>
-          <tr><td><strong>영어에서 무너지나</strong></td><td>②를 ①과 나란히 놓고 비교</td><td>영어 구간만 유독 어색함</td></tr>
-          <tr><td><strong>끊기나</strong></td><td>④를 끝까지 재생</td><td>화면이 멈추거나 건너뜀</td></tr>
-          <tr><td><strong>말 끝난 뒤가 자연스럽나</strong></td><td>발화가 끝나고 대기 상태로 돌아가는 순간</td><td>화면이 툭 튐</td></tr>
-          <tr><td><strong>얼굴이 뭉개지나</strong></td><td>일시정지해서 입 주변을 본다</td><td>치아·입술 경계가 뭉개짐</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="note">화면 녹화는 윈도우 기본 기능(<code>Win + Alt + R</code>)으로 충분하다. 소리까지 같이 녹화되어야 나중에 느리게 돌려 볼 수 있다.</p>
-    <div class="decision"><strong>더 정확히 보고 싶을 때만.</strong> 문장 앞에 <strong>"빠!"</strong> 같은 소리를 붙여 두면 입이 닫혔다 터지는 순간이 뚜렷해서 어긋남을 정확히 찍을 수 있다. 필수는 아니고, 두 업체가 비슷해서 우열을 못 가릴 때 쓰면 된다.</div>
-  </section>
+    <div class="section-head"><div><div class="eyebrow">03 · Criteria</div><h2>평가 기준</h2><p class="section-desc">아래 다섯 가지를 본다. <strong>X 조건에 하나라도 해당하면 그 항목은 X</strong>다. 애매하면 X로 적고 메모에 적어 둔다.</p></div></div>
 
-  <section class="section" id="howto">
-    <div class="section-head"><div><div class="eyebrow">03 · Run</div><h2>업체별 시작 방법</h2><p class="section-desc">아바타는 각 사 기본 제공(스톡)으로 한다. 강사 얼굴은 초상권 계약 전이라 쓰지 않는다.</p></div></div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>업체</th><th>절차</th><th>주의</th></tr></thead>
+        <thead><tr><th>항목</th><th>어느 문장으로</th><th>이럴 때 X</th></tr></thead>
         <tbody>
-          <tr><td><strong>Anam</strong></td>
-            <td>무료 가입 → 세션 만들 때 <code>enableAudioPassthrough</code> 를 켠다 → 음성 파일을 넣는다. <a href="https://anam.ai/docs/javascript-sdk/examples/custom-tts" target="_blank" rel="noopener">공식 예제</a>에 ElevenLabs 연동까지 나와 있다</td>
-            <td>이 옵션을 안 켜면 외부 음성을 아예 받지 않는다</td></tr>
-          <tr><td><strong>Simli</strong></td>
-            <td>무료 가입 → 같은 파일을 그대로 넣는다. <a href="https://docs.simli.com/api-reference/audio-info" target="_blank" rel="noopener">형식 문서</a></td>
-            <td>Anam과 형식이 같아 파일을 다시 만들 필요가 없다</td></tr>
-          <tr><td><strong>Beyond Presence</strong></td>
-            <td>LiveKit 또는 Pipecat을 세운 뒤 연결한다</td>
-            <td>앞 두 곳과 달리 개발이 필요하다. <strong>앞 두 곳 결과를 본 뒤에 판단</strong>해도 늦지 않다</td></tr>
-          <tr><td><strong>클레온</strong></td>
-            <td>SDK 키를 요청한다. 함께 물어볼 것 — <strong>① 내장 대화 기능을 안 쓸 때 요금이 내려가는지 ② 넣을 음성의 형식 ③ 강사 아바타 제작 조건</strong></td>
-            <td>회신이 오면 그때 같은 파일로 동일하게 진행한다</td></tr>
+          <tr>
+            <td class="key-cell"><strong>1 · 입과 소리가 맞음</strong></td>
+            <td>①과 ④<span class="note">0.25배속</span></td>
+            <td>· 소리가 먼저 나고 <strong>입이 뒤늦게 열리는 것이 보임</strong><br>· 소리가 끝났는데 <strong>입이 계속 움직임</strong><br>· ①의 "네", "좋아요"에서 <strong>입이 거의 안 열림</strong><br>· ④ 후반부가 앞부분보다 <strong>눈에 띄게 더 밀림</strong><br><span class="note">보통 속도로 봐도 어긋남이 보이면 명백한 결격이다</span></td>
+          </tr>
+          <tr>
+            <td class="key-cell"><strong>2 · 영어 구간도 괜찮음</strong></td>
+            <td>②<span class="note">가장 중요</span></td>
+            <td>· <strong><code>phone</code>의 f 발음에서 아랫입술이 윗니에 닿지 않음</strong> — 한국어에 없는 입 모양이라 여기가 가장 잘 깨진다. 판별이 제일 쉬운 지점이기도 하다<br>· <code>the</code>에서 <strong>혀가 보이지 않고</strong> 그냥 입만 벌어짐<br>· 한국어에서 영어로 <strong>넘어가는 순간 한 박자 멈칫</strong>함<br>· 영어 구간만 입이 <strong>덜 벌어지거나 뭉개짐</strong></td>
+          </tr>
+          <tr>
+            <td class="key-cell"><strong>3 · 끊기지 않음</strong></td>
+            <td>④</td>
+            <td>· 재생 중 화면이 <strong>멈췄다 이어짐</strong><br>· 소리는 나는데 <strong>입이 잠깐 멈춤</strong><br>· 중간에 <strong>연결이 끊김</strong><br><span class="note">40초 동안 단 한 번이라도 있으면 X</span></td>
+          </tr>
+          <tr>
+            <td class="key-cell"><strong>4 · 끝맺음이 자연스러움</strong></td>
+            <td>모든 문장<span class="note">끝나고 3초</span></td>
+            <td>· 마지막 <strong>입 모양이 열린 채로 굳음</strong><br>· 대기 상태로 넘어갈 때 <strong>화면이 툭 튐</strong><br>· 얼굴 <strong>위치나 각도가 갑자기 바뀜</strong></td>
+          </tr>
+          <tr>
+            <td class="key-cell"><strong>5 · 얼굴이 깨끗함</strong></td>
+            <td>②<span class="note">말하는 중 일시정지</span></td>
+            <td>· <strong>치아가 뭉개져</strong> 하얀 덩어리로 보임<br>· <strong>입술 경계가 번짐</strong><br>· 입을 크게 벌릴 때 <strong>턱선이 일그러짐</strong><br>· 입 안이 <strong>검은 구멍</strong>처럼 비어 보임</td>
+          </tr>
         </tbody>
       </table>
     </div>
+
+    <div class="decision"><strong>판정이 갈릴 때.</strong> 두 업체가 비슷해서 우열을 못 가리겠으면, 문장 앞에 <strong>"빠!"</strong> 같은 소리를 붙여 다시 만든다. 입이 완전히 닫혔다가 터지는 소리라 <strong>입이 열리는 순간을 정확히 찍을 수 있어</strong> 어긋남이 눈에 보인다. 처음부터 할 필요는 없고, 필요할 때만 한다.</div>
   </section>
 
   <section class="section" id="record">
-    <div class="section-head"><div><div class="eyebrow">04 · Record</div><h2>결과 기록</h2><p class="section-desc">테스트하면서 이 표에 바로 체크한다. <strong>체크 = 통과</strong>이고, 입력한 내용은 이 브라우저에 자동 저장된다.</p></div></div>
+    <div class="section-head"><div><div class="eyebrow">04 · Record</div><h2>결과 기록</h2><p class="section-desc">테스트하면서 이 표에 바로 체크한다. 번호는 앞의 <a href="#check">평가 기준</a> 다섯 항목과 같다. <strong>체크 = 통과</strong>이며, 입력한 내용은 이 브라우저에 자동 저장된다.</p></div></div>
 
     <div class="table-wrap">
       <table class="sheet">
         <thead><tr>
-          <th>업체</th><th>입과 소리가<br>맞음</th><th>영어 구간도<br>괜찮음</th><th>끊기지<br>않음</th><th>끝맺음이<br>자연스러움</th><th>얼굴이<br>깨끗함</th><th>메모 — 어색했던 지점</th>
+          <th>업체</th><th>1<br>입과 소리</th><th>2<br>영어 구간</th><th>3<br>끊김 없음</th><th>4<br>끝맺음</th><th>5<br>얼굴</th><th>메모 — 어색했던 지점</th>
         </tr></thead>
         <tbody id="sheet-body">
           <tr data-v="anam"><td><strong>Anam</strong></td></tr>
