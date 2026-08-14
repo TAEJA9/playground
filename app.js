@@ -160,6 +160,16 @@ const CARD_DATA = [
     type: "report"
   },
   {
+    icon: "🔍",
+    title: "실시간 AI 휴먼 검토",
+    desc: "AI 휴먼 도입을 위한 업체 비교 검토 결과",
+    href: "https://taeja9.github.io/playground/works/ai-human-vendors/ai-human-summary-ybm-report.html",
+    cats: ["report"],
+    isActive: true,
+    author: "정연",
+    type: "report"
+  },
+  {
     icon: "🐳",
     title: "AI 필기인식 서비스 비교 분석 결과",
     desc: "AI 필기인식 서비스 비교 항목 선정부터 분석 결과까지 완전 시각화 미쳤지 모야",
