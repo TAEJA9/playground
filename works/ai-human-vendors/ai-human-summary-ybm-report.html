@@ -276,6 +276,21 @@ td a[target]:after{content:"↗";margin-left:3px;font-size:.85em;opacity:.6}
 .subbox{padding:22px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--paper)}
 .subbox h3{font-size:16px;margin:0 0 4px}
 footer{padding:26px 4px;color:rgba(0,0,0,.4);font-size:12px;line-height:1.6}
+/* ── 실측 영상 ── */
+.clips{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;margin-top:18px}
+.clip{margin:0;padding:14px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--paper)}
+.clip video{width:100%;aspect-ratio:16/9;display:block;border-radius:8px;background:#000;object-fit:contain}
+.clip figcaption{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin-top:11px}
+.clip figcaption b{font-size:15px}
+.clip figcaption span{font-size:12px;color:var(--slate)}
+.speed{display:flex;gap:6px;margin-top:10px}
+.speed button{
+  flex:1;padding:7px 0;border:1px solid var(--line-strong);border-radius:var(--radius-btn);
+  background:var(--white);color:var(--slate);font:inherit;font-size:12px;font-weight:600;cursor:pointer;
+}
+.speed button:hover{border-color:var(--notion-blue);color:var(--notion-blue)}
+.speed button.on{background:var(--ink);color:var(--white);border-color:transparent}
+.rateref{padding:1px 7px;border-radius:var(--radius-pill);background:var(--marigold);font-weight:700}
 @media (max-width:900px){
   .summary-grid,.ranking,.gates{grid-template-columns:1fr}
   .summary-card{min-height:auto}.summary-card p{margin-top:12px;padding-top:0}
@@ -311,7 +326,7 @@ footer{padding:26px 4px;color:rgba(0,0,0,.4);font-size:12px;line-height:1.6}
   </header>
 
   <nav class="quick-nav" aria-label="문서 목차">
-    <a href="#summary">요약</a><a href="#background">검토 배경</a><a href="#vendors">업체 비교</a><a href="#cost">비용</a><a href="#scope">적용 범위</a><a href="#plan">추진 계획</a>
+    <a href="#summary">요약</a><a href="#background">검토 배경</a><a href="#vendors">업체 비교</a><a href="#evidence">실측 영상</a><a href="#cost">비용</a><a href="#scope">적용 범위</a><a href="#plan">추진 계획</a>
   </nav>
 
   <section class="section" id="summary">
@@ -398,8 +413,49 @@ footer{padding:26px 4px;color:rgba(0,0,0,.4);font-size:12px;line-height:1.6}
     <p class="note">※ 딥브레인과 ElevenLabs의 제휴가 공개되어 있으나, 이는 <strong>영상 생성 제품(AI Studios)에서 ElevenLabs 음성을 선택해 영상을 만드는 기능</strong>이다. 이번 검토 대상인 <strong>실시간 AI Human SDK와는 다른 제품</strong>이므로 도입 근거가 되지 않는다.</p>
   </section>
 
+  <section class="section" id="evidence">
+    <div class="section-head"><div><div class="eyebrow">03 · Evidence</div><h2>실측 영상</h2><p class="section-desc">두 업체에 <strong>YBM 강사 음성을 직접 넣어</strong> 녹화한 화면이다. 판정은 아래 결과 정리를 참고한다.</p></div></div>
+
+    <div class="decision"><strong>보는 법 — 반드시 <span class="rateref">0.25배</span>로.</strong> 보통 속도로는 어긋남이 거의 보이지 않는다. 각 영상 아래 속도 버튼을 쓰면 된다.
+      가장 중요한 지점은 <strong><code>answer the phone</code>의 f 발음</strong>이다 — <strong>아랫입술이 윗니에 닿는지</strong>를 본다. 한국어에 없는 입 모양이라 여기가 가장 먼저 무너진다.</div>
+
+    <div class="clips">
+      <figure class="clip">
+        <video preload="none" controls playsinline src="media/test-anam-1.mp4"></video>
+        <figcaption><b>Anam · 1차</b><span>강사 음성(ElevenLabs) 입력</span></figcaption>
+        <div class="speed">
+          <button type="button" data-rate="1">1배</button>
+          <button type="button" data-rate="0.5">0.5배</button>
+          <button type="button" data-rate="0.25">0.25배</button>
+        </div>
+      </figure>
+
+      <figure class="clip">
+        <video preload="none" controls playsinline src="media/test-anam-2.mp4"></video>
+        <figcaption><b>Anam · 2차</b><span>동일 조건 재시도</span></figcaption>
+        <div class="speed">
+          <button type="button" data-rate="1">1배</button>
+          <button type="button" data-rate="0.5">0.5배</button>
+          <button type="button" data-rate="0.25">0.25배</button>
+        </div>
+      </figure>
+
+      <figure class="clip">
+        <video preload="none" controls playsinline src="media/test-klleon.mp4"></video>
+        <figcaption><b>클레온</b><span>동일 음성 · 동일 문장</span></figcaption>
+        <div class="speed">
+          <button type="button" data-rate="1">1배</button>
+          <button type="button" data-rate="0.5">0.5배</button>
+          <button type="button" data-rate="0.25">0.25배</button>
+        </div>
+      </figure>
+    </div>
+
+    <p class="note">※ 영상은 재생 버튼을 눌러야 내려받는다(<code>preload="none"</code>). 문서를 열기만 하면 통신량이 발생하지 않는다.</p>
+  </section>
+
   <section class="section" id="cost">
-    <div class="section-head"><div><div class="eyebrow">03 · Cost</div><h2>비용 비교</h2><p class="section-desc">학생 1명이 하루 10분씩 30일 사용해 월 300분을 이용한다는 가정으로 환산한 추정치다.</p></div></div>
+    <div class="section-head"><div><div class="eyebrow">04 · Cost</div><h2>비용 비교</h2><p class="section-desc">학생 1명이 하루 10분씩 30일 사용해 월 300분을 이용한다는 가정으로 환산한 추정치다.</p></div></div>
     <div class="cost-callout">
       <div class="cost-box"><strong>립싱크 단독형</strong><b>약 0.4 ~ 6.7만 원 / 인·월</b><p>Simli, Beyond Presence S2V, HeyGen Lite, Anam 기준<br>클레온은 실시간 SDK 단가가 비공개라 미포함</p></div>
       <div class="cost-box"><strong>번들형</strong><b>약 7.7 ~ 13.4만 원 / 인·월</b><p>Beyond Presence Agent, HeyGen Full, Tavus 기준</p></div>
@@ -422,7 +478,7 @@ footer{padding:26px 4px;color:rgba(0,0,0,.4);font-size:12px;line-height:1.6}
   </section>
 
   <section class="section" id="scope">
-    <div class="section-head"><div><div class="eyebrow">04 · Scope</div><h2>적용 범위</h2><p class="section-desc">실시간 생성은 모든 화면에 필요한 기능이 아니다.</p></div></div>
+    <div class="section-head"><div><div class="eyebrow">05 · Scope</div><h2>적용 범위</h2><p class="section-desc">실시간 생성은 모든 화면에 필요한 기능이 아니다.</p></div></div>
     <div class="scope-grid">
       <div class="scope"><b>온보딩 강사 소개</b><span>발화가 고정되어 있어 사전 제작 영상이 적합</span></div>
       <div class="scope on"><b>수업 중 강사 패널</b><span>학생 응답에 따라 발화가 달라지는 유일한 구간 → 실시간 립싱크 필요</span></div>
@@ -433,7 +489,7 @@ footer{padding:26px 4px;color:rgba(0,0,0,.4);font-size:12px;line-height:1.6}
   </section>
 
   <section class="section">
-    <div class="section-head"><div><div class="eyebrow">05 · Avatar Strategy</div><h2>실존 강사 복제는 기술 검증 이후 진행</h2><p class="section-desc">기술 검증과 제품 방향 판단을 분리한다.</p></div></div>
+    <div class="section-head"><div><div class="eyebrow">06 · Avatar Strategy</div><h2>실존 강사 복제는 기술 검증 이후 진행</h2><p class="section-desc">기술 검증과 제품 방향 판단을 분리한다.</p></div></div>
     <div class="table-wrap">
       <table>
         <thead><tr><th>구분</th><th>신규 AI 휴먼</th><th>실존 강사 복제</th></tr></thead>
@@ -448,7 +504,7 @@ footer{padding:26px 4px;color:rgba(0,0,0,.4);font-size:12px;line-height:1.6}
   </section>
 
   <section class="section" id="plan">
-    <div class="section-head"><div><div class="eyebrow">06 · Action Plan</div><h2>3단계 검증 계획</h2><p class="section-desc">앞 단계에서 기준을 통과한 경우에만 다음 단계로 진행한다.</p></div></div>
+    <div class="section-head"><div><div class="eyebrow">07 · Action Plan</div><h2>3단계 검증 계획</h2><p class="section-desc">앞 단계에서 기준을 통과한 경우에만 다음 단계로 진행한다.</p></div></div>
     <div class="gates">
       <div class="gate"><div class="num">1</div><h3>기술 검증</h3><p>4개 후보 모두 <strong>외부 음성을 입력받는 방식</strong>이므로, 동일한 음성 파일을 네 곳에 똑같이 넣고 결과 영상만 비교하는 통제 실험이 가능하다. 아래 실측 설계를 따른다.</p><div class="pass"><strong>통과 기준:</strong> 동기 · 끊김 · 한영 혼용 세 항목에서 결격이 없을 것</div></div>
       <div class="gate"><div class="num">2</div><h3>비용 검증</h3><p>수업 한 판에서 강사가 실제로 발화하는 시간을 측정해 가정치 대신 실제 사용량으로 월 원가를 재산정한다.</p><div class="pass"><strong>추가 확인:</strong> 동시 세션 수, 최소 과금 단위, ElevenLabs 음성 비용</div></div>
@@ -508,5 +564,20 @@ footer{padding:26px 4px;color:rgba(0,0,0,.4);font-size:12px;line-height:1.6}
 
   <footer>YBM AI LAB. 2026</footer>
 </main>
+
+<script>
+/* 립싱크는 0.25배로 봐야 어긋남이 보인다. 영상마다 속도 버튼을 붙여 둔다. */
+document.querySelectorAll('.speed').forEach(function (box) {
+  var video = box.closest('.clip').querySelector('video');
+  var btns = box.querySelectorAll('button');
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      video.playbackRate = parseFloat(b.dataset.rate);
+      btns.forEach(function (x) { x.classList.toggle('on', x === b); });
+    });
+  });
+  btns[0].classList.add('on');
+});
+</script>
 </body>
 </html>
