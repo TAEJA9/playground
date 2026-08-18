@@ -259,7 +259,7 @@ td a[target]:after{content:"↗";margin-left:3px;font-size:.85em;opacity:.6}
 .cost-box:last-child b{color:var(--white)}
 .cost-box p{font-size:12px;color:rgba(0,0,0,.58);margin:8px 0 0}
 .cost-box:last-child p{color:rgba(255,255,255,.68)}
-.scope-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.scope-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
 .scope{padding:18px;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--white)}
 .scope b{display:block;font-size:14px}
 .scope span{display:block;font-size:12px;color:var(--slate);margin-top:6px;line-height:1.55}
@@ -319,30 +319,29 @@ footer{padding:26px 4px;color:rgba(0,0,0,.4);font-size:12px;line-height:1.6}
     <a class="top-link" href="ai-human-test-guide.html">립싱크 실측 테스트 가이드<span class="arw" aria-hidden="true">→</span></a>
     <div class="kicker">YBM AI LAB · AI 어학원</div>
     <h1><span class="hero-highlight">실시간 AI 휴먼</span><br>도입 검토</h1>
-    <p>현재 AI 강사 화면의 입 모양 불일치를 개선하기 위해 실시간 AI 휴먼 API 8종을 비교했다. 검토의 핵심은 전체 대화 시스템을 교체하는 것이 아니라, 현재 수업 구조를 유지하면서 <strong>실시간 립싱크 기능만 추가할 수 있는지</strong> 여부다.</p>
+    <p>AI 강사의 발화에 필요한 립싱크 기술을 위해 실시간 AI 휴먼 업체를 비교·검토하였다. 대화 시스템 전체를 교체하기보다, 기존 수업 구조를 유지한 상태에서 <strong>실시간 립싱크 기능만을 추가할 수 있는지</strong>를 중점적으로 확인하였다.</p>
     <div class="meta">
-      <span>비교 대상 8개 업체</span><span>실측 후보 4개 업체</span><span>API 문서 기반 검토</span><span>2026-08-14</span>
+      <span>2026-08-14</span>
     </div>
   </header>
 
   <nav class="quick-nav" aria-label="문서 목차">
-    <a href="#summary">요약</a><a href="#background">검토 배경</a><a href="#vendors">업체 비교</a><a href="#evidence">실측 영상</a><a href="#cost">비용</a><a href="#scope">적용 범위</a><a href="#plan">추진 계획</a>
+    <a href="#summary">요약</a><a href="#background">검토 배경</a><a href="#scope">적용 범위</a><a href="#vendors">업체 비교</a><a href="#evidence">실측 영상</a><a href="#cost">비용</a><a href="#plan">추진 계획</a>
   </nav>
 
   <section class="section" id="summary">
-    <div class="section-head"><div><div class="eyebrow">Executive Summary</div><h2>검토 결론</h2><p class="section-desc">현재 구조를 유지하는 조건에서 우선 검토할 업체와 실행 순서를 정리했다.</p></div></div>
+    <div class="section-head"><div><div class="eyebrow">Executive Summary</div><h2>검토 결론</h2></div></div>
     <div class="summary-grid">
-      <div class="summary-card"><strong>도입 방식</strong><b>립싱크 단독형 우선</b><p>수업 설계·판단 로직과 기존 음성을 유지하고, 얼굴 생성 기능만 추가한다.</p></div>
-      <div class="summary-card"><strong>1차 실측 대상</strong><b>Simli · Beyond Presence<br>Anam · 클레온</b><p>네 곳 모두 외부에서 생성한 음성을 입력받는다. 기존 강사 음성을 그대로 쓸 수 있다는 뜻이다.</p></div>
-      <div class="summary-card"><strong>실측 순서</strong><b>신규 AI 휴먼 → 실존 강사</b><p>기술 검증을 먼저 진행한 뒤, 통과 시 초상권 계약과 신규 촬영을 검토한다.</p></div>
+      <div class="summary-card"><strong>도입 방식</strong><b>립싱크 단독형 우선</b><p>수업 설계 및 판단 로직과 기존 음성을 유지하고, 얼굴 생성 기능만을 부가한다.</p></div>
+      <div class="summary-card"><strong>1차 실측 대상</strong><b>Simli · Anam · 클레온</b><p>3개 사 모두 외부에서 생성한 음성을 입력받는 구조로, 기존 강사 음성을 그대로 활용할 수 있다.</p></div>
+      <div class="summary-card"><strong>실측 순서</strong><b>신규 AI 휴먼 → 실존 강사</b><p>기술 검증을 선행하고, 통과 시 초상권 계약 및 신규 촬영을 검토한다.</p></div>
     </div>
-    <div class="decision"><strong>권고안.</strong> Tavus·D-ID·딥브레인처럼 대화 기능 전체를 묶어 팔거나 텍스트만 입력받는 상품은 이번 도입 목적과 맞지 않는다. 1차로 <strong>립싱크 단독형 4개 업체</strong>를 동일한 한국어·영어 혼용 음성으로 비교하고, 품질이 확보된 경우에만 비용 및 실제 화면 연동 검토로 진행한다. 국내 업체 중에서는 <strong>클레온만 외부 음성 입력이 가능해 후보에 포함</strong>했다.</div>
 
-    <div class="decision"><strong>이 검토의 범위 — 지금까지는 "가능한가"만 확인했다.</strong> 여기까지는 <strong>각 사 API 문서와 SDK 명세를 근거로 한 서면 검토</strong>이며, 구조적으로 도입이 가능한 업체를 걸러낸 결과다. <strong>한국어 립싱크 품질은 아직 확인하지 않았다</strong> — 문서에는 지원 언어만 적혀 있고 실제 입 모양이 맞는지는 써 봐야 알 수 있다. 따라서 이 문서는 업체를 선정한 것이 아니라 <strong>실측할 대상을 좁힌 것</strong>이고, 선정은 1단계 실측 결과로 결정한다.</div>
+    <div class="decision"><strong>본 검토의 범위:</strong> 현재까지의 내용은 각 업체에서 제공하는 API 문서 및 SDK 명세에 근거한 서면 검토이며, 구조적으로 도입이 가능한 업체를 선별한 결과이다. 업체별 문서에는 지원 가능한 언어만 명시되어 있을 뿐, 실제 정합성은 실측을 통해서만 확인이 가능하다.</div>
   </section>
 
   <section class="section" id="background">
-    <div class="section-head"><div><div class="eyebrow">01 · Background</div><h2>왜 ‘AI 휴먼 전체’가 아니라 ‘립싱크’만 필요한가</h2><p class="section-desc">현재 목업은 대화와 음성 기능이 이미 동작하고 있으며, 화면 표현에서만 개선이 필요하다.</p></div></div>
+    <div class="section-head"><div><div class="eyebrow">01 · Background</div><h2>‘AI 휴먼 전체’가 아닌 ‘립싱크’ 기능만 필요한 이유</h2></div></div>
     <div class="flow">
       <div class="step"><small>1</small><b>학생 발화 인식</b></div>
       <div class="step"><small>2</small><b>학생 답변 이해</b></div>
@@ -352,55 +351,63 @@ footer{padding:26px 4px;color:rgba(0,0,0,.4);font-size:12px;line-height:1.6}
       <div class="step"><small>현재 화면</small><b>무음 영상 클립 재생</b></div>
       <div class="step target"><small>6</small><b>실시간 립싱크 얼굴</b></div>
     </div>
-    <p class="note">※ 1·2·5번은 현재 목업에서 사용 중인 임시 구성으로, MVP1의 최종 기술 구성은 개발 단계에서 달라질 수 있다. 다만 3번 수업 판단 로직과 4번 강의 콘텐츠는 YBM이 유지해야 하는 핵심 자산이다.</p>
+    <p class="note">※ 1·2·5번은 현행 목업의 임시 구성으로, MVP1의 최종 기술 구성은 개발 단계에서 변경될 수 있다. 다만 3번 수업 판단 로직과 4번 강의 콘텐츠는 YBM이 유지하여야 할 핵심 자산이다.</p>
     <div class="criteria">
-      <div class="criterion"><b>① 수업 설계 유지</b><span>채점·힌트·단계 진행 로직을 YBM 쪽에 그대로 둘 수 있는가</span></div>
+      <div class="criterion"><b>① 수업 설계 유지</b><span>채점·힌트·단계 진행 로직을 YBM이 자체 보유할 수 있는가</span></div>
       <div class="criterion"><b>② 기존 강사 음성 유지</b><span>YBM이 생성한 ElevenLabs 음성을 그대로 입력할 수 있는가</span></div>
       <div class="criterion"><b>③ 한국어 품질</b><span>한국어 및 한·영 혼용 발화에서 립싱크와 지연이 허용 수준인가</span></div>
-      <div class="criterion"><b>④ 비용</b><span>실제 강사 발화 시간 기준으로 파일럿 비용이 감당 가능한가</span></div>
+      <div class="criterion"><b>④ 비용</b><span>실제 강사 발화 시간을 기준으로 파일럿 비용이 수용 가능한 수준인가</span></div>
+    </div>
+  </section>
+
+  <section class="section" id="scope">
+    <div class="section-head"><div><div class="eyebrow">02 · Scope</div><h2>적용 범위</h2><p class="section-desc">현재 구현 기준, 실시간 립싱크 기술은 전체 화면이 아닌 '수업 중 강사 패널'에만 한정적으로 요구된다.</p></div></div>
+    <div class="scope-grid">
+      <div class="scope"><b>온보딩 강사 소개</b><span>발화 내용이 고정되어 있어 사전 제작 영상이 적합</span></div>
+      <div class="scope on"><b>수업 중 강사 패널</b><span>학생 응답에 따라 발화가 변동되는 유일한 구간으로 실시간 립싱크가 요구됨</span></div>
+      <div class="scope"><b>실전·리포트</b><span>강사 얼굴이 노출되지 않아 적용 대상에서 제외</span></div>
     </div>
   </section>
 
   <section class="section" id="vendors">
-    <div class="section-head"><div><div class="eyebrow">02 · Vendor Comparison</div><h2>업체 비교</h2><p class="section-desc">WebRTC 기반 실시간 대화형 아바타를 대상으로 비교했다.</p></div></div>
+    <div class="section-head"><div><div class="eyebrow">03 · Vendor Comparison</div><h2>업체 비교</h2><p class="section-desc">WebRTC 기반 실시간 대화형 아바타를 대상으로 비교하였다.</p></div></div>
     <div class="table-wrap">
       <table>
         <thead><tr><th>업체</th><th>판매 형태</th><th>주요 특징</th><th>검토 의견</th><th>상태</th></tr></thead>
         <tbody>
-          <tr><td><strong><a href="https://www.simli.com/" target="_blank" rel="noopener">Simli</a></strong></td><td>립싱크 단독</td><td>외부에서 생성한 음성을 입력해 립싱크만 수행. 무료 약 50분.</td><td>단가가 가장 낮다. 다만 한국어 품질 자료가 부족해 실측이 우선이다.</td><td><span class="badge test">1차 실측</span></td></tr>
-          <tr><td><strong><a href="https://www.beyondpresence.ai/" target="_blank" rel="noopener">Beyond Presence</a></strong><br><span class="note">S2V</span></td><td>립싱크 단독 / 번들</td><td>S2V 모드에서 외부 TTS 사용. 독일 법인, 무료 약 40분.</td><td>데이터 관할이 유럽이며 스톡 아바타로 즉시 테스트 가능하다. 커스텀 아바타는 상위 플랜 필요.</td><td><span class="badge test">1차 실측</span></td></tr>
-          <tr><td><strong><a href="https://anam.ai/" target="_blank" rel="noopener">Anam</a></strong></td><td>립싱크 단독</td><td>오디오 패스스루 지원. 한국어를 포함한 70개 이상 언어 명시. 무료 약 30분.</td><td>기존 ElevenLabs 음성을 그대로 전달할 수 있고 한국어 지원을 명시한다. 단가는 상대적으로 높다.</td><td><span class="badge test">1차 실측</span></td></tr>
-          <tr><td><strong><a href="https://liveavatar.com/" target="_blank" rel="noopener">HeyGen LiveAvatar</a></strong><br><span class="note">Lite</span></td><td>립싱크 단독 / 번들</td><td>Lite 모드에서 립싱크 중심 사용 가능. 기술 문서가 비교적 충실하다.</td><td>구조는 적합하나 1차 후보보다 비용이 높아 예비 후보로 둔다. 기존 음성 유지 방식은 추가 확인 필요.</td><td><span class="badge reserve">예비</span></td></tr>
-          <tr><td><strong><a href="https://www.tavus.io/" target="_blank" rel="noopener">Tavus</a></strong></td><td>번들형</td><td>대화 전 과정을 통합 제공. 표정·시선 인식 등 부가 기능 포함.</td><td>립싱크만 분리 구매할 수 없고, 일부 기능을 사용하지 않아도 단가가 낮아지지 않는다. 이번 도입 범위와 불일치.</td><td><span class="badge out">제외</span></td></tr>
-          <tr><td><strong><a href="https://www.d-id.com/" target="_blank" rel="noopener">D-ID</a></strong></td><td>번들형</td><td>사진 기반 아바타와 실시간 Agent 제공.</td><td>립싱크 단독 판매가 아니며 실시간 분당 단가가 공개되지 않아 비용 산정도 어렵다.</td><td><span class="badge out">제외</span></td></tr>
-          <tr><td><strong><a href="https://www.klleon.io/" target="_blank" rel="noopener">Klleon</a></strong> 클레온<br><span class="note">국내</span></td><td>립싱크 단독 <span class="note">기술 확인</span></td><td>Chat SDK에 <code>startAudioEcho</code> 제공. 외부에서 만든 음성을 Base64로 전송해 아바타가 그대로 발화한다.</td><td>외부 음성 입력이 SDK 차원에서 확인됐다. 국내 업체라 한국어 립싱크에 강점이 예상된다. 가격이 비공개라 과금 기준 확인이 선행되어야 한다.</td><td><span class="badge test">1차 실측</span></td></tr>
-          <tr><td><strong><a href="https://www.deepbrain.io/ko/home" target="_blank" rel="noopener">DeepBrain AI</a></strong> 딥브레인<br><span class="note">국내</span></td><td>번들형</td><td>AI Human SDK는 텍스트를 받아 자체 TTS로 발화한다. 외부 오디오를 입력하는 메서드가 없다.</td><td>기존 강사 음성을 유지할 수 없어 이번 도입 범위와 불일치. ElevenLabs 제휴는 실시간 SDK가 아닌 영상 생성 제품(AI Studios) 기준이다.</td><td><span class="badge out">제외</span></td></tr>
+          <tr><td><strong><a href="https://www.simli.com/" target="_blank" rel="noopener">Simli</a></strong></td><td>립싱크 단독</td><td>외부에서 생성한 음성을 입력받아 립싱크만 수행한다. 무료 제공 약 50분.</td><td>후보 중 단가가 가장 낮다. 다만 한국어 품질에 관한 자료가 부족하여 실측이 선행되어야 한다.</td><td><span class="badge test">1차 실측</span></td></tr>
+          <tr><td><strong><a href="https://anam.ai/" target="_blank" rel="noopener">Anam</a></strong></td><td>립싱크 단독</td><td>오디오 패스스루를 지원한다. 한국어를 포함한 70개 이상 언어를 명시하고 있다. 무료 제공 약 30분.</td><td>기존 ElevenLabs 음성을 그대로 전달할 수 있으며 한국어 지원을 명시하고 있다. 단가는 상대적으로 높은 편이다.</td><td><span class="badge test">1차 실측</span></td></tr>
+          <tr><td><strong><a href="https://www.klleon.io/" target="_blank" rel="noopener">Klleon</a></strong> 클레온<br><span class="note">국내</span></td><td>립싱크 단독 <span class="note">기술 확인</span></td><td>Chat SDK에 <code>startAudioEcho</code> 를 제공한다. 외부에서 생성한 음성을 Base64로 전송하면 아바타가 이를 그대로 발화한다.</td><td>외부 음성 입력이 SDK 차원에서 확인되었다. 국내 업체로서 한국어 립싱크에 강점이 있을 것으로 예상된다. 가격이 비공개이므로 과금 기준 확인이 선행되어야 한다.</td><td><span class="badge test">1차 실측</span></td></tr>
+          <tr><td><strong><a href="https://www.beyondpresence.ai/" target="_blank" rel="noopener">Beyond Presence</a></strong><br><span class="note">S2V</span></td><td>립싱크 단독 / 번들</td><td>S2V 모드에서 외부 TTS를 사용한다. 독일 법인, 무료 제공 약 40분.</td><td>데이터 관할이 유럽에 속하며, 스톡 아바타를 통한 즉시 테스트가 가능하다. 커스텀 아바타 이용 시 상위 플랜이 필요하다.</td><td><span class="badge reserve">예비</span></td></tr>
+          <tr><td><strong><a href="https://liveavatar.com/" target="_blank" rel="noopener">HeyGen LiveAvatar</a></strong><br><span class="note">Lite</span></td><td>립싱크 단독 / 번들</td><td>Lite 모드에서 립싱크 중심의 사용이 가능하다. 기술 문서가 비교적 충실하다.</td><td>구조상 적합하나 1차 후보 대비 비용이 높아 예비 후보로 분류한다. 기존 음성 유지 방식은 추가 확인이 필요하다.</td><td><span class="badge reserve">예비</span></td></tr>
+          <tr><td><strong><a href="https://www.tavus.io/" target="_blank" rel="noopener">Tavus</a></strong></td><td>번들형</td><td>대화 전 과정을 통합 제공한다. 표정·시선 인식 등 부가 기능을 포함한다.</td><td>립싱크 기능만 따로 분리해서 구매할 수 없고, 불필요한 부가 기능을 안 쓰더라도 요금을 깎아주지 않아 도입 목적에 맞지 않는다.</td><td><span class="badge out">제외</span></td></tr>
+          <tr><td><strong><a href="https://www.d-id.com/" target="_blank" rel="noopener">D-ID</a></strong></td><td>번들형</td><td>사진 기반 아바타 및 실시간 Agent를 제공한다.</td><td>립싱크 기능만 단독으로 판매하지 않으며, 실시간 분당 요금이 비공개여서 비용을 예측하기 어렵다.</td><td><span class="badge out">제외</span></td></tr>
+          <tr><td><strong><a href="https://www.deepbrain.io/ko/home" target="_blank" rel="noopener">DeepBrain AI</a></strong> 딥브레인<br><span class="note">국내</span></td><td>번들형</td><td>AI Human SDK는 텍스트를 입력받아 자체 TTS로 발화한다. 외부 오디오를 입력하는 메서드가 존재하지 않는다.</td><td>기존 ElevenLabs 강사 목소리를 입힐 수 없어 도입 목적에 부합하지 않는다. (ElevenLabs 제휴는 실시간 대화가 아닌 '동영상 사전 제작' 기능에만 해당한다.)</td><td><span class="badge out">제외</span></td></tr>
         </tbody>
       </table>
     </div>
 
     <div class="ranking">
-      <div class="rank-card"><div class="rank-no">TEST 01</div><h3>Simli</h3><p>가장 낮은 단가가 장점. 한국어 립싱크 품질이 확보되는지가 핵심 확인 사항.</p></div>
-      <div class="rank-card"><div class="rank-no">TEST 02</div><h3>Beyond Presence</h3><p>유럽 데이터 관할과 무료 스톡 아바타가 장점. 커스텀 아바타 비용은 후속 검토.</p></div>
-      <div class="rank-card"><div class="rank-no">TEST 03</div><h3>Anam</h3><p>한국어 지원을 명시하고 오디오 패스스루를 제공. 비용은 해외 후보 중 높은 편.</p></div>
-      <div class="rank-card"><div class="rank-no">TEST 04</div><h3>Klleon 클레온</h3><p>유일한 국내 후보. 한국어 립싱크에 강점이 예상되나, 음성을 0.1MB 단위로 나눠 보내는 구조라 청크 경계에서 끊김이 없는지 확인이 필요하다.</p></div>
+      <div class="rank-card"><div class="rank-no">TEST 01</div><h3>Simli</h3><p>최저 단가가 강점이다. 한국어 립싱크 품질의 확보 여부가 핵심 확인 사항이다.</p></div>
+      <div class="rank-card"><div class="rank-no">TEST 02</div><h3>Anam</h3><p>한국어 지원을 명시하고 오디오 패스스루를 제공한다. 비용은 해외 후보 중 높은 편이다.</p></div>
+      <div class="rank-card"><div class="rank-no">TEST 03</div><h3>Klleon 클레온</h3><p>유일한 국내 후보이다. 한국어 립싱크에 강점이 예상되나, 음성을 0.1MB 단위로 분할 전송하는 구조이므로 청크 경계에서의 끊김 발생 여부를 확인하여야 한다.</p></div>
     </div>
 
-    <div class="decision"><strong>국내 업체 검토 결과 — 클레온은 후보, 딥브레인은 제외.</strong> 두 업체를 <strong>기존 ElevenLabs 강사 음성을 그대로 쓸 수 있는가</strong> 하나의 기준으로 확인했고, 결과가 갈렸다. 클레온은 SDK가 외부 음성 입력을 지원해 1차 실측 후보에 포함하고, 딥브레인은 텍스트만 입력받는 구조여서 제외한다.</div>
+    <div class="decision"><strong>국내 업체 검토 결과 — 클레온은 후보, 딥브레인은 제외.</strong> 양 사를 <strong>기존 ElevenLabs 강사 음성의 활용 가능 여부</strong>라는 단일 기준으로 검토한 결과, 결론이 상이하게 도출되었다. 클레온은 SDK가 외부 음성 입력을 지원하므로 1차 실측 후보에 포함하며, 딥브레인은 텍스트만을 입력받는 구조이므로 제외한다.</div>
 
     <div class="table-wrap">
       <table>
         <thead><tr><th>확인 항목</th><th>Klleon 클레온</th><th>DeepBrain AI 딥브레인</th></tr></thead>
         <tbody>
           <tr><td><strong>외부 음성 입력</strong><br><span class="note">기존 강사 음성 유지</span></td>
-            <td><strong>가능.</strong> <a href="https://docs.klleon.io/en/docs/usage/sdk-method" target="_blank" rel="noopener"><code>startAudioEcho(audio)</code></a> 로 Base64 음성을 전송하면 아바타가 그대로 발화한다. 음성을 업체에 등록하는 방식이 아니라 <strong>생성된 음성 데이터를 그대로 넘기는 방식</strong>이라 강사 클론 음성이 유지된다.</td>
-            <td><strong>불가.</strong> AIPlayer의 <a href="https://docs.aistudios.com/aihuman/web-sdk/apis/aiplayer" target="_blank" rel="noopener"><code>send()</code></a> 는 텍스트 또는 텍스트+제스처만 받는다. 음성 데이터를 입력하는 메서드가 없다.</td></tr>
+            <td><strong>가능.</strong> <a href="https://docs.klleon.io/en/docs/usage/sdk-method" target="_blank" rel="noopener"><code>startAudioEcho(audio)</code></a> 로 Base64 음성을 전송하면 아바타가 이를 그대로 발화한다. 음성을 업체에 사전 등록하는 방식이 아니라 <strong>생성된 음성 데이터를 직접 전달하는 방식</strong>이므로 강사 클론 음성이 유지된다.</td>
+            <td><strong>불가.</strong> AIPlayer의 <a href="https://docs.aistudios.com/aihuman/web-sdk/apis/aiplayer" target="_blank" rel="noopener"><code>send()</code></a> 는 텍스트 또는 텍스트+제스처만을 입력받는다. 음성 데이터를 입력하는 메서드가 존재하지 않는다.</td></tr>
           <tr><td><strong>음성 선택 방식</strong></td>
             <td>음성 데이터 직접 전송</td>
-            <td><code>CustomVoice</code> 는 <strong>딥브레인 플랫폼에 등록된 음성을 고르는 기능</strong>이다. 외부 음성 파일을 넘기는 용도가 아니다.</td></tr>
+            <td><code>CustomVoice</code> 는 <strong>딥브레인 플랫폼에 등록된 음성을 선택하는 기능</strong>이다. 외부 음성 파일을 전달하는 용도가 아니다.</td></tr>
           <tr><td><strong>립싱크 단독 사용</strong></td>
-            <td>기술적으로 가능. 내장 LLM·TTS를 호출하지 않으면 된다. 다만 <strong>패스스루 전용 모드가 따로 있는 것은 아니다.</strong></td>
-            <td>불가. 텍스트 입력과 자체 TTS가 전제된 구조다.</td></tr>
+            <td>기술적으로 가능하다. 내장 LLM·TTS를 호출하지 않으면 된다. 다만 <strong>패스스루 전용 모드가 별도로 제공되는 것은 아니다.</strong></td>
+            <td>불가. 텍스트 입력과 자체 TTS를 전제한 구조이다.</td></tr>
           <tr><td><strong>가격</strong></td>
             <td>비공개 — 영업 문의</td>
             <td>비공개 — 영업 문의</td></tr>
@@ -408,18 +415,33 @@ footer{padding:26px 4px;color:rgba(0,0,0,.4);font-size:12px;line-height:1.6}
       </table>
     </div>
 
-    <div class="decision"><strong>클레온 문의 시 확인할 것.</strong> 음성 입력은 확인됐으나 <strong>과금 기준이 남아 있다.</strong> ① 내장 LLM·TTS를 쓰지 않을 때 단가가 내려가는지, 아니면 아바타 스트림 시간 기준으로 동일하게 과금되는지 — Tavus처럼 기능을 덜어내도 단가가 같으면 제외 사유가 된다. ② 전송 음성의 인코딩 규격(<code>0.1MB</code> 단위 분할 전송이 필요하며, 샘플레이트·코덱이 문서에 없다). ③ 실존 강사 아바타 생성 조건과 비용.</div>
+    <div class="decision"><strong>클레온 문의 시 확인 사항.</strong> 음성 입력 가능 여부는 확인되었으나 <strong>과금 기준이 미확인 상태이다.</strong> ① 내장 LLM·TTS 미사용 시 단가가 인하되는지, 또는 아바타 스트림 시간을 기준으로 동일하게 과금되는지 여부. Tavus와 같이 기능을 축소하여도 단가가 동일하다면 제외 사유에 해당한다. ② 전송 음성의 인코딩 규격. <code>0.1MB</code> 단위의 분할 전송이 요구되나 샘플레이트·코덱이 문서에 명시되어 있지 않다. ③ 실존 강사 아바타의 생성 조건 및 비용.</div>
 
-    <p class="note">※ 딥브레인과 ElevenLabs의 제휴가 공개되어 있으나, 이는 <strong>영상 생성 제품(AI Studios)에서 ElevenLabs 음성을 선택해 영상을 만드는 기능</strong>이다. 이번 검토 대상인 <strong>실시간 AI Human SDK와는 다른 제품</strong>이므로 도입 근거가 되지 않는다.</p>
+    <p class="note">※ 딥브레인과 ElevenLabs 간 제휴가 공개되어 있으나, 이는 <strong>영상 생성 제품(AI Studios)에서 ElevenLabs 음성을 선택하여 영상을 제작하는 기능</strong>이다. 본 검토 대상인 <strong>실시간 AI Human SDK와는 별개의 제품</strong>이므로 도입 근거로 인정되지 않는다.</p>
   </section>
 
   <section class="section" id="evidence">
-    <div class="section-head"><div><div class="eyebrow">03 · Evidence</div><h2>실측 영상</h2><p class="section-desc">두 업체에 <strong>YBM 강사 음성을 직접 넣어</strong> 녹화한 화면이다. 판정은 아래 결과 정리를 참고한다.</p></div></div>
+    <div class="section-head"><div><div class="eyebrow">04 · Evidence</div><h2>실측 영상</h2><p class="section-desc">검토 가능한 범위 내에서 3개 사를 테스트해보았다.</p></div></div>
 
-    <div class="decision"><strong>보는 법 — 반드시 <span class="rateref">0.25배</span>로.</strong> 보통 속도로는 어긋남이 거의 보이지 않는다. 각 영상 아래 속도 버튼을 쓰면 된다.
-      가장 중요한 지점은 <strong><code>answer the phone</code>의 f 발음</strong>이다 — <strong>아랫입술이 윗니에 닿는지</strong>를 본다. 한국어에 없는 입 모양이라 여기가 가장 먼저 무너진다.</div>
+    <div class="decision"><strong>실측 조건 안내.</strong> 무료로 검토 가능한 3개 사(Simli, Anam, 클레온)를 대상으로 실측을 진행하였다.
+      <div style="margin-top: 8px;">
+        • <strong>Simli:</strong> 아바타 클로닝이 지원되지 않아 기존 제공되는 기본 아바타를 사용하였으며, 음성은 박혜원 강사의 기본 음성(클로닝 미적용)을 적용하였다.<br>
+        • <strong>Anam:</strong> 사진으로 커스텀 아바타를 생성하여 진행하였으며, 음성은 ElevenLabs로 클로닝한 강사 음성을 적용하였다.<br>
+        • <strong>클레온:</strong> 사진 기반의 아바타 클로닝이 지원되지 않아 기존 제공 아바타를 사용하였으며, 음성은 ElevenLabs 강사 음성을 적용하였다.
+      </div>
+    </div>
 
     <div class="clips">
+      <figure class="clip">
+        <video preload="none" controls playsinline src="media/video_test_simli.mp4"></video>
+        <figcaption><b>Simli</b><span>기본 아바타 · 박혜원 강사 음성</span></figcaption>
+        <div class="speed">
+          <button type="button" data-rate="1">1배</button>
+          <button type="button" data-rate="0.5">0.5배</button>
+          <button type="button" data-rate="0.25">0.25배</button>
+        </div>
+      </figure>
+
       <figure class="clip">
         <video preload="none" controls playsinline src="media/test-anam-1.mp4"></video>
         <figcaption><b>Anam · 1차</b><span>강사 음성(ElevenLabs) 입력</span></figcaption>
@@ -432,7 +454,7 @@ footer{padding:26px 4px;color:rgba(0,0,0,.4);font-size:12px;line-height:1.6}
 
       <figure class="clip">
         <video preload="none" controls playsinline src="media/test-anam-2.mp4"></video>
-        <figcaption><b>Anam · 2차</b><span>동일 조건 재시도</span></figcaption>
+        <figcaption><b>Anam · 2차</b><span>동일 조건 재측정</span></figcaption>
         <div class="speed">
           <button type="button" data-rate="1">1배</button>
           <button type="button" data-rate="0.5">0.5배</button>
@@ -451,13 +473,13 @@ footer{padding:26px 4px;color:rgba(0,0,0,.4);font-size:12px;line-height:1.6}
       </figure>
     </div>
 
-    <p class="note">※ 영상은 재생 버튼을 눌러야 내려받는다(<code>preload="none"</code>). 문서를 열기만 하면 통신량이 발생하지 않는다.</p>
+    <p class="note">※ 영상은 재생 버튼을 클릭한 시점에 다운로드된다(<code>preload="none"</code>). 문서를 열람하는 것만으로는 데이터 통신이 발생하지 않는다.</p>
   </section>
 
   <section class="section" id="cost">
-    <div class="section-head"><div><div class="eyebrow">04 · Cost</div><h2>비용 비교</h2><p class="section-desc">학생 1명이 하루 10분씩 30일 사용해 월 300분을 이용한다는 가정으로 환산한 추정치다.</p></div></div>
+    <div class="section-head"><div><div class="eyebrow">05 · Cost</div><h2>비용 비교</h2><p class="section-desc">학생 1인이 1일 10분씩 30일간 사용하여 월 300분을 이용한다는 가정 하에 환산한 추정치이다.</p></div></div>
     <div class="cost-callout">
-      <div class="cost-box"><strong>립싱크 단독형</strong><b>약 0.4 ~ 6.7만 원 / 인·월</b><p>Simli, Beyond Presence S2V, HeyGen Lite, Anam 기준<br>클레온은 실시간 SDK 단가가 비공개라 미포함</p></div>
+      <div class="cost-box"><strong>립싱크 단독형</strong><b>약 0.4 ~ 6.7만 원 / 인·월</b><p>Simli, Anam, Beyond Presence S2V, HeyGen Lite 기준<br>클레온은 실시간 SDK 단가가 비공개이므로 제외</p></div>
       <div class="cost-box"><strong>번들형</strong><b>약 7.7 ~ 13.4만 원 / 인·월</b><p>Beyond Presence Agent, HeyGen Full, Tavus 기준</p></div>
     </div>
     <div class="table-wrap">
@@ -465,100 +487,47 @@ footer{padding:26px 4px;color:rgba(0,0,0,.4);font-size:12px;line-height:1.6}
         <thead><tr><th>업체</th><th>형태</th><th>분당 단가</th><th>1인 월 비용<br>(300분 가정)</th><th>300명 월 비용</th></tr></thead>
         <tbody>
           <tr><td><strong><a href="https://www.simli.com/" target="_blank" rel="noopener">Simli</a></strong></td><td>립싱크 단독</td><td>$0.01 ~ 0.05</td><td>약 0.4 ~ 2.1만 원</td><td>약 126 ~ 630만 원</td></tr>
+          <tr><td><strong><a href="https://anam.ai/" target="_blank" rel="noopener">Anam</a></strong></td><td>립싱크 단독</td><td>$0.11 ~ 0.16</td><td>약 4.6 ~ 6.7만 원</td><td>약 1,386 ~ 2,016만 원</td></tr>
           <tr><td><strong>Beyond Presence S2V</strong></td><td>립싱크 단독</td><td>€0.0875</td><td>약 4.0만 원</td><td>약 1,191만 원</td></tr>
           <tr><td><strong>HeyGen LiveAvatar Lite</strong></td><td>립싱크 단독</td><td>$0.095</td><td>약 4.0만 원</td><td>약 1,197만 원</td></tr>
-          <tr><td><strong><a href="https://anam.ai/" target="_blank" rel="noopener">Anam</a></strong></td><td>립싱크 단독</td><td>$0.11 ~ 0.16</td><td>약 4.6 ~ 6.7만 원</td><td>약 1,386 ~ 2,016만 원</td></tr>
           <tr><td><strong>Beyond Presence Agent</strong></td><td>번들형</td><td>-</td><td>약 7.7만 원</td><td>-</td></tr>
           <tr><td><strong>HeyGen LiveAvatar Full</strong></td><td>번들형</td><td>-</td><td>약 8.2만 원</td><td>-</td></tr>
           <tr><td><strong><a href="https://www.tavus.io/" target="_blank" rel="noopener">Tavus</a></strong></td><td>번들형</td><td>$0.32</td><td>약 13.4만 원</td><td>약 4,032만 원</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="note">※ 환율 1,400원, 유로/달러 1.08 기준. 립싱크 단독형에는 ElevenLabs 음성 합성 비용이 별도로 추가된다. 실제 원가는 아바타 스트림이 열린 시간, 동시 접속자 수, 최소 과금 단위에 따라 달라지므로 파일럿 전 재산정이 필요하다.</p>
-  </section>
-
-  <section class="section" id="scope">
-    <div class="section-head"><div><div class="eyebrow">05 · Scope</div><h2>적용 범위</h2><p class="section-desc">실시간 생성은 모든 화면에 필요한 기능이 아니다.</p></div></div>
-    <div class="scope-grid">
-      <div class="scope"><b>온보딩 강사 소개</b><span>발화가 고정되어 있어 사전 제작 영상이 적합</span></div>
-      <div class="scope on"><b>수업 중 강사 패널</b><span>학생 응답에 따라 발화가 달라지는 유일한 구간 → 실시간 립싱크 필요</span></div>
-      <div class="scope"><b>전화 수신 화면</b><span>짧은 고정 인사말이므로 사전 제작이 적합</span></div>
-      <div class="scope"><b>실전·리포트</b><span>강사 얼굴이 노출되지 않아 적용 대상 아님</span></div>
-    </div>
-    <div class="decision"><strong>비용 산정 기준도 수정 필요.</strong> 현재 월 300분 가정은 보수적인 추정치다. 실제 적용이 ‘수업 중 강사가 말하는 시간’으로 한정되면 사용 시간이 크게 줄어들 수 있으므로, 파일럿 화면에서 실제 강사 발화 시간을 먼저 측정한 뒤 원가를 다시 계산한다.</div>
+    <p class="note">※ 환율 1,400원, 유로/달러 1.08 적용 기준 (2026-08-13 각 사 공개 요금제 페이지 기준). 
+       분당 단가는 각 사 최상위 셀프서브 플랜의 초과(Overage) 단가로서, 300명 규모에서는 구독 기본료보다 초과 단가가 비용의 대부분을 차지하므로 이를 실질 기준으로 산정하였다. 
+       립싱크 단독형의 경우 ElevenLabs 음성 합성 비용이 제외되어 있으며, 실제 과금은 단순 발화 시간이 아닌 '아바타 스트림이 열려 있는 시간'을 기준으로 하므로 파일럿 단계에서 실제 사용량을 측정하여 원가를 재산정해야 한다.</p>
   </section>
 
   <section class="section">
-    <div class="section-head"><div><div class="eyebrow">06 · Avatar Strategy</div><h2>실존 강사 복제는 기술 검증 이후 진행</h2><p class="section-desc">기술 검증과 제품 방향 판단을 분리한다.</p></div></div>
+    <div class="section-head"><div><div class="eyebrow">06 · Avatar Strategy</div><h2>실존 강사 복제 여부는 추후 검토</h2><p class="section-desc">실존 강사 복제 가능 여부는 기술 검증 완료 후 추후 검토할 예정이며, 이는 강사와의 초상권 계약 관계에 따라 결정된다.</p></div></div>
     <div class="table-wrap">
       <table>
         <thead><tr><th>구분</th><th>신규 AI 휴먼</th><th>실존 강사 복제</th></tr></thead>
         <tbody>
-          <tr><td><strong>생성 방식</strong></td><td>사진 1장 또는 텍스트 설명 등으로 즉시 생성 가능</td><td>강사 특유의 표정·습관을 재현하려면 영상 기반 학습이 필요</td></tr>
+          <tr><td><strong>생성 방식</strong></td><td>사진 1매 또는 텍스트 설명만으로 즉시 생성 가능</td><td>강사 고유의 표정·습관을 재현하기 위하여 영상 기반 학습이 필요</td></tr>
           <tr><td><strong>선행 조건</strong></td><td>별도 계약 없음</td><td>초상권 활용 범위 확인, 필요 시 재계약 및 조건에 맞춘 신규 촬영</td></tr>
           <tr><td><strong>권장 활용</strong></td><td>한국어 립싱크·지연·모바일 안정성 검증</td><td>기술 검증을 통과한 이후 최종 서비스 형태 검토</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="note">※ 신규 AI 휴먼을 최종 서비스로 채택하는 것은 별도의 제품 의사결정이다. 현재 검증 가설이 ‘실제 강사 페르소나에 대한 수용성’이라면 기술 테스트와 최종 서비스 형태를 구분해서 판단해야 한다.</p>
+    <p class="note">※ 신규 AI 휴먼의 최종 서비스 채택 여부는 별도의 제품 의사결정 사안이다. 현재 검증 가설이 ‘실제 강사 페르소나에 대한 수용성’인 점을 고려할 때, 기술 테스트와 최종 서비스 형태는 구분하여 판단하여야 한다.</p>
   </section>
 
   <section class="section" id="plan">
-    <div class="section-head"><div><div class="eyebrow">07 · Action Plan</div><h2>3단계 검증 계획</h2><p class="section-desc">앞 단계에서 기준을 통과한 경우에만 다음 단계로 진행한다.</p></div></div>
+    <div class="section-head"><div><div class="eyebrow">07 · Action Plan</div><h2>3단계 검증 계획</h2><p class="section-desc">전 단계의 기준을 통과한 경우에 한하여 다음 단계로 진행한다.</p></div></div>
     <div class="gates">
-      <div class="gate"><div class="num">1</div><h3>기술 검증</h3><p>4개 후보 모두 <strong>외부 음성을 입력받는 방식</strong>이므로, 동일한 음성 파일을 네 곳에 똑같이 넣고 결과 영상만 비교하는 통제 실험이 가능하다. 아래 실측 설계를 따른다.</p><div class="pass"><strong>통과 기준:</strong> 동기 · 끊김 · 한영 혼용 세 항목에서 결격이 없을 것</div></div>
-      <div class="gate"><div class="num">2</div><h3>비용 검증</h3><p>수업 한 판에서 강사가 실제로 발화하는 시간을 측정해 가정치 대신 실제 사용량으로 월 원가를 재산정한다.</p><div class="pass"><strong>추가 확인:</strong> 동시 세션 수, 최소 과금 단위, ElevenLabs 음성 비용</div></div>
-      <div class="gate"><div class="num">3</div><h3>화면 연동</h3><p>선정 업체를 수업 중 강사 패널에 연결해 모바일 앱에서 안정적으로 동작하는지 확인한다.</p><div class="pass"><strong>통과 후:</strong> 실존 강사 복제 여부, 초상권 계약, 신규 촬영 착수 검토</div></div>
+      <div class="gate"><div class="num">1</div><h3>기술 검증</h3><p>3개 후보 모두 <strong>실시간 오디오 스트리밍 입력</strong>을 지원하므로, LLM이 생성한 답변 음성 데이터를 실시간으로 전송할 때 지연 시간(Latency)이 최소화되는지, 스트리밍 중 끊김 없이 안정적으로 립싱크가 구동되는지 검증한다.</p><div class="pass"><strong>통과 기준:</strong> 실시간 지연 시간(Latency) · 스트리밍 안정성 · 립싱크 정합성</div></div>
+      <div class="gate"><div class="num">2</div><h3>비용 검증</h3><p>수업 1회당 강사의 실제 발화 시간을 측정하여, 가정치가 아닌 실사용량을 기준으로 월 원가를 재산정한다.</p><div class="pass"><strong>추가 확인:</strong> 동시 세션 수, 최소 과금 단위, ElevenLabs 음성 비용</div></div>
+      <div class="gate"><div class="num">3</div><h3>화면 연동</h3><p>선정 업체를 수업 중 강사 패널에 연동하여 모바일 앱 환경에서의 동작 안정성을 확인한다.</p><div class="pass"><strong>통과 후:</strong> 실존 강사 복제 여부, 초상권 계약, 신규 촬영 착수 검토</div></div>
     </div>
-
-    <h3 class="sub-h">1단계 실측 설계 — 같은 음성, 같은 문장, 네 곳</h3>
-    <p class="section-desc">업체마다 음성이 달라지면 무엇 때문에 품질이 갈렸는지 알 수 없다. <strong>입력을 고정하는 것이 이 실측의 핵심</strong>이다.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>고정할 것</th><th>내용</th><th>이유</th></tr></thead>
-        <tbody>
-          <tr><td><strong>음성</strong></td><td>YBM 강사 ElevenLabs 클론 음성으로 <strong>미리 생성한 동일 오디오 파일</strong>을 네 곳에 그대로 입력</td><td>업체 자체 TTS를 쓰면 음성 품질과 립싱크 품질이 섞여 비교가 무의미해진다</td></tr>
-          <tr><td><strong>아바타</strong></td><td>1차는 <strong>각 사 스톡 아바타</strong>로 립싱크 엔진만 비교</td><td>실존 강사 아바타는 초상권 계약이 선행되어야 한다. 엔진 비교에는 스톡으로 충분하다</td></tr>
-          <tr><td><strong>문장 세트</strong></td><td>실제 수업 스크립트에서 발췌한 <strong>6종 고정 세트</strong>(아래)</td><td>업체별로 유리한 문장을 고르면 결과가 뒤집힌다</td></tr>
-          <tr><td><strong>기록</strong></td><td>화면 녹화 후 <strong>오디오 파형과 입 벌림 시점을 프레임 단위로 대조</strong></td><td>"괜찮아 보인다"는 판정은 남지 않는다. 근거를 남겨야 재검토가 가능하다</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>문장 세트</th><th>무엇을 보는가</th></tr></thead>
-        <tbody>
-          <tr><td><strong>① 순수 한국어 설명</strong><br><span class="note">기본 강의 발화</span></td><td>기준선. 여기서 깨지면 나머지는 볼 필요가 없다</td></tr>
-          <tr><td><strong>② 한·영 혼용</strong><br><span class="note">"이 문장에서 answer the phone이 정답이에요"</span></td><td><strong>가장 중요한 항목.</strong> TOEIC 수업은 한 문장 안에서 언어가 바뀐다. 한국어 기준으로 학습된 엔진이 영어 음소에서 입이 어긋나는지</td></tr>
-          <tr><td><strong>③ 영어 지문 낭독</strong></td><td>Part 1·2 문항을 읽는 구간. 영어만 길게 이어질 때의 정확도</td></tr>
-          <tr><td><strong>④ 숫자 · 알파벳</strong><br><span class="note">"3번 문제, 보기 A, B, C, D"</span></td><td>수업에서 가장 자주 나오는 발화인데 짧고 파열음이 많아 잘 깨진다</td></tr>
-          <tr><td><strong>⑤ 짧은 리액션</strong><br><span class="note">"네", "좋아요", "음—"</span></td><td>0.5초 미만 발화. 입이 아예 안 열리거나 뒤늦게 열리는 업체가 있다</td></tr>
-          <tr><td><strong>⑥ 30초 이상 연속 발화</strong></td><td>시간이 갈수록 입 모양이 음성보다 밀리는 <strong>드리프트</strong>. 클레온은 0.1MB 청크 분할이 필요하므로 <strong>청크 경계에서 끊기는지</strong>를 함께 본다</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>평가 항목</th><th>측정 방법</th><th>제안 기준</th></tr></thead>
-        <tbody>
-          <tr><td><strong>동기</strong> 입과 소리가 맞는가</td><td>파형의 발화 시작 지점과 입이 열리는 프레임의 차이</td><td>±100ms 이내. <strong>입이 소리보다 늦는 쪽이 앞서는 쪽보다 관대하게 인지된다</strong></td></tr>
-          <tr><td><strong>끊김</strong></td><td>세션 5분 연속 재생 중 프레임 정지·건너뜀 횟수</td><td>0회</td></tr>
-          <tr><td><strong>한영 혼용</strong></td><td>②③에서 ①(한국어 기준선) 대비 품질 저하 여부</td><td>육안으로 구분되는 저하 없을 것</td></tr>
-          <tr><td><strong>무발화 전환</strong></td><td>발화가 끝난 뒤 대기 영상으로 돌아가는 모습</td><td>튀지 않을 것. 클레온은 <code>endAudioEcho</code> 호출 여부에 따라 달라지므로 양쪽 다 확인</td></tr>
-          <tr><td><strong>지연</strong></td><td>음성 전송 시점부터 첫 프레임이 뜨기까지</td><td>수업 흐름이 끊기지 않는 수준. 절대값보다 <strong>업체 간 상대 비교</strong>가 목적</td></tr>
-          <tr><td><strong>얼굴 아티팩트</strong></td><td>치아·입술 경계·턱선 뭉개짐</td><td>정지 화면에서 확인 가능한 수준이면 감점</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="decision"><strong>판정 방식.</strong> 업체명을 가린 채 결과 영상만 나열해 <strong>내부 인원 3인 이상이 각자 순위를 매긴다.</strong> 립싱크 품질은 수치로 다 잡히지 않고, 결국 <strong>학생이 어색하다고 느끼는지</strong>가 기준이기 때문이다. 수치 측정은 결격 여부를 거르는 용도이고, 최종 선택은 블라인드 평가 결과를 따른다.</div>
+    <div class="decision"><strong>실측 설계 및 테스트 방법.</strong> 테스트용 고정 문장 세트, 상세 평가 기준(지연 시간, 끊김, 조음 정합성 등) 및 평가 기록 시트는 <strong><a href="ai-human-test-guide.html">립싱크 실측 테스트 가이드</a></strong>에서 상세하게 다루고 있습니다. 실제 테스트 진행 시 해당 가이드라인에 따라 검증을 수행합니다.</div>
 
     <div class="todo">
-      <div class="subbox"><h3>업체별로 따로 확인할 항목</h3><ul><li><strong>클레온</strong> — 0.1MB 청크 분할 시 경계 끊김, 음성 인코딩 규격(샘플레이트·코덱), 실시간 SDK 과금 기준</li><li><strong>Beyond Presence</strong> — 커스텀 아바타 상위 플랜 조건</li><li><strong>Simli</strong> — 한국어 자료가 없어 실측 결과가 유일한 근거</li><li><strong>Anam</strong> — 단가가 높아 품질 우위가 확인되어야 선택 근거가 생김</li></ul></div>
-      <div class="subbox"><h3>도입 확정 전 확인할 항목</h3><ul><li>학습자 음성 데이터 보관 위치</li><li>업체의 모델 학습 활용 여부</li><li>개인정보 처리방침 및 이용약관 고지</li><li>실존 강사 영상·음성의 외부 업체 전송 동의 범위</li></ul></div>
+      <div class="subbox"><h3>업체별 개별 확인 항목</h3><ul><li><strong>클레온</strong> — 0.1MB 청크 분할 시 경계 끊김, 음성 인코딩 규격(샘플레이트·코덱), 실시간 SDK 과금 기준</li><li><strong>Beyond Presence</strong> — 커스텀 아바타 상위 플랜 조건</li><li><strong>Simli</strong> — 한국어 관련 자료가 부재하여 실측 결과가 유일한 판단 근거</li><li><strong>Anam</strong> — 단가가 높아 품질 우위가 확인되는 경우에 한하여 선정 근거가 성립</li></ul></div>
+      <div class="subbox"><h3>도입 확정 전 확인 항목</h3><ul><li>학습자 음성 데이터 보관 위치</li><li>업체의 모델 학습 활용 여부</li><li>개인정보 처리방침 및 이용약관 고지</li><li>실존 강사 영상·음성의 외부 업체 전송 동의 범위</li></ul></div>
     </div>
   </section>
 

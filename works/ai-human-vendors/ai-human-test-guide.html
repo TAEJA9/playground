@@ -374,6 +374,21 @@ td.c{text-align:center;vertical-align:middle}
     </div>
     <p class="note">※ 립싱크 외의 것 — 음성 품질, 아바타 생김새, 대화 성능 — 은 이 테스트의 대상이 아니다. 음성은 우리가 만든 것을 그대로 넣으므로 업체와 무관하고, 대화는 애초에 사지 않는다.</p>
 
+    <h3 class="sub-h">실측 설계 — 통제 변수 고정</h3>
+    <p class="section-desc">업체별로 입력 음성이 상이할 경우 품질 차이의 원인을 규명할 수 없다. <strong>입력 조건의 고정이 실측의 핵심</strong>이다.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>고정할 것</th><th>내용</th><th>이유</th></tr></thead>
+        <tbody>
+          <tr><td><strong>음성</strong></td><td>실시간 대화 환경을 모사하여 <strong>ElevenLabs API로 실시간 스트리밍되는 동일한 음성 데이터</strong>를 각 사 SDK에 전송</td><td>단순 파일 업로드가 아닌, 실시간 LLM 답변 생성 상황에서 스트리밍 오디오 청크가 끊김 없이 영상으로 변환되는지 확인하기 위함</td></tr>
+          <tr><td><strong>아바타</strong></td><td>1차 실측은 <strong>각 사 스톡 아바타</strong>를 사용하여 립싱크 엔진만을 비교</td><td>실존 강사 아바타는 초상권 계약이 선행되어야 하며, 엔진 비교 목적에는 스톡 아바타로 충분하다</td></tr>
+          <tr><td><strong>문장 세트</strong></td><td>실제 수업 스크립트에서 발췌한 <strong>4종 고정 세트</strong>(하단 참조)</td><td>업체별로 유리한 문장을 선택할 경우 결과의 신뢰성이 확보되지 않는다</td></tr>
+          <tr><td><strong>기록</strong></td><td>화면 녹화 후 <strong>오디오 파형과 입 개폐 시점을 프레임 단위로 대조</strong></td><td>정성적 인상만으로는 판정 근거가 남지 않는다. 근거를 기록하여야 재검토가 가능하다</td></tr>
+        </tbody>
+      </table>
+    </div>
+
     <h3 class="sub-h">시작 전 준비</h3>
     <p class="section-desc">준비물은 음성 파일 4개와 무료 계정뿐이다.</p>
 
