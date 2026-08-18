@@ -118,8 +118,8 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
     <div class="g2">
       <div class="vcard">
         <div class="use"><b>영상 제작용</b>클로닝 · 사전 생성</div>
-        <p class="names">HeyGen · Tavus<br>Beyond Presence · DeepBrain</p>
-        <p>영상 2~5분 학습으로 실제 강사를 재현. 생성 시간 제약이 없어 품질이 높음.</p>
+        <p class="names">DeepBrain · HeyGen<br>Tavus · Beyond Presence</p>
+        <p>영상 2~5분 학습으로 실제 강사를 재현. 생성 시간 제약이 없어 품질이 높음.<br><strong>딥브레인이 앞서는 이유</strong> — 국내 업체 · 한국어 특화 · Voice Clone 내장. 실시간에서 걸리던 외부 음성 입력 이슈가 <strong>이 용도에선 무관</strong>함.</p>
       </div>
       <div class="vcard on">
         <div class="use"><b>실시간 휴먼용</b>대화 · 즉시 응답</div>
@@ -239,6 +239,7 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
           <th>LLM 제어<span class="sub2">System Prompt · 외부 LLM 연결</span></th>
           <th>클로닝 입력<span class="sub2">실존 강사 재현</span></th>
           <th>한국어 립싱크<span class="sub2">핵심 판단 기준</span></th>
+          <th>분당 단가<span class="sub2">실시간 기준</span></th>
         </tr></thead>
         <tbody>
           <tr>
@@ -247,6 +248,8 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk y">◎<span class="sub2">OpenAI-compatible</span></td>
             <td>사진 1장</td>
             <td><strong>실측 — 미달</strong><span class="sub2">3곳 중 품질 최하</span></td>
+          
+            <td class="mk">$0.01~0.05<span class="sub2">최저</span></td>
           </tr>
           <tr>
             <td><strong>Anam</strong></td>
@@ -254,6 +257,8 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk y">◎<span class="sub2">Custom LLM</span></td>
             <td>사진 1장</td>
             <td><strong>실측 — 미달</strong></td>
+          
+            <td class="mk">$0.11~0.16</td>
           </tr>
           <tr>
             <td><strong>Klleon</strong> 클레온</td>
@@ -261,6 +266,8 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk n">△<span class="sub2">공개 문서 확인 부족</span></td>
             <td class="no">확인 필요</td>
             <td><strong>실측 — 미달</strong></td>
+          
+            <td class="no">비공개<span class="sub2">영업 문의</span></td>
           </tr>
           <tr>
             <td><strong>Beyond Presence</strong></td>
@@ -268,6 +275,8 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk y">◎<span class="sub2">OpenAI-compatible</span></td>
             <td class="pick"><strong>영상 2~5분</strong></td>
             <td><span class="chip">미확인</span></td>
+          
+            <td class="mk">€0.0875</td>
           </tr>
           <tr>
             <td><strong>HeyGen LiveAvatar</strong></td>
@@ -275,6 +284,8 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk y">◎<span class="sub2">FULL 에서도 가능</span></td>
             <td class="pick"><strong>영상 2분 또는 사진 1장</strong></td>
             <td><span class="chip">미확인</span></td>
+          
+            <td class="mk">$0.095<span class="sub2">영상 제작은 $29/월~</span></td>
           </tr>
           <tr>
             <td><strong>Tavus</strong></td>
@@ -282,6 +293,8 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk y">◎<span class="sub2">Persona system prompt</span></td>
             <td class="pick"><strong>영상 1.5~2분</strong></td>
             <td><span class="chip">미확인</span></td>
+          
+            <td class="mk">$0.32<span class="sub2">최고</span></td>
           </tr>
           <tr>
             <td><strong>D-ID</strong></td>
@@ -289,13 +302,17 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk y">◎<span class="sub2">Custom LLM</span></td>
             <td class="pick"><strong>사진 또는 영상</strong></td>
             <td><span class="chip">미확인</span></td>
+          
+            <td class="no">비공개</td>
           </tr>
           <tr>
             <td><strong>DeepBrain</strong> 딥브레인</td>
-            <td class="mk n">○<span class="sub2">자료 상충 — 확인 필요</span></td>
+            <td class="mk n">✕<span class="sub2">실시간 SDK는 텍스트만 입력</span></td>
             <td class="mk y">◎<span class="sub2">Custom HTTP LLM</span></td>
             <td class="pick"><strong>영상</strong></td>
             <td><span class="chip">미확인</span></td>
+          
+            <td class="no">비공개</td>
           </tr>
         </tbody>
       </table>
@@ -304,8 +321,11 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
     <p class="note">
       ※ <strong>립싱크 열이 이 표의 핵심인데 5곳이 비어 있음.</strong>
       실측한 3곳은 모두 기준 미달이었고, 영상 기반 클로닝을 지원하는 곳은 하나도 확인하지 못함.
-      외부 음성 입력과 LLM 제어는 거의 전부 ◎ 라 업체를 가르는 기준이 되지 못함 —
-      <strong>실제 변별점은 립싱크 품질과 클로닝 입력 둘뿐.</strong>
+      LLM 제어는 거의 전부 ◎ 라 업체를 가르는 기준이 되지 못함 — <strong>실제 변별점은 립싱크 품질과 클로닝 입력 둘뿐.</strong>
+      <strong>딥브레인은 실시간 SDK로 외부 음성을 넣을 수 없음이 확인됨</strong> — <code>AIPlayer.send()</code> 는 텍스트만 받고,
+      <code>setCustomVoice()</code> 는 딥브레인 플랫폼에 등록된 음성을 고르는 기능이라 강사 클론 음성을 못 씀.
+      다만 이는 <strong>실시간 제품 기준이며 영상 제작 제품(AI Studios)은 별개</strong>라, 영상 제작용 후보 지위는 유지됨.
+      단가도 <strong>8곳 중 3곳(클레온 · D-ID · 딥브레인)이 비공개</strong>라 비용 비교가 완결되지 않음. 표의 단가는 <strong>실시간 분당 기준</strong>이며, 영상 제작은 건당·크레딧 과금이라 과금 체계가 다름 — HeyGen 외에는 공개 자료 없음.
     </p>
   </section>
 
