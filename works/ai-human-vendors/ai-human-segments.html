@@ -45,8 +45,6 @@ h1 em{font-style:normal;color:var(--blue)}
 .vcard.on .use b{color:var(--blue)}
 .names{margin:14px 0 0;font-size:19px;line-height:1.45;font-weight:600;letter-spacing:-.16px;color:var(--head)}
 .vcard p{margin:10px 0 0;font-size:14px;line-height:1.55;color:var(--caption)}
-.verdict .kicker{margin-top:20px;padding:16px 20px;border-radius:var(--r-box);background:var(--wash);font-size:15px;line-height:1.6;color:var(--body)}
-.verdict .kicker b{color:var(--head)}
 
 /* Section */
 .section{margin-bottom:80px;scroll-margin-top:24px}
@@ -58,6 +56,11 @@ h2.sh{margin:0;font-size:36px;line-height:1.15;letter-spacing:-.032em;font-weigh
 .g2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:24px}
 .warn{margin-top:20px;padding:16px 20px;border-radius:var(--r-box);background:var(--wash);border-left:2px solid var(--blue);font-size:15px;line-height:1.6;color:var(--body)}
 .warn b{display:block;color:var(--head);margin-bottom:6px}
+details{margin-top:10px}
+summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--r-pill);border:1px solid var(--divider);background:var(--card);font-size:13px;font-weight:500;color:var(--caption);transition:border-color .2s ease,color .2s ease}
+summary::-webkit-details-marker{display:none}
+summary:hover{border-color:var(--blue);color:var(--blue)}
+details[open]>summary{margin-bottom:2px}
 
 /* Table — 페이지 폭에 맞춘다 */
 .tw{margin-top:20px;width:100%;overflow-x:auto;background:var(--card);border:1px solid var(--divider);border-radius:var(--r-box)}
@@ -115,23 +118,65 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
     <h2>결론</h2>
     <p class="sub">용도가 둘로 갈리며, 잘하는 업체도 서로 다름.</p>
 
-    <div class="g2">
-      <div class="vcard">
-        <div class="use"><b>영상 제작용</b>클로닝 · 사전 생성</div>
-        <p class="names">DeepBrain · HeyGen<br>Tavus · Beyond Presence</p>
-        <p>영상 2~5분 학습으로 실제 강사를 재현. 생성 시간 제약이 없어 품질이 높음.<br><strong>딥브레인이 앞서는 이유</strong> — 국내 업체 · 한국어 특화 · Voice Clone 내장. 실시간에서 걸리던 외부 음성 입력 이슈가 <strong>이 용도에선 무관</strong>함.</p>
-      </div>
-      <div class="vcard on">
-        <div class="use"><b>실시간 휴먼용</b>대화 · 즉시 응답</div>
-        <p class="names">Anam · Simli<br>Beyond Presence · HeyGen</p>
-        <p>외부 음성 패스스루와 LLM 분리를 지원해 강사 음성을 그대로 넣고 즉시 발화.</p>
-      </div>
+    <h3 class="subh" style="margin-top:8px;font-size:17px">사전 영상 제작용 <span style="font-weight:400;color:var(--helper);font-size:13px">클로닝 · 사전 생성</span></h3>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>업체</th><th>적합</th><th>근거</th><th>분당 단가<span class="sub2">실시간 기준 참고</span></th></tr></thead>
+        <tbody>
+          <tr><td class="pick"><strong>DeepBrain</strong> 딥브레인</td><td class="pick mk y">◎</td><td><strong>영상</strong>으로 클로닝 · Custom Avatar + Voice Clone<span class="sub2">국내 업체 · 한국어 특화</span></td><td class="no">비공개</td></tr>
+          <tr><td class="pick"><strong>HeyGen LiveAvatar</strong></td><td class="pick mk y">◎</td><td><strong>영상 2분 또는 사진 1장</strong> — 둘 다 되는 유일한 곳<span class="sub2">촬영본 없이 먼저 붙여볼 수 있음</span></td><td class="mk">$0.095</td></tr>
+          <tr><td class="pick"><strong>Beyond Presence</strong></td><td class="pick mk y">◎</td><td><strong>영상</strong>으로 클로닝 · 권장 4~5분, 최소 2분</td><td class="mk">€0.0875</td></tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="kicker">
-      <b>HeyGen · Beyond Presence는 양쪽 모두 가능</b> — 한 곳으로 두 용도를 처리하려면 이 둘이 후보.
-      다만 <b>이 분류는 기능 기준이며 한국어 립싱크 품질은 반영되지 않음</b> — 영상 제작용 네 곳은 실측 미실시(02 참조).
+    <details>
+      <summary>나머지 5곳 보기</summary>
+      <div class="tw">
+        <table>
+          <thead><tr><th>업체</th><th>적합</th><th>근거</th><th>분당 단가<span class="sub2">실시간 기준 참고</span></th></tr></thead>
+          <tbody>
+            <tr><td><strong>Tavus</strong></td><td class="mk y">◎</td><td><strong>영상</strong>으로 클로닝 · 1.5~2분 + 본인 동의</td><td class="mk">$0.32</td></tr>
+            <tr><td><strong>D-ID</strong></td><td class="mk n">○</td><td><strong>사진 또는 영상</strong> · Photo Avatar / Instant Video Avatar</td><td class="no">비공개</td></tr>
+            <tr><td><strong>Anam</strong></td><td class="mk n">△</td><td><strong>사진 1장만</strong> 가능 · 영상 학습 지원 안 함<span class="sub2">표정 · 고개 움직임 제한</span></td><td class="mk">$0.11~0.16</td></tr>
+            <tr><td><strong>Simli</strong></td><td class="mk n">△</td><td><strong>사진 1장만</strong> 가능 · 영상 학습 지원 안 함</td><td class="mk">$0.01~0.05</td></tr>
+            <tr><td><strong>Klleon</strong> 클레온</td><td class="no">?</td><td class="no">Studio 에서 만든 avatar_id 를 가져다 쓰는 구조 — <strong>무엇으로 만드는지 비공개</strong></td><td class="no">비공개</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+
+    <h3 class="subh" style="font-size:17px">실시간 휴먼용 <span style="font-weight:400;color:var(--helper);font-size:13px">대화 · 즉시 응답</span></h3>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>업체</th><th>적합</th><th>근거</th><th>분당 단가</th></tr></thead>
+        <tbody>
+          <tr><td class="pick"><strong>HeyGen LiveAvatar</strong></td><td class="pick mk y">◎</td><td><strong>LITE Mode</strong> — 외부 음성 입력과 LLM 분리를 모두 지원<span class="sub2">강사 클론 음성을 그대로 넣고 수업 로직은 YBM 이 쌀</span></td><td class="mk">$0.095</td></tr>
+          <tr><td class="pick"><strong>Beyond Presence</strong></td><td class="pick mk y">◎</td><td><strong>Speech-to-Video</strong> — 외부 음성만 받아 입을 맞춤<span class="sub2">AI 층을 통째로 분리 가능</span></td><td class="mk">€0.0875</td></tr>
+          <tr><td class="pick"><strong>Anam</strong></td><td class="pick mk y">◎</td><td><strong>오디오 패스스루 + Custom LLM</strong><span class="sub2">연동을 실측으로 확인한 유일한 곳 — 다만 립싱크는 미달</span></td><td class="mk">$0.11~0.16</td></tr>
+        </tbody>
+      </table>
     </div>
+
+    <details>
+      <summary>나머지 5곳 보기</summary>
+      <div class="tw">
+        <table>
+          <thead><tr><th>업체</th><th>적합</th><th>근거</th><th>분당 단가</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Simli</strong></td><td class="mk n">△</td><td>외부 음성 · LLM 분리 모두 되나 <strong>실측 립싱크 품질이 3곳 중 최하</strong><span class="sub2">단가가 가장 싸다는 것만으로는 근거 부족</span></td><td class="mk">$0.01~0.05</td></tr>
+            <tr><td><strong>Tavus</strong></td><td class="mk n">△</td><td><strong>Echo Mode</strong> 로 기능은 충족하나 <strong>단가가 3배 이상</strong><span class="sub2">기능을 덤어내도 단가가 내려가지 않음</span></td><td class="mk">$0.32</td></tr>
+            <tr><td><strong>D-ID</strong></td><td class="mk n">△</td><td>외부 Agent 연동만 지원(○) · <strong>단가 비공개로 비용 산정 불가</strong></td><td class="no">비공개</td></tr>
+            <tr><td><strong>DeepBrain</strong> 딥브레인</td><td class="mk n">✕</td><td><strong>외부 음성을 넣을 수 없음</strong> — <code>AIPlayer.send()</code> 는 텍스트만 받음<span class="sub2">강사 클론 음성을 못 써서 이 용도엔 탈락</span></td><td class="no">비공개</td></tr>
+            <tr><td><strong>Klleon</strong> 클레온</td><td class="mk n">△</td><td><code>startAudioEcho</code> 로 외부 음성 입력은 확인됨<span class="sub2">다만 LLM 제어 · 과금 기준 비공개 · 실측 립싱크 미달</span></td><td class="no">비공개</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
   </section>
 
   <!-- ══ 01 ══ -->
@@ -177,6 +222,74 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <h3 class="subh">직접 만들어보고 확인한 한계</h3>
+    <p class="note" style="margin-top:8px;font-size:15px;color:var(--caption)">
+      목업을 만들며 실제로 겪은 것. <strong>이 문서에서 유일하게 문서가 아닌 1차 근거.</strong>
+    </p>
+
+    <h4 style="margin:20px 0 0;font-size:15px;font-weight:600;color:var(--head)">사전 영상 제작으로 해본 것</h4>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>도구</th><th>입력</th><th>확인된 한계</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>DeepBrain</strong> 딥브레인</td>
+            <td><strong>영상</strong></td>
+            <td><strong>동작이 매번 똑같음</strong><span class="sub2">여러 번 생성해도 모든 영상에서 휴먼의 움직임이 동일 — 다양성이 없음</span></td>
+          </tr>
+          <tr>
+            <td><strong>Higgsfield</strong></td>
+            <td><strong>사진</strong></td>
+            <td><strong>다른 사람처럼 만들어짐 · 음성 연동 불가</strong><span class="sub2">실제 강사와 닮지 않게 생성됨 · MCP 사용 시 ElevenLabs 커스텀 보이스를 붙일 수 없어 매번 편집 필요 · 현재 지원 여부 미확인</span></td>
+          </tr>
+          <tr>
+            <td><strong>Gemini Omni</strong></td>
+            <td><strong>사진</strong></td>
+            <td><strong>인물이 일관되지 않음</strong><span class="sub2">생성할 때마다 다른 사람이 나옴</span></td>
+          </tr>
+          <tr>
+            <td><strong>ElevenLabs</strong> 영상 생성</td>
+            <td><strong>사진</strong></td>
+            <td><strong>인물 일관성 부족 · 생성 실패</strong><span class="sub2">결국 모델을 불러오는 방식이라 사람이 달라지거나, 아예 생성되지 않는 경우도 있었음</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4 style="margin:28px 0 0;font-size:15px;font-weight:600;color:var(--head)">실시간 휴먼으로 해본 것</h4>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>업체</th><th>아바타</th><th>확인된 한계</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Anam</strong></td>
+            <td class="pick"><strong>사진으로 클로닝 성공</strong><span class="sub2">무료 등급에서 지원</span></td>
+            <td><strong>한국어 립싱크 품질 미달</strong><span class="sub2">아바타는 만들었으나 입 모양에서 걸림</span></td>
+          </tr>
+          <tr>
+            <td><strong>Simli</strong></td>
+            <td class="no">기본 아바타<span class="sub2">무료 등급에서 커스텀 아바타 생성 불가</span></td>
+            <td><strong>한국어 립싱크 품질 미달</strong><span class="sub2">3곳 중 최하</span></td>
+          </tr>
+          <tr>
+            <td><strong>Klleon</strong> 클레온</td>
+            <td class="no">기본 아바타<span class="sub2">무료 등급에서 커스텀 아바타 생성 불가</span></td>
+            <td><strong>한국어 립싱크 품질 미달</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <b>정리 — 한계가 용도별로 갈림</b>
+      <strong>사전 영상 제작</strong> — 사진 기반(Higgsfield · Gemini Omni · ElevenLabs)은 공통으로 <strong>같은 강사로 여러 번 만들면 다른 사람이 나옴.</strong>
+      영상 기반(딥브레인)은 인물은 일정하나 <strong>동작이 고정</strong>됨.<br>
+      <strong>실시간 휴먼</strong> — 아바타 클로닝을 했든(Anam) 기본 아바타를 썼든(Simli · 클레온)
+      <strong>세 곳 모두 한국어 립싱크 품질에서 걸람.</strong> 아바타를 잘 만드는 것과 입 모양이 맞는 것은 별개의 문제임.
     </div>
 
     <h3 class="subh">구간별 실시간 AI 휴먼 필요 여부</h3>
@@ -227,8 +340,13 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
     <div class="eyebrow">02 · VENDOR</div>
     <h2 class="sh">업체 종합 비교</h2>
     <p class="note" style="margin-top:12px;font-size:15px;color:var(--caption)">
-      STT · TTS · LLM 은 YBM 이 가져가는 층이므로 업체 비교 항목이 아님.
-      <strong>업체가 실제로 파는 것</strong> 기준으로 네 가지를 비교.
+      업체에서 사는 것은 <strong>말에 맞춰 입이 움직이는 얼굴 영상</strong> 하나임.
+      음성 인식(STT) · 음성 합성(ElevenLabs) · 답변 생성(LLM)은 YBM 이 이미 쓰는 것을 그대로 쓰므로 업체를 고르는 기준이 아님.
+      <strong>그래서 확인할 것은 네 가지</strong> —
+      ① YBM 이 만든 강사 음성을 받아주는가 ·
+      ② YBM 수업 로직을 붙일 수 있는가 ·
+      ③ 실제 강사 얼굴을 만들 수 있는가 ·
+      ④ 한국어 입 모양이 맞는가.
     </p>
 
     <div class="tw">
@@ -361,7 +479,14 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
       </table>
     </div>
 
-    <p class="note">※ 이 순위는 <strong>재현 품질 기준</strong>이므로 결론의 용도별 구분과는 층위가 다름. 3순위인 Anam · Simli도 <strong>실시간 휴먼용으로는 여전히 유효</strong>하며, 사진 1장으로 즉시 착수할 수 있다는 점이 오히려 강점. 비용을 우선하면 순서가 뒤집힘.</p>
+    <div class="warn">
+      <b>비용을 우선해도 답이 크게 달라지지 않음</b>
+      최저가 Simli는 실측 품질이 최하라 이미 걸림. 그다음이 <strong>Beyond Presence(€0.0875) · HeyGen(/usr/bin/bash.095)</strong> 인데
+      <strong>두 곳 모두 재현 기준에서도 1순위</strong>임. 즉 비용 기준과 재현 기준이 충돌하지 않고 같은 답으로 수렴.
+      갈리는 것은 <strong>Tavus 하나</strong> — 재현은 1순위지만 단가가 /usr/bin/bash.32 로 세 배가 넘음.
+    </div>
+
+    <p class="note">※ 이 순위는 <strong>재현 품질 기준</strong>이므로 결론의 용도별 구분과는 층위가 다름. 3순위인 Anam · Simli도 <strong>실시간 휴먼용으로는 여전히 유효</strong>하며, 사진 1장으로 즉시 착수할 수 있다는 점이 오히려 강점.</p>
   </section>
 
   <footer>YBM AI LAB. 2026</footer>
