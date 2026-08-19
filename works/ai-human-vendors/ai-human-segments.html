@@ -222,52 +222,65 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
   <section class="section" id="realtime">
     <div class="eyebrow">01 · SEGMENT</div>
     <h2 class="sh">실시간 영상이 필요한 구간</h2>
-    <h3 class="subh">여기에 필요한 것 &mdash; 업체 평가 기준</h3>
-    <p class="ptsh">업체 비교표에서 답하는 것</p>
+    <h3 class="subh">여기에 필요한 것</h3>
+
     <ul class="pts">
       <li><i>①</i><b>외부 음성 입력</b> &mdash; 강사 클론 음성(ElevenLabs)을 그대로 넣을 수 있어야 함</li>
       <li><i>②</i><b>외부 LLM 연결</b> &mdash; 수업 로직은 YBM 이 쥠. 업체 LLM 에 맡기지 않음</li>
       <li><i>③</i><b>실존 강사 얼굴</b> &mdash; 영상 클로닝으로 만든 아바타</li>
       <li><i>④</i><b>한국어 립싱크 품질</b> &mdash; <strong>앞을 다 갖춰도 여기서 떨어지면 못 씀</strong></li>
-    </ul>
-
-    <p class="ptsh">아직 어느 업체도 확인하지 못한 것 &mdash; 실측해야만 나옴</p>
-    <ul class="pts">
       <li><i>⑤</i><b>한·영 혼용</b> &mdash; 한 문장 안에서 언어가 바뀜. <strong>립싱크가 가장 잘 깨지는 조건</strong></li>
       <li><i>⑥</i><b>양방향 · 끼어들기</b> &mdash; 학생이 말을 끊고 들어옴. 발화 중단 · 재개 제어 필요</li>
       <li><i>⑦</i><b>30초 이상 연속 발화</b> &mdash; 길어질수록 입이 소리보다 밀리는 <strong>드리프트</strong> 발생</li>
-    </ul>
-
-    <p class="ptsh">실시간 제품이면 기본 충족 &mdash; 업체를 가르지 못함</p>
-    <ul class="pts">
-      <li><b>발화마다 반복 호출</b> &mdash; 1회성이 아니라 수업 내내</li>
-      <li><b>가변 텍스트 즉시 반영</b> &mdash; 학생 이름처럼 방금 받은 값을 그 자리에서 말해야 함</li>
+      <li><i>⑧</i><b>발화마다 반복 호출</b> &mdash; 1회성이 아니라 수업 내내</li>
+      <li><i>⑨</i><b>가변 텍스트 즉시 반영</b> &mdash; 학생 이름처럼 방금 받은 값을 그 자리에서 말해야 함</li>
     </ul>
 
     <h3 class="subh">해본 것과 결과</h3>
 
     <div class="tw">
       <table>
-        <thead><tr><th>업체</th><th>아바타</th><th>확인된 한계</th></tr></thead>
+        <thead><tr>
+          <th>업체</th>
+          <th>① 외부 음성</th>
+          <th>② 외부 LLM</th>
+          <th>③ 실존 강사 얼굴</th>
+          <th>④ 한국어 립싱크</th>
+          <th>⑤~⑦<span class="sub2">혼용 · 끼어들기 · 드리프트</span></th>
+        </tr></thead>
         <tbody>
           <tr>
             <td><strong>Anam</strong></td>
-            <td class="pick"><strong>사진으로 클로닝 성공</strong><span class="sub2">무료 등급에서 지원</span></td>
-            <td><strong>한국어 립싱크 품질 미달</strong><span class="sub2">아바타는 만들었으나 입 모양에서 걸림</span></td>
+            <td class="mk y">◎<span class="sub2">오디오 패스스루</span></td>
+            <td class="mk y">◎<span class="sub2">Custom LLM</span></td>
+            <td class="mk n">△<span class="sub2">사진으로 클로닝은 성공 &mdash; 영상 학습은 지원 안 함</span></td>
+            <td class="mk n"><strong>✕ 미달</strong><span class="sub2">아바타는 만들었으나 입 모양에서 걸림</span></td>
+            <td class="no">미확인<span class="sub2">④ 에서 걸려 더 보지 않음</span></td>
           </tr>
           <tr>
             <td><strong>Simli</strong></td>
-            <td class="no">기본 아바타<span class="sub2">무료 등급에서 커스텀 아바타 생성 불가</span></td>
-            <td><strong>한국어 립싱크 품질 미달</strong><span class="sub2">3곳 중 최하</span></td>
+            <td class="mk y">◎</td>
+            <td class="mk y">◎<span class="sub2">OpenAI-compatible</span></td>
+            <td class="mk n">✕<span class="sub2">무료 등급에서 커스텀 아바타 생성 불가 &mdash; 기본 아바타로 테스트</span></td>
+            <td class="mk n"><strong>✕ 미달</strong><span class="sub2">3곳 중 최하</span></td>
+            <td class="no">미확인<span class="sub2">④ 에서 걸려 더 보지 않음</span></td>
           </tr>
           <tr>
             <td><strong>Klleon</strong> 클레온</td>
-            <td class="no">기본 아바타<span class="sub2">무료 등급에서 커스텀 아바타 생성 불가</span></td>
-            <td><strong>한국어 립싱크 품질 미달</strong></td>
+            <td class="mk y">◎<span class="sub2">startAudioEcho</span></td>
+            <td class="mk n">△<span class="sub2">공개 문서 확인 부족</span></td>
+            <td class="mk n">✕<span class="sub2">무료 등급에서 커스텀 아바타 생성 불가 &mdash; 기본 아바타로 테스트</span></td>
+            <td class="mk n"><strong>✕ 미달</strong></td>
+            <td class="no">미확인<span class="sub2">④ 에서 걸려 더 보지 않음</span></td>
           </tr>
         </tbody>
       </table>
     </div>
+
+    <p class="note">
+      ※ 세 곳 모두 <strong>①②는 통과했고 ④에서 떨어짐.</strong> 스펙을 갖추는 것과 한국어 입 모양이 맞는 것은 별개이며,
+      <strong>⑤~⑦은 ④를 통과한 뒤에야 볼 수 있는 항목</strong>이라 아직 아무 데서도 확인하지 못함.
+    </p>
 
   </section>
 
