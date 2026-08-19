@@ -285,7 +285,7 @@ flowchart LR
       <li><i>①</i><b>외부 음성 입력</b> &mdash; 강사 클론 음성(ElevenLabs)을 그대로 넣을 수 있어야 함</li>
       <li><i>②</i><b>외부 LLM 연결</b> &mdash; 수업 로직은 YBM 이 쥠. 업체 LLM 에 맡기지 않음</li>
       <li><i>③</i><b>실존 강사 얼굴</b> &mdash; 영상 클로닝으로 만든 아바타</li>
-      <li><i>④</i><b>한국어 립싱크 품질</b> &mdash; <strong>앞을 다 갖춰도 여기서 떨어지면 못 씀</strong></li>
+      <li><i>④</i><b>립싱크 품질</b> &mdash; <strong>앞을 다 갖춰도 여기서 떨어지면 못 씀.</strong> <strong>영어와 한국어를 나눠서 봄</strong> &mdash; 대부분 영어 기준으로 만들어진 제품이라 한국어에서 갈림</li>
       <li><i>⑤</i><b>한·영 혼용</b> &mdash; 한 문장 안에서 언어가 바뀜. <strong>립싱크가 가장 잘 깨지는 조건</strong></li>
       <li><i>⑥</i><b>양방향 · 끼어들기</b> &mdash; 학생이 말을 끊고 들어옴. 발화 중단 · 재개 제어 필요</li>
       <li><i>⑦</i><b>30초 이상 연속 발화</b> &mdash; 길어질수록 입이 소리보다 밀리는 <strong>드리프트</strong> 발생</li>
@@ -302,7 +302,8 @@ flowchart LR
           <th>① 외부 음성</th>
           <th>② 외부 LLM</th>
           <th>③ 실존 강사 얼굴</th>
-          <th>④ 한국어 립싱크</th>
+          <th>④ 영어 립싱크</th>
+          <th>④ 한국어 립싱크<span class="sub2">실제 판정 기준</span></th>
           <th>⑤~⑦<span class="sub2">혼용 · 끼어들기 · 드리프트</span></th>
         </tr></thead>
         <tbody>
@@ -311,6 +312,7 @@ flowchart LR
             <td class="mk y">◎<span class="sub2">오디오 패스스루</span></td>
             <td class="mk y">◎<span class="sub2">Custom LLM</span></td>
             <td class="mk n">△<span class="sub2">사진으로 클로닝은 성공 &mdash; 영상 학습은 지원 안 함</span></td>
+            <td class="no">미확인</td>
             <td class="mk n"><strong>✕ 미달</strong><span class="sub2">아바타는 만들었으나 입 모양에서 걸림</span></td>
             <td class="no">미확인<span class="sub2">④ 에서 걸려 더 보지 않음</span></td>
           </tr>
@@ -319,6 +321,7 @@ flowchart LR
             <td class="mk y">◎</td>
             <td class="mk y">◎<span class="sub2">OpenAI-compatible</span></td>
             <td class="mk n">✕<span class="sub2">무료 등급에서 커스텀 아바타 생성 불가 &mdash; 기본 아바타로 테스트</span></td>
+            <td class="no">미확인</td>
             <td class="mk n"><strong>✕ 미달</strong><span class="sub2">3곳 중 최하</span></td>
             <td class="no">미확인<span class="sub2">④ 에서 걸려 더 보지 않음</span></td>
           </tr>
@@ -327,6 +330,7 @@ flowchart LR
             <td class="mk y">◎<span class="sub2">startAudioEcho</span></td>
             <td class="mk n">△<span class="sub2">공개 문서 확인 부족</span></td>
             <td class="mk n">✕<span class="sub2">무료 등급에서 커스텀 아바타 생성 불가 &mdash; 기본 아바타로 테스트</span></td>
+            <td class="no">미확인</td>
             <td class="mk n"><strong>✕ 미달</strong></td>
             <td class="no">미확인<span class="sub2">④ 에서 걸려 더 보지 않음</span></td>
           </tr>
@@ -335,8 +339,10 @@ flowchart LR
     </div>
 
     <p class="note">
-      ※ 세 곳 모두 <strong>①②는 통과했고 ④에서 떨어짐.</strong> 스펙을 갖추는 것과 한국어 입 모양이 맞는 것은 별개이며,
-      <strong>⑤~⑦은 ④를 통과한 뒤에야 볼 수 있는 항목</strong>이라 아직 아무 데서도 확인하지 못함.
+      ※ 세 곳 모두 <strong>①②는 통과했고 ④(한국어)에서 떨어짐.</strong> 스펙을 갖추는 것과 한국어 입 모양이 맞는 것은 별개이며,
+      <strong>⑤~⑦은 ④를 통과한 뒤에야 볼 수 있는 항목</strong>이라 아직 아무 데서도 확인하지 못함.<br>
+      ※ <strong>영어 립싱크는 따로 판정하지 않았음.</strong> 세 곳 모두 영어 기준으로 만들어진 제품이라 영어가 괜찮은 것과 한국어가 되는 것은 별개이며,
+      <strong>영어가 기준선으로 남아 있어야 &ldquo;한국어에서만 깨지는가&rdquo;를 말할 수 있음.</strong>
     </p>
 
   </section>
