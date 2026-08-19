@@ -181,58 +181,6 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
   </section>
 
 
-  <section class="section" id="scope">
-    <div class="eyebrow">SCOPE</div>
-    <h2 class="sh">클로닝 경우의 수</h2>
-    <p class="note" style="margin-top:12px;font-size:15px;color:var(--caption)">
-      <strong>대상</strong>(실존 강사 · 가상 인물) × <strong>용도</strong>(실시간 · 사전 제작) × <strong>입력</strong>(사진 · 영상).
-      이 조합이 지금 결정해야 할 범위이며, <strong>칸마다 막히는 이유가 서로 다름.</strong>
-    </p>
-
-    <div class="mmwrap">
-      <pre class="mermaid">
-flowchart LR
-  ROOT([클로닝]) --> REAL[실존 강사]
-  ROOT --> VIRT[가상 인물]
-
-  REAL --> RP[사진 입력]
-  REAL --> RV["영상 입력<br/><b>본인확인 필요</b>"]
-  VIRT --> VP[사진 입력]
-  VIRT --> VV["영상 입력"]
-
-  RP --> RPL["실시간<br/>△ 포즈 고정 · 립싱크 미달<br/><i>실측함</i>"]
-  RP --> RPP["사전 제작<br/>✕ 인물 일관성 붕괴<br/><i>실측함</i>"]
-
-  RV --> RVL["실시간<br/>△ 아직 못 해봄"]
-  RV --> RVP["사전 제작<br/>◎ 유일하게 성립<br/><i>딥브레인 · 동작은 고정</i>"]
-
-  VP --> VPL["실시간<br/>△ 품질 검토 필요"]
-  VP --> VPP["사전 제작<br/>△ 품질 검토 필요"]
-
-  VV --> VVX["✕ 불가<br/>본인확인을 통과할 사람이 없음"]
-
-  classDef ok fill:#e8f0ff,stroke:#145aff,stroke-width:1.5px,color:#020520;
-  classDef warn fill:#fff6ec,stroke:#ffa64d,color:#020520;
-  classDef no fill:#f4f4f6,stroke:#c9ccd4,color:#6b7280;
-  classDef gate fill:#fff,stroke:#145aff,stroke-dasharray:4 3,color:#020520;
-  classDef plain fill:#fff,stroke:#e2e8f0,color:#14141e;
-
-  class ROOT,REAL,VIRT,RP,VP plain;
-  class RV,VV gate;
-  class RVP ok;
-  class RPL,RVL,VPL,VPP warn;
-  class RPP,VVX no;
-      </pre>
-    </div>
-
-    <p class="note">
-      ※ <strong>영상 클로닝은 실존 인물 전용임.</strong> 대부분의 업체가 <strong>본인 동의 · 심사</strong>를 요구하며(HeyGen · Beyond Presence · Tavus 모두 확인됨),
-      가상 인물은 그 절차를 통과할 사람이 없음. 즉 <strong>가상 인물로 가면 선택지가 사진 한 줄로 줄어듦.</strong><br>
-      ※ 반대로 <strong>실존 강사로 가면 강사 동의 확보가 모든 것의 전제</strong>가 됨 &mdash; 동의가 없으면 영상 칸 두 개가 동시에 막히고, 남는 것은 이미 품질에서 떨어진 사진 칸뿐임.<br>
-      ※ <strong>가상 인물 두 칸은 아직 아무것도 해보지 않았음.</strong> 다만 이 노선을 택하면 <strong>H2(실존 강사 페르소나 수용성)는 FGI 에서 검증할 수 없게 됨.</strong>
-    </p>
-  </section>
-
   <nav class="tabs" role="tablist">
     <button class="tab on" data-t="pane-live" role="tab" aria-selected="true">실시간 휴먼<span>대화 · 즉시 응답</span></button>
     <button class="tab" data-t="pane-pre" role="tab" aria-selected="false">사전 영상 제작<span>클로닝 · 사전 생성</span></button>
@@ -276,6 +224,49 @@ flowchart LR
     </section>
 
   <!-- ══ 02 ══ -->
+  <section class="section" id="scope-live">
+    <div class="eyebrow">SCOPE</div>
+    <h2 class="sh">클로닝 경우의 수</h2>
+    <p class="note" style="margin-top:12px;font-size:15px;color:var(--caption)">
+      <strong>실시간 휴먼</strong>을 만든다고 할 때 갈리는 경우의 수. <strong>대상</strong>(실존 강사 · 가상 인물) × <strong>입력</strong>(사진 · 영상).
+    </p>
+
+    <div class="mmwrap">
+      <pre class="mermaid">
+flowchart LR
+  ROOT([실시간 휴먼]) --> REAL[실존 강사]
+  ROOT --> VIRT[가상 인물]
+
+  REAL --> RP[사진 입력]
+  REAL --> RV["영상 입력<br/><b>본인확인 필요</b>"]
+  VIRT --> VP[사진 입력]
+  VIRT --> VV[영상 입력]
+
+  RP --> RPO["△ 포즈 고정 · 한국어 립싱크 미달<br/><i>Anam · Simli · 클레온 실측</i>"]
+  RV --> RVO["△ 아직 못 해봄<br/><i>강사 동의가 전제</i>"]
+  VP --> VPO["△ 품질 검토 필요<br/><i>미검토</i>"]
+  VV --> VVO["✕ 불가<br/><i>본인확인을 통과할 사람이 없음</i>"]
+
+  classDef warn fill:#fff6ec,stroke:#ffa64d,color:#020520;
+  classDef no fill:#f4f4f6,stroke:#c9ccd4,color:#6b7280;
+  classDef gate fill:#fff,stroke:#145aff,stroke-dasharray:4 3,color:#020520;
+  classDef plain fill:#fff,stroke:#e2e8f0,color:#14141e;
+
+  class ROOT,REAL,VIRT,RP,VP plain;
+  class RV,VV gate;
+  class RPO,RVO,VPO warn;
+  class VVO no;
+      </pre>
+    </div>
+
+    <p class="note">
+      ※ <strong>영상 클로닝은 실존 인물 전용임.</strong> HeyGen · Beyond Presence · Tavus 모두 <strong>본인 동의 · 심사</strong>를 요구함 &mdash;
+      가상 인물은 그 절차를 통과할 사람이 없어 영상 갈래가 통째로 막힘.<br>
+      ※ 반대로 <strong>실존 강사로 가면 강사 동의 확보가 전제</strong>가 됨. 동의가 없으면 영상 갈래가 막히고, 남는 것은 이미 품질에서 떨어진 사진 갈래뿐임.<br>
+      ※ <strong>가상 인물 갈래는 아직 아무것도 해보지 않았음.</strong> 이 노선을 택하면 <strong>H2(실존 강사 페르소나 수용성)를 FGI 에서 검증할 수 없게 됨.</strong>
+    </p>
+  </section>
+
   <section class="section" id="realtime">
     <div class="eyebrow">01 · SEGMENT</div>
     <h2 class="sh">실시간 영상이 필요한 구간</h2>
@@ -549,6 +540,51 @@ flowchart LR
     </section>
 
   <!-- ══ 03 ══ -->
+  <section class="section" id="scope-pre">
+    <div class="eyebrow">SCOPE</div>
+    <h2 class="sh">클로닝 경우의 수</h2>
+    <p class="note" style="margin-top:12px;font-size:15px;color:var(--caption)">
+      <strong>사전 제작 영상</strong>을 만든다고 할 때 갈리는 경우의 수. <strong>대상</strong>(실존 강사 · 가상 인물) × <strong>입력</strong>(사진 · 영상).
+    </p>
+
+    <div class="mmwrap">
+      <pre class="mermaid">
+flowchart LR
+  ROOT([사전 제작 영상]) --> REAL[실존 강사]
+  ROOT --> VIRT[가상 인물]
+
+  REAL --> RP[사진 입력]
+  REAL --> RV["영상 입력<br/><b>본인확인 필요</b>"]
+  VIRT --> VP[사진 입력]
+  VIRT --> VV[영상 입력]
+
+  RP --> RPO["✕ 인물 일관성 붕괴<br/><i>만들 때마다 다른 사람</i>"]
+  RV --> RVO["◎ 유일하게 성립<br/><i>딥브레인 실측 · 동작은 고정</i>"]
+  VP --> VPO["△ 품질 검토 필요<br/><i>미검토</i>"]
+  VV --> VVO["✕ 불가<br/><i>본인확인 · 학습용 원본 영상 모두 걸림</i>"]
+
+  classDef ok fill:#e8f0ff,stroke:#145aff,stroke-width:1.5px,color:#020520;
+  classDef warn fill:#fff6ec,stroke:#ffa64d,color:#020520;
+  classDef no fill:#f4f4f6,stroke:#c9ccd4,color:#6b7280;
+  classDef gate fill:#fff,stroke:#145aff,stroke-dasharray:4 3,color:#020520;
+  classDef plain fill:#fff,stroke:#e2e8f0,color:#14141e;
+
+  class ROOT,REAL,VIRT,RP,VP plain;
+  class RV,VV gate;
+  class RVO ok;
+  class VPO warn;
+  class RPO,VVO no;
+      </pre>
+    </div>
+
+    <p class="note">
+      ※ <strong>영상 클로닝은 실존 인물 전용임.</strong> HeyGen · Beyond Presence · Tavus 모두 <strong>본인 동의 · 심사</strong>를 요구함 &mdash;
+      가상 인물은 그 절차를 통과할 사람이 없어 영상 갈래가 통째로 막힘.<br>
+      ※ 반대로 <strong>실존 강사로 가면 강사 동의 확보가 전제</strong>가 됨. 동의가 없으면 영상 갈래가 막히고, 남는 것은 이미 품질에서 떨어진 사진 갈래뿐임.<br>
+      ※ <strong>가상 인물 갈래는 아직 아무것도 해보지 않았음.</strong> 이 노선을 택하면 <strong>H2(실존 강사 페르소나 수용성)를 FGI 에서 검증할 수 없게 됨.</strong>
+    </p>
+  </section>
+
   <section class="section" id="premade">
     <div class="eyebrow">01 · SEGMENT</div>
     <h2 class="sh">사전 제작 영상이 필요한 구간</h2>
@@ -746,10 +782,27 @@ document.querySelectorAll('.tab').forEach(function(b){
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
   mermaid.initialize({
-    startOnLoad: true,
+    startOnLoad: false,
     securityLevel: 'loose',
     flowchart: { htmlLabels: true, curve: 'basis', nodeSpacing: 30, rankSpacing: 60 },
     themeVariables: { fontFamily: "'Pretendard Variable', Pretendard, system-ui, sans-serif", fontSize: '13px' }
+  });
+
+  // 숨은 탭에서 렌더하면 크기 계산이 깨지므로, 보이는 시점에 그린다
+  function renderPane(pane) {
+    if (!pane) return;
+    var nodes = pane.querySelectorAll('.mermaid:not([data-processed="true"])');
+    if (nodes.length) mermaid.run({ nodes: Array.prototype.slice.call(nodes) });
+  }
+
+  document.querySelectorAll('.pane:not([hidden])').forEach(renderPane);
+
+  document.querySelectorAll('.tab').forEach(function (b) {
+    b.addEventListener('click', function () { renderPane(document.getElementById(b.dataset.t)); });
+  });
+
+  window.addEventListener('beforeprint', function () {
+    document.querySelectorAll('.pane').forEach(renderPane);
   });
 </script>
 
