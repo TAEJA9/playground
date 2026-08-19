@@ -125,7 +125,7 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
         <thead><tr><th>업체</th><th>적합</th><th>근거</th><th>분당 단가<span class="sub2">실시간 기준 참고</span></th></tr></thead>
         <tbody>
           <tr><td class="pick"><strong>DeepBrain</strong> 딥브레인</td><td class="pick mk y">◎</td><td><strong>영상</strong>으로 클로닝 · Custom Avatar + Voice Clone<span class="sub2">국내 업체 · 한국어 특화</span></td><td class="no">비공개</td></tr>
-          <tr><td class="pick"><strong>HeyGen LiveAvatar</strong></td><td class="pick mk y">◎</td><td><strong>영상 2분 또는 사진 1장</strong> — 둘 다 되는 유일한 곳<span class="sub2">촬영본 없이 먼저 붙여볼 수 있음</span></td><td class="mk">$0.095</td></tr>
+          <tr><td class="pick"><strong>HeyGen LiveAvatar</strong></td><td class="pick mk n">○</td><td><strong>영상 클로닝은 본인확인에 막혀 진행 못 함</strong><span class="sub2">사진 + 음성을 따로 올리는 방식은 성공 — 다만 <strong>포즈가 거의 고정</strong>됨</span></td><td class="mk">$0.095</td></tr>
           <tr><td class="pick"><strong>Beyond Presence</strong></td><td class="pick mk y">◎</td><td><strong>영상</strong>으로 클로닝 · 권장 4~5분, 최소 2분</td><td class="mk">€0.0875</td></tr>
         </tbody>
       </table>
@@ -155,7 +155,7 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
         <thead><tr><th>업체</th><th>적합</th><th>근거</th><th>분당 단가</th></tr></thead>
         <tbody>
           <tr><td class="pick"><strong>HeyGen LiveAvatar</strong></td><td class="pick mk y">◎</td><td><strong>LITE Mode</strong> — 외부 음성 입력과 LLM 분리를 모두 지원<span class="sub2">강사 클론 음성을 그대로 넣고 수업 로직은 YBM 이 쌀</span></td><td class="mk">$0.095</td></tr>
-          <tr><td class="pick"><strong>Beyond Presence</strong></td><td class="pick mk y">◎</td><td><strong>Speech-to-Video</strong> — 외부 음성만 받아 입을 맞춤<span class="sub2">AI 층을 통째로 분리 가능</span></td><td class="mk">€0.0875</td></tr>
+          <tr><td class="pick"><strong>Beyond Presence</strong></td><td class="pick mk y">◎</td><td><strong>Speech-to-Video</strong> — 외부 음성만 받아 입을 맞춤<span class="sub2">AI 층을 통째로 분리 가능 · 다만 <strong>공개 자료의 지원 언어 목록에 한국어가 없음</strong> — 영·스·불·독·아랍·중·힌디·일본어만 나열됨. 확인 필요</span></td><td class="mk">€0.0875</td></tr>
           <tr><td class="pick"><strong>Anam</strong></td><td class="pick mk y">◎</td><td><strong>오디오 패스스루 + Custom LLM</strong><span class="sub2">연동을 실측으로 확인한 유일한 곳 — 다만 립싱크는 미달</span></td><td class="mk">$0.11~0.16</td></tr>
         </tbody>
       </table>
@@ -170,7 +170,7 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <tr><td><strong>Simli</strong></td><td class="mk n">△</td><td>외부 음성 · LLM 분리 모두 되나 <strong>실측 립싱크 품질이 3곳 중 최하</strong><span class="sub2">단가가 가장 싸다는 것만으로는 근거 부족</span></td><td class="mk">$0.01~0.05</td></tr>
             <tr><td><strong>Tavus</strong></td><td class="mk n">△</td><td><strong>Echo Mode</strong> 로 기능은 충족하나 <strong>단가가 3배 이상</strong><span class="sub2">기능을 덤어내도 단가가 내려가지 않음</span></td><td class="mk">$0.32</td></tr>
             <tr><td><strong>D-ID</strong></td><td class="mk n">△</td><td>외부 Agent 연동만 지원(○) · <strong>단가 비공개로 비용 산정 불가</strong></td><td class="no">비공개</td></tr>
-            <tr><td><strong>DeepBrain</strong> 딥브레인</td><td class="mk n">✕</td><td><strong>외부 음성을 넣을 수 없음</strong> — <code>AIPlayer.send()</code> 는 텍스트만 받음<span class="sub2">강사 클론 음성을 못 써서 이 용도엔 탈락</span></td><td class="no">비공개</td></tr>
+            <tr><td><strong>DeepBrain</strong> 딥브레인</td><td class="mk n">△</td><td><strong>실시간 자체는 지원 · 다만 외부 음성을 넣을 수 없음</strong> — <code>AIPlayer.send()</code> 는 텍스트만 받음<span class="sub2">실시간 SDK와 Custom LLM 연결은 있으므로 기능이 없는 게 아니라, <strong>ElevenLabs 강사 음성을 그대로 못 쓰는 것</strong>이 걸림 — 딥브레인 쪽에 강사 음성을 다시 클로닝해 등록하면 풀릴 여지가 있으나 미확인</span></td><td class="no">비공개</td></tr>
             <tr><td><strong>Klleon</strong> 클레온</td><td class="mk n">△</td><td><code>startAudioEcho</code> 로 외부 음성 입력은 확인됨<span class="sub2">다만 LLM 제어 · 과금 기준 비공개 · 실측 립싱크 미달</span></td><td class="no">비공개</td></tr>
           </tbody>
         </table>
@@ -180,86 +180,102 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
   </section>
 
   <!-- ══ 01 ══ -->
-  <section class="section" id="segments">
-    <div class="eyebrow">01 · SEGMENTS</div>
-    <h2 class="sh">구간별 요구</h2>
-
-    <h3 class="subh" style="margin-top:24px">현재 목업 구성</h3>
+  <section class="section" id="mockup">
+    <div class="eyebrow">01 · MOCKUP</div>
+    <h2 class="sh">현재 목업 구성</h2>
 
     <div class="tw">
       <table>
-        <thead><tr><th>구간</th><th>클로닝 입력</th><th>사용 도구</th><th>한계</th></tr></thead>
+        <thead><tr><th>구간</th><th>클로닝 입력</th><th>사용 도구</th></tr></thead>
         <tbody>
           <tr>
             <td><strong>온보딩</strong></td>
-            <td class="pick"><strong>사진 1장</strong><span class="sub2">강사 사진 → 영상 생성</span></td>
-            <td>ElevenLabs · Gemini Omni · Higgsfield<span class="sub2">각각으로 만든 버전이 있음</span></td>
-            <td>모두에게 같은 영상<span class="sub2">닉네임 호명 불가</span></td>
+            <td class="pick"><strong>사진 1장</strong><span class="sub2">강사 사진 &rarr; 영상 생성</span></td>
+            <td>Higgsfield · Gemini Omni · ElevenLabs<span class="sub2">각각으로 만든 버전이 있음 &mdash; <strong>셋 다 강사 사진을 넣어 만든 것</strong><br>실제 생성 모델 &mdash; Higgsfield <strong>(Seedance 2.0)</strong> · Gemini Omni <strong>(직접)</strong> · ElevenLabs <strong>(Seedance 2.0 · Veo 3.1 · Gemini Omni)</strong></span></td>
           </tr>
           <tr>
-            <td><strong>수업 전 도입</strong></td>
-            <td class="no">없음<span class="sub2">강사 사진을 그대로 노출</span></td>
-            <td class="no">—</td>
-            <td class="no">변경 예정</td>
+            <td><strong>수업 전 도입 및 마무리</strong></td>
+            <td class="no">없음<span class="sub2">도입은 강사 사진을 그대로 노출 · 마무리는 구성 확인 필요</span></td>
+            <td class="no">&mdash;</td>
           </tr>
           <tr>
-            <td><strong>수업 중</strong></td>
-            <td class="no">없음<span class="sub2">사전 제작 GIF 반복 재생</span></td>
-            <td>ElevenLabs 에이전트<span class="sub2">음성만 실시간 호출</span></td>
-            <td><strong>입 모양과 발화 불일치</strong><span class="sub2">이번 검토의 출발점</span></td>
+            <td><strong>수업 중</strong><span class="sub2">두 가지 버전이 있음</span></td>
+            <td class="no">없음<span class="sub2">상시 화면은 사전 제작 GIF 반복 재생</span></td>
+            <td>ElevenLabs 에이전트<span class="sub2">음성만 실시간 호출 · 화면은 GIF</span></td>
           </tr>
           <tr>
-            <td><strong>수업 마무리</strong></td>
-            <td class="no">확인 필요</td>
-            <td class="no">확인 필요</td>
-            <td class="no">—</td>
+            <td><strong>수업 중</strong> <span style="color:var(--helper);font-weight:400">시연본</span><span class="sub2">시연 때 실제로 보여준 것</span></td>
+            <td><strong>영상</strong><span class="sub2">딥브레인으로 클로닝</span></td>
+            <td>DeepBrain 딥브레인<span class="sub2">미리 만든 영상을 넣어둔 것 &mdash; 딥브레인 실시간 SDK를 쓴 게 아니라 영상 제작 제품으로 뽑아 심은 것</span></td>
           </tr>
           <tr>
             <td><strong>리포트</strong></td>
-            <td class="no">—</td>
-            <td class="no">—</td>
-            <td>강사 얼굴 없음 · 영상 불필요 구간</td>
+            <td class="no">&mdash;<span class="sub2">강사 얼굴이 나오지 않는 구간</span></td>
+            <td class="no">&mdash;</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <h3 class="subh">직접 만들어보고 확인한 한계</h3>
-    <p class="note" style="margin-top:8px;font-size:15px;color:var(--caption)">
-      목업을 만들며 실제로 겪은 것. <strong>이 문서에서 유일하게 문서가 아닌 1차 근거.</strong>
-    </p>
-
-    <h4 style="margin:20px 0 0;font-size:15px;font-weight:600;color:var(--head)">사전 영상 제작으로 해본 것</h4>
+    <h3 class="subh">구간을 둘로 나누면</h3>
 
     <div class="tw">
       <table>
-        <thead><tr><th>도구</th><th>입력</th><th>확인된 한계</th></tr></thead>
+        <thead><tr><th>구간</th><th>어느 쪽</th><th>왜 그런가</th></tr></thead>
         <tbody>
           <tr>
-            <td><strong>DeepBrain</strong> 딥브레인</td>
-            <td><strong>영상</strong></td>
-            <td><strong>동작이 매번 똑같음</strong><span class="sub2">여러 번 생성해도 모든 영상에서 휴먼의 움직임이 동일 — 다양성이 없음</span></td>
+            <td><span class="dot d-amber"></span><strong>온보딩 인사</strong><span class="sub2">인사말 + 닉네임 호명</span></td>
+            <td><span class="chip on">실시간</span></td>
+            <td><strong>멘트는 모두에게 같지만 이름 한 단어가 매번 다름.</strong><span class="sub2">이름이 그 영상 안에 들어가므로 <strong>영상 전체가 실시간이어야 함</strong> &mdash; 인사말만 미리 만들어 두고 이름만 나중에 얹는 것은 입 모양이 어긋나서 불가. 지금 목업이 닉네임을 못 부르는 이유가 이것</span></td>
           </tr>
           <tr>
-            <td><strong>Higgsfield</strong></td>
-            <td><strong>사진</strong></td>
-            <td><strong>다른 사람처럼 만들어짐 · 음성 연동 불가</strong><span class="sub2">실제 강사와 닮지 않게 생성됨 · MCP 사용 시 ElevenLabs 커스텀 보이스를 붙일 수 없어 매번 편집 필요 · 현재 지원 여부 미확인</span></td>
+            <td><span class="dot d-green"></span><strong>수업 전 도입 및 마무리</strong><span class="sub2">수업 도입 · 종료 포함</span></td>
+            <td><span class="chip">사전 제작</span></td>
+            <td>발화 고정 &mdash; 학생이 누구든 같은 말<span class="sub2">마무리 구간은 현재 구성 확인 필요</span></td>
           </tr>
           <tr>
-            <td><strong>Gemini Omni</strong></td>
-            <td><strong>사진</strong></td>
-            <td><strong>인물이 일관되지 않음</strong><span class="sub2">생성할 때마다 다른 사람이 나옴</span></td>
+            <td><span class="dot d-coral"></span><strong>수업 중 대화</strong></td>
+            <td><span class="chip on">실시간</span></td>
+            <td>학생 응답에 따라 발화가 매번 달라짐</td>
           </tr>
           <tr>
-            <td><strong>ElevenLabs</strong> 영상 생성</td>
-            <td><strong>사진</strong></td>
-            <td><strong>인물 일관성 부족 · 생성 실패</strong><span class="sub2">결국 모델을 불러오는 방식이라 사람이 달라지거나, 아예 생성되지 않는 경우도 있었음</span></td>
+            <td><strong>리포트</strong></td>
+            <td class="no">해당 없음</td>
+            <td>강사 얼굴이 나오지 않는 구간</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <h4 style="margin:28px 0 0;font-size:15px;font-weight:600;color:var(--head)">실시간 휴먼으로 해본 것</h4>
+  </section>
+
+  <!-- ══ 02 ══ -->
+  <section class="section" id="realtime">
+    <div class="eyebrow">02 · REAL-TIME</div>
+    <h2 class="sh">실시간 영상이 필요한 구간</h2>
+    <h3 class="subh">여기에 필요한 것 &mdash; 두 구간이 서로 다름</h3>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>항목</th><th>온보딩 인사<span class="sub2">인사말 + 닉네임</span></th><th>수업 중 대화</th></tr></thead>
+        <tbody>
+          <tr><td><strong>발화 길이</strong></td><td class="pick">3~5초</td><td>30초 이상 연속</td></tr>
+          <tr><td><strong>언어</strong></td><td class="pick">한국어만</td><td>한·영 혼용<span class="sub2">립싱크가 가장 잘 깨지는 조건</span></td></tr>
+          <tr><td><strong>방향</strong></td><td class="pick">일방 &mdash; 듣기만</td><td>양방향 &mdash; 끼어들기 처리 필요</td></tr>
+          <tr><td><strong>횟수</strong></td><td class="pick">1인당 1회</td><td>발화마다 반복</td></tr>
+          <tr><td><strong>발화 중단 제어</strong></td><td class="pick">불필요</td><td>필요</td></tr>
+          <tr><td><strong>드리프트</strong><span class="sub2">말이 길어질수록 입이 소리보다 밀리는 현상</span></td><td class="pick">없음 &mdash; 너무 짧아 발생 여지 없음</td><td>있음 &mdash; 뒤로 갈수록 어긋남</td></tr>
+          <tr><td><strong>실패 시 타격</strong></td><td><strong>큼</strong><span class="sub2">서비스 첫인상 &mdash; 이탈로 직결</span></td><td>중간<span class="sub2">수업 중 한 번 어색한 정도</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note">
+      ※ <strong>난이도가 낮은 쪽이 실패 시 타격은 더 큼.</strong> 온보딩은 실시간이라 해도 <strong>가변인 부분은 이름 한 단어뿐</strong>이고 3~5초 · 한국어만 · 일방이라 기술적으로 가장 쉬운 조건인데,
+      서비스 첫 화면이라 여기서 어색하면 그대로 이탈로 이어짐. <strong>실측을 시작한다면 이 구간부터 보는 것이 맞음.</strong>
+    </p>
+
+    <h3 class="subh">해본 것과 결과</h3>
 
     <div class="tw">
       <table>
@@ -285,59 +301,86 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
     </div>
 
     <div class="warn">
-      <b>정리 — 한계가 용도별로 갈림</b>
-      <strong>사전 영상 제작</strong> — 사진 기반(Higgsfield · Gemini Omni · ElevenLabs)은 공통으로 <strong>같은 강사로 여러 번 만들면 다른 사람이 나옴.</strong>
-      영상 기반(딥브레인)은 인물은 일정하나 <strong>동작이 고정</strong>됨.<br>
-      <strong>실시간 휴먼</strong> — 아바타 클로닝을 했든(Anam) 기본 아바타를 썼든(Simli · 클레온)
-      <strong>세 곳 모두 한국어 립싱크 품질에서 걸람.</strong> 아바타를 잘 만드는 것과 입 모양이 맞는 것은 별개의 문제임.
-    </div>
-
-    <h3 class="subh">구간별 실시간 AI 휴먼 필요 여부</h3>
-
-    <div class="tw">
-      <table>
-        <thead><tr><th>구간</th><th>실시간</th><th>왜 그런가</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><span class="dot d-green"></span><strong>수업 도입 · 종료</strong></td>
-            <td><span class="chip">불필요</span></td>
-            <td>발화 고정 — 사전 제작 가능</td>
-          </tr>
-          <tr>
-            <td><span class="dot d-amber"></span><strong>온보딩 닉네임 인사</strong></td>
-            <td><span class="chip on">필요</span></td>
-            <td><strong>방금 받은 이름</strong>을 즉시 호명해야 함</td>
-          </tr>
-          <tr>
-            <td><span class="dot d-coral"></span><strong>수업 중 대화</strong></td>
-            <td><span class="chip on">필요</span></td>
-            <td>학생 응답에 따라 발화가 매번 달라짐</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h3 class="subh">실시간 휴먼 필요 기능</h3>
-
-    <div class="tw">
-      <table>
-        <thead><tr><th>항목</th><th>온보딩 닉네임 인사</th><th>수업 중 대화</th></tr></thead>
-        <tbody>
-          <tr><td><strong>발화 길이</strong></td><td class="pick">3~5초</td><td>30초 이상 연속</td></tr>
-          <tr><td><strong>언어</strong></td><td class="pick">한국어만</td><td>한·영 혼용<span class="sub2">립싱크가 가장 잘 깨지는 조건</span></td></tr>
-          <tr><td><strong>방향</strong></td><td class="pick">일방 — 듣기만</td><td>양방향 — 끼어들기 처리 필요</td></tr>
-          <tr><td><strong>횟수</strong></td><td class="pick">1인당 1회</td><td>발화마다 반복</td></tr>
-          <tr><td><strong>발화 중단 제어</strong></td><td class="pick">불필요</td><td>필요</td></tr>
-          <tr><td><strong>드리프트</strong><span class="sub2">말이 길어질수록 입이 소리보다 밀리는 현상</span></td><td class="pick">없음 — 너무 짧아 발생 여지 없음</td><td>있음 — 뒤로 갈수록 어긋남</td></tr>
-          <tr><td><strong>실패 시 타격</strong></td><td><strong>큼</strong><span class="sub2">서비스 첫인상 — 이탈로 직결</span></td><td>중간<span class="sub2">수업 중 한 번 어색한 정도</span></td></tr>
-        </tbody>
-      </table>
+      <b>정리 &mdash; 아바타를 만드는 것과 입이 맞는 것은 별개</b>
+      아바타 클로닝을 했든(Anam) 기본 아바타를 썼든(Simli · 클레온) <strong>세 곳 모두 한국어 립싱크에서 걸림.</strong>
+      <strong>아바타 품질과 립싱크 품질은 같이 가지 않음</strong> &mdash; 사진으로 그럴듯한 얼굴을 만드는 것과 한국어 발음에 입이 맞는 것은 다른 문제임.<br>
+      더 중요한 것은 <strong>세 곳 다 스펙표에서는 외부 음성 ◎ · LLM 제어 ◎ 로 만점이었다는 점</strong>임.
+      <strong>스펙으로 거른 뒤에도 실측에서 떨어질 수 있다</strong>는 뜻이며, 아직 안 해본 HeyGen · Beyond Presence 에도 그대로 적용됨.
     </div>
   </section>
 
-  <!-- ══ 02 ══ -->
+  <!-- ══ 03 ══ -->
+  <section class="section" id="premade">
+    <div class="eyebrow">03 · PRE-MADE</div>
+    <h2 class="sh">사전 제작 영상이 필요한 구간</h2>
+    <p class="note" style="margin-top:8px;font-size:15px;color:var(--caption)">
+      <strong>수업 전 도입 및 마무리 · 수업 도입 · 종료.</strong> 실시간이 필요 없으니 미리 만들어 넣으면 되고, 그래서 요구도 단순함 &mdash;
+      <strong>다만 &ldquo;여러 편을 만들어도 같은 강사로 보이는가&rdquo;가 여기서 제일 어려운 조건임.</strong>
+    </p>
+
+    <h3 class="subh">여기에 필요한 것</h3>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>요구</th><th>왜 필요한가</th></tr></thead>
+        <tbody>
+          <tr><td class="pick"><strong>인물 일관성</strong></td><td>편마다 얼굴이 달라지면 <strong>강사 재현이라는 전제 자체가 깨짐</strong></td></tr>
+          <tr><td class="pick"><strong>동작 다양성</strong></td><td>몸짓이 매번 같으면 <strong>여러 편을 만들어도 한 편처럼 보임</strong> &mdash; 편 수를 늘려도 해결되지 않음</td></tr>
+          <tr><td class="pick"><strong>강사 음성</strong></td><td>얼굴만 같고 목소리가 다르면 재현으로 읽히지 않음</td></tr>
+          <tr><td><strong>실시간성</strong></td><td class="no">불필요 &mdash; 생성에 몇 분이 걸려도 상관없음</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="subh">해본 것과 결과</h3>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>도구</th><th>입력</th><th>확인된 한계</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="pick"><strong>HeyGen</strong></td>
+            <td><strong>사진 + 음성</strong><span class="sub2">영상 클로닝은 시도 못 함</span></td>
+            <td><strong>영상 클로닝은 본인확인이 필요해 진행 불가 · 사진 기반은 포즈가 고정</strong><span class="sub2">영상을 넣어 학습시키려면 본인확인 절차를 통과해야 해서 테스트 자체를 못 함 — 대신 사진 1장과 음성을 따로 올려 클로닝한 것은 성공했으나, 만들어진 아바타의 <strong>자세·움직임이 거의 바뀌지 않음</strong></span></td>
+          </tr>
+          <tr>
+            <td><strong>DeepBrain</strong> 딥브레인</td>
+            <td><strong>영상</strong></td>
+            <td><strong>동작이 매번 똑같음</strong><span class="sub2">여러 번 생성해도 모든 영상에서 휴먼의 움직임이 동일 — 다양성이 없음</span></td>
+          </tr>
+          <tr>
+            <td><strong>Higgsfield</strong><span class="sub2">Seedance 2.0</span></td>
+            <td><strong>사진</strong></td>
+            <td><strong>다른 사람처럼 만들어짐 · 음성 연동 불가</strong><span class="sub2">실제 강사와 닮지 않게 생성됨 · MCP 사용 시 ElevenLabs 커스텀 보이스를 붙일 수 없어 매번 편집 필요 · 현재 지원 여부 미확인</span></td>
+          </tr>
+          <tr>
+            <td><strong>Gemini Omni</strong><span class="sub2">직접 사용</span></td>
+            <td><strong>사진</strong></td>
+            <td><strong>인물이 일관되지 않음</strong><span class="sub2">생성할 때마다 다른 사람이 나옴</span></td>
+          </tr>
+          <tr>
+            <td><strong>ElevenLabs</strong> 영상 생성<span class="sub2">Seedance 2.0 · Veo 3.1 · Gemini Omni</span></td>
+            <td><strong>사진</strong></td>
+            <td><strong>인물 일관성 부족 · 생성 실패</strong><span class="sub2">자체 생성이 아니라 <strong>외부 모델을 골라 불러오는 구조</strong>라 사람이 달라지거나, 아예 생성되지 않는 경우도 있었음</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn">
+      <b>정리 &mdash; 사진이냐 영상이냐로 실패 방식이 갈림</b>
+      <strong>사진 기반</strong>(Higgsfield · Gemini Omni · ElevenLabs)은 공통으로 <strong>같은 강사로 여러 번 만들면 다른 사람이 나옴</strong> &mdash; 인물 일관성에서 탈락.
+      <strong>영상 기반</strong>(딥브레인)은 인물은 일정하나 <strong>동작이 고정</strong> &mdash; 다양성에서 걸림.
+      HeyGen은 사진 기반이 같은 문제였고, <strong>영상 기반은 본인확인 때문에 시도 자체를 못 함.</strong><br>
+      <strong>즉 두 조건을 동시에 만족한 곳이 아직 없음.</strong> 현재로선 딥브레인이 가장 가까우며, 남는 문제는 <strong>동작 다양성 하나</strong>임.
+    </div>
+
+  </section>
+
+
+  <!-- ══ 04 ══ -->
   <section class="section" id="vendors">
-    <div class="eyebrow">02 · VENDOR</div>
+    <div class="eyebrow">04 · VENDOR</div>
     <h2 class="sh">업체 종합 비교</h2>
     <p class="note" style="margin-top:12px;font-size:15px;color:var(--caption)">
       업체에서 사는 것은 <strong>말에 맞춰 입이 움직이는 얼굴 영상</strong> 하나임.
@@ -400,8 +443,8 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td><strong>HeyGen LiveAvatar</strong></td>
             <td class="mk y">◎<span class="sub2">LITE Mode</span></td>
             <td class="mk y">◎<span class="sub2">FULL 에서도 가능</span></td>
-            <td class="pick"><strong>영상 2분 또는 사진 1장</strong></td>
-            <td><span class="chip">미확인</span></td>
+            <td class="pick"><strong>영상 2분 또는 사진 1장</strong><span class="sub2">영상은 본인확인 필요 — 미시도</span></td>
+            <td><span class="chip">미확인</span><span class="sub2">사진 기반은 만들어봄 — 포즈 고정</span></td>
           
             <td class="mk">$0.095<span class="sub2">영상 제작은 $29/월~</span></td>
           </tr>
@@ -425,7 +468,7 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
           </tr>
           <tr>
             <td><strong>DeepBrain</strong> 딥브레인</td>
-            <td class="mk n">✕<span class="sub2">실시간 SDK는 텍스트만 입력</span></td>
+            <td class="mk n">✕<span class="sub2">실시간 SDK는 있으나 입력이 텍스트뿐</span></td>
             <td class="mk y">◎<span class="sub2">Custom HTTP LLM</span></td>
             <td class="pick"><strong>영상</strong></td>
             <td><span class="chip">미확인</span></td>
@@ -438,18 +481,25 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
 
     <p class="note">
       ※ <strong>립싱크 열이 이 표의 핵심인데 5곳이 비어 있음.</strong>
-      실측한 3곳은 모두 기준 미달이었고, 영상 기반 클로닝을 지원하는 곳은 하나도 확인하지 못함.
-      LLM 제어는 거의 전부 ◎ 라 업체를 가르는 기준이 되지 못함 — <strong>실제 변별점은 립싱크 품질과 클로닝 입력 둘뿐.</strong>
+      실측한 3곳은 모두 기준 미달이었고, <strong>영상 기반 클로닝은 아직 한 곳도 확인하지 못함</strong> — HeyGen은 영상 학습에 <strong>본인확인</strong>이 걸려 있어 테스트 계정으로는 진행이 막힘.
+      LLM 제어는 거의 전부 ◎ 라 업체를 가르는 기준이 되지 못함 — <strong>실제 변별점은 립싱크 품질과 클로닝 입력 둘뿐.</strong> 그리고 <strong>이 표의 ◎ 는 품질 보증이 아니라 스펙 충족 표시임</strong> — 실측에서 떨어진 Anam · Simli 도 외부 음성 ◎ · LLM 제어 ◎ 로 서류상 만점이었음. <strong>조건표 통과와 한국어 립싱크 품질 사이에 상관관계가 있다는 근거는 아직 없음.</strong>
       <strong>딥브레인은 실시간 SDK로 외부 음성을 넣을 수 없음이 확인됨</strong> — <code>AIPlayer.send()</code> 는 텍스트만 받고,
       <code>setCustomVoice()</code> 는 딥브레인 플랫폼에 등록된 음성을 고르는 기능이라 강사 클론 음성을 못 씀.
+      <strong>단 이는 실시간 기능이 없다는 뜻이 아님</strong> — 실시간 SDK도 Custom HTTP LLM 연결도 있음. 걸리는 건 <strong>음성 층을 우리가 못 쥔다</strong>는 것 하나이며,
+      <strong>ElevenLabs 음성을 그대로 가져오는 경로는 공개 문서상 없음</strong> — 딥브레인 × ElevenLabs 제휴(2025.7)는 실재하나
+      <strong>영상 제작(AI Studios) 쪽 플랫폼 통합</strong>이고, 우리 계정 · API 키 · 보이스 ID를 붙이는 방식이라는 근거는 어디에도 없음.
+      다만 <strong>Voice Clone API</strong>(<code>POST /api/odin/v3/avatars/voiceclone</code>)가 <strong>오디오 URL을 받아 <code>voiceId</code> 를 돌려주므로</strong>,
+      강사 음성 샘플을 딥브레인 쪽에 다시 클로닝해 등록하는 경로는 있음.
+      <strong>남은 질문은 그 <code>voiceId</code> 가 실시간 SDK의 <code>findCustomVoice(voiceId)</code> 에 잡히느냐 하나 — 공개 문서로는 확인 불가, 영업 문의 항목.</strong>
+      <span style="display:block;margin-top:6px">※ 참고로 <strong>HeyGen 은 3rd-party voice 를 정식 지원</strong> — ElevenLabs API 키를 붙여 자기 보이스를 가져오는 절차가 헬프센터에 문서화돼 있음. 음성 층을 누가 쥐느냐에서 두 곳이 갈림.</span>
       다만 이는 <strong>실시간 제품 기준이며 영상 제작 제품(AI Studios)은 별개</strong>라, 영상 제작용 후보 지위는 유지됨.
       단가도 <strong>8곳 중 3곳(클레온 · D-ID · 딥브레인)이 비공개</strong>라 비용 비교가 완결되지 않음. 표의 단가는 <strong>실시간 분당 기준</strong>이며, 영상 제작은 건당·크레딧 과금이라 과금 체계가 다름 — HeyGen 외에는 공개 자료 없음.
     </p>
   </section>
 
-  <!-- ══ 03 ══ -->
+  <!-- ══ 05 ══ -->
   <section class="section" id="priority">
-    <div class="eyebrow">03 · PRIORITY</div>
+    <div class="eyebrow">05 · PRIORITY</div>
     <h2 class="sh">실존 강사 재현 기준 우선순위</h2>
     <p class="note" style="margin-top:12px;font-size:15px;color:var(--caption)">
       앞 표를 종합한 결과. <strong>실제 강사를 영상으로 학습시킬 수 있고 동시에 외부 LLM을 연결할 수 있는 곳</strong>을 위로 뒀음.
@@ -458,7 +508,7 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
 
     <div class="warn">
       <b>공개 문서만 보고 매긴 순위 — 실측 결과와는 별개</b>
-      1순위 세 곳은 <strong>실측 미실시</strong>라 순위가 높다고 검증된 것이 아님.
+      1순위 세 곳은 <strong>영상 클로닝 실측 미실시</strong>라 순위가 높다고 검증된 것이 아님. HeyGen은 시도했으나 <strong>영상 학습이 본인확인에 막혔고</strong>, 우회로 해본 사진 기반은 <strong>포즈가 고정</strong>이었음.<br><strong>다만 본인확인은 HeyGen 만의 벽이 아님</strong> — Beyond Presence 도 <em>"explicit consent from the person being replicated · we verify consent during our review process"</em>, Tavus 도 본인 동의를 요구함. 실존 인물 영상을 학습시키는 곳은 사실상 전부 동의 절차가 있음. 즉 이건 업체를 가르는 기준이 아니라 <strong>영상 클로닝 노선 전체의 전제조건</strong>이며, <strong>강사 동의를 확보하지 못하면 1순위 세 곳이 동시에 막힌다.</strong>
       반대로 3순위 Anam · Simli는 실측했고 <strong>한국어 립싱크가 기준 미달</strong>이었음.
       즉 <strong>지금 순위와 실제 품질은 아직 서로 확인되지 않은 상태.</strong>
     </div>
@@ -467,7 +517,7 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
       <table>
         <thead><tr><th>우선</th><th>후보</th><th>이유</th></tr></thead>
         <tbody>
-          <tr><td><span class="chip on">1순위</span></td><td class="pick"><strong>HeyGen LiveAvatar</strong></td><td>영상 기반 실제 인물 + LITE로 LLM 완전 분리 가능</td></tr>
+          <tr><td><span class="chip on">1순위</span></td><td class="pick"><strong>HeyGen LiveAvatar</strong></td><td>영상 기반 실제 인물 + LITE로 LLM 완전 분리 가능<span class="sub2">단 영상 학습은 <strong>본인확인 통과가 전제</strong> — 강사 본인 동의가 있으면 풀리는 절차지만, 그전까지는 검증 불가</span></td></tr>
           <tr><td><span class="chip on">1순위</span></td><td class="pick"><strong>Tavus</strong></td><td>영상 Replica 품질 + Persona/System Prompt + Custom LLM + Echo Mode</td></tr>
           <tr><td><span class="chip on">1순위</span></td><td class="pick"><strong>Beyond Presence</strong></td><td>영상 Custom Avatar + Speech-to-Video로 AI stack 완전 분리</td></tr>
           <tr><td><span class="chip">2순위</span></td><td><strong>DeepBrain</strong> 딥브레인</td><td>영상 Custom Avatar + Voice Clone + 한국어 + Custom HTTP LLM</td></tr>
@@ -481,9 +531,9 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
 
     <div class="warn">
       <b>비용을 우선해도 답이 크게 달라지지 않음</b>
-      최저가 Simli는 실측 품질이 최하라 이미 걸림. 그다음이 <strong>Beyond Presence(€0.0875) · HeyGen(/usr/bin/bash.095)</strong> 인데
+      최저가 Simli는 실측 품질이 최하라 이미 걸림. 그다음이 <strong>Beyond Presence(€0.0875) · HeyGen($0.095)</strong> 인데
       <strong>두 곳 모두 재현 기준에서도 1순위</strong>임. 즉 비용 기준과 재현 기준이 충돌하지 않고 같은 답으로 수렴.
-      갈리는 것은 <strong>Tavus 하나</strong> — 재현은 1순위지만 단가가 /usr/bin/bash.32 로 세 배가 넘음.
+      갈리는 것은 <strong>Tavus 하나</strong> — 재현은 1순위지만 단가가 $0.32 로 세 배가 넘음.
     </div>
 
     <p class="note">※ 이 순위는 <strong>재현 품질 기준</strong>이므로 결론의 용도별 구분과는 층위가 다름. 3순위인 Anam · Simli도 <strong>실시간 휴먼용으로는 여전히 유효</strong>하며, 사진 1장으로 즉시 착수할 수 있다는 점이 오히려 강점.</p>
