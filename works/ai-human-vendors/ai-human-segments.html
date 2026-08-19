@@ -118,7 +118,36 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
     <h2>결론</h2>
     <p class="sub">용도가 둘로 갈리며, 잘하는 업체도 서로 다름.</p>
 
-    <h3 class="subh" style="margin-top:8px;font-size:17px">사전 영상 제작용 <span style="font-weight:400;color:var(--helper);font-size:13px">클로닝 · 사전 생성</span></h3>
+    <h3 class="subh" style="margin-top:8px;font-size:17px">실시간 휴먼용 <span style="font-weight:400;color:var(--helper);font-size:13px">대화 · 즉시 응답</span></h3>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>업체</th><th>적합</th><th>근거</th><th>분당 단가</th></tr></thead>
+        <tbody>
+          <tr><td class="pick"><strong>HeyGen LiveAvatar</strong></td><td class="pick mk y">◎</td><td><strong>LITE Mode</strong> — 외부 음성 입력과 LLM 분리를 모두 지원<span class="sub2">강사 클론 음성을 그대로 넣고 수업 로직은 YBM 이 쌀</span></td><td class="mk">$0.095</td></tr>
+          <tr><td class="pick"><strong>Beyond Presence</strong></td><td class="pick mk y">◎</td><td><strong>Speech-to-Video</strong> — 외부 음성만 받아 입을 맞춤<span class="sub2">AI 층을 통째로 분리 가능 · 다만 <strong>공개 자료의 지원 언어 목록에 한국어가 없음</strong> — 영·스·불·독·아랍·중·힌디·일본어만 나열됨. 확인 필요</span></td><td class="mk">€0.0875</td></tr>
+          <tr><td class="pick"><strong>Anam</strong></td><td class="pick mk y">◎</td><td><strong>오디오 패스스루 + Custom LLM</strong><span class="sub2">연동을 실측으로 확인한 유일한 곳 — 다만 립싱크는 미달</span></td><td class="mk">$0.11~0.16</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <details>
+      <summary>나머지 5곳 보기</summary>
+      <div class="tw">
+        <table>
+          <thead><tr><th>업체</th><th>적합</th><th>근거</th><th>분당 단가</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Simli</strong></td><td class="mk n">△</td><td>외부 음성 · LLM 분리 모두 되나 <strong>실측 립싱크 품질이 3곳 중 최하</strong><span class="sub2">단가가 가장 싸다는 것만으로는 근거 부족</span></td><td class="mk">$0.01~0.05</td></tr>
+            <tr><td><strong>Tavus</strong></td><td class="mk n">△</td><td><strong>Echo Mode</strong> 로 기능은 충족하나 <strong>단가가 3배 이상</strong><span class="sub2">기능을 덤어내도 단가가 내려가지 않음</span></td><td class="mk">$0.32</td></tr>
+            <tr><td><strong>D-ID</strong></td><td class="mk n">△</td><td>외부 Agent 연동만 지원(○) · <strong>단가 비공개로 비용 산정 불가</strong></td><td class="no">비공개</td></tr>
+            <tr><td><strong>DeepBrain</strong> 딥브레인</td><td class="mk n">△</td><td><strong>실시간 자체는 지원 · 다만 외부 음성을 넣을 수 없음</strong> — <code>AIPlayer.send()</code> 는 텍스트만 받음<span class="sub2">실시간 SDK와 Custom LLM 연결은 있으므로 기능이 없는 게 아니라, <strong>ElevenLabs 강사 음성을 그대로 못 쓰는 것</strong>이 걸림 — 딥브레인 쪽에 강사 음성을 다시 클로닝해 등록하면 풀릴 여지가 있으나 미확인</span></td><td class="no">비공개</td></tr>
+            <tr><td><strong>Klleon</strong> 클레온</td><td class="mk n">△</td><td><code>startAudioEcho</code> 로 외부 음성 입력은 확인됨<span class="sub2">다만 LLM 제어 · 과금 기준 비공개 · 실측 립싱크 미달</span></td><td class="no">비공개</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <h3 class="subh" style="font-size:17px">사전 영상 제작용 <span style="font-weight:400;color:var(--helper);font-size:13px">클로닝 · 사전 생성</span></h3>
 
     <div class="tw">
       <table>
@@ -147,35 +176,6 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
       </div>
     </details>
 
-
-    <h3 class="subh" style="font-size:17px">실시간 휴먼용 <span style="font-weight:400;color:var(--helper);font-size:13px">대화 · 즉시 응답</span></h3>
-
-    <div class="tw">
-      <table>
-        <thead><tr><th>업체</th><th>적합</th><th>근거</th><th>분당 단가</th></tr></thead>
-        <tbody>
-          <tr><td class="pick"><strong>HeyGen LiveAvatar</strong></td><td class="pick mk y">◎</td><td><strong>LITE Mode</strong> — 외부 음성 입력과 LLM 분리를 모두 지원<span class="sub2">강사 클론 음성을 그대로 넣고 수업 로직은 YBM 이 쌀</span></td><td class="mk">$0.095</td></tr>
-          <tr><td class="pick"><strong>Beyond Presence</strong></td><td class="pick mk y">◎</td><td><strong>Speech-to-Video</strong> — 외부 음성만 받아 입을 맞춤<span class="sub2">AI 층을 통째로 분리 가능 · 다만 <strong>공개 자료의 지원 언어 목록에 한국어가 없음</strong> — 영·스·불·독·아랍·중·힌디·일본어만 나열됨. 확인 필요</span></td><td class="mk">€0.0875</td></tr>
-          <tr><td class="pick"><strong>Anam</strong></td><td class="pick mk y">◎</td><td><strong>오디오 패스스루 + Custom LLM</strong><span class="sub2">연동을 실측으로 확인한 유일한 곳 — 다만 립싱크는 미달</span></td><td class="mk">$0.11~0.16</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <details>
-      <summary>나머지 5곳 보기</summary>
-      <div class="tw">
-        <table>
-          <thead><tr><th>업체</th><th>적합</th><th>근거</th><th>분당 단가</th></tr></thead>
-          <tbody>
-            <tr><td><strong>Simli</strong></td><td class="mk n">△</td><td>외부 음성 · LLM 분리 모두 되나 <strong>실측 립싱크 품질이 3곳 중 최하</strong><span class="sub2">단가가 가장 싸다는 것만으로는 근거 부족</span></td><td class="mk">$0.01~0.05</td></tr>
-            <tr><td><strong>Tavus</strong></td><td class="mk n">△</td><td><strong>Echo Mode</strong> 로 기능은 충족하나 <strong>단가가 3배 이상</strong><span class="sub2">기능을 덤어내도 단가가 내려가지 않음</span></td><td class="mk">$0.32</td></tr>
-            <tr><td><strong>D-ID</strong></td><td class="mk n">△</td><td>외부 Agent 연동만 지원(○) · <strong>단가 비공개로 비용 산정 불가</strong></td><td class="no">비공개</td></tr>
-            <tr><td><strong>DeepBrain</strong> 딥브레인</td><td class="mk n">△</td><td><strong>실시간 자체는 지원 · 다만 외부 음성을 넣을 수 없음</strong> — <code>AIPlayer.send()</code> 는 텍스트만 받음<span class="sub2">실시간 SDK와 Custom LLM 연결은 있으므로 기능이 없는 게 아니라, <strong>ElevenLabs 강사 음성을 그대로 못 쓰는 것</strong>이 걸림 — 딥브레인 쪽에 강사 음성을 다시 클로닝해 등록하면 풀릴 여지가 있으나 미확인</span></td><td class="no">비공개</td></tr>
-            <tr><td><strong>Klleon</strong> 클레온</td><td class="mk n">△</td><td><code>startAudioEcho</code> 로 외부 음성 입력은 확인됨<span class="sub2">다만 LLM 제어 · 과금 기준 비공개 · 실측 립싱크 미달</span></td><td class="no">비공개</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </details>
 
   </section>
 
@@ -337,14 +337,6 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
       </table>
     </div>
 
-    <div class="warn">
-      <b>정리 &mdash; 사진이냐 영상이냐로 실패 방식이 갈림</b>
-      <strong>사진 기반</strong>(Higgsfield · Gemini Omni · ElevenLabs)은 공통으로 <strong>같은 강사로 여러 번 만들면 다른 사람이 나옴</strong> &mdash; 인물 일관성에서 탈락.
-      <strong>영상 기반</strong>(딥브레인)은 인물은 일정하나 <strong>동작이 고정</strong> &mdash; 다양성에서 걸림.
-      HeyGen은 사진 기반이 같은 문제였고, <strong>영상 기반은 본인확인 때문에 시도 자체를 못 함.</strong><br>
-      <strong>즉 두 조건을 동시에 만족한 곳이 아직 없음.</strong> 현재로선 딥브레인이 가장 가까우며, 남는 문제는 <strong>동작 다양성 하나</strong>임.
-    </div>
-
   </section>
 
 
@@ -493,13 +485,6 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
       비용이 아니라 재현 품질을 기준으로 삼았을 때의 순서.
     </p>
 
-    <div class="warn">
-      <b>공개 문서만 보고 매긴 순위 — 실측 결과와는 별개</b>
-      1순위 세 곳은 <strong>영상 클로닝 실측 미실시</strong>라 순위가 높다고 검증된 것이 아님. HeyGen은 시도했으나 <strong>영상 학습이 본인확인에 막혔고</strong>, 우회로 해본 사진 기반은 <strong>포즈가 고정</strong>이었음.<br><strong>다만 본인확인은 HeyGen 만의 벽이 아님</strong> — Beyond Presence 도 <em>"explicit consent from the person being replicated · we verify consent during our review process"</em>, Tavus 도 본인 동의를 요구함. 실존 인물 영상을 학습시키는 곳은 사실상 전부 동의 절차가 있음. 즉 이건 업체를 가르는 기준이 아니라 <strong>영상 클로닝 노선 전체의 전제조건</strong>이며, <strong>강사 동의를 확보하지 못하면 1순위 세 곳이 동시에 막힌다.</strong>
-      반대로 3순위 Anam · Simli는 실측했고 <strong>한국어 립싱크가 기준 미달</strong>이었음.
-      즉 <strong>지금 순위와 실제 품질은 아직 서로 확인되지 않은 상태.</strong>
-    </div>
-
     <div class="tw">
       <table>
         <thead><tr><th>우선</th><th>후보</th><th>이유</th></tr></thead>
@@ -514,13 +499,6 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
           <tr><td><span class="chip">확인 필요</span></td><td><strong>Klleon</strong> 클레온</td><td class="no">공개 문서만으로 Custom LLM 및 실제 인물 생성 방식 확인 부족</td></tr>
         </tbody>
       </table>
-    </div>
-
-    <div class="warn">
-      <b>비용을 우선해도 답이 크게 달라지지 않음</b>
-      최저가 Simli는 실측 품질이 최하라 이미 걸림. 그다음이 <strong>Beyond Presence(€0.0875) · HeyGen($0.095)</strong> 인데
-      <strong>두 곳 모두 재현 기준에서도 1순위</strong>임. 즉 비용 기준과 재현 기준이 충돌하지 않고 같은 답으로 수렴.
-      갈리는 것은 <strong>Tavus 하나</strong> — 재현은 1순위지만 단가가 $0.32 로 세 배가 넘음.
     </div>
 
     <p class="note">※ 이 순위는 <strong>재현 품질 기준</strong>이므로 결론의 용도별 구분과는 층위가 다름. 3순위인 Anam · Simli도 <strong>실시간 휴먼용으로는 여전히 유효</strong>하며, 사진 1장으로 즉시 착수할 수 있다는 점이 오히려 강점.</p>
