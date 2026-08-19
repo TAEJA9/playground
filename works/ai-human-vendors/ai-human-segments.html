@@ -199,7 +199,17 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
 
     <div class="tw">
       <table>
-        <thead><tr><th>순위</th><th>업체</th><th>API</th><th>영상 소스 클로닝</th><th>보이스 클로닝<span class="sub2">자체 / EL 연동</span></th><th>적합</th><th>체험</th></tr></thead>
+        <thead><tr>
+          <th>순위</th>
+          <th>업체</th>
+          <th>API</th>
+          <th>영상 소스 클로닝<span class="sub2">실존 강사는 영상이어야 자연스러움</span></th>
+          <th>보이스 클로닝<span class="sub2">자체 / EL 연동</span></th>
+          <th>외부 LLM 연결<span class="sub2">수업 스캐폴딩 로직에 따라 반영되어야 함</span></th>
+          <th>한국어 립싱크<span class="sub2">한국어 립싱크가 가능해야 함</span></th>
+          <th>적합</th>
+          <th>체험</th>
+        </tr></thead>
         <tbody>
           <tr>
             <td class="pick"><strong>1</strong></td>
@@ -207,6 +217,8 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk y">◎<span class="sub2">WebSocket + REST · LITE 모드</span></td>
             <td class="mk y">◎<span class="sub2">영상 2분 &mdash; <strong>본인확인 필요</strong></span></td>
             <td class="mk y">◎<span class="sub2">자체 ◎ · <strong>EL 연동 ◎</strong>(API 키 등록)</span></td>
+            <td class="mk y">◎<span class="sub2">LITE 모드에서 LLM 을 통째로 우리가 쥠</span></td>
+            <td class="no">미확인</td>
             <td class="mk y"><strong>O</strong></td>
             <td class="no">X<span class="sub2">실시간은 미체험</span></td>
           </tr>
@@ -216,6 +228,8 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk y">◎<span class="sub2">Persona · Conversation API</span></td>
             <td class="mk y">◎<span class="sub2">영상 1.5~2분 &mdash; <strong>본인 동의 필요</strong></span></td>
             <td class="mk y">◎<span class="sub2">echo 모드로 오디오 직접 주입 &mdash; TTS 무관</span></td>
+            <td class="mk y">◎<span class="sub2">Persona system prompt · Custom LLM</span></td>
+            <td class="no">미확인</td>
             <td class="mk y"><strong>O</strong><span class="sub2">단가 $0.32 로 3배 이상</span></td>
             <td class="no">X</td>
           </tr>
@@ -225,7 +239,9 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk y">◎<span class="sub2">Audio-to-Video · LiveKit · Pipecat</span></td>
             <td class="mk y">◎<span class="sub2">영상 4~5분 &mdash; <strong>동의 · 심사 필요</strong></span></td>
             <td class="mk y">◎<span class="sub2">자체 없음(외부 TTS 사용) · <strong>EL 연동 ◎</strong></span></td>
-            <td class="mk n"><strong>O</strong><span class="sub2"><strong>공개 언어 목록에 한국어가 없음</strong> &mdash; 확인 전까지는 보류</span></td>
+            <td class="mk y">◎<span class="sub2">OpenAI 호환</span></td>
+            <td class="no">미확인<span class="sub2"><strong>공개 언어 목록에 한국어가 없음</strong></span></td>
+            <td class="mk n"><strong>O</strong><span class="sub2">한국어 확인 전까지는 보류</span></td>
             <td class="no">X</td>
           </tr>
           <tr>
@@ -233,6 +249,8 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td><strong>D-ID</strong></td>
             <td class="mk n">○<span class="sub2">외부 Agent 연동 &mdash; 상세 미확인</span></td>
             <td class="mk y">◎<span class="sub2">사진 또는 영상</span></td>
+            <td class="no">미확인</td>
+            <td class="mk y">◎<span class="sub2">Custom LLM</span></td>
             <td class="no">미확인</td>
             <td class="mk n"><strong>O</strong><span class="sub2">단가 비공개</span></td>
             <td class="no">X</td>
@@ -243,6 +261,8 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk y">◎<span class="sub2">WebRTC · JS / Python SDK</span></td>
             <td class="mk n">✕<span class="sub2">사진 1장만 &mdash; 영상 학습 미지원</span></td>
             <td class="mk y">◎<span class="sub2">오디오 패스스루 &mdash; <strong>EL 음성 그대로 주입</strong></span></td>
+            <td class="mk y">◎<span class="sub2"><code>customLlmUrl</code> 로 서버사이드 연결</span></td>
+            <td class="neg"><strong>✕ 미달</strong><span class="sub2">실측</span></td>
             <td class="no neg"><strong>X</strong><span class="sub2">한국어 립싱크 미달</span></td>
             <td class="mk y"><strong>O</strong></td>
           </tr>
@@ -252,7 +272,9 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk y">◎<span class="sub2">WebRTC · JS 클라이언트</span></td>
             <td class="mk n">✕<span class="sub2">사진 1장만</span></td>
             <td class="mk y">◎<span class="sub2">PCM 직접 주입 &mdash; TTS 무관</span></td>
-            <td class="no neg"><strong>X</strong><span class="sub2">립싱크 3곳 중 최하</span></td>
+            <td class="mk y">◎<span class="sub2">OpenAI 호환</span></td>
+            <td class="neg"><strong>✕ 미달</strong><span class="sub2">실측 &mdash; 3곳 중 최하</span></td>
+            <td class="no neg"><strong>X</strong></td>
             <td class="mk y"><strong>O</strong></td>
           </tr>
           <tr>
@@ -261,7 +283,9 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk n">△<span class="sub2">SDK 있으나 공개 문서 부족</span></td>
             <td class="no">비공개<span class="sub2">무엇으로 만드는지 미공개</span></td>
             <td class="mk n">△<span class="sub2"><code>startAudioEcho</code> 로 외부 음성 입력은 확인</span></td>
-            <td class="no neg"><strong>X</strong><span class="sub2">립싱크 미달 · 단가 비공개</span></td>
+            <td class="mk n">△<span class="sub2">공개 문서 확인 부족</span></td>
+            <td class="neg"><strong>✕ 미달</strong><span class="sub2">실측</span></td>
+            <td class="no neg"><strong>X</strong><span class="sub2">단가도 비공개</span></td>
             <td class="mk y"><strong>O</strong></td>
           </tr>
           <tr>
@@ -270,6 +294,8 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk y">◎<span class="sub2">AI Human SDK &mdash; 웹 · iOS · Android · Unity</span></td>
             <td class="mk y">◎<span class="sub2">영상 &mdash; 스튜디오 촬영</span></td>
             <td class="mk n">△<span class="sub2">자체 Voice Clone ◎ · <strong>EL 연동 ✕</strong> &mdash; 외부 음성을 못 넣음</span></td>
+            <td class="mk y">◎<span class="sub2">Custom HTTP LLM</span></td>
+            <td class="no">미확인<span class="sub2">실시간 미체험</span></td>
             <td class="no neg"><strong>X</strong><span class="sub2">실시간에서 강사 음성을 못 씀</span></td>
             <td class="no">X<span class="sub2">실시간은 미체험</span></td>
           </tr>
