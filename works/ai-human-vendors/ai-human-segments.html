@@ -290,7 +290,7 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td><strong>8</strong></td>
             <td><strong>DeepBrain</strong> 딥브레인</td>
             <td class="mk y">◎<span class="sub2">AI Human SDK &mdash; 웹 · iOS · Android · Unity</span></td>
-            <td class="mk y">◎<span class="sub2">영상 &mdash; 스튜디오 촬영</span></td>
+            <td class="mk y">◎<span class="sub2">영상 파일 업로드 &mdash; 웹캠 · 스마트폰 촬영본도 가능</span></td>
             <td class="mk n">△<span class="sub2">자체 Voice Clone ◎ · <strong>EL 연동 ✕</strong> &mdash; 외부 음성을 못 넣음</span></td>
             <td class="mk y">◎<span class="sub2">Custom HTTP LLM</span></td>
             <td class="no">미확인<span class="sub2">실시간 미체험</span></td>
@@ -542,7 +542,7 @@ flowchart LR
             <td class="pick"><strong>1</strong></td>
             <td class="pick"><strong>DeepBrain</strong> 딥브레인</td>
             <td class="mk y">◎<span class="sub2">AI Studios V3 API</span></td>
-            <td class="pick"><strong>영상</strong><span class="sub2">스튜디오 촬영 &mdash; 학습 · 제작 약 1개월</span></td>
+            <td class="pick"><strong>영상</strong><span class="sub2">영상 파일 업로드 &mdash; 웹캠 · 스마트폰 촬영본도 가능 · <strong>최소 3분 권장 · 생성 5~40분</strong><br>스튜디오 촬영(Custom AI Human)은 별도 상위 제품 &mdash; 약 1개월</span></td>
             <td class="mk y">◎<span class="sub2"><strong>자체 Voice Clone ◎</strong> · EL 연동은 AI Studios 제휴로 존재하나 우리 키를 붙이는 방식은 아님</span></td>
             <td class="mk y"><strong>O</strong><span class="sub2">인물 일관성 확보 &mdash; 남는 문제는 동작 고정</span></td>
             <td class="mk y"><strong>O</strong></td>
@@ -796,7 +796,10 @@ flowchart LR
             <td>AI Human SDK<span class="sub2"><strong>웹 · iOS · Android · Unity · Windows 공식 SDK 제공</strong> &mdash; 8곳 중 네이티브 앱 지원이 가장 넓음</span></td>
             <td class="mk n"><strong>✕ 불가</strong><span class="sub2"><code>AIPlayer.send()</code> 는 텍스트만 받음. 음성은 <code>loadCustomVoices()</code> &rarr; <code>setCustomVoice()</code> 로 <strong>플랫폼 등록 음성 중 선택</strong>. 등록 경로는 Voice Clone API <code>POST /api/odin/v3/avatars/voiceclone</code> (오디오 URL &rarr; <code>voiceId</code>) &mdash; <strong>이 voiceId 가 실시간 SDK 에서 잡히는지는 미확인</strong></span></td>
             <td class="mk y">◎<span class="sub2">Custom HTTP LLM</span></td>
-            <td><strong>영상</strong><span class="sub2">Custom AI Human 은 스튜디오 촬영 &mdash; 학습 · 제작까지 약 1개월</span></td>
+            <td><strong>영상 파일 업로드</strong><span class="sub2"><code>POST /api/odin/v3/avatars/customavatar</code> &mdash; <code>url</code>(영상 URL) · <code>gender</code> · <code>locale</code>(<strong>ko 지원</strong>) · <code>isWebcam</code> 을 받아 <strong><code>avatarId</code> 와 <code>voiceId</code> 를 함께 반환</strong>(아바타 + 보이스 클론 동시 생성)<br>
+              <strong>최소 3분 권장</strong>(30초 미만이면 움직임이 덜 매끄러움) · 생성 <strong>5~40분</strong> · 웹캠 · 스마트폰 촬영본 가능<br>
+              <strong>공개 문서에 본인확인 · 동의 심사 절차가 없음</strong> &mdash; 업로드 권한은 사용자 책임으로 고지. HeyGen · Beyond Presence · Tavus 와 갈리는 지점이며, <strong>우리가 영상 클로닝을 실제로 해볼 수 있었던 이유</strong>이기도 함<br>
+              스튜디오 촬영(Custom AI Human)은 별도 상위 제품 &mdash; 약 1개월</span></td>
           </tr>
           <tr>
             <td><strong>Klleon</strong> 클레온</td>
