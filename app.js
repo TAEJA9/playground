@@ -163,7 +163,7 @@ const CARD_DATA = [
     icon: "🔍",
     title: "실시간 AI 휴먼 검토",
     desc: "AI 휴먼 도입을 위한 업체 비교 검토 결과",
-    href: "https://taeja9.github.io/playground/works/ai-human-vendors/ai-human-summary-ybm-report.html",
+    href: "https://taeja9.github.io/playground/works/ai-human-vendors/ai-human-segments.html",
     cats: ["report"],
     isActive: true,
     author: "정연",
