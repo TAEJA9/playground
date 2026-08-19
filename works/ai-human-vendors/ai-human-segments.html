@@ -505,17 +505,17 @@ flowchart LR
       <h2>결론 <span style="font-weight:400;color:var(--helper);font-size:14px">사전 영상 제작용</span></h2>
       <p class="sub">미리 만들어 넣어두는 구간에서 쓸 곳.</p>
 
-    <h3 class="subh" style="margin-top:8px;font-size:17px">영상으로 클로닝 <span style="font-weight:400;color:var(--helper);font-size:13px">아바타를 만들어 발화시킴</span></h3>
+    <h3 class="subh" style="margin-top:8px;font-size:17px">사전 영상 제작용 <span style="font-weight:400;color:var(--helper);font-size:13px">클로닝 · 사전 생성</span></h3>
 
     <div class="tw">
       <table>
-        <thead><tr><th>순위</th><th>업체</th><th>API</th><th>영상 소스 클로닝</th><th>보이스 클로닝<span class="sub2">자체 / EL 연동</span></th><th>적합</th><th>체험</th></tr></thead>
+        <thead><tr><th>순위</th><th>업체 · 도구</th><th>API</th><th>클로닝 소스</th><th>보이스 클로닝<span class="sub2">자체 / EL 연동</span></th><th>적합</th><th>체험</th></tr></thead>
         <tbody>
           <tr>
             <td class="pick"><strong>1</strong></td>
             <td class="pick"><strong>DeepBrain</strong> 딥브레인</td>
             <td class="mk y">◎<span class="sub2">AI Studios V3 API</span></td>
-            <td class="mk y">◎<span class="sub2">스튜디오 촬영 &mdash; 학습 · 제작 약 1개월</span></td>
+            <td class="pick"><strong>영상</strong><span class="sub2">스튜디오 촬영 &mdash; 학습 · 제작 약 1개월</span></td>
             <td class="mk y">◎<span class="sub2"><strong>자체 Voice Clone ◎</strong> · EL 연동은 AI Studios 제휴로 존재하나 우리 키를 붙이는 방식은 아님</span></td>
             <td class="mk y"><strong>O</strong><span class="sub2">인물 일관성 확보 &mdash; 남는 문제는 동작 고정</span></td>
             <td class="mk y"><strong>O</strong></td>
@@ -524,7 +524,7 @@ flowchart LR
             <td class="pick"><strong>2</strong></td>
             <td class="pick"><strong>HeyGen</strong></td>
             <td class="mk y">◎<span class="sub2">REST API</span></td>
-            <td class="mk n">△<span class="sub2">영상 2분 &mdash; <strong>본인확인에 막혀 미시도</strong></span></td>
+            <td class="pick"><strong>영상 2분 또는 사진 1장</strong><span class="sub2">영상은 <strong>본인확인에 막혀 미시도</strong> &mdash; 사진 + 음성만 해봄</span></td>
             <td class="mk y">◎<span class="sub2">자체 ◎ · <strong>EL 연동 ◎</strong>(API 키 등록)</span></td>
             <td class="mk n"><strong>O</strong><span class="sub2">사진 기반은 포즈 고정</span></td>
             <td class="mk y"><strong>O</strong><span class="sub2">사진 + 음성만</span></td>
@@ -533,7 +533,7 @@ flowchart LR
             <td><strong>3</strong></td>
             <td><strong>Tavus</strong></td>
             <td class="mk y">◎</td>
-            <td class="mk y">◎<span class="sub2">영상 1.5~2분 · 본인 동의</span></td>
+            <td><strong>영상</strong><span class="sub2">1.5~2분 · 본인 동의</span></td>
             <td class="mk y">◎<span class="sub2">오디오 직접 주입</span></td>
             <td class="mk y"><strong>O</strong><span class="sub2">단가 높음</span></td>
             <td class="no">X</td>
@@ -542,7 +542,7 @@ flowchart LR
             <td><strong>4</strong></td>
             <td><strong>Beyond Presence</strong></td>
             <td class="mk y">◎</td>
-            <td class="mk y">◎<span class="sub2">영상 4~5분 · 동의 · 심사</span></td>
+            <td><strong>영상</strong><span class="sub2">4~5분(최소 2분) · 동의 · 심사</span></td>
             <td class="mk y">◎<span class="sub2">외부 TTS 사용 · EL 연동 ◎</span></td>
             <td class="mk n"><strong>O</strong><span class="sub2"><strong>공개 언어 목록에 한국어가 없음</strong></span></td>
             <td class="no">X</td>
@@ -551,44 +551,34 @@ flowchart LR
             <td><strong>5</strong></td>
             <td><strong>D-ID</strong></td>
             <td class="mk n">○<span class="sub2">상세 미확인</span></td>
-            <td class="mk y">◎<span class="sub2">사진 또는 영상</span></td>
+            <td><strong>사진 또는 영상</strong><span class="sub2">Photo Avatar / Instant Video Avatar</span></td>
             <td class="no">미확인</td>
             <td class="mk n"><strong>O</strong><span class="sub2">단가 비공개</span></td>
             <td class="no">X</td>
           </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h3 class="subh" style="font-size:17px">사진으로 생성 <span style="font-weight:400;color:var(--helper);font-size:13px">영상 생성 모델 &mdash; 목업에 실제로 쓴 것들</span></h3>
-
-    <div class="tw">
-      <table>
-        <thead><tr><th>순위</th><th>도구</th><th>API</th><th>영상 소스 클로닝</th><th>보이스 클로닝<span class="sub2">자체 / EL 연동</span></th><th>적합</th><th>체험</th></tr></thead>
-        <tbody>
           <tr>
-            <td><strong>1</strong></td>
+            <td><strong>6</strong></td>
             <td><strong>Higgsfield</strong><span class="sub2">Seedance 2.0</span></td>
             <td class="mk y">◎<span class="sub2">API · MCP</span></td>
-            <td class="mk n">✕<span class="sub2">사진 입력 방식 &mdash; 영상 학습 개념 없음</span></td>
+            <td class="no"><strong>사진</strong><span class="sub2">영상 학습 개념 없음 &mdash; 생성 모델</span></td>
             <td class="mk n">✕<span class="sub2">MCP 사용 시 <strong>EL 커스텀 보이스를 못 붙임</strong></span></td>
             <td class="no"><strong>X</strong><span class="sub2">실제 강사와 닮지 않게 생성됨</span></td>
             <td class="mk y"><strong>O</strong></td>
           </tr>
           <tr>
-            <td><strong>2</strong></td>
+            <td><strong>7</strong></td>
             <td><strong>ElevenLabs</strong> 영상 생성<span class="sub2">Seedance 2.0 · Veo 3.1 · Gemini Omni</span></td>
             <td class="mk y">◎</td>
-            <td class="mk n">✕<span class="sub2">사진 입력 방식</span></td>
+            <td class="no"><strong>사진</strong><span class="sub2">외부 모델을 골라 불러오는 구조</span></td>
             <td class="mk y">◎<span class="sub2">EL 자체 보이스 &mdash; 음성만은 강점</span></td>
             <td class="no"><strong>X</strong><span class="sub2">인물 일관성 부족 · 생성 실패</span></td>
             <td class="mk y"><strong>O</strong></td>
           </tr>
           <tr>
-            <td><strong>3</strong></td>
+            <td><strong>8</strong></td>
             <td><strong>Gemini Omni</strong></td>
             <td class="mk y">◎</td>
-            <td class="mk n">✕<span class="sub2">사진 입력 방식</span></td>
+            <td class="no"><strong>사진</strong><span class="sub2">생성 모델</span></td>
             <td class="no">미확인</td>
             <td class="no"><strong>X</strong><span class="sub2">생성할 때마다 다른 사람이 나옴</span></td>
             <td class="mk y"><strong>O</strong></td>
@@ -598,8 +588,8 @@ flowchart LR
     </div>
 
     <p class="note">
-      ※ <strong>사진으로 생성하는 갈래는 세 도구 모두 실측에서 탈락했음</strong> &mdash; 실존 강사를 재현해야 하는데 인물이 유지되지 않음.
-      즉 <strong>사전 제작은 사실상 &ldquo;영상으로 클로닝&rdquo; 한 줄로 좁혀지며, 그중 실측한 곳은 딥브레인뿐임.</strong><br>
+      ※ <strong>클로닝 소스가 사진인 6~8위는 모두 실측에서 탈락했음</strong> &mdash; 실존 강사를 재현해야 하는데 인물이 유지되지 않음.
+      즉 <strong>사전 제작은 사실상 &ldquo;영상으로 클로닝&rdquo; 쪽으로 좁혀지며, 그중 실측한 곳은 딥브레인뿐임.</strong><br>
       ※ <strong>Anam · Simli · 클레온은 이 표에서 뺐음</strong> &mdash; 셋 다 실시간 스트리밍 전용 제품이라 사전 제작용 영상 파일을 뽑는 용도가 아님.
     </p>
 
