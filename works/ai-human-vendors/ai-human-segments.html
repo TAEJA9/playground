@@ -57,6 +57,13 @@ h1 em{font-style:normal;color:var(--blue)}
 .pane>.verdict{margin-bottom:80px}
 .verdict h2 span{letter-spacing:0}
 
+/* 개조식 목록 */
+.pts{margin:20px 0 0;padding:0;list-style:none;background:var(--card);border:1px solid var(--divider);border-radius:var(--r-box)}
+.pts li{position:relative;padding:14px 20px 14px 38px;border-bottom:1px solid var(--divider);font-size:15px;line-height:1.6;color:var(--caption)}
+.pts li:last-child{border-bottom:none}
+.pts li::before{content:'';position:absolute;left:20px;top:23px;width:5px;height:5px;border-radius:50%;background:var(--blue)}
+.pts li b{color:var(--head);font-weight:600}
+
 /* Section */
 .section{margin-bottom:80px;scroll-margin-top:24px}
 .eyebrow{font-size:12px;font-weight:500;letter-spacing:.06em;color:var(--helper);margin-bottom:10px}
@@ -217,27 +224,22 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
   <section class="section" id="realtime">
     <div class="eyebrow">01 · SEGMENT</div>
     <h2 class="sh">실시간 영상이 필요한 구간</h2>
-    <h3 class="subh">여기에 필요한 것 &mdash; 두 구간이 서로 다름</h3>
-
-    <div class="tw">
-      <table>
-        <thead><tr><th>항목</th><th>온보딩 인사<span class="sub2">인사말 + 닉네임</span></th><th>수업 중 대화</th></tr></thead>
-        <tbody>
-          <tr><td><strong>발화 길이</strong></td><td class="pick">3~5초</td><td>30초 이상 연속</td></tr>
-          <tr><td><strong>언어</strong></td><td class="pick">한국어만</td><td>한·영 혼용<span class="sub2">립싱크가 가장 잘 깨지는 조건</span></td></tr>
-          <tr><td><strong>방향</strong></td><td class="pick">일방 &mdash; 듣기만</td><td>양방향 &mdash; 끼어들기 처리 필요</td></tr>
-          <tr><td><strong>횟수</strong></td><td class="pick">1인당 1회</td><td>발화마다 반복</td></tr>
-          <tr><td><strong>발화 중단 제어</strong></td><td class="pick">불필요</td><td>필요</td></tr>
-          <tr><td><strong>드리프트</strong><span class="sub2">말이 길어질수록 입이 소리보다 밀리는 현상</span></td><td class="pick">없음 &mdash; 너무 짧아 발생 여지 없음</td><td>있음 &mdash; 뒤로 갈수록 어긋남</td></tr>
-          <tr><td><strong>실패 시 타격</strong></td><td><strong>큼</strong><span class="sub2">서비스 첫인상 &mdash; 이탈로 직결</span></td><td>중간<span class="sub2">수업 중 한 번 어색한 정도</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p class="note">
-      ※ <strong>난이도가 낮은 쪽이 실패 시 타격은 더 큼.</strong> 온보딩은 실시간이라 해도 <strong>가변인 부분은 이름 한 단어뿐</strong>이고 3~5초 · 한국어만 · 일방이라 기술적으로 가장 쉬운 조건인데,
-      서비스 첫 화면이라 여기서 어색하면 그대로 이탈로 이어짐. <strong>실측을 시작한다면 이 구간부터 보는 것이 맞음.</strong>
+    <h3 class="subh">여기에 필요한 것</h3>
+    <p class="note" style="margin-top:8px;font-size:15px;color:var(--caption)">
+      <strong>수업 중 대화</strong>를 기준으로 잡음. 온보딩 인사는 3~5초 · 한국어만 · 일방이라 <strong>여기 조건의 부분집합</strong>이므로 따로 세지 않음.
     </p>
+
+    <ul class="pts">
+      <li><b>한·영 혼용</b> &mdash; 한 문장 안에서 언어가 바뀜. <strong>립싱크가 가장 잘 깨지는 조건</strong></li>
+      <li><b>양방향</b> &mdash; 학생이 말을 끊고 들어옴. 발화 중단 · 재개 제어 필요</li>
+      <li><b>30초 이상 연속 발화</b> &mdash; 길어질수록 입이 소리보다 밀리는 <strong>드리프트</strong> 발생</li>
+      <li><b>발화마다 반복 호출</b> &mdash; 1회성이 아니라 수업 내내</li>
+      <li><b>가변 텍스트 즉시 반영</b> &mdash; 학생 이름처럼 방금 받은 값을 그 자리에서 말해야 함</li>
+      <li><b>외부 음성 입력</b> &mdash; 강사 클론 음성(ElevenLabs)을 그대로 넣을 수 있어야 함</li>
+      <li><b>외부 LLM 연결</b> &mdash; 수업 로직은 YBM 이 쥠. 업체 LLM 에 맡기지 않음</li>
+      <li><b>실존 강사 얼굴</b> &mdash; 영상 클로닝으로 만든 아바타</li>
+      <li><b>한국어 립싱크 품질</b> &mdash; <strong>위 조건을 다 갖춰도 여기서 떨어지면 못 씀</strong></li>
+    </ul>
 
     <h3 class="subh">해본 것과 결과</h3>
 
@@ -476,17 +478,13 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
     <h2 class="sh">사전 제작 영상이 필요한 구간</h2>
     <h3 class="subh">여기에 필요한 것</h3>
 
-    <div class="tw">
-      <table>
-        <thead><tr><th>요구</th><th>왜 필요한가</th></tr></thead>
-        <tbody>
-          <tr><td class="pick"><strong>인물 일관성</strong></td><td>편마다 얼굴이 달라지면 <strong>강사 재현이라는 전제 자체가 깨짐</strong></td></tr>
-          <tr><td class="pick"><strong>동작 다양성</strong></td><td>몸짓이 매번 같으면 <strong>여러 편을 만들어도 한 편처럼 보임</strong> &mdash; 편 수를 늘려도 해결되지 않음</td></tr>
-          <tr><td class="pick"><strong>강사 음성</strong></td><td>얼굴만 같고 목소리가 다르면 재현으로 읽히지 않음</td></tr>
-          <tr><td><strong>실시간성</strong></td><td class="no">불필요 &mdash; 생성에 몇 분이 걸려도 상관없음</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <ul class="pts">
+      <li><b>인물 일관성</b> &mdash; 편마다 얼굴이 달라지면 <strong>강사 재현이라는 전제 자체가 깨짐</strong></li>
+      <li><b>동작 다양성</b> &mdash; 몸짓이 매번 같으면 <strong>여러 편을 만들어도 한 편처럼 보임</strong></li>
+      <li><b>강사 음성</b> &mdash; 얼굴만 같고 목소리가 다르면 재현으로 읽히지 않음</li>
+      <li><b>편수 산정</b> &mdash; <strong>발화 종류 × 강사 수</strong>로 정해짐. 단조로움을 덜려고 편 수를 늘리는 것은 동작이 고정이라 효과 없음</li>
+      <li><b>실시간성 불필요</b> &mdash; 생성에 몇 분이 걸려도 상관없음</li>
+    </ul>
 
     <h3 class="subh">해본 것과 결과</h3>
 
