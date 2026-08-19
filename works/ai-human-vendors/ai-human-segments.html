@@ -100,10 +100,13 @@ td strong{color:var(--head);font-weight:500}
 code{font-family:var(--f-mono);font-size:.92em;padding:1px 5px;border-radius:4px;background:var(--fog);color:var(--caption);word-break:break-all}
 td.pick{background:rgba(20,90,255,.035)}
 td.pick strong{color:var(--blue)}
-.mk{font-family:var(--f-mono);font-size:15px;font-weight:500}
-.mk.y{color:var(--blue)}
-.mk.n{color:var(--helper)}
-.no{color:var(--helper)}
+.mk{font-family:var(--f-mono);font-size:16px;font-weight:600}
+.mk.y{color:var(--blue);background:rgba(20,90,255,.07)}
+.mk.n{color:var(--helper);background:rgba(0,0,0,.022)}
+.no{color:var(--helper);background:rgba(0,0,0,.022)}
+td.neg{background:rgba(242,96,82,.08);color:var(--dot-coral)}
+td.neg strong{color:var(--dot-coral)}
+td.mk .sub2,td.no .sub2,td.neg .sub2{font-weight:400}
 .chip{display:inline-block;padding:4px 12px;border-radius:var(--r-pill);font-size:13px;font-weight:500;background:var(--fog);color:var(--helper)}
 .chip.on{background:var(--blue);color:#fff}
 .dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:8px;vertical-align:middle}
@@ -240,7 +243,7 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk y">◎<span class="sub2">WebRTC · JS / Python SDK</span></td>
             <td class="mk n">✕<span class="sub2">사진 1장만 &mdash; 영상 학습 미지원</span></td>
             <td class="mk y">◎<span class="sub2">오디오 패스스루 &mdash; <strong>EL 음성 그대로 주입</strong></span></td>
-            <td class="no"><strong>X</strong><span class="sub2">한국어 립싱크 미달</span></td>
+            <td class="no neg"><strong>X</strong><span class="sub2">한국어 립싱크 미달</span></td>
             <td class="mk y"><strong>O</strong></td>
           </tr>
           <tr>
@@ -249,7 +252,7 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk y">◎<span class="sub2">WebRTC · JS 클라이언트</span></td>
             <td class="mk n">✕<span class="sub2">사진 1장만</span></td>
             <td class="mk y">◎<span class="sub2">PCM 직접 주입 &mdash; TTS 무관</span></td>
-            <td class="no"><strong>X</strong><span class="sub2">립싱크 3곳 중 최하</span></td>
+            <td class="no neg"><strong>X</strong><span class="sub2">립싱크 3곳 중 최하</span></td>
             <td class="mk y"><strong>O</strong></td>
           </tr>
           <tr>
@@ -258,7 +261,7 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk n">△<span class="sub2">SDK 있으나 공개 문서 부족</span></td>
             <td class="no">비공개<span class="sub2">무엇으로 만드는지 미공개</span></td>
             <td class="mk n">△<span class="sub2"><code>startAudioEcho</code> 로 외부 음성 입력은 확인</span></td>
-            <td class="no"><strong>X</strong><span class="sub2">립싱크 미달 · 단가 비공개</span></td>
+            <td class="no neg"><strong>X</strong><span class="sub2">립싱크 미달 · 단가 비공개</span></td>
             <td class="mk y"><strong>O</strong></td>
           </tr>
           <tr>
@@ -267,7 +270,7 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
             <td class="mk y">◎<span class="sub2">AI Human SDK &mdash; 웹 · iOS · Android · Unity</span></td>
             <td class="mk y">◎<span class="sub2">영상 &mdash; 스튜디오 촬영</span></td>
             <td class="mk n">△<span class="sub2">자체 Voice Clone ◎ · <strong>EL 연동 ✕</strong> &mdash; 외부 음성을 못 넣음</span></td>
-            <td class="no"><strong>X</strong><span class="sub2">실시간에서 강사 음성을 못 씀</span></td>
+            <td class="no neg"><strong>X</strong><span class="sub2">실시간에서 강사 음성을 못 씀</span></td>
             <td class="no">X<span class="sub2">실시간은 미체험</span></td>
           </tr>
         </tbody>
@@ -562,7 +565,7 @@ flowchart LR
             <td class="mk y">◎<span class="sub2">API · MCP</span></td>
             <td class="no"><strong>사진</strong><span class="sub2">영상 학습 개념 없음 &mdash; 생성 모델</span></td>
             <td class="mk n">✕<span class="sub2">MCP 사용 시 <strong>EL 커스텀 보이스를 못 붙임</strong></span></td>
-            <td class="no"><strong>X</strong><span class="sub2">실제 강사와 닮지 않게 생성됨</span></td>
+            <td class="no neg"><strong>X</strong><span class="sub2">실제 강사와 닮지 않게 생성됨</span></td>
             <td class="mk y"><strong>O</strong></td>
           </tr>
           <tr>
@@ -571,7 +574,7 @@ flowchart LR
             <td class="mk y">◎</td>
             <td class="no"><strong>사진</strong><span class="sub2">외부 모델을 골라 불러오는 구조</span></td>
             <td class="mk y">◎<span class="sub2">EL 자체 보이스 &mdash; 음성만은 강점</span></td>
-            <td class="no"><strong>X</strong><span class="sub2">인물 일관성 부족 · 생성 실패</span></td>
+            <td class="no neg"><strong>X</strong><span class="sub2">인물 일관성 부족 · 생성 실패</span></td>
             <td class="mk y"><strong>O</strong></td>
           </tr>
           <tr>
@@ -580,7 +583,7 @@ flowchart LR
             <td class="mk y">◎</td>
             <td class="no"><strong>사진</strong><span class="sub2">생성 모델</span></td>
             <td class="no">미확인</td>
-            <td class="no"><strong>X</strong><span class="sub2">생성할 때마다 다른 사람이 나옴</span></td>
+            <td class="no neg"><strong>X</strong><span class="sub2">생성할 때마다 다른 사람이 나옴</span></td>
             <td class="mk y"><strong>O</strong></td>
           </tr>
         </tbody>
