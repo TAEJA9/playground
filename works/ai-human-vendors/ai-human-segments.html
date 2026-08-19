@@ -31,7 +31,7 @@ a:hover{color:var(--blue-deep)}
 .badge i{width:6px;height:6px;border-radius:50%;background:var(--blue)}
 h1{margin:0;font-size:38px;line-height:1.15;letter-spacing:-.03em;font-weight:600;color:var(--head);white-space:nowrap}
 h1 em{font-style:normal;color:var(--blue)}
-.ghost{display:inline-block;margin-top:20px;padding:12px 28px;border-radius:var(--r-pill);background:var(--card);border:1px solid var(--blue);font-size:15px;font-weight:500;color:var(--blue);transition:background .2s ease,color .2s ease}
+.ghost{display:inline-block;margin-top:16px;padding:7px 16px;border-radius:var(--r-pill);background:var(--card);border:1px solid var(--blue);font-size:12px;font-weight:500;color:var(--blue);transition:background .2s ease,color .2s ease}
 .ghost:hover{background:var(--blue);color:#fff}
 
 /* 결론 */
@@ -63,6 +63,9 @@ h1 em{font-style:normal;color:var(--blue)}
 .pts li:last-child{border-bottom:none}
 .pts li::before{content:'';position:absolute;left:20px;top:17px;width:5px;height:5px;border-radius:50%;background:var(--blue)}
 .pts li b{color:var(--head);font-weight:600}
+.pts li i{display:inline-block;width:20px;font-style:normal;font-weight:600;color:var(--blue)}
+.ptsh{margin:24px 0 6px;font-size:13px;font-weight:500;color:var(--helper)}
+.pts+.ptsh{margin-top:22px}
 
 /* Section */
 .section{margin-bottom:80px;scroll-margin-top:24px}
@@ -128,7 +131,7 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
 <header class="hero">
   <div class="badge"><i></i>YBM AI LAB · AI 어학원</div>
   <h1>AI 강사 영상, <em>용도별</em> 서비스 비교</h1>
-  <a class="ghost" href="ai-human-summary-ybm-report.html">실시간 AI 휴먼 도입 검토 →</a>
+  <a class="ghost" href="ai-human-summary-ybm-report.html" target="_blank" rel="noopener">실시간 AI 휴먼 도입 검토 →</a>
 </header>
 
 <main class="shell">
@@ -219,17 +222,31 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
   <section class="section" id="realtime">
     <div class="eyebrow">01 · SEGMENT</div>
     <h2 class="sh">실시간 영상이 필요한 구간</h2>
-    <h3 class="subh">여기에 필요한 것</h3>
+    <h3 class="subh">여기에 필요한 것 &mdash; 업체 평가 기준</h3>
+    <p class="note" style="margin-top:8px;font-size:15px;color:var(--caption)">
+      <strong>수업 중 대화</strong> 기준. 온보딩 인사는 이 조건의 부분집합이라 따로 세지 않음.
+      <strong>①~④ 가 다음 장 업체 비교표의 열이 됨.</strong>
+    </p>
+
+    <p class="ptsh">업체 비교표에서 답하는 것</p>
     <ul class="pts">
-      <li><b>한·영 혼용</b> &mdash; 한 문장 안에서 언어가 바뀜. <strong>립싱크가 가장 잘 깨지는 조건</strong></li>
-      <li><b>양방향</b> &mdash; 학생이 말을 끊고 들어옴. 발화 중단 · 재개 제어 필요</li>
-      <li><b>30초 이상 연속 발화</b> &mdash; 길어질수록 입이 소리보다 밀리는 <strong>드리프트</strong> 발생</li>
+      <li><i>①</i><b>외부 음성 입력</b> &mdash; 강사 클론 음성(ElevenLabs)을 그대로 넣을 수 있어야 함</li>
+      <li><i>②</i><b>외부 LLM 연결</b> &mdash; 수업 로직은 YBM 이 쥠. 업체 LLM 에 맡기지 않음</li>
+      <li><i>③</i><b>실존 강사 얼굴</b> &mdash; 영상 클로닝으로 만든 아바타</li>
+      <li><i>④</i><b>한국어 립싱크 품질</b> &mdash; <strong>앞을 다 갖춰도 여기서 떨어지면 못 씀</strong></li>
+    </ul>
+
+    <p class="ptsh">아직 어느 업체도 확인하지 못한 것 &mdash; 실측해야만 나옴</p>
+    <ul class="pts">
+      <li><i>⑤</i><b>한·영 혼용</b> &mdash; 한 문장 안에서 언어가 바뀜. <strong>립싱크가 가장 잘 깨지는 조건</strong></li>
+      <li><i>⑥</i><b>양방향 · 끼어들기</b> &mdash; 학생이 말을 끊고 들어옴. 발화 중단 · 재개 제어 필요</li>
+      <li><i>⑦</i><b>30초 이상 연속 발화</b> &mdash; 길어질수록 입이 소리보다 밀리는 <strong>드리프트</strong> 발생</li>
+    </ul>
+
+    <p class="ptsh">실시간 제품이면 기본 충족 &mdash; 업체를 가르지 못함</p>
+    <ul class="pts">
       <li><b>발화마다 반복 호출</b> &mdash; 1회성이 아니라 수업 내내</li>
       <li><b>가변 텍스트 즉시 반영</b> &mdash; 학생 이름처럼 방금 받은 값을 그 자리에서 말해야 함</li>
-      <li><b>외부 음성 입력</b> &mdash; 강사 클론 음성(ElevenLabs)을 그대로 넣을 수 있어야 함</li>
-      <li><b>외부 LLM 연결</b> &mdash; 수업 로직은 YBM 이 쥠. 업체 LLM 에 맡기지 않음</li>
-      <li><b>실존 강사 얼굴</b> &mdash; 영상 클로닝으로 만든 아바타</li>
-      <li><b>한국어 립싱크 품질</b> &mdash; <strong>위 조건을 다 갖춰도 여기서 떨어지면 못 씀</strong></li>
     </ul>
 
     <h3 class="subh">해본 것과 결과</h3>
@@ -266,21 +283,18 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
     <p class="note" style="margin-top:12px;font-size:15px;color:var(--caption)">
       업체에서 사는 것은 <strong>말에 맞춰 입이 움직이는 얼굴 영상</strong> 하나임.
       음성 인식(STT) · 음성 합성(ElevenLabs) · 답변 생성(LLM)은 YBM 이 이미 쓰는 것을 그대로 쓰므로 업체를 고르는 기준이 아님.
-      <strong>그래서 확인할 것은 네 가지</strong> —
-      ① YBM 이 만든 강사 음성을 받아주는가 ·
-      ② YBM 수업 로직을 붙일 수 있는가 ·
-      ③ 실제 강사 얼굴을 만들 수 있는가 ·
-      ④ 한국어 입 모양이 맞는가.
+      <strong>앞 장의 기준 ①~④ 를 업체별로 채운 것이 아래 표임.</strong>
+      ⑤~⑦(한·영 혼용 · 끼어들기 · 드리프트)은 <strong>열이 없음 — 어느 업체도 확인하지 못했고, 실측해야만 나옴.</strong>
     </p>
 
     <div class="tw">
       <table>
         <thead><tr>
           <th>업체</th>
-          <th>외부 음성 입력<span class="sub2">강사 클론 음성 사용</span></th>
-          <th>LLM 제어<span class="sub2">System Prompt · 외부 LLM 연결</span></th>
-          <th>클로닝 입력<span class="sub2">실존 강사 재현</span></th>
-          <th>한국어 립싱크<span class="sub2">핵심 판단 기준</span></th>
+          <th>① 외부 음성 입력<span class="sub2">강사 클론 음성 사용</span></th>
+          <th>② 외부 LLM 연결<span class="sub2">System Prompt · 외부 LLM</span></th>
+          <th>③ 실존 강사 얼굴<span class="sub2">클로닝 입력</span></th>
+          <th>④ 한국어 립싱크<span class="sub2">핵심 판단 기준</span></th>
           <th>분당 단가<span class="sub2">실시간 기준</span></th>
         </tr></thead>
         <tbody>
