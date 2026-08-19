@@ -507,35 +507,40 @@ flowchart LR
       <h2>결론 <span style="font-weight:400;color:var(--helper);font-size:14px">사전 영상 제작용</span></h2>
       <p class="sub">미리 만들어 넣어두는 구간에서 쓸 곳.</p>
 
-    <h3 class="subh" style="font-size:17px">사전 영상 제작용 <span style="font-weight:400;color:var(--helper);font-size:13px">클로닝 · 사전 생성</span></h3>
+    <h3 class="subh" style="margin-top:8px;font-size:17px">영상으로 클로닝 <span style="font-weight:400;color:var(--helper);font-size:13px">아바타를 만들어 발화시킴</span></h3>
 
     <div class="tw">
       <table>
-        <thead><tr><th>업체</th><th>적합</th><th>근거</th><th>분당 단가<span class="sub2">실시간 기준 참고</span></th></tr></thead>
+        <thead><tr><th>업체</th><th>적합</th><th>근거</th><th>단가</th></tr></thead>
         <tbody>
-          <tr><td class="pick"><strong>DeepBrain</strong> 딥브레인</td><td class="pick mk y">◎</td><td><strong>영상</strong>으로 클로닝 · Custom Avatar + Voice Clone<span class="sub2">국내 업체 · 한국어 특화</span></td><td class="no">비공개</td></tr>
-          <tr><td class="pick"><strong>HeyGen LiveAvatar</strong></td><td class="pick mk n">○</td><td><strong>영상 클로닝은 본인확인에 막혀 진행 못 함</strong><span class="sub2">사진 + 음성을 따로 올리는 방식은 성공 — 다만 <strong>포즈가 거의 고정</strong>됨</span></td><td class="mk">$0.095</td></tr>
-          <tr><td class="pick"><strong>Beyond Presence</strong></td><td class="pick mk y">◎</td><td><strong>영상</strong>으로 클로닝 · 권장 4~5분, 최소 2분</td><td class="mk">€0.0875</td></tr>
+          <tr><td class="pick"><strong>DeepBrain</strong> 딥브레인</td><td class="pick mk y">◎</td><td><strong>실측함 &mdash; 인물 일관성 확보</strong> · Custom Avatar + Voice Clone<span class="sub2">국내 업체 · 한국어 특화 · <strong>남는 문제는 동작 고정 하나</strong></span></td><td class="no">비공개</td></tr>
+          <tr><td class="pick"><strong>HeyGen</strong></td><td class="pick mk n">○</td><td><strong>영상 클로닝은 본인확인에 막혀 진행 못 함</strong><span class="sub2">사진 + 음성을 따로 올리는 방식은 성공 &mdash; 다만 <strong>포즈가 거의 고정</strong>됨</span></td><td class="mk">$29/월~</td></tr>
+          <tr><td class="pick"><strong>Beyond Presence</strong></td><td class="pick mk y">◎</td><td><strong>영상</strong>으로 클로닝 · 권장 4~5분, 최소 2분 &mdash; <strong>미실측</strong><span class="sub2">본인 동의 + 심사 필요</span></td><td class="mk">€0.0875<span class="sub2">실시간 기준</span></td></tr>
+          <tr><td><strong>Tavus</strong></td><td class="mk y">◎</td><td><strong>영상</strong>으로 클로닝 · 1.5~2분 + 본인 동의 &mdash; <strong>미실측</strong></td><td class="mk">$0.32<span class="sub2">실시간 기준</span></td></tr>
+          <tr><td><strong>D-ID</strong></td><td class="mk n">○</td><td><strong>사진 또는 영상</strong> · Photo Avatar / Instant Video Avatar &mdash; <strong>미실측</strong></td><td class="no">비공개</td></tr>
         </tbody>
       </table>
     </div>
 
-    <details>
-      <summary>나머지 5곳 보기</summary>
-      <div class="tw">
-        <table>
-          <thead><tr><th>업체</th><th>적합</th><th>근거</th><th>분당 단가<span class="sub2">실시간 기준 참고</span></th></tr></thead>
-          <tbody>
-            <tr><td><strong>Tavus</strong></td><td class="mk y">◎</td><td><strong>영상</strong>으로 클로닝 · 1.5~2분 + 본인 동의</td><td class="mk">$0.32</td></tr>
-            <tr><td><strong>D-ID</strong></td><td class="mk n">○</td><td><strong>사진 또는 영상</strong> · Photo Avatar / Instant Video Avatar</td><td class="no">비공개</td></tr>
-            <tr><td><strong>Anam</strong></td><td class="mk n">△</td><td><strong>사진 1장만</strong> 가능 · 영상 학습 지원 안 함<span class="sub2">표정 · 고개 움직임 제한</span></td><td class="mk">$0.11~0.16</td></tr>
-            <tr><td><strong>Simli</strong></td><td class="mk n">△</td><td><strong>사진 1장만</strong> 가능 · 영상 학습 지원 안 함</td><td class="mk">$0.01~0.05</td></tr>
-            <tr><td><strong>Klleon</strong> 클레온</td><td class="no">?</td><td class="no">Studio 에서 만든 avatar_id 를 가져다 쓰는 구조 — <strong>무엇으로 만드는지 비공개</strong></td><td class="no">비공개</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </details>
+    <h3 class="subh" style="font-size:17px">사진으로 생성 <span style="font-weight:400;color:var(--helper);font-size:13px">영상 생성 모델 &mdash; 목업에 실제로 쓴 것들</span></h3>
 
+    <div class="tw">
+      <table>
+        <thead><tr><th>도구</th><th>적합</th><th>근거</th><th>과금</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Higgsfield</strong><span class="sub2">Seedance 2.0</span></td><td class="mk n">✕</td><td><strong>실측 &mdash; 실제 강사와 닮지 않게 생성됨</strong><span class="sub2">MCP 사용 시 ElevenLabs 커스텀 보이스를 못 붙임</span></td><td class="no">구독</td></tr>
+          <tr><td><strong>Gemini Omni</strong></td><td class="mk n">✕</td><td><strong>실측 &mdash; 생성할 때마다 다른 사람이 나옴</strong></td><td class="no">종량</td></tr>
+          <tr><td><strong>ElevenLabs</strong> 영상 생성<span class="sub2">Seedance 2.0 · Veo 3.1 · Gemini Omni</span></td><td class="mk n">✕</td><td><strong>실측 &mdash; 인물 일관성 부족 · 생성 실패</strong><span class="sub2">자체 생성이 아니라 외부 모델을 골라 불러오는 구조</span></td><td class="no">구독</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note">
+      ※ <strong>사진으로 생성하는 갈래는 세 도구 모두 실측에서 탈락했음</strong> &mdash; 실존 강사를 재현해야 하는데 인물이 유지되지 않음.
+      즉 <strong>사전 제작은 사실상 &ldquo;영상으로 클로닝&rdquo; 한 줄로 좁혀지며, 그중 실측한 곳은 딥브레인뿐임.</strong><br>
+      ※ <strong>Anam · Simli · 클레온은 이 표에서 뺐음.</strong> 셋 다 <strong>실시간 스트리밍 전용 제품</strong>이라 사전 제작용 영상 파일을 뽑는 용도가 아니며,
+      특히 클레온은 <strong>아바타를 무엇으로 만드는지 자체가 비공개</strong>라 판단할 근거가 없음.
+    </p>
 
     </section>
 
