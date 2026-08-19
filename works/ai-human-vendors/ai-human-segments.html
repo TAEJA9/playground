@@ -480,21 +480,38 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
     </div>
 
     <p class="note">
-      ※ <strong>립싱크 열이 이 표의 핵심인데 5곳이 비어 있음.</strong>
-      실측한 3곳은 모두 기준 미달이었고, <strong>영상 기반 클로닝은 아직 한 곳도 확인하지 못함</strong> — HeyGen은 영상 학습에 <strong>본인확인</strong>이 걸려 있어 테스트 계정으로는 진행이 막힘.
-      LLM 제어는 거의 전부 ◎ 라 업체를 가르는 기준이 되지 못함 — <strong>실제 변별점은 립싱크 품질과 클로닝 입력 둘뿐.</strong> 그리고 <strong>이 표의 ◎ 는 품질 보증이 아니라 스펙 충족 표시임</strong> — 실측에서 떨어진 Anam · Simli 도 외부 음성 ◎ · LLM 제어 ◎ 로 서류상 만점이었음. <strong>조건표 통과와 한국어 립싱크 품질 사이에 상관관계가 있다는 근거는 아직 없음.</strong>
-      <strong>딥브레인은 실시간 SDK로 외부 음성을 넣을 수 없음이 확인됨</strong> — <code>AIPlayer.send()</code> 는 텍스트만 받고,
-      <code>setCustomVoice()</code> 는 딥브레인 플랫폼에 등록된 음성을 고르는 기능이라 강사 클론 음성을 못 씀.
-      <strong>단 이는 실시간 기능이 없다는 뜻이 아님</strong> — 실시간 SDK도 Custom HTTP LLM 연결도 있음. 걸리는 건 <strong>음성 층을 우리가 못 쥔다</strong>는 것 하나이며,
-      <strong>ElevenLabs 음성을 그대로 가져오는 경로는 공개 문서상 없음</strong> — 딥브레인 × ElevenLabs 제휴(2025.7)는 실재하나
-      <strong>영상 제작(AI Studios) 쪽 플랫폼 통합</strong>이고, 우리 계정 · API 키 · 보이스 ID를 붙이는 방식이라는 근거는 어디에도 없음.
-      다만 <strong>Voice Clone API</strong>(<code>POST /api/odin/v3/avatars/voiceclone</code>)가 <strong>오디오 URL을 받아 <code>voiceId</code> 를 돌려주므로</strong>,
-      강사 음성 샘플을 딥브레인 쪽에 다시 클로닝해 등록하는 경로는 있음.
-      <strong>남은 질문은 그 <code>voiceId</code> 가 실시간 SDK의 <code>findCustomVoice(voiceId)</code> 에 잡히느냐 하나 — 공개 문서로는 확인 불가, 영업 문의 항목.</strong>
-      <span style="display:block;margin-top:6px">※ 참고로 <strong>HeyGen 은 3rd-party voice 를 정식 지원</strong> — ElevenLabs API 키를 붙여 자기 보이스를 가져오는 절차가 헬프센터에 문서화돼 있음. 음성 층을 누가 쥐느냐에서 두 곳이 갈림.</span>
-      다만 이는 <strong>실시간 제품 기준이며 영상 제작 제품(AI Studios)은 별개</strong>라, 영상 제작용 후보 지위는 유지됨.
-      단가도 <strong>8곳 중 3곳(클레온 · D-ID · 딥브레인)이 비공개</strong>라 비용 비교가 완결되지 않음. 표의 단가는 <strong>실시간 분당 기준</strong>이며, 영상 제작은 건당·크레딧 과금이라 과금 체계가 다름 — HeyGen 외에는 공개 자료 없음.
+      ※ <strong>립싱크 열이 이 표의 핵심인데 5곳이 비어 있음.</strong> 실측한 3곳은 모두 미달이었고, <strong>영상 기반 클로닝은 아직 한 곳도 확인하지 못함.</strong><br>
+      ※ <strong>◎ 는 품질 보증이 아니라 스펙 충족 표시임.</strong> 실측에서 떨어진 Anam · Simli 도 외부 음성 ◎ · LLM 제어 ◎ 로 서류상 만점이었음 &mdash;
+      <strong>조건표 통과와 한국어 립싱크 품질 사이에 상관관계가 있다는 근거는 아직 없음.</strong> LLM 제어는 거의 전부 ◎ 라 변별력이 없고, 실제로 가르는 것은 <strong>립싱크 품질과 클로닝 입력 둘뿐.</strong>
     </p>
+
+    <h3 class="subh">표에 안 들어간 것</h3>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>항목</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>딥브레인 &mdash; 음성</strong><span class="sub2">실시간 기준</span></td>
+            <td><strong>실시간 SDK에 외부 음성을 넣을 수 없음</strong> &mdash; <code>send()</code> 는 텍스트만 받고 <code>setCustomVoice()</code> 는 딥브레인에 등록된 음성을 고르는 기능.
+              <span class="sub2">실시간 기능이 없다는 뜻은 아님(실시간 SDK · Custom HTTP LLM 모두 있음). 걸리는 건 <strong>음성 층을 우리가 못 쥔다</strong>는 것 하나. 그리고 이는 실시간 제품 기준이라 <strong>영상 제작용 후보 지위는 유지됨.</strong></span></td>
+          </tr>
+          <tr>
+            <td><strong>딥브레인 &mdash; 우회로</strong><span class="sub2">영업 문의 항목</span></td>
+            <td><strong>ElevenLabs 음성을 그대로 가져오는 경로는 공개 문서상 없음.</strong> 다만 <code>POST /avatars/voiceclone</code> 이 <strong>오디오 URL을 받아 <code>voiceId</code> 를 돌려줌</strong> &mdash; 딥브레인 쪽에 다시 클로닝해 등록하는 길은 있음.
+              <span class="sub2">제휴(2025.7)는 실재하나 <strong>영상 제작(AI Studios) 쪽 통합</strong>이고 우리 키 · 보이스 ID를 붙이는 방식이 아님. <strong>남은 질문 하나 &mdash; 그 <code>voiceId</code> 가 실시간 SDK의 <code>findCustomVoice()</code> 에 잡히는가.</strong></span></td>
+          </tr>
+          <tr>
+            <td><strong>HeyGen &mdash; 음성</strong></td>
+            <td><strong>3rd-party voice 를 정식 지원</strong> &mdash; ElevenLabs API 키를 붙여 자기 보이스를 가져오는 절차가 문서화돼 있음.<span class="sub2">음성 층을 누가 쥐느냐에서 딥브레인과 갈림</span></td>
+          </tr>
+          <tr>
+            <td><strong>단가</strong></td>
+            <td><strong>8곳 중 3곳(클레온 · D-ID · 딥브레인) 비공개</strong>라 비용 비교가 완결되지 않음.<span class="sub2">표의 단가는 실시간 분당 기준 · 영상 제작은 건당 · 크레딧 과금이라 체계가 다름 &mdash; HeyGen 외에는 공개 자료 없음</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <!-- ══ 05 ══ -->
