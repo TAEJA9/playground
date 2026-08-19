@@ -344,18 +344,23 @@ flowchart LR
   <section class="section" id="realtime">
     <div class="eyebrow">01 · SEGMENT</div>
     <h2 class="sh">실시간 영상이 필요한 구간</h2>
-    <h3 class="subh">여기에 필요한 것</h3>
+    <h3 class="subh">어떤 구간인가</h3>
 
     <ul class="pts">
-      <li><i>①</i><b>외부 음성 입력</b> &mdash; 강사 클론 음성(ElevenLabs)을 그대로 넣을 수 있어야 함</li>
-      <li><i>②</i><b>외부 LLM 연결</b> &mdash; 수업 로직은 YBM 이 쥠. 업체 LLM 에 맡기지 않음</li>
-      <li><i>③</i><b>실존 강사 얼굴</b> &mdash; 영상 클로닝으로 만든 아바타</li>
-      <li><i>④</i><b>립싱크 품질</b> &mdash; <strong>앞을 다 갖춰도 여기서 떨어지면 못 씀.</strong> <strong>영어와 한국어를 나눠서 봄</strong> &mdash; 대부분 영어 기준으로 만들어진 제품이라 한국어에서 갈림</li>
-      <li><i>⑤</i><b>한·영 혼용</b> &mdash; 한 문장 안에서 언어가 바뀜. <strong>립싱크가 가장 잘 깨지는 조건</strong></li>
-      <li><i>⑥</i><b>양방향 · 끼어들기</b> &mdash; 학생이 말을 끊고 들어옴. 발화 중단 · 재개 제어 필요</li>
-      <li><i>⑦</i><b>30초 이상 연속 발화</b> &mdash; 길어질수록 입이 소리보다 밀리는 <strong>드리프트</strong> 발생</li>
-      <li><i>⑧</i><b>발화마다 반복 호출</b> &mdash; 1회성이 아니라 수업 내내</li>
-      <li><i>⑨</i><b>가변 텍스트 즉시 반영</b> &mdash; 학생 이름처럼 방금 받은 값을 그 자리에서 말해야 함</li>
+      <li><b>온보딩</b> &mdash; 사용자 이름을 받아서 불러주며 후킹 멘트 생성</li>
+      <li><b>수업 중</b> &mdash; 학생과 상호작용하며 대화</li>
+    </ul>
+
+    <h3 class="subh">필요한 기능</h3>
+
+    <ul class="pts">
+      <li><i>①</i><b>휴먼의 음성</b> &mdash; 강사 클론 음성(ElevenLabs)을 그대로 넣을 수 있어야 함</li>
+      <li><i>②</i><b>LLM 별도 연결</b> &mdash; 수업 스캐폴딩 로직에 따라 반영이 되어야 함</li>
+      <li><i>③</i><b>영상으로 클로닝</b> &mdash; 실존 강사의 경우, 입력 소스가 영상이어야 자연스러움</li>
+      <li><i>④</i><b>한국어 립싱크 품질</b></li>
+      <li><i>⑤</i><b>한·영 혼용</b></li>
+      <li><i>⑥</i><b>끼어들기</b> &mdash; 사용자가 끼어들었을 때와 아닐 때를 적절히 구분</li>
+      <li><i>⑦</i><b>상호작용</b> &mdash; 1회성이 아니라 수업 내내 실시간 대화가 가능해야 함</li>
     </ul>
 
     <h3 class="subh">해본 것과 결과</h3>
@@ -367,8 +372,8 @@ flowchart LR
           <th>① 외부 음성</th>
           <th>② 외부 LLM</th>
           <th>③ 실존 강사 얼굴</th>
-          <th>④ 영어 립싱크</th>
-          <th>④ 한국어 립싱크<span class="sub2">실제 판정 기준</span></th>
+          <th>영어 립싱크<span class="sub2">참고 &mdash; 기준선</span></th>
+          <th>④ 한국어 립싱크</th>
           <th>⑤~⑦<span class="sub2">혼용 · 끼어들기 · 드리프트</span></th>
         </tr></thead>
         <tbody>
