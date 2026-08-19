@@ -413,7 +413,7 @@ flowchart LR
             <td class="mk y">◎<span class="sub2">Custom LLM</span></td>
             <td class="mk n">△<span class="sub2">사진으로 클로닝은 성공 &mdash; 영상 학습은 지원 안 함</span></td>
             <td class="mk n"><strong>✕ 미달</strong><span class="sub2">아바타는 만들었으나 입 모양에서 걸림</span></td>
-            <td class="mk y">◎<span class="sub2">실측 &mdash; 가능</span></td>
+            <td class="mk y">◎</td>
             <td class="no">미확인</td>
             <td class="no">미확인</td>
             <td class="no">미확인</td>
@@ -424,7 +424,7 @@ flowchart LR
             <td class="mk y">◎<span class="sub2">OpenAI-compatible</span></td>
             <td class="mk n">✕<span class="sub2">무료 등급에서 커스텀 아바타 생성 불가 &mdash; 기본 아바타로 테스트</span></td>
             <td class="mk n"><strong>✕ 미달</strong><span class="sub2">3곳 중 최하</span></td>
-            <td class="no">미확인</td>
+            <td class="mk y">◎</td>
             <td class="no">미확인</td>
             <td class="no">미확인</td>
             <td class="no">미확인</td>
@@ -435,7 +435,7 @@ flowchart LR
             <td class="mk n">△<span class="sub2">공개 문서 확인 부족</span></td>
             <td class="mk n">✕<span class="sub2">무료 등급에서 커스텀 아바타 생성 불가 &mdash; 기본 아바타로 테스트</span></td>
             <td class="mk n"><strong>✕ 미달</strong></td>
-            <td class="no">미확인</td>
+            <td class="mk y">◎</td>
             <td class="no">미확인</td>
             <td class="no">미확인</td>
             <td class="no">미확인</td>
@@ -634,12 +634,12 @@ flowchart LR
   class RPO,VVO no;
       </pre>
     </div>
-    <h3 class="subh">여기에 필요한 것</h3>
+    <h3 class="subh">필요한 조건</h3>
 
     <ul class="pts">
       <li><i>①</i><b>인물 일관성</b> &mdash; 편마다 얼굴이 달라지면 <strong>강사 재현이라는 전제 자체가 깨짐</strong></li>
-      <li><i>②</i><b>동작 다양성</b> &mdash; 몸짓이 매번 같으면 <strong>여러 편을 만들어도 한 편처럼 보임</strong></li>
-      <li><i>③</i><b>강사 음성</b> &mdash; 얼굴만 같고 목소리가 다르면 재현으로 읽히지 않음</li>
+      <li><i>②</i><b>동작 다양성</b> &mdash; 여러 편이 다양하게 보이려면 <strong>어느 정도 자연스러운 동작이 있어야 함</strong></li>
+      <li><i>③</i><b>강사 음성 재현</b> &mdash; <strong>실존 강사의 보이스 클론이 가능해야 함</strong></li>
     </ul>
 
     <h3 class="subh">체험 후 분석 결과</h3>
@@ -651,7 +651,7 @@ flowchart LR
           <th>입력</th>
           <th>① 인물 일관성</th>
           <th>② 동작 다양성</th>
-          <th>③ 강사 음성</th>
+          <th>③ 강사 음성 재현</th>
         </tr></thead>
         <tbody>
           <tr>
@@ -741,11 +741,6 @@ flowchart LR
   <section class="section" id="appendix">
     <div class="eyebrow">APPENDIX</div>
     <h2 class="sh">기술 사양 요약</h2>
-    <p class="note" style="margin-top:12px;font-size:15px;color:var(--caption)">
-      <strong>각 업체 공개 API 문서를 확인해 정리한 것</strong> &mdash; 개발사 전달용.
-      본문 표가 &ldquo;되는가/안 되는가&rdquo;라면 여기는 <strong>&ldquo;어떻게 붙이는가&rdquo;</strong>임.
-      문서에 없는 항목은 <strong>미공개 · 미확인</strong>으로 표기했고, 추정해 채우지 않음.
-    </p>
 
     <div class="tw">
       <table>
