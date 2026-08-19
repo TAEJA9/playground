@@ -94,6 +94,7 @@ tbody tr:hover{background:var(--fog)}
 td{line-height:1.6;color:var(--caption)}
 td strong{color:var(--head);font-weight:500}
 .sub2{display:block;margin-top:3px;font-size:12px;line-height:1.45;color:var(--helper)}
+code{font-family:var(--f-mono);font-size:.92em;padding:1px 5px;border-radius:4px;background:var(--fog);color:var(--caption);word-break:break-all}
 td.pick{background:rgba(20,90,255,.035)}
 td.pick strong{color:var(--blue)}
 .mk{font-family:var(--f-mono);font-size:15px;font-weight:500}
@@ -492,51 +493,175 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
     <h3 class="subh">여기에 필요한 것</h3>
 
     <ul class="pts">
-      <li><b>인물 일관성</b> &mdash; 편마다 얼굴이 달라지면 <strong>강사 재현이라는 전제 자체가 깨짐</strong></li>
-      <li><b>동작 다양성</b> &mdash; 몸짓이 매번 같으면 <strong>여러 편을 만들어도 한 편처럼 보임</strong></li>
-      <li><b>강사 음성</b> &mdash; 얼굴만 같고 목소리가 다르면 재현으로 읽히지 않음</li>
-      <li><b>편수 산정</b> &mdash; <strong>발화 종류 × 강사 수</strong>로 정해짐. 단조로움을 덜려고 편 수를 늘리는 것은 동작이 고정이라 효과 없음</li>
-      <li><b>실시간성 불필요</b> &mdash; 생성에 몇 분이 걸려도 상관없음</li>
+      <li><i>①</i><b>인물 일관성</b> &mdash; 편마다 얼굴이 달라지면 <strong>강사 재현이라는 전제 자체가 깨짐</strong></li>
+      <li><i>②</i><b>동작 다양성</b> &mdash; 몸짓이 매번 같으면 <strong>여러 편을 만들어도 한 편처럼 보임</strong></li>
+      <li><i>③</i><b>강사 음성</b> &mdash; 얼굴만 같고 목소리가 다르면 재현으로 읽히지 않음</li>
+      <li><i>④</i><b>편수 산정</b> &mdash; <strong>발화 종류 × 강사 수</strong>로 정해짐. 단조로움을 덜려고 편 수를 늘리는 것은 동작이 고정이라 효과 없음</li>
+      <li><i>⑤</i><b>실시간성 불필요</b> &mdash; 생성에 몇 분이 걸려도 상관없음</li>
     </ul>
 
     <h3 class="subh">해본 것과 결과</h3>
 
     <div class="tw">
       <table>
-        <thead><tr><th>도구</th><th>입력</th><th>확인된 한계</th></tr></thead>
+        <thead><tr>
+          <th>도구</th>
+          <th>입력</th>
+          <th>① 인물 일관성</th>
+          <th>② 동작 다양성</th>
+          <th>③ 강사 음성</th>
+        </tr></thead>
         <tbody>
           <tr>
             <td class="pick"><strong>HeyGen</strong></td>
-            <td><strong>사진 + 음성</strong><span class="sub2">영상 클로닝은 시도 못 함</span></td>
-            <td><strong>영상 클로닝은 본인확인이 필요해 진행 불가 · 사진 기반은 포즈가 고정</strong><span class="sub2">영상을 넣어 학습시키려면 본인확인 절차를 통과해야 해서 테스트 자체를 못 함 — 대신 사진 1장과 음성을 따로 올려 클로닝한 것은 성공했으나, 만들어진 아바타의 <strong>자세·움직임이 거의 바뀌지 않음</strong></span></td>
+            <td><strong>사진 + 음성</strong><span class="sub2">영상 클로닝은 <strong>본인확인</strong>에 막혀 미시도</span></td>
+            <td class="mk y">◎<span class="sub2">아바타가 고정돼 편마다 같은 인물</span></td>
+            <td class="mk n"><strong>✕</strong><span class="sub2">자세 · 움직임이 거의 바뀌지 않음</span></td>
+            <td class="mk y">◎<span class="sub2">음성을 따로 올려 클로닝 성공</span></td>
           </tr>
           <tr>
             <td><strong>DeepBrain</strong> 딥브레인</td>
             <td><strong>영상</strong></td>
-            <td><strong>동작이 매번 똑같음</strong><span class="sub2">여러 번 생성해도 모든 영상에서 휴먼의 움직임이 동일 — 다양성이 없음</span></td>
+            <td class="mk y">◎<span class="sub2">여러 번 생성해도 인물이 일정</span></td>
+            <td class="mk n"><strong>✕</strong><span class="sub2">모든 영상에서 움직임이 동일</span></td>
+            <td class="mk y">◎<span class="sub2">Voice Clone 지원</span></td>
           </tr>
           <tr>
             <td><strong>Higgsfield</strong><span class="sub2">Seedance 2.0</span></td>
             <td><strong>사진</strong></td>
-            <td><strong>다른 사람처럼 만들어짐 · 음성 연동 불가</strong><span class="sub2">실제 강사와 닮지 않게 생성됨 · MCP 사용 시 ElevenLabs 커스텀 보이스를 붙일 수 없어 매번 편집 필요 · 현재 지원 여부 미확인</span></td>
+            <td class="mk n"><strong>✕</strong><span class="sub2">실제 강사와 닮지 않게 생성됨</span></td>
+            <td class="no">미확인</td>
+            <td class="mk n"><strong>✕</strong><span class="sub2">MCP 사용 시 ElevenLabs 커스텀 보이스를 못 붙여 매번 편집 필요 · 현재 지원 여부 미확인</span></td>
           </tr>
           <tr>
             <td><strong>Gemini Omni</strong><span class="sub2">직접 사용</span></td>
             <td><strong>사진</strong></td>
-            <td><strong>인물이 일관되지 않음</strong><span class="sub2">생성할 때마다 다른 사람이 나옴</span></td>
+            <td class="mk n"><strong>✕</strong><span class="sub2">생성할 때마다 다른 사람이 나옴</span></td>
+            <td class="no">미확인</td>
+            <td class="no">미확인</td>
           </tr>
           <tr>
             <td><strong>ElevenLabs</strong> 영상 생성<span class="sub2">Seedance 2.0 · Veo 3.1 · Gemini Omni</span></td>
             <td><strong>사진</strong></td>
-            <td><strong>인물 일관성 부족 · 생성 실패</strong><span class="sub2">자체 생성이 아니라 <strong>외부 모델을 골라 불러오는 구조</strong>라 사람이 달라지거나, 아예 생성되지 않는 경우도 있었음</span></td>
+            <td class="mk n"><strong>✕</strong><span class="sub2">사람이 달라지거나 아예 생성되지 않음 &mdash; 자체 생성이 아니라 외부 모델을 골라 불러오는 구조</span></td>
+            <td class="no">미확인</td>
+            <td class="no">미확인</td>
           </tr>
         </tbody>
       </table>
     </div>
 
+    <p class="note">
+      ※ <strong>①과 ②를 동시에 만족한 곳이 아직 없음.</strong> 영상 기반(딥브레인 · HeyGen)은 인물은 지켜지나 동작이 고정이고,
+      사진 기반 생성(Higgsfield · Gemini Omni · ElevenLabs)은 인물부터 무너져 ② 를 볼 단계에 이르지 못함.
+      <strong>현재로선 딥브레인이 가장 가까우며 남는 문제는 ② 하나.</strong>
+    </p>
+
   </section>
 
   </div>
+
+
+  <section class="section" id="appendix">
+    <div class="eyebrow">APPENDIX</div>
+    <h2 class="sh">기술 사양 요약</h2>
+    <p class="note" style="margin-top:12px;font-size:15px;color:var(--caption)">
+      <strong>각 업체 공개 API 문서를 확인해 정리한 것</strong> &mdash; 개발사 전달용.
+      본문 표가 &ldquo;되는가/안 되는가&rdquo;라면 여기는 <strong>&ldquo;어떻게 붙이는가&rdquo;</strong>임.
+      문서에 없는 항목은 <strong>미공개 · 미확인</strong>으로 표기했고, 추정해 채우지 않음.
+    </p>
+
+    <div class="tw">
+      <table>
+        <thead><tr>
+          <th>업체</th>
+          <th>통합 방식</th>
+          <th>외부 음성 입력 규격</th>
+          <th>외부 LLM</th>
+          <th>아바타 생성 요건</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td class="pick"><strong>HeyGen</strong> LiveAvatar</td>
+            <td>WebSocket 명령 + WebRTC 영상<span class="sub2"><strong>LITE</strong>(영상만) · <strong>FULL</strong>(파이프라인 전체) 두 모드</span></td>
+            <td><code>agent.speak</code> 에 <strong>Base64 PCM 16-bit 24kHz</strong><span class="sub2">패킷당 최대 1MB · 약 1초 청크 권장 · 중단은 <code>agent.interrupt</code> · <code>session.state_updated</code> 가 <code>connected</code> 된 뒤 전송</span></td>
+            <td class="mk y">◎<span class="sub2">LITE 모드에서 STT · LLM · TTS 전부 자체 사용</span></td>
+            <td><strong>영상 2분 또는 사진 1장</strong><span class="sub2">영상 학습은 <strong>본인확인 필요</strong></span></td>
+          </tr>
+          <tr>
+            <td class="pick"><strong>Beyond Presence</strong></td>
+            <td>Audio-to-Video API<span class="sub2">LiveKit · Pipecat 플러그인 제공(필수 아님) · TTS 오디오 &rarr; HD 아바타 <strong>250ms</strong></span></td>
+            <td class="mk y">◎<span class="sub2">음성 에이전트 오디오를 그대로 받음 &mdash; <strong>포맷 · 샘플레이트는 공개 문서에 미기재</strong></span></td>
+            <td class="mk y">◎<span class="sub2">OpenAI 호환</span></td>
+            <td><strong>영상 4~5분</strong>(최소 2분)<span class="sub2">1080p 권장 · MP4/MOV · <strong>본인 동의 + 심사 절차</strong> · 소요 기간 미기재</span></td>
+          </tr>
+          <tr>
+            <td><strong>Anam</strong></td>
+            <td>WebRTC · JS / Python SDK<span class="sub2">SDK 가 시그널링까지 처리</span></td>
+            <td><code>enable_audio_passthrough</code><span class="sub2"><code>createTalkMessageStream()</code> 로 오디오 주입 · 끼어들기는 <code>endOfSpeechSensitivity</code> 등으로 제어</span></td>
+            <td class="mk y">◎<span class="sub2">서버사이드 <code>customLlmUrl</code> · 클라이언트사이드 <code>llmId: CUSTOMER_CLIENT_V1</code></span></td>
+            <td><strong>이미지 1장</strong>(one-shot)<span class="sub2">영상 학습 미지원 · 70개 이상 언어</span></td>
+          </tr>
+          <tr>
+            <td><strong>Simli</strong></td>
+            <td>WebRTC · JS 클라이언트</td>
+            <td><code>sendAudioData(Uint8Array)</code><span class="sub2"><strong>PCM Int16 · 16kHz · 모노</strong> · <code>listenToMediastreamTrack()</code> 로 트랙 직접 연결도 가능</span></td>
+            <td class="mk y">◎<span class="sub2">OpenAI 호환</span></td>
+            <td><strong>이미지 1장</strong> &rarr; <code>faceId</code><span class="sub2">무료 등급에서는 커스텀 아바타 생성 불가</span></td>
+          </tr>
+          <tr>
+            <td><strong>Tavus</strong></td>
+            <td>Daily / WebRTC<span class="sub2">Persona · Conversation API</span></td>
+            <td><code>pipeline_mode: "echo"</code><span class="sub2">LLM 을 우회하고 넣은 오디오를 그대로 말함 · echo 에서는 <code>system_prompt</code> 불요</span></td>
+            <td class="mk y">◎<span class="sub2">Persona system prompt · Custom LLM</span></td>
+            <td><strong>영상 1.5~2분</strong><span class="sub2"><strong>본인 동의 필요</strong></span></td>
+          </tr>
+          <tr>
+            <td><strong>DeepBrain</strong> 딥브레인</td>
+            <td>AI Human SDK<span class="sub2">Web · Unity · iOS · Android · Windows</span></td>
+            <td class="mk n"><strong>✕ 불가</strong><span class="sub2"><code>AIPlayer.send()</code> 는 텍스트만 받음. 음성은 <code>loadCustomVoices()</code> &rarr; <code>setCustomVoice()</code> 로 <strong>플랫폼 등록 음성 중 선택</strong>. 등록 경로는 Voice Clone API <code>POST /api/odin/v3/avatars/voiceclone</code> (오디오 URL &rarr; <code>voiceId</code>) &mdash; <strong>이 voiceId 가 실시간 SDK 에서 잡히는지는 미확인</strong></span></td>
+            <td class="mk y">◎<span class="sub2">Custom HTTP LLM</span></td>
+            <td><strong>영상</strong><span class="sub2">Custom AI Human 은 스튜디오 촬영 &mdash; 학습 · 제작까지 약 1개월</span></td>
+          </tr>
+          <tr>
+            <td><strong>Klleon</strong> 클레온</td>
+            <td class="no">SDK<span class="sub2">공개 문서 부족</span></td>
+            <td><code>startAudioEcho</code><span class="sub2">외부 음성 입력 자체는 확인됨 · 규격 미공개</span></td>
+            <td class="mk n">△<span class="sub2">공개 문서 확인 부족</span></td>
+            <td class="no">확인 필요<span class="sub2">Studio 에서 만든 <code>avatar_id</code> 를 가져다 쓰는 구조 &mdash; 무엇으로 만드는지 비공개</span></td>
+          </tr>
+          <tr>
+            <td><strong>D-ID</strong></td>
+            <td class="no">Agent 연동<span class="sub2">상세 미확인</span></td>
+            <td class="mk n">○<span class="sub2">외부 Agent 연동 형태 &mdash; 규격 미확인</span></td>
+            <td class="mk y">◎<span class="sub2">Custom LLM</span></td>
+            <td><strong>사진 또는 영상</strong><span class="sub2">Photo Avatar / Instant Video Avatar</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="subh">개발사에 확인 요청할 항목</h3>
+
+    <ul class="pts">
+      <li><b>딥브레인</b> &mdash; Voice Clone API 로 만든 <code>voiceId</code> 를 <strong>AI Human 실시간 SDK 에서 쓸 수 있는가</strong>. 되면 실시간 후보로 복귀, 안 되면 영상 제작 전용</li>
+      <li><b>Beyond Presence</b> &mdash; <strong>한국어를 지원하는가</strong>(공개 언어 목록에 없음) · 커스텀 아바타 <strong>심사 소요 기간</strong> · 오디오 입력 포맷</li>
+      <li><b>HeyGen</b> &mdash; 영상 클로닝 <strong>본인확인 절차의 구체적 요건</strong>(강사 본인이 무엇을 해야 하는가)</li>
+      <li><b>클레온 · D-ID · 딥브레인</b> &mdash; <strong>단가</strong>(3곳 모두 비공개)</li>
+      <li><b>공통</b> &mdash; 한·영 혼용 발화 시 립싱크 · 끼어들기(barge-in) 처리 · 30초 이상 연속 발화의 드리프트</li>
+    </ul>
+
+    <h3 class="subh">참고 문서</h3>
+
+    <ul class="pts">
+      <li><b>HeyGen LiveAvatar</b> &mdash; <a href="https://docs.liveavatar.com/" target="_blank" rel="noopener">docs.liveavatar.com</a> (LITE Mode &rarr; Events 에 명령 규격)</li>
+      <li><b>Beyond Presence</b> &mdash; <a href="https://docs.bey.dev/integration/audio-to-video" target="_blank" rel="noopener">docs.bey.dev</a> (Audio-to-Video · Custom Avatars)</li>
+      <li><b>Anam</b> &mdash; <a href="https://docs.anam.ai/" target="_blank" rel="noopener">docs.anam.ai</a></li>
+      <li><b>Simli</b> &mdash; <a href="https://docs.simli.com/api-reference/simli-webrtc" target="_blank" rel="noopener">docs.simli.com</a></li>
+      <li><b>Tavus</b> &mdash; <a href="https://docs.tavus.io/" target="_blank" rel="noopener">docs.tavus.io</a> (Personas · pipeline_mode)</li>
+      <li><b>DeepBrain</b> &mdash; <a href="https://docs.aistudios.com/" target="_blank" rel="noopener">docs.aistudios.com</a> (AI Human SDK · AI Studios V3 API)</li>
+    </ul>
+  </section>
 
   <footer>YBM AI LAB. 2026</footer>
 </main>
