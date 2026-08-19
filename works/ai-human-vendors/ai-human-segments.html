@@ -94,6 +94,9 @@ tbody tr:hover{background:var(--fog)}
 td{line-height:1.6;color:var(--caption)}
 td strong{color:var(--head);font-weight:500}
 .sub2{display:block;margin-top:3px;font-size:12px;line-height:1.45;color:var(--helper)}
+.mmwrap{margin-top:20px;padding:20px 12px;background:var(--card);border:1px solid var(--divider);border-radius:var(--r-box);overflow-x:auto}
+.mermaid{display:flex;justify-content:center;min-width:640px}
+.mermaid i{font-style:normal;color:#6b7280}
 code{font-family:var(--f-mono);font-size:.92em;padding:1px 5px;border-radius:4px;background:var(--fog);color:var(--caption);word-break:break-all}
 td.pick{background:rgba(20,90,255,.035)}
 td.pick strong{color:var(--blue)}
@@ -186,36 +189,40 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
       이 조합이 지금 결정해야 할 범위이며, <strong>칸마다 막히는 이유가 서로 다름.</strong>
     </p>
 
-    <div class="tw">
-      <table>
-        <thead><tr>
-          <th style="width:26%">대상 · 용도</th>
-          <th style="width:37%">사진으로 클로닝</th>
-          <th style="width:37%">영상으로 클로닝</th>
-        </tr></thead>
-        <tbody>
-          <tr>
-            <td><span class="dot d-coral"></span><strong>실존 강사</strong><span class="sub2">실시간 휴먼</span></td>
-            <td class="mk n">△ 되지만 품질 미달<span class="sub2">실측 &mdash; 아바타는 만들어지나 <strong>포즈 고정 · 한국어 립싱크 미달</strong></span></td>
-            <td class="mk n">△ 미실측<span class="sub2"><strong>본인확인 필요</strong> &mdash; 강사 동의를 받아야 착수 가능</span></td>
-          </tr>
-          <tr>
-            <td><span class="dot d-coral"></span><strong>실존 강사</strong><span class="sub2">사전 제작</span></td>
-            <td class="mk n">✕ 품질 미달<span class="sub2">실측 &mdash; <strong>만들 때마다 다른 사람이 나옴</strong>(인물 일관성 붕괴)</span></td>
-            <td class="mk y">◎ 유일하게 성립<span class="sub2">실측(딥브레인) &mdash; 인물은 일정하나 <strong>동작이 고정</strong> · <strong>본인확인 필요</strong></span></td>
-          </tr>
-          <tr>
-            <td><span class="dot d-amber"></span><strong>가상 인물</strong><span class="sub2">실시간 휴먼</span></td>
-            <td class="mk n">△ <strong>품질 검토 필요</strong><span class="sub2">&ldquo;안 닮았다&rdquo;는 판정이 사라지지만 <strong>립싱크 품질은 별개 &mdash; 미검토</strong></span></td>
-            <td class="mk n">✕ 불가<span class="sub2">본인확인을 통과할 사람이 없음</span></td>
-          </tr>
-          <tr>
-            <td><span class="dot d-amber"></span><strong>가상 인물</strong><span class="sub2">사전 제작</span></td>
-            <td class="mk n">△ <strong>품질 검토 필요</strong><span class="sub2">캐릭터를 한 번 확정하면 그것이 기준선이 됨 &mdash; <strong>미검토</strong></span></td>
-            <td class="mk n">✕ 불가<span class="sub2">본인확인 · 학습용 원본 영상 확보 모두 걸림</span></td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="mmwrap">
+      <pre class="mermaid">
+flowchart LR
+  ROOT([클로닝]) --> REAL[실존 강사]
+  ROOT --> VIRT[가상 인물]
+
+  REAL --> RP[사진 입력]
+  REAL --> RV["영상 입력<br/><b>본인확인 필요</b>"]
+  VIRT --> VP[사진 입력]
+  VIRT --> VV["영상 입력"]
+
+  RP --> RPL["실시간<br/>△ 포즈 고정 · 립싱크 미달<br/><i>실측함</i>"]
+  RP --> RPP["사전 제작<br/>✕ 인물 일관성 붕괴<br/><i>실측함</i>"]
+
+  RV --> RVL["실시간<br/>△ 아직 못 해봄"]
+  RV --> RVP["사전 제작<br/>◎ 유일하게 성립<br/><i>딥브레인 · 동작은 고정</i>"]
+
+  VP --> VPL["실시간<br/>△ 품질 검토 필요"]
+  VP --> VPP["사전 제작<br/>△ 품질 검토 필요"]
+
+  VV --> VVX["✕ 불가<br/>본인확인을 통과할 사람이 없음"]
+
+  classDef ok fill:#e8f0ff,stroke:#145aff,stroke-width:1.5px,color:#020520;
+  classDef warn fill:#fff6ec,stroke:#ffa64d,color:#020520;
+  classDef no fill:#f4f4f6,stroke:#c9ccd4,color:#6b7280;
+  classDef gate fill:#fff,stroke:#145aff,stroke-dasharray:4 3,color:#020520;
+  classDef plain fill:#fff,stroke:#e2e8f0,color:#14141e;
+
+  class ROOT,REAL,VIRT,RP,VP plain;
+  class RV,VV gate;
+  class RVP ok;
+  class RPL,RVL,VPL,VPP warn;
+  class RPP,VVX no;
+      </pre>
     </div>
 
     <p class="note">
@@ -624,7 +631,7 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
       <table>
         <thead><tr>
           <th>업체</th>
-          <th>통합 방식</th>
+          <th>통합 방식 · 연동 플랫폼</th>
           <th>외부 음성 입력 규격</th>
           <th>외부 LLM</th>
           <th>아바타 생성 요건</th>
@@ -632,42 +639,42 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--divider);font
         <tbody>
           <tr>
             <td class="pick"><strong>HeyGen</strong> LiveAvatar</td>
-            <td>WebSocket 명령 + WebRTC 영상<span class="sub2"><strong>LITE</strong>(영상만) · <strong>FULL</strong>(파이프라인 전체) 두 모드</span></td>
+            <td>WebSocket 명령 + WebRTC 영상<span class="sub2"><strong>LITE</strong>(영상만) · <strong>FULL</strong>(파이프라인 전체) 두 모드<br><strong>웹</strong> &mdash; JS SDK(<code>@heygen/streaming-avatar</code>) · REST API. <strong>앱</strong> &mdash; 공식 네이티브 SDK 미확인, WebRTC 직접 연동 필요</span></td>
             <td><code>agent.speak</code> 에 <strong>Base64 PCM 16-bit 24kHz</strong><span class="sub2">패킷당 최대 1MB · 약 1초 청크 권장 · 중단은 <code>agent.interrupt</code> · <code>session.state_updated</code> 가 <code>connected</code> 된 뒤 전송</span></td>
             <td class="mk y">◎<span class="sub2">LITE 모드에서 STT · LLM · TTS 전부 자체 사용</span></td>
             <td><strong>영상 2분 또는 사진 1장</strong><span class="sub2">영상 학습은 <strong>본인확인 필요</strong></span></td>
           </tr>
           <tr>
             <td class="pick"><strong>Beyond Presence</strong></td>
-            <td>Audio-to-Video API<span class="sub2">LiveKit · Pipecat 플러그인 제공(필수 아님) · TTS 오디오 &rarr; HD 아바타 <strong>250ms</strong></span></td>
+            <td>Audio-to-Video API<span class="sub2">LiveKit · Pipecat 플러그인 제공(필수 아님) · TTS 오디오 &rarr; HD 아바타 <strong>250ms</strong><br><strong>웹 · 앱</strong> &mdash; LiveKit 경유 시 LiveKit 클라이언트가 있는 플랫폼(웹 · iOS · Android)에 붙일 수 있음</span></td>
             <td class="mk y">◎<span class="sub2">음성 에이전트 오디오를 그대로 받음 &mdash; <strong>포맷 · 샘플레이트는 공개 문서에 미기재</strong></span></td>
             <td class="mk y">◎<span class="sub2">OpenAI 호환</span></td>
             <td><strong>영상 4~5분</strong>(최소 2분)<span class="sub2">1080p 권장 · MP4/MOV · <strong>본인 동의 + 심사 절차</strong> · 소요 기간 미기재</span></td>
           </tr>
           <tr>
             <td><strong>Anam</strong></td>
-            <td>WebRTC · JS / Python SDK<span class="sub2">SDK 가 시그널링까지 처리</span></td>
+            <td>WebRTC · JS / Python SDK<span class="sub2">SDK 가 시그널링까지 처리<br><strong>웹</strong> &mdash; JS SDK. <strong>서버</strong> &mdash; Python SDK. <strong>앱</strong> &mdash; 네이티브 SDK 미확인</span></td>
             <td><code>enable_audio_passthrough</code><span class="sub2"><code>createTalkMessageStream()</code> 로 오디오 주입 · 끼어들기는 <code>endOfSpeechSensitivity</code> 등으로 제어</span></td>
             <td class="mk y">◎<span class="sub2">서버사이드 <code>customLlmUrl</code> · 클라이언트사이드 <code>llmId: CUSTOMER_CLIENT_V1</code></span></td>
             <td><strong>이미지 1장</strong>(one-shot)<span class="sub2">영상 학습 미지원 · 70개 이상 언어</span></td>
           </tr>
           <tr>
             <td><strong>Simli</strong></td>
-            <td>WebRTC · JS 클라이언트</td>
+            <td>WebRTC · JS 클라이언트<span class="sub2"><strong>웹</strong> &mdash; <code>simli-client</code>. <strong>앱</strong> &mdash; Flutter 패키지(<code>simli_client</code>) 존재</span></td>
             <td><code>sendAudioData(Uint8Array)</code><span class="sub2"><strong>PCM Int16 · 16kHz · 모노</strong> · <code>listenToMediastreamTrack()</code> 로 트랙 직접 연결도 가능</span></td>
             <td class="mk y">◎<span class="sub2">OpenAI 호환</span></td>
             <td><strong>이미지 1장</strong> &rarr; <code>faceId</code><span class="sub2">무료 등급에서는 커스텀 아바타 생성 불가</span></td>
           </tr>
           <tr>
             <td><strong>Tavus</strong></td>
-            <td>Daily / WebRTC<span class="sub2">Persona · Conversation API</span></td>
+            <td>Daily / WebRTC<span class="sub2">Persona · Conversation API<br><strong>웹 · 앱</strong> &mdash; Daily 클라이언트가 있는 플랫폼(웹 · iOS · Android · React Native)에 붙일 수 있음</span></td>
             <td><code>pipeline_mode: "echo"</code><span class="sub2">LLM 을 우회하고 넣은 오디오를 그대로 말함 · echo 에서는 <code>system_prompt</code> 불요</span></td>
             <td class="mk y">◎<span class="sub2">Persona system prompt · Custom LLM</span></td>
             <td><strong>영상 1.5~2분</strong><span class="sub2"><strong>본인 동의 필요</strong></span></td>
           </tr>
           <tr>
             <td><strong>DeepBrain</strong> 딥브레인</td>
-            <td>AI Human SDK<span class="sub2">Web · Unity · iOS · Android · Windows</span></td>
+            <td>AI Human SDK<span class="sub2"><strong>웹 · iOS · Android · Unity · Windows 공식 SDK 제공</strong> &mdash; 8곳 중 네이티브 앱 지원이 가장 넓음</span></td>
             <td class="mk n"><strong>✕ 불가</strong><span class="sub2"><code>AIPlayer.send()</code> 는 텍스트만 받음. 음성은 <code>loadCustomVoices()</code> &rarr; <code>setCustomVoice()</code> 로 <strong>플랫폼 등록 음성 중 선택</strong>. 등록 경로는 Voice Clone API <code>POST /api/odin/v3/avatars/voiceclone</code> (오디오 URL &rarr; <code>voiceId</code>) &mdash; <strong>이 voiceId 가 실시간 SDK 에서 잡히는지는 미확인</strong></span></td>
             <td class="mk y">◎<span class="sub2">Custom HTTP LLM</span></td>
             <td><strong>영상</strong><span class="sub2">Custom AI Human 은 스튜디오 촬영 &mdash; 학습 · 제작까지 약 1개월</span></td>
@@ -729,6 +736,16 @@ document.querySelectorAll('.tab').forEach(function(b){
 });
 </script>
 
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: true,
+    securityLevel: 'loose',
+    flowchart: { htmlLabels: true, curve: 'basis', nodeSpacing: 30, rankSpacing: 60 },
+    themeVariables: { fontFamily: "'Pretendard Variable', Pretendard, system-ui, sans-serif", fontSize: '13px' }
+  });
+</script>
 
 </body>
 </html>
