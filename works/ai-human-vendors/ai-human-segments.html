@@ -442,61 +442,6 @@ flowchart LR
       <strong>조건표 통과와 한국어 립싱크 품질 사이에 상관관계가 있다는 근거는 아직 없음.</strong> LLM 제어는 거의 전부 ◎ 라 변별력이 없고, 실제로 가르는 것은 <strong>립싱크 품질과 클로닝 입력 둘뿐.</strong>
     </p>
 
-    <h3 class="subh">표에 안 들어간 것</h3>
-
-    <div class="tw">
-      <table>
-        <thead><tr><th>항목</th><th>내용</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><strong>딥브레인 &mdash; 음성</strong><span class="sub2">실시간 기준</span></td>
-            <td><strong>실시간 SDK에 외부 음성을 넣을 수 없음</strong> &mdash; <code>send()</code> 는 텍스트만 받고 <code>setCustomVoice()</code> 는 딥브레인에 등록된 음성을 고르는 기능.
-              <span class="sub2">실시간 기능이 없다는 뜻은 아님(실시간 SDK · Custom HTTP LLM 모두 있음). 걸리는 건 <strong>음성 층을 우리가 못 쥔다</strong>는 것 하나. 그리고 이는 실시간 제품 기준이라 <strong>영상 제작용 후보 지위는 유지됨.</strong></span></td>
-          </tr>
-          <tr>
-            <td><strong>딥브레인 &mdash; 우회로</strong><span class="sub2">영업 문의 항목</span></td>
-            <td><strong>ElevenLabs 음성을 그대로 가져오는 경로는 공개 문서상 없음.</strong> 다만 <code>POST /avatars/voiceclone</code> 이 <strong>오디오 URL을 받아 <code>voiceId</code> 를 돌려줌</strong> &mdash; 딥브레인 쪽에 다시 클로닝해 등록하는 길은 있음.
-              <span class="sub2">제휴(2025.7)는 실재하나 <strong>영상 제작(AI Studios) 쪽 통합</strong>이고 우리 키 · 보이스 ID를 붙이는 방식이 아님. <strong>남은 질문 하나 &mdash; 그 <code>voiceId</code> 가 실시간 SDK의 <code>findCustomVoice()</code> 에 잡히는가.</strong></span></td>
-          </tr>
-          <tr>
-            <td><strong>HeyGen &mdash; 음성</strong></td>
-            <td><strong>3rd-party voice 를 정식 지원</strong> &mdash; ElevenLabs API 키를 붙여 자기 보이스를 가져오는 절차가 문서화돼 있음.<span class="sub2">음성 층을 누가 쥐느냐에서 딥브레인과 갈림</span></td>
-          </tr>
-          <tr>
-            <td><strong>단가</strong></td>
-            <td><strong>8곳 중 3곳(클레온 · D-ID · 딥브레인) 비공개</strong>라 비용 비교가 완결되지 않음.<span class="sub2">표의 단가는 실시간 분당 기준 · 영상 제작은 건당 · 크레딧 과금이라 체계가 다름 &mdash; HeyGen 외에는 공개 자료 없음</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- ══ 05 ══ -->
-  <section class="section" id="priority">
-    <div class="eyebrow">03 · PRIORITY</div>
-    <h2 class="sh">실존 강사 재현 기준 우선순위</h2>
-    <p class="note" style="margin-top:12px;font-size:15px;color:var(--caption)">
-      앞 표를 종합한 결과. <strong>실제 강사를 영상으로 학습시킬 수 있고 동시에 외부 LLM을 연결할 수 있는 곳</strong>을 위로 뒀음.
-      비용이 아니라 재현 품질을 기준으로 삼았을 때의 순서.
-    </p>
-
-    <div class="tw">
-      <table>
-        <thead><tr><th>우선</th><th>후보</th><th>이유</th></tr></thead>
-        <tbody>
-          <tr><td><span class="chip on">1순위</span></td><td class="pick"><strong>HeyGen LiveAvatar</strong></td><td>영상 기반 실제 인물 + LITE로 LLM 완전 분리 가능<span class="sub2">단 영상 학습은 <strong>본인확인 통과가 전제</strong> — 강사 본인 동의가 있으면 풀리는 절차지만, 그전까지는 검증 불가</span></td></tr>
-          <tr><td><span class="chip on">1순위</span></td><td class="pick"><strong>Tavus</strong></td><td>영상 Replica 품질 + Persona/System Prompt + Custom LLM + Echo Mode</td></tr>
-          <tr><td><span class="chip on">1순위</span></td><td class="pick"><strong>Beyond Presence</strong></td><td>영상 Custom Avatar + Speech-to-Video로 AI stack 완전 분리</td></tr>
-          <tr><td><span class="chip">2순위</span></td><td><strong>DeepBrain</strong> 딥브레인</td><td>영상 Custom Avatar + Voice Clone + 한국어 + Custom HTTP LLM</td></tr>
-          <tr><td><span class="chip">2순위</span></td><td><strong>D-ID</strong></td><td>영상 · 사진 모두 지원 + Custom LLM</td></tr>
-          <tr><td><span class="chip">3순위</span></td><td><strong>Anam</strong></td><td>LLM 통제는 매우 좋으나 사람 아바타는 사진 1장 방식</td></tr>
-          <tr><td><span class="chip">3순위</span></td><td><strong>Simli</strong></td><td>LLM · 아바타 분리는 매우 좋으나 사람 아바타 생성은 사진 기반</td></tr>
-          <tr><td><span class="chip">확인 필요</span></td><td><strong>Klleon</strong> 클레온</td><td class="no">공개 문서만으로 Custom LLM 및 실제 인물 생성 방식 확인 부족</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p class="note">※ 이 순위는 <strong>재현 품질 기준</strong>이므로 결론의 용도별 구분과는 층위가 다름. 3순위인 Anam · Simli도 <strong>실시간 휴먼용으로는 여전히 유효</strong>하며, 사진 1장으로 즉시 착수할 수 있다는 점이 오히려 강점.</p>
   </section>
 
   </div>
