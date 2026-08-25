@@ -247,6 +247,7 @@
   }
   tbody tr:last-child td{border-bottom:none;}
   td.rec{background:var(--good-soft);}
+  td.flagcell{background:var(--gap-soft);}
 
   /* ---------- Cards / tiles ---------- */
   .grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:var(--el-gap); margin:16px 0;}
@@ -312,7 +313,7 @@
   .vnav-btn:hover:not(:disabled){color:var(--accent); border-color:var(--chalk);}
   .vnav-btn:disabled{opacity:.35; cursor:default;}
   .vnav-btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
-  .vcounter{font-variant-numeric:tabular-nums; font-size:var(--text-caption); color:var(--fog); min-width:4.2em; text-align:center;}
+  .vcounter{font-variant-numeric:tabular-nums; font-size:var(--text-caption); color:var(--fog); min-width:7em; text-align:center; white-space:nowrap;}
 
   /* ---------- Presentation mode ---------- */
   body.present-mode .rail, body.present-mode .toc, body.present-mode .masthead{display:none;}
@@ -427,13 +428,13 @@
           <ol>
           <li><a href="#s7"><span class="num">07</span><span class="dot warn"></span>서비스 제공 모델</a></li>
           <li><a href="#s8"><span class="num">08</span><span class="dot warn"></span>수익모델 검토</a></li>
-          <li><a href="#s9"><span class="num">09</span><span class="dot warn"></span>서비스 확장 방향</a></li>
           </ol>
         </div>
         <div class="toc-card">
           <span class="tc-part">Ⅳ</span>
           <h3>사업 추진 및 운영 구조</h3>
           <ol>
+          <li><a href="#s9"><span class="num">09</span><span class="dot warn"></span>운영 주체별 사업 모델</a></li>
           <li><a href="#s10"><span class="num">10</span><span class="dot good"></span>사업 운영에 필요한 역할</a></li>
           <li><a href="#s11"><span class="num">11</span><span class="dot good"></span>사업 주체 및 운영 모델 검토</a></li>
           <li><a href="#s12"><span class="num">12</span><span class="dot warn"></span>사업 추진 체계 및 R&R</a></li>
@@ -469,7 +470,6 @@
     </section>
 
   <nav class="rail">
-    <p class="rail-label">7 Parts · 20 Slides</p>
     <ol>
       <li class="part-label">Ⅰ. 사업 개요</li>
       <li><a href="#s1"><span class="num">01</span><span class="dot good"></span>사업 추진 경과</a>
@@ -499,7 +499,7 @@
       <li><a href="#s4"><span class="num">04</span><span class="dot good"></span>목업의 한계 및 상용화 전환 시 필요사항</a>
         <ul class="sub-list">
           <li><a href="#s4-1">1) 목업 제작 목적</a></li>
-          <li><a href="#s4-2">2) 현재 목업의 개발 한계</a></li>
+          <li><a href="#s4-2">2) 왜 바이브코딩으로는 상용화할 수 없는가</a></li>
           <li><a href="#s4-3">3) 상용화를 위해 추가로 필요한 요소</a></li>
           <li><a href="#s4-4">4) 상용화 전환 시 핵심 결정사항</a></li>
         </ul>
@@ -533,19 +533,18 @@
         <ul class="sub-list">
           <li><a href="#s8-1">1) 과금 모델 후보</a></li>
           <li><a href="#s8-2">2) 상품별 장·단점</a></li>
-          <li><a href="#s8-3">3) 초기 권고 모델</a></li>
-          <li><a href="#s8-4">4) 매출 발생 구조</a></li>
-        </ul>
-      </li>
-      <li><a href="#s9"><span class="num">09</span><span class="dot warn"></span>서비스 확장 방향</a>
-        <ul class="sub-list">
-          <li><a href="#s9-1">1) 단기</a></li>
-          <li><a href="#s9-2">2) 중기</a></li>
-          <li><a href="#s9-3">3) 장기</a></li>
+          <li><a href="#s8-3">3) 매출 발생 구조</a></li>
         </ul>
       </li>
 
       <li class="part-label">Ⅳ. 사업 추진 및 운영 구조</li>
+      <li><a href="#s9"><span class="num">09</span><span class="dot warn"></span>운영 주체별 사업 모델</a>
+        <ul class="sub-list">
+          <li><a href="#s9-1">1) 인강사업본부 — 인강 연계</a></li>
+          <li><a href="#s9-2">2) 어학원사업본부 — 강사별 브랜딩 앱</a></li>
+          <li><a href="#s9-3">3) 출판사업본부 — 대학 교재</a></li>
+        </ul>
+      </li>
       <li><a href="#s10"><span class="num">10</span><span class="dot good"></span>사업 운영에 필요한 역할</a>
         <ul class="sub-list">
           <li><a href="#s10-1">1) Product</a></li>
@@ -556,14 +555,14 @@
       <li><a href="#s11"><span class="num">11</span><span class="dot good"></span>사업 주체 및 운영 모델 검토</a>
         <ul class="sub-list">
           <li><a href="#s11-1">1) 운영 주체 선정 기준</a></li>
-          <li><a href="#s11-2">2) 후보 조직별 적합성 검토</a></li>
+          <li><a href="#s11-2">2) 기준별 적합성 평가</a></li>
           <li><a href="#s11-3">3) 운영 모델 대안</a></li>
         </ul>
       </li>
       <li><a href="#s12"><span class="num">12</span><span class="dot warn"></span>사업 추진 체계 및 R&R</a>
         <ul class="sub-list">
           <li><a href="#s12-1">1) 전체 추진 체계</a></li>
-          <li><a href="#s12-2">2) 조직별 역할</a></li>
+          <li><a href="#s12-2">2) 역할별 담당 조직</a></li>
           <li><a href="#s12-3">3) 주요 의사결정 권한</a></li>
         </ul>
       </li>
@@ -587,17 +586,17 @@
       </li>
       <li><a href="#s15"><span class="num">15</span><span class="dot good"></span>운영 비용</a>
         <ul class="sub-list">
-          <li><a href="#s15-1">1) 고정비</a></li>
-          <li><a href="#s15-2">2) 변동비</a></li>
-          <li><a href="#s15-3">3) 사용자당 원가</a></li>
+          <li><a href="#s15-1">1) 고정비와 변동비</a></li>
+          <li><a href="#s15-3">2) 사용자당 원가</a></li>
         </ul>
       </li>
       <li><a href="#s16"><span class="num">16</span><span class="dot gap"></span>예상 매출 및 수익성</a>
         <ul class="sub-list">
-          <li><a href="#s16-1">1) 주요 가정</a></li>
+          <li><a href="#s16-1">1) 손익분기 계산에 필요한 변수</a></li>
           <li><a href="#s16-2">2) 시나리오</a></li>
-          <li><a href="#s16-3">3) 손익구조</a></li>
-          <li><a href="#s16-4">4) 사업성 핵심 조건</a></li>
+          <li><a href="#s16-3">3) 손익분기 구조</a></li>
+          <li><a href="#s16-4">4) 가격 × 이용량 민감도</a></li>
+          <li><a href="#s16-5">5) 사업성 핵심 조건</a></li>
         </ul>
       </li>
 
@@ -747,7 +746,7 @@ timeline
     4월 : 시장조사 착수 : 샘플 목업 개발 착수
     5월 : 대표 보고 : 회장 보고 : 타부서 시연
     6월 : 특허 논의 : 콘텐츠 입수(편집1국)
-    7월 : FGI 가설 정리 : 캐치잇 계약 논의 : 어학원·출판사업본부 협의 : AI휴먼 벤더 협의 : 스캐폴딩 구조도·42강 커리큘럼 설계
+    7월 : FGI 가설 정리 : 캐치잇플레이 계약 논의 : 어학원사업본부·출판사업본부 협의 : AI휴먼 벤더 협의 : 스캐폴딩 구조도·42강 커리큘럼 설계
     8월 : 구동테스트·내부 리허설 : 내부 검수 : FGI용 문항 매핑
     9월(예정) : 타깃 유저 50명 FGI 진행
     11월(예정) : 티저 공개 : 상용 MVP 구축 착수
@@ -849,22 +848,37 @@ flowchart LR
 
       <hr class="pbreak">
       <h5 class="sub" id="s3-4">4) AI Human 업체 검토 결과</h5>
-      <p>기존 강사 음성(ElevenLabs)을 그대로 쓸 수 있는지를 단일 기준으로 8개 업체를 검토했습니다. 외부 음성을 받아 립싱크만 해주는 업체만 후보로 남습니다.</p>
+      <p>기존 강사 음성(ElevenLabs)을 그대로 쓸 수 있는지를 단일 기준으로 검토했습니다. 외부 음성을 받아 립싱크만 해주는 업체만 후보로 남습니다.</p>
       <div class="tbl-wrap">
         <table>
-          <thead><tr><th>업체</th><th>형태</th><th>분당 단가</th><th>1인 월 비용<br><span class="note">300분 가정</span></th><th>검토 의견</th><th>상태</th></tr></thead>
+          <thead><tr><th>업체</th><th>형태</th><th>분당 단가</th><th>외부 음성 입력</th><th>검토 의견</th><th>상태</th></tr></thead>
           <tbody>
-            <tr class="rec"><td><b>Simli</b></td><td>립싱크 단독</td><td>$0.01~0.05</td><td>약 0.4~2.1만 원</td><td>후보 중 단가가 가장 낮음. 한국어 품질 자료가 부족해 실측이 선행돼야 함</td><td>1차 실측</td></tr>
-            <tr class="rec"><td><b>Anam</b></td><td>립싱크 단독</td><td>$0.11~0.16</td><td>약 4.6~6.7만 원</td><td>오디오 패스스루 지원, 한국어 포함 70개 언어 명시. 해외 후보 중 단가는 높은 편</td><td>1차 실측</td></tr>
-            <tr class="rec"><td><b>클레온</b> <span class="note">국내</span></td><td>번들형<br><span class="note">우회 가능</span></td><td colspan="2">비공개 — 영업 문의</td><td>SDK가 외부 음성 입력을 지원(<span class="mono">startAudioEcho</span>). 국내 업체라 한국어 립싱크에 강점 예상. 과금 기준 확인 필요</td><td>1차 실측</td></tr>
-            <tr><td>Beyond Presence</td><td>립싱크 단독 / 번들</td><td>€0.0875</td><td>약 4.0만 원</td><td>S2V 모드에서 외부 TTS 사용 가능. 독일 법인이라 데이터 관할이 유럽</td><td>예비</td></tr>
-            <tr><td>HeyGen LiveAvatar</td><td>립싱크 단독 / 번들</td><td>$0.095</td><td>약 4.0만 원</td><td>구조는 적합하나 1차 후보 대비 비용이 높음</td><td>예비</td></tr>
-            <tr><td>Tavus</td><td>번들형</td><td>$0.32</td><td>약 13.4만 원</td><td>립싱크만 분리 구매 불가. 부가 기능을 안 써도 단가가 동일</td><td>제외</td></tr>
-            <tr><td>D-ID</td><td>번들형</td><td colspan="2">비공개</td><td>립싱크 단독 판매 없음, 실시간 분당 요금 비공개라 비용 예측 불가</td><td>제외</td></tr>
-            <tr><td>딥브레인 <span class="note">국내</span></td><td>번들형</td><td colspan="2">비공개 — 영업 문의</td><td>SDK가 텍스트만 입력받고 자체 TTS로 발화. 기존 강사 음성을 입힐 수 없음</td><td>제외</td></tr>
+            <tr class="rec"><td><b>Anam</b></td><td>립싱크 단독</td><td>$0.11~0.16</td><td>가능 — 오디오 패스스루</td><td>한국어 포함 70개 언어 명시. 기존 ElevenLabs 음성을 그대로 넘길 수 있음. 단가는 높은 편</td><td>1차 실측</td></tr>
+            <tr><td><b>HeyGen</b> LiveAvatar</td><td>립싱크 단독(Lite)<br>번들(Full)</td><td>Lite $0.095<br><span class="note">Full 약 $0.195</span></td><td>Lite 모드에서 가능 <span class="note">추가 확인 필요</span></td><td>구조는 적합하고 기술 문서가 충실함. 1차 후보 대비 비용이 높아 예비로 분류</td><td>예비</td></tr>
+            <tr><td><b>D-ID</b></td><td>번들형</td><td>비공개</td><td>불가 — 립싱크 단독 판매 없음</td><td>실시간 분당 요금이 비공개라 비용을 예측할 수 없음</td><td>제외</td></tr>
+            <tr><td><b>딥브레인</b> <span class="note">국내</span></td><td>번들형</td><td>불가 — 텍스트만 입력</td><td>SDK가 텍스트를 받아 자체 TTS로 발화. 기존 강사 음성을 입힐 수 없음</td><td>제외</td></tr>
           </tbody>
         </table>
       </div>
+      <p class="note">딥브레인과 ElevenLabs의 제휴는 영상을 미리 만드는 제품(AI Studios)에 해당하며, 실시간 SDK와는 별개입니다.</p>
+
+      <hr class="pbreak">
+      <h5 class="sub">학생 1인 · 30분 수업 1회 호출 비용 (추정)</h5>
+      <p>과금은 강사가 실제로 말한 시간이 아니라 <b>아바타 스트림이 열려 있는 시간</b> 기준입니다. 그래서 수업 중 스트림을 계속 열어두느냐, 강사가 말할 때만 여느냐에 따라 원가가 세 배까지 벌어집니다.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>항목</th><th>스트림 상시 오픈<br><span class="note">30분 과금</span></th><th>발화 구간만 오픈<br><span class="note">10분 과금 가정</span></th></tr></thead>
+          <tbody>
+            <tr><td>AI Human — Anam ($0.11~0.16/분)</td><td>약 4,600~6,700원</td><td>약 1,500~2,200원</td></tr>
+            <tr><td>AI Human — HeyGen ($0.095/분)</td><td>약 4,000원</td><td>약 1,300원</td></tr>
+            <tr><td>음성·대화 (ElevenLabs 에이전트)</td><td colspan="2">미확인 — 요금제 확인 필요</td></tr>
+            <tr><td>LLM 호출</td><td colspan="2">미확인 — 문항당 호출 수·누적 토큰 실측 필요</td></tr>
+            <tr class="rec"><td><b>합계</b></td><td colspan="2"><b>AI Human만으로 회당 1,300~6,700원</b> · 음성·LLM 비용은 여기에 더해집니다</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">환율 1,400원, 2026-08-13 각 사 공개 요금제 기준. 주 3회 수강 시 AI Human 비용만 <b>월 1.6~8.0만 원</b>이 되어, 구독료 설계(<a href="#s8">§8</a>)와 손익(<a href="#s16">§16</a>)을 좌우합니다. <b>수업 1회당 강사의 실제 발화 시간을 측정해 이 숫자를 확정하는 것이 파일럿의 필수 과제입니다.</b></p>
+      <p class="note flag">음성·LLM 단가는 아직 조사되지 않았습니다. ElevenLabs 에이전트 요금제와 LLM 문항당 토큰량을 확인해 이 표를 채워야 합니다.</p>
       <p class="note">환율 1,400원·유로/달러 1.08, 2026-08-13 각 사 공개 요금제 기준. 립싱크 단독형 단가에는 ElevenLabs 음성 합성 비용이 빠져 있고, 실제 과금은 발화 시간이 아니라 <b>아바타 스트림이 열려 있는 시간</b> 기준입니다. 수업 1회당 실제 발화 시간을 측정해 원가를 다시 잡아야 합니다. 상세는 별도 검토 보고서 참조.</p>
 
       <hr class="pbreak">
@@ -925,24 +939,51 @@ graph TB
         <li>전문 개발을 통한 상용 서비스 구축을 목적으로 한 개발 결과물이 아님</li>
       </ul>
 
-      <p><b>콘셉트카와 양산차의 차이와 같습니다.</b> 콘셉트카는 외관과 시승 경험을 몇 주 만에 만듭니다 — 충돌 안전, 내구성, 양산 체계를 아직 넣지 않았기 때문입니다.</p>
+      <p>목업은 화면과 학습 경험을 빠르게 만들기 위한 것이었고, 그 목적은 달성했습니다. 문제는 남은 부분이 <b>나중에 붙이면 되는 것이 아니라는 데</b> 있습니다.</p>
 
-      <h5 class="sub" id="s4-2">2) 현재 목업의 개발 한계</h5>
+      <h5 class="sub" id="s4-2">2) 왜 바이브코딩으로는 상용화할 수 없는가</h5>
       <div class="grid2">
-        <div class="card"><h5>(1) 개발 구조</h5><ul>
-          <li>비전문 개발 인력의 바이브코딩 기반 구현</li>
-          <li>코드 구조 및 품질 검증 미실시</li>
-          <li>확장성, 유지보수성 미검증</li>
-          <li>정식 Backend/DB 구조 미구축</li>
-        </ul></div>
-        <div class="card"><h5>(2) 상용 환경</h5><ul>
-          <li>실제 트래픽·동시접속 미검증</li>
-          <li>보안 및 개인정보 처리 미적용</li>
-          <li>장애 대응·모니터링 미구축</li>
-          <li>QA(품질검증) 및 배포 프로세스 미구축</li>
-        </ul></div>
+        <div class="card">
+          <h5>(1) 데이터·인프라</h5>
+          <ul>
+            <li>회원·이용권·학습이력·결제가 서로를 참조하는 <b>스키마가 없음</b> — 문항과 시나리오가 코드 안에 상수로 박혀 있음</li>
+            <li>서버 DB를 거치지 않아 <b>학습 기록이 남지 않음</b></li>
+            <li>화면에 맞춰 데이터를 끼워 넣은 구조 — DB를 붙이는 게 아니라 <b>데이터 모델 기준으로 화면을 다시 짜야 함</b></li>
+            <li>데이터 이관·백업·복구 체계 없음</li>
+            <li><b>서버 규모 산정이 되어 있지 않음</b> — 현재는 무료 티어 위에서 동작. 용량·동시 연결 수에 제한이 걸려 있고 운영 보장(SLA)도 없어, 실사용자 규모에 맞춘 서버·DB 사양을 다시 잡고 구축해야 함</li>
+            <li>사용자가 늘었을 때 <b>어디까지 어떻게 늘릴지(확장 설계)</b>가 없음</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color:var(--accent);">
+          <h5 style="color:var(--accent)">(2) 보안·개인정보</h5>
+          <ul>
+            <li><b>인증·권한 체계 미적용</b> — 누가 무엇에 접근할 수 있는지를 통제하는 층이 없음</li>
+            <li>개인정보 수집·보관·파기 절차 없음 — 처리방침, 이용약관, 동의 고지 포함</li>
+            <li>학습자 음성이 <b>외부 AI로 전송되는 구간</b>의 암호화·보관 정책 없음</li>
+            <li>결제 정보 처리, 미성년자 관련 법적 요건 미검토</li>
+            <li>취약점 점검·보안 감사 이력 없음</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h5>(3) 기술 안정성·운영</h5>
+          <ul>
+            <li><b>동시접속·트래픽 부하 검증 없음</b> — 몇 명까지 견디는지, 어느 지점에서 느려지는지 측정된 바 없음</li>
+            <li>수업이 실시간 음성이라 <b>동시 세션이 곧 비용이자 부하</b> — 응답 지연 관리 기준 없음</li>
+            <li>장애 감지·복구, 모니터링·로그 체계 없음</li>
+            <li>테스트 코드 없음 — QA·배포 절차 미구축</li>
+            <li>외부 호출이 실패해도 <b>조용히 넘어가도록</b> 만들어져 있어 오류가 드러나지 않음</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h5>(4) 디자인·화면</h5>
+          <ul>
+            <li>정상 흐름만 존재 — <b>예외 상태 화면 없음</b>(네트워크 끊김, 결제 실패, 데이터 없음, 오류, 로딩)</li>
+            <li>접근성 미적용</li>
+            <li>기기·해상도별 대응 미검증</li>
+            <li>디자인 시스템·컴포넌트 규격 없음</li>
+          </ul>
+        </div>
       </div>
-
       <hr class="pbreak">
       <h5 class="sub" id="s4-3">3) 상용화를 위해 추가로 필요한 요소</h5>
       <div class="grid2">
@@ -1022,7 +1063,7 @@ graph LR
 
     <!-- PART III -->
     <div class="part-divider">
-      <span class="part-eyebrow">Part Ⅲ — 07~09</span>
+      <span class="part-eyebrow">Part Ⅲ — 07~08</span>
       <h2>사업 추진 구조</h2>
       <p>어떤 형태로, 어떤 돈으로, 어디까지 확장할 것인가.</p>
     </div>
@@ -1044,62 +1085,126 @@ graph LR
         <li>주차별 사용 로그·리텐션 모니터링, CS 접수·이슈 트리아지</li>
         <li>종료 설문·심층 인터뷰로 마무리</li>
       </ul>
-      <p class="note flag">참가 규모(300명 등)·정확한 운영 기간은 §12 조직 확정 후 캐치잇과 재조율.</p>
+      <p class="note flag">참가 규모(300명 등)·정확한 운영 기간은 §12 조직 확정 후 캐치잇플레이와 재조율.</p>
     </section>
 
     <section class="slide" id="s8">
       <div class="slide-head"><span class="s-num mono">08</span><h3>수익모델 검토</h3><span class="status warn">warn</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>과금 모델 후보와 매출 발생 구조를 정리했습니다. 초기에는 진입 장벽을 낮추고 이후 유료로 전환하는 방향이며, 가격은 미확정입니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>과금 모델 후보와 모델별 매출 산식을 정리했습니다. 어느 모델을 쓸지는 사업 운영 주체에 따라 달라지고, 단가는 미확정입니다.</p></div>
 
       <h5 class="sub" id="s8-1">1) 과금 모델 후보</h5>
-      <div class="grid2">
-        <div class="card"><h5>구독</h5><p>월 정기결제</p></div>
+      <div class="grid3">
+        <div class="card"><h5>월 구독형</h5><p>월 정기결제</p></div>
         <div class="card"><h5>기간제</h5><p>N개월 이용권</p></div>
-        <div class="card"><h5>강의 결합 판매</h5><p>인강+앱 패키지</p></div>
+        <div class="card"><h5>강의 결합 판매</h5><p>인강 + 앱 패키지</p></div>
         <div class="card"><h5>무료→유료</h5><p>체험 후 전환</p></div>
+        <div class="card"><h5>교재 결합</h5><p>교재 + 앱 이용권<br>학교·학과 단위 라이선스</p></div>
       </div>
+      <p class="note"><b>어느 모델을 쓸지는 사업 운영 주체에 따라 달라집니다.</b> 인강사업본부라면 강의 결합 판매와 구독, 어학원사업본부라면 수강생 대상 기간제·부가 서비스, 출판사업본부라면 교재 결합과 단체 라이선스가 중심이 됩니다(<a href="#s9">§9</a>). 주체가 정해지기 전에는 후보를 좁히기 어렵습니다.</p>
 
       <h5 class="sub" id="s8-2">2) 상품별 장·단점</h5>
-      <div class="grid2">
-        <div class="card"><h5>구독</h5><p>관리 쉬움 / 초기 가입장벽 있음</p></div>
+      <div class="grid3">
+        <div class="card"><h5>월 구독형</h5><p>관리 쉬움 / 초기 가입장벽 있음</p></div>
         <div class="card"><h5>기간제</h5><p>시험일 기준 학습에 적합 / 갱신 관리 필요</p></div>
-        <div class="card"><h5>강의 결합 판매</h5><p>§7 권고와 정합 / 단독 판매 채널 없음</p></div>
+        <div class="card"><h5>강의 결합 판매</h5><p>기존 채널·결제 재사용 / 단독 판매 채널 없음</p></div>
         <div class="card"><h5>무료→유료</h5><p>초기 진입장벽 낮음 / 전환율 미지수</p></div>
+        <div class="card"><h5>교재 결합</h5><p>단체 결제로 객단가 큼 / 학교 단위 영업 체계 필요</p></div>
       </div>
 
       <hr class="pbreak">
-      <h5 class="sub" id="s8-3">3) 초기 권고 모델</h5>
-      <p>구독 또는 강의 결합 판매 — §7의 인강 보완재 포지션과 가장 잘 맞음</p>
-
-      <h5 class="sub" id="s8-4">4) 매출 발생 구조</h5>
-      <p class="mono" style="text-align:center; background:var(--mist); border:1px solid var(--chalk); border-radius:var(--r-card); padding:var(--card-pad); font-weight:500;">유료 전환 사용자수 × 월 구독료(ARPU) × 12개월 = 연 매출</p>
-    </section>
-
-    <section class="slide" id="s9">
-      <div class="slide-head"><span class="s-num mono">09</span><h3>서비스 확장 방향</h3><span class="status warn">warn</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>단기 인강 연계, 중기 강사별 브랜딩 앱, 장기 B2B 교재 패키지 순으로 검증된 인프라 위에 단계적으로 확장합니다.</p></div>
-      <p class="note flag">아래 단기→중기→장기 순서는 확정된 로드맵이 아니라 제안입니다. 실제 순서·품목은 §5 FGI 결과와 §11 사업주체 결정에 따라 바뀔 수 있습니다.</p>
-      <div class="diagram">
-        <span class="diagram-label">Mermaid 초안 — 단기 → 중기 → 장기 (제안, 확정 아님)</span>
-        <pre class="mermaid">
-graph LR
-    A["단기(제안)<br/>인강 연계 상품"] --> B["중기(제안)<br/>강사별 브랜딩 앱<br/>(페르소나 수용성 검증 후)"]
-    B --> C["장기(제안)<br/>대학 교재 패키지(B2B)<br/>스터디카페 연계(획득채널)"]
-        </pre>
+      <h5 class="sub" id="s8-3">3) 매출 발생 구조</h5>
+      <p>모델마다 매출이 잡히는 방식이 다릅니다.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>과금 모델</th><th>매출 산식</th><th>매출 특성</th></tr></thead>
+          <tbody>
+            <tr><td><b>월 구독형</b></td><td class="mono">유료 전환자수 × 월 구독료 × 이용 개월수</td><td>매월 반복 매출. 이탈률이 매출을 좌우</td></tr>
+            <tr><td><b>기간제</b></td><td class="mono">이용권 판매 건수 × 이용권 단가</td><td>판매 시점에 선수금으로 들어오고 이용 기간에 걸쳐 인식. 시험일 기준 수요라 계절성이 큼</td></tr>
+            <tr><td><b>강의 결합 판매</b></td><td class="mono">인강 판매 건수 × 결합 상품 추가 단가<br>(또는 패키지 단가 × 앱 배분율)</td><td>인강 매출에 얹히는 구조. 단독 판매 채널이 없어 인강 판매량에 종속</td></tr>
+            <tr><td><b>무료→유료</b></td><td class="mono">체험 사용자수 × 유료 전환율 × 전환 후 단가</td><td>전환율이 전체를 결정. 전환 전 체험 구간의 AI 원가는 그대로 발생</td></tr>
+            <tr><td><b>교재 결합</b></td><td class="mono">교재 판매 부수 × 앱 이용권 단가<br>학교·학과 라이선스 계약 건수 × 계약 단가</td><td>B2B 단체 결제. 건당 금액이 크고 계약 주기가 학기 단위</td></tr>
+          </tbody>
+        </table>
       </div>
-      <div class="grid3">
-        <div class="card" id="s9-1"><h5>1) 단기 (제안)</h5><p>인강 연계 상품(§7) — 검증된 채널 위에 바로 얹는 1차 상품</p></div>
-        <div class="card" id="s9-2"><h5>2) 중기 (제안)</h5><p>강사별 브랜딩 앱 — FGI·베타에서 페르소나 수용성 검증 후</p></div>
-        <div class="card" id="s9-3"><h5>3) 장기 (제안)</h5><p>대학 교재 패키지(B2B, 출판사업본부 트랙) · 스터디카페 연계(획득 채널)</p></div>
-      </div>
+      <p class="note flag">단가는 전부 미확정입니다. <a href="#s16">§16 예상 매출</a>의 시나리오는 <b>월 구독형 기준</b>으로 잡혀 있어, 과금 모델이 확정되면 그 모델의 산식으로 다시 계산해야 합니다. 모델에 따라 원가가 나가는 시점도 달라집니다 — 특히 무료→유료는 전환 전 구간의 AI 호출 비용이 매출 없이 먼저 나갑니다(<a href="#s15">§15</a>).</p>
     </section>
 
     <!-- PART IV -->
     <div class="part-divider">
-      <span class="part-eyebrow">Part Ⅳ — 10~12</span>
+      <span class="part-eyebrow">Part Ⅳ — 09~12</span>
       <h2>사업 추진 및 운영 구조</h2>
       <p>필요한 역할 → 그 역할을 누가 맡을지 → 구체적 R&R 순으로 좁혀간다.</p>
     </div>
+
+    <section class="slide" id="s9">
+      <div class="slide-head"><span class="s-num mono">09</span><h3>운영 주체별 사업 모델</h3><span class="status warn">warn</span></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>어느 조직이 운영하느냐에 따라 주력 상품이 달라집니다. 조직마다 쥐고 있는 자산이 다르기 때문입니다.</p></div>
+      <p class="note flag">아래 세 모델은 확정안이 아니라 검토안입니다. <a href="#s11">§11 사업 주체</a>가 정해지면 그 조직이 계속 운영하는 것을 전제로, 해당 열의 모델을 상세화하게 됩니다.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:10%"></th>
+              <th id="s9-1">인강사업본부</th>
+              <th id="s9-2">어학원사업본부</th>
+              <th id="s9-3">출판사업본부</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>주력 상품</b></td>
+              <td><b>인강 연계 상품</b></td>
+              <td><b>강사별 브랜딩 앱</b><br>+ 스터디카페 연계</td>
+              <td><b>대학 교재 패키지</b></td>
+            </tr>
+            <tr>
+              <td><b>개념</b></td>
+              <td>강의 + 앱을 패키지로 판매. 인강을 듣고 혼자 복습하다 막히는 부분을 AI 강사가 케어</td>
+              <td>오프라인 강사 수업을 앱이 보조. 그날 배운 내용을 같은 강사 페르소나로 복습. 강사 코드를 넣으면 해당 강사 콘텐츠만 뜸<br><span class="note">스터디카페는 체험·획득 채널로 병행</span></td>
+              <td>대학 정규 영어 수업(교양영어·토익)에서 교재와 앱을 함께 사용</td>
+            </tr>
+            <tr>
+              <td><b>운영 방식</b></td>
+              <td>인강 수강생에게 결합 상품으로 판매. 인강 강사가 해주지 못하는 <b>관리 역할</b>을 앱이 맡음</td>
+              <td>오프라인 수업 진도·오답을 앱에 태깅 → 해당 유형 보충 콘텐츠를 같은 강사 스타일로 제공. 스터디카페 방문객은 비치 태블릿으로 체험</td>
+              <td>교수·강사가 진도에 맞춰 앱을 지정 → 교재 QR·시리얼로 이용권 배포 → 수업 중 실습 또는 과제</td>
+            </tr>
+            <tr>
+              <td><b>타깃</b></td>
+              <td>기존 인강 수강생</td>
+              <td>해당 강사의 오프라인 수강생 · 스터디카페 이용객<br><span class="note">학습 의지가 확인된 층</span></td>
+              <td>교양영어·토익 강좌 수강 대학생 전체<br><span class="note">취업준비생 한정 아님</span></td>
+            </tr>
+            <tr>
+              <td><b>수익 구조</b></td>
+              <td>B2C — 강의 + 앱 결합 판매</td>
+              <td>B2C — 수강생 대상 부가 유료 서비스. 스터디카페 이용료 + 구독 결합</td>
+              <td>B2B — 학교·학과 단위 라이선스(단체 결제) + 교재 결합 판매</td>
+            </tr>
+            <tr>
+              <td><b>쓰는 자산</b></td>
+              <td>온라인 플랫폼 · 결제 인프라 · 마케팅 조직 · 수강생 DB</td>
+              <td>강사 IP · 오프라인 수강생 · 현장 CS · 스터디카페 공간</td>
+              <td>토익 문항 · 교재 IP · 학교 영업 채널</td>
+            </tr>
+            <tr>
+              <td><b>강점</b></td>
+              <td>검증된 판매 채널 위에 바로 얹을 수 있어 초기 리스크가 가장 낮음</td>
+              <td>오프라인 수업을 이어가는 팔로업 도구. 매장에 이미 온 사람이 대상이라 획득 비용이 낮음</td>
+              <td>수업 커리큘럼 자체에 앱이 편입되므로 실사용률이 높을 가능성. 객단가와 사용률 양쪽에 개선 여지</td>
+            </tr>
+            <tr>
+              <td><b>한계 · 전제</b></td>
+              <td>기존 스타강사와 포지셔닝 충돌 우려</td>
+              <td>온라인 운영 경험 없음. <span class="flag">전제</span> 강사가 자신의 노하우와 문제풀이 기준을 상당량 제공해야 성립</td>
+              <td>B2C 채널 없음. 학교 단위 영업 체계가 별도로 필요</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">세 모델은 같은 앱과 같은 콘텐츠를 씁니다. 달라지는 것은 <b>판매 채널과 과금 주체</b>이고, 그건 운영 조직이 무엇을 쥐고 있느냐에서 나옵니다. 어디로 정할 것인가는 <a href="#s11">§11 사업 주체 및 운영 모델 검토</a>에서 판단합니다.</p>
+    </section>
 
     <section class="slide" id="s10">
       <div class="slide-head"><span class="s-num mono">10</span><h3>사업 운영에 필요한 역할</h3><span class="status good">good</span></div>
@@ -1113,54 +1218,65 @@ graph LR
 
     <section class="slide" id="s11">
       <div class="slide-head"><span class="s-num mono">11</span><h3>사업 주체 및 운영 모델 검토</h3><span class="status good">good</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>인강사업본부로 이관하고, 어학원은 강사 IP·콘텐츠 파트너로 참여하는 구조를 권고합니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>어느 조직이 운영하느냐에 따라 필요한 것이 달라집니다. 선정 기준과 조직별 적합성, 운영 모델 대안을 정리했습니다.</p></div>
+      <p class="note"><a href="#s9">§9</a>가 주체별로 상품이 어떻게 달라지는지를 보여줬다면, 여기서는 <b>무엇을 근거로 고를 것인가</b>를 정리합니다. 결정은 <a href="#s20">§20</a>에서 요청드립니다.</p>
 
       <h5 class="sub" id="s11-1">1) 운영 주체 선정 기준</h5>
       <ul>
-        <li>온라인 플랫폼·결제 인프라 보유 여부</li>
-        <li>기존 고객 접점(수강생 DB) 보유 여부</li>
-        <li>콘텐츠·강사 IP 보유 여부</li>
-        <li>기존 상품과의 포지셔닝 충돌 리스크</li>
+        <li><b>온라인 플랫폼·결제 인프라</b> — 구독 과금과 앱 배포를 자체적으로 감당할 수 있는가</li>
+        <li><b>기존 고객 접점</b> — 초기 사용자를 데려올 수강생 DB가 있는가</li>
+        <li><b>콘텐츠·강사 IP</b> — 앱에 넣을 강사와 문항을 쥐고 있는가</li>
+        <li><b>포지셔닝 충돌 리스크</b> — 기존 상품의 매출을 잠식하지 않는가</li>
+        <li><b>초기 실행 부담</b> — 새로 만들어야 할 채널·조직이 얼마나 되는가</li>
       </ul>
 
-      <h5 class="sub" id="s11-2">2) 후보 조직별 적합성 검토</h5>
+      <h5 class="sub" id="s11-2">2) 기준별 적합성 평가</h5>
       <div class="tbl-wrap">
         <table>
-          <thead><tr><th></th><th>어학원</th><th>인강사업본부</th><th>출판사업본부</th></tr></thead>
+          <thead><tr><th>선정 기준</th><th>인강사업본부<br><span class="note">인강 연계</span></th><th>어학원사업본부<br><span class="note">강사별 브랜딩 앱</span></th><th>출판사업본부<br><span class="note">대학 교재 패키지</span></th></tr></thead>
           <tbody>
-            <tr><td>강점</td><td>수강생 DB·강사진·현장 CS</td><td class="rec">온라인 플랫폼·결제 인프라·마케팅 조직</td><td>토익 문항·교재 IP</td></tr>
-            <tr><td>약점</td><td>온라인 운영 경험 없음</td><td>기존 스타강사와 포지셔닝 충돌 우려</td><td>B2C 채널 없음</td></tr>
+            <tr><td>온라인 플랫폼·결제</td><td class="rec"><b>보유</b> — 즉시 판매 가능</td><td>없음 — 신규 구축 필요</td><td>없음 — B2C 채널 자체가 없음</td></tr>
+            <tr><td>기존 고객 접점</td><td class="rec"><b>인강 수강생 DB</b></td><td>오프라인 수강생 · 스터디카페 이용객</td><td>교재 구매자 <span class="note">직접 접점 아님</span></td></tr>
+            <tr><td>콘텐츠·강사 IP</td><td>없음 — 어학원·출판사업본부에서 조달</td><td class="rec"><b>강사 IP 보유</b></td><td class="rec"><b>토익 문항·교재 IP 보유</b></td></tr>
+            <tr><td>포지셔닝 충돌</td><td>있음 — 기존 스타강사와 겹칠 우려</td><td>낮음 — 오프라인 수업의 보완재</td><td>낮음 — B2B라 B2C와 분리</td></tr>
+            <tr><td>초기 실행 부담</td><td class="rec"><b>가장 낮음</b> — 검증된 채널에 얹음</td><td>중간 — 온라인 운영 조직을 새로 갖춰야 함</td><td>높음 — 학교 단위 영업 체계 신설 필요</td></tr>
           </tbody>
         </table>
       </div>
+      <p class="note">어느 조직도 다섯 기준을 혼자 충족하지 못합니다. 판매를 할 수 있는 곳과 콘텐츠를 쥔 곳이 서로 다르기 때문입니다.</p>
 
+      <hr class="pbreak">
       <h5 class="sub" id="s11-3">3) 운영 모델 대안</h5>
       <div class="grid2">
-        <div class="card"><h5>계열사 이관</h5><p>사업 계열사가 운영 전체를 인수</p></div>
-        <div class="card" style="border-color:var(--accent);"><h5 style="color:var(--accent)">공동 운영 (권고)</h5><p>인강사업본부(운영) + 어학원(IP·콘텐츠, 계약 기반)</p></div>
+        <div class="card"><h5>계열사 이관</h5><p>한 계열사가 운영 전체를 인수합니다. 의사결정은 단순하지만, 그 조직에 없는 자산(플랫폼 또는 IP)을 새로 갖춰야 합니다.</p></div>
+        <div class="card" style="border-color:var(--accent);"><h5 style="color:var(--accent)">공동 운영 (권고)</h5><p>인강사업본부가 운영·판매·과금을 맡고, 어학원사업본부가 강사 IP와 콘텐츠를 계약 기반으로 공급합니다. 각자 가진 것을 그대로 쓰는 구조입니다.</p></div>
       </div>
-      <p class="note">※ "우리 팀 직접 운영"은 검토 대상에서 제외 — 우리 팀은 개발까지만 담당하고 운영은 인계하는 구조(§10·§12).</p>
+
+      <p class="note"><b>어느 대안을 택하든 운영 주체는 하나로 고정되는 것을 전제로 검토했습니다.</b> 이후 상품이 늘어도 운영 주체가 바뀌지 않아야, <a href="#s9">§9</a>의 다른 모델을 같은 조직 아래 상품으로 추가할 수 있습니다.</p>
+      <p class="note">※ "우리 팀 직접 운영"은 검토 대상에서 제외 — 우리 팀은 개발까지만 담당하고 운영은 인계하는 구조(<a href="#s10">§10</a>·<a href="#s12">§12</a>).</p>
+      <p class="note flag">조직 간 정산 구조(수익 배분·IP 사용료)는 미정 — <a href="#s12">§12 R&amp;R</a>에서 결정 항목으로 다룹니다.</p>
     </section>
 
     <section class="slide" id="s12">
       <div class="slide-head"><span class="s-num mono">12</span><h3>사업 추진 체계 및 R&R</h3><span class="status warn">warn</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>AI랩·인강사업본부·어학원·개발사의 역할과 의사결정 권한을 어디까지 나눌지 정리해야 합니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>AI랩·인강사업본부·어학원사업본부·개발사의 역할과 의사결정 권한을 어디까지 나눌지 정리해야 합니다.</p></div>
 
       <h5 class="sub" id="s12-1">1) 전체 추진 체계</h5>
-      <p>현재 조직(우리 팀) → 사업 운영 계열사 → 개발 조직 → 콘텐츠 조직, 네 축으로 구성</p>
+      <p>서비스 기획 → 사업 운영 → 상용 서비스 개발 → 콘텐츠, 네 축으로 구성됩니다. 각 축을 어느 조직이 맡을지는 아래와 같습니다.</p>
 
-      <h5 class="sub" id="s12-2">2) 조직별 역할</h5>
+      <h5 class="sub" id="s12-2">2) 역할별 담당 조직</h5>
       <div class="tbl-wrap">
         <table>
-          <thead><tr><th>조직</th><th>역할</th></tr></thead>
+          <thead><tr><th>역할</th><th>하는 일</th><th>담당 조직</th></tr></thead>
           <tbody>
-            <tr><td>현재 조직(우리 팀)</td><td>Product / AI / 서비스 기획</td></tr>
-            <tr><td>사업 운영 계열사(권고: 인강사업본부)</td><td>상품 / 판매 / 회원 / 결제 / CS / 매출</td></tr>
-            <tr><td>개발 조직(캐치잇)</td><td>상용 개발 / 유지보수</td></tr>
-            <tr><td>콘텐츠 조직(어학원)</td><td>학습 콘텐츠 / 검수</td></tr>
+            <tr><td><b>서비스 기획</b></td><td>Product · AI · 서비스 기획</td><td>AI랩</td></tr>
+            <tr><td><b>사업 운영</b></td><td>상품 · 판매 · 회원 · 결제 · CS · 매출</td><td class="flagcell"><b>미정</b> — 후보와 근거는 <a href="#s11">§11</a>, 결정은 <a href="#s20">§20</a>에서 요청</td></tr>
+            <tr><td><b>상용 서비스 개발</b></td><td>상용 개발 · 유지보수</td><td>캐치잇플레이</td></tr>
+            <tr><td><b>콘텐츠</b></td><td>학습 콘텐츠 · 검수</td><td>출판사업본부(문항·교재 IP) · 어학원사업본부(강사 IP)</td></tr>
           </tbody>
         </table>
       </div>
+      <p class="note">사업 운영을 어느 계열사가 맡느냐에 따라 <a href="#s9">§9</a>의 주력 상품이 달라지므로, 이 한 칸이 나머지를 결정합니다.</p>
 
       <h5 class="sub" id="s12-3">3) 주요 의사결정 권한</h5>
       <p class="flag">기능 우선순위(현재 조직) / 가격·프로모션(운영 계열사) / 기술 구현 방식(개발 조직) / 콘텐츠 품질 승인(콘텐츠 조직) — §11 사업주체 결정 이후 세부 확정.</p>
@@ -1214,7 +1330,7 @@ graph LR
       <div class="slide-head"><span class="s-num mono">14</span><h3>구축 비용</h3><span class="status gap">gap</span></div>
       <div class="msg"><span class="msg-label">핵심메시지</span><p>개발비, 콘텐츠·데이터 구축비, 강사 IP 계약금 등 비용 항목을 정리했습니다. 금액은 FGI 반영 요구사항이 확정돼야 산정할 수 있습니다.</p></div>
       <div class="grid2">
-        <div class="card" id="s14-1"><h5>1) 상용 MVP 개발비</h5><p>개발사(캐치잇) 용역비 — 인건비 기준 월단위 협의 중 <span class="flag">투입 인원·기간 미확정</span></p></div>
+        <div class="card" id="s14-1"><h5>1) 상용 MVP 개발비</h5><p>개발사(캐치잇플레이) 용역비 — 인건비 기준 월단위 협의 중 <span class="flag">투입 인원·기간 미확정</span></p></div>
         <div class="card" id="s14-2"><h5>2) 콘텐츠·데이터 구축비</h5><p>문항·해설·음성 자산, 4,000문항 태깅</p></div>
         <div class="card" id="s14-3"><h5>3) 추가 구축비</h5><p>AI 강사 자산 제작, 강사 초상·음성권 계약금, 문항 저작권</p></div>
       </div>
@@ -1224,58 +1340,120 @@ graph LR
     <section class="slide" id="s15">
       <div class="slide-head"><span class="s-num mono">15</span><h3>운영 비용</h3><span class="status good">good</span></div>
       <div class="msg"><span class="msg-label">핵심메시지</span><p>고정비와 LLM·음성·AI 휴먼 트래픽 변동비로 나뉩니다. 사용자당 AI 원가를 얼마로 관리하느냐가 관건입니다.</p></div>
-      <div class="grid2">
-        <div class="card" id="s15-1"><h5>1) 고정비</h5><p>개발사 운영 인력, 유지보수, 서버 기본비, 콘텐츠 운영</p></div>
-        <div class="card" id="s15-2" style="border-color:var(--accent);"><h5 style="color:var(--accent)">2) 변동비</h5><p>LLM, STT, TTS, AI Human 트래픽</p></div>
-      </div>
-      <h5 class="sub" id="s15-3">3) 사용자당 원가</h5>
+      <h5 class="sub" id="s15-1">1) 고정비와 변동비</h5>
+      <p>두 비용은 사용자가 늘 때 서로 다르게 움직입니다. 이 차이가 손익 구조를 결정합니다.</p>
       <div class="tbl-wrap">
         <table>
-          <thead><tr><th>방식</th><th>월 20회·회당 10분 가정 시</th></tr></thead>
+          <thead><tr><th style="width:16%"></th><th>고정비</th><th id="s15-2">변동비</th></tr></thead>
           <tbody>
-            <tr><td>실시간(HeyGen Full, $0.20/분)</td><td>월 $40/인 (약 55,000원) — 이용자 수에 비례 증가</td></tr>
-            <tr><td>사전제작(Avatar III, $20~40/1회)</td><td>1회 제작 후 한계비용 0에 근접</td></tr>
+            <tr><td><b>항목</b></td><td>개발·유지보수 인력, 서버 기본비, 콘텐츠 운영·검수, 강사 IP 계약금</td><td>LLM · STT · TTS · AI Human 호출</td></tr>
+            <tr><td><b>사용자가 늘면</b></td><td>그대로</td><td>인원에 비례해 증가</td></tr>
+            <tr><td><b>한 사람이 많이 쓰면</b></td><td>그대로</td><td>사용량에 비례해 또 증가</td></tr>
+            <tr><td><b>통제 방법</b></td><td>조직 규모와 계약으로 관리</td><td>벤더 단가 선정 + <b>이용량 상한</b> 설계</td></tr>
           </tbody>
         </table>
       </div>
+      <p class="note">변동비가 두 번(인원 × 사용량) 늘어나기 때문에, 사용자를 늘리는 것만으로는 수익이 개선되지 않습니다. 항목별 세부는 <a href="#s16-1">§16 손익분기 변수</a>에서 다룹니다.</p>
+      <h5 class="sub" id="s15-3">2) 사용자당 원가</h5>
+      <p>AI 원가는 한 덩어리가 아니라 <b>층으로 쌓입니다.</b> 업체가 STT·LLM·TTS까지 묶어 파는 번들형을 쓰면 한 줄로 끝나지만, <b>우리는 번들을 쓸 수 없습니다</b> — 강사 클론 음성을 그대로 써야 하고 LLM 발화를 직접 통제해야 하기 때문입니다(<a href="#s3-5">§3-5</a>). 그래서 립싱크 단독 요금 위에 음성·LLM 요금이 따로 붙습니다.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>원가 층</th><th>무엇에 대한 비용인가</th><th>분당 단가</th></tr></thead>
+          <tbody>
+            <tr><td><b>AI Human (립싱크)</b></td><td>아바타가 입을 맞춰 말하는 영상 렌더링</td><td>$0.095(HeyGen Lite) ~ $0.16(Anam)<br><span class="note">확보 — §3-4</span></td></tr>
+            <tr><td>TTS</td><td>강사 목소리 합성</td><td class="flagcell">미확인</td></tr>
+            <tr><td>STT</td><td>학생 음성 인식</td><td class="flagcell">미확인</td></tr>
+            <tr><td>LLM</td><td>해설 문장 생성</td><td class="flagcell">미확인</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">현재 목업은 STT·LLM·TTS를 ElevenLabs 음성 에이전트가 한 덩어리로 처리하므로, 실제 청구는 <b>AI Human 분당 요금 + 음성 에이전트 분당 요금</b> 두 갈래로 잡힙니다. 후자의 요금제를 확인하면 아래 세 줄이 한 번에 채워집니다.</p>
+      <p class="note">참고 — 업체 번들형(HeyGen Full 약 $0.195, Tavus $0.32)은 STT·LLM·TTS를 포함한 값입니다. 우리 구조에서는 선택지가 아닙니다.</p>
+
+      <p>아래는 <b>AI Human 층만</b> 계산한 것입니다. 과금은 강사가 말한 시간이 아니라 <b>아바타 스트림이 열려 있는 시간</b> 기준이라, 스트림 운용 방식에 따라 세 배까지 벌어집니다.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>가정</th><th>월 과금 시간</th><th>AI Human 층만 (월·1인)</th></tr></thead>
+          <tbody>
+            <tr><td>월 20회 · 회당 10분<br><span class="note">발화 구간에만 스트림 오픈</span></td><td>200분</td><td>약 2.7~4.5만 원</td></tr>
+            <tr><td>월 20회 · 회당 30분<br><span class="note">수업 내내 스트림 오픈</span></td><td>600분</td><td>약 8.0~13.4만 원</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">분당 $0.095(HeyGen)~$0.16(Anam), 환율 1,400원 기준(<a href="#s3-4">§3-4</a>). <b>음성·LLM 비용은 여기에 더해집니다.</b> 사전 제작 영상 방식은 1회 제작 후 한계비용이 0에 가깝지만 실시간 대화가 되지 않습니다.</p>
+      <p class="note flag">두 가지가 미정입니다 — ① 스트림 운용 방식과 실제 발화 시간(2.7만~13.4만 원 사이에서 결정) ② 음성·LLM 층의 단가. <b>둘 다 정해져야 1인당 총 AI 원가가 나옵니다.</b></p>
     </section>
 
     <section class="slide" id="s16">
       <div class="slide-head"><span class="s-num mono">16</span><h3>예상 매출 및 수익성</h3><span class="status gap">gap</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>가정에 따른 시나리오 추정입니다. 사용자당 원가가 구독료를 넘지 않는 선에서 손익이 성립합니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>손익분기를 내는 데 필요한 변수를 정리했습니다. 1인당 월 AI 원가가 월 단가를 넘지 않아야 사용자를 늘리는 의미가 생깁니다.</p></div>
 
-      <h5 class="sub" id="s16-1">1) 주요 가정</h5>
-      <p>가입자, 유료 전환율, ARPU, 이용기간 <span class="flag">전부 가정 필요 — 마케팅·운영계열사(§11) 협의 후 확정</span></p>
+      <h5 class="sub" id="s16-1">1) 손익분기 계산에 필요한 변수</h5>
+      <p>손익분기를 내려면 아래 변수가 모두 있어야 합니다. 과금 모델(<a href="#s8">§8</a>)에 따라 단가의 정의가 달라지므로, 모델이 먼저 정해져야 채울 수 있는 칸이 있습니다.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>구분</th><th>변수</th><th>왜 필요한가</th><th>현재</th></tr></thead>
+          <tbody>
+            <tr><td rowspan="4"><b>매출</b></td><td>유료 사용자 수</td><td>손익분기가 답으로 내놓는 값</td><td class="flagcell">미확정</td></tr>
+            <tr><td>가입자 수 · 유료 전환율</td><td>무료→유료 모델일 때 유료 사용자에 이르는 경로</td><td class="flagcell">미확정</td></tr>
+            <tr><td>1인당 월 단가</td><td>모델마다 정의가 다름 — 구독료 / 이용권 단가÷개월 / 결합 상품 배분액</td><td class="flagcell">미확정</td></tr>
+            <tr><td>이용 유지 기간</td><td>월 이탈률의 역수. 짧으면 고객 획득 비용을 회수하지 못함</td><td class="flagcell">미확정</td></tr>
+            <tr><td rowspan="5"><b>변동비</b><br><span class="note">1인당</span></td><td><b>월 이용 횟수</b></td><td>쓸수록 원가가 오르는 구조라 가장 민감한 변수</td><td class="flagcell">미확정</td></tr>
+            <tr><td><b>회당 과금 시간</b></td><td>발화 시간이 아니라 아바타 스트림이 열려 있는 시간(<a href="#s15-3">§15</a>)</td><td class="flagcell">실측 필요</td></tr>
+            <tr><td>분당 AI 단가</td><td>AI Human + LLM + 음성 합계</td><td>AI Human만 확보(<a href="#s3-4">§3</a>)</td></tr>
+            <tr><td>결제 수수료율</td><td>PG·앱마켓 수수료. 인앱결제면 비중이 큼</td><td class="flagcell">미확정</td></tr>
+            <tr><td>무료 체험 구간 원가</td><td>전환 전 사용자도 AI 호출 비용을 발생시킴</td><td class="flagcell">미확정</td></tr>
+            <tr><td rowspan="5"><b>고정비</b><br><span class="note">인원 무관</span></td><td>개발·유지보수 인건비</td><td>월 고정 지출</td><td>협의 중(<a href="#s14">§14</a>)</td></tr>
+            <tr><td>서버·인프라 기본비</td><td>실사용자 규모에 맞춘 사양 산정이 선행돼야 함(<a href="#s4-2">§4</a>)</td><td class="flagcell">미확정</td></tr>
+            <tr><td>콘텐츠 운영·검수 인력</td><td>AI 응답 품질관리 포함</td><td class="flagcell">미확정</td></tr>
+            <tr><td>강사 IP 계약금·로열티</td><td>정액이면 고정비, 매출 연동이면 변동비로 자리가 바뀜</td><td class="flagcell">미확정</td></tr>
+            <tr><td>마케팅비 · 고객 획득 비용</td><td>1인을 데려오는 데 드는 비용. 채널에 따라 크게 다름(<a href="#s9">§9</a>)</td><td class="flagcell">미확정</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note flag">현재 확보된 값은 AI Human 분당 단가뿐입니다. 나머지는 과금 모델(<a href="#s8">§8</a>)·사업 주체(<a href="#s11">§11</a>) 결정과 파일럿 실측 이후에 채워집니다.</p>
+
+      <hr class="pbreak">
 
       <h5 class="sub" id="s16-2">2) 시나리오</h5>
       <div class="tbl-wrap">
         <table>
           <thead><tr><th>구분</th><th>보수</th><th>기준</th><th>낙관</th></tr></thead>
           <tbody>
-            <tr><td>유료 사용자수</td><td class="flag">가정 필요</td><td class="flag">가정 필요</td><td class="flag">가정 필요</td></tr>
-            <tr><td>ARPU(월 구독료)</td><td class="flag">가정 필요</td><td class="flag">가정 필요</td><td class="flag">가정 필요</td></tr>
-            <tr><td>매출원가(AI)</td><td colspan="3">1인당 월 $10~40 (§15 근거)</td></tr>
-            <tr><td><strong>영업이익(손실)</strong></td><td class="flag">가정 필요</td><td class="flag">가정 필요</td><td class="flag">가정 필요</td></tr>
+            <tr><td>유료 사용자 수</td><td class="flag">가정 필요</td><td class="flag">가정 필요</td><td class="flag">가정 필요</td></tr>
+            <tr><td>1인당 월 단가</td><td class="flag">가정 필요</td><td class="flag">가정 필요</td><td class="flag">가정 필요</td></tr>
+            <tr><td>월 이용 횟수 · 회당 분수</td><td class="flag">가정 필요</td><td class="flag">가정 필요</td><td class="flag">가정 필요</td></tr>
+            <tr><td>1인당 월 AI Human 원가</td><td colspan="3">약 2.7만~13.4만 원 <b>(립싱크 층만)</b> — 음성·LLM 층은 미확인(<a href="#s15-3">§15</a>)</td></tr>
+            <tr><td>월 고정비</td><td colspan="3" class="flag">가정 필요 — 개발·운영·콘텐츠·IP·마케팅</td></tr>
+            <tr><td><b>1인당 월 공헌이익</b></td><td class="flag">가정 필요</td><td class="flag">가정 필요</td><td class="flag">가정 필요</td></tr>
+            <tr><td><b>손익분기 사용자 수</b></td><td class="flag">가정 필요</td><td class="flag">가정 필요</td><td class="flag">가정 필요</td></tr>
           </tbody>
         </table>
       </div>
 
       <hr class="pbreak">
-      <h5 class="sub" id="s16-3">3) 손익구조</h5>
-      <p>몇 명이 결제해야 하는지 / 어느 가격이어야 하는지 / 사용량이 어느 수준까지 허용되는지</p>
-      <div class="diagram">
-        <span class="diagram-label">Mermaid 초안 — 손익분기점 개념도 (실제 수치 아님)</span>
-        <pre class="mermaid">
-xychart-beta
-    title "손익분기점 개념도 (예시 수치 — 실제 값 아님)"
-    x-axis "유료 사용자 수 (가정)"
-    y-axis "월 금액"
-    line "매출 = 사용자수 × ARPU" [0, 20, 40, 60, 80, 100]
-    line "비용 = 고정비 + 사용자수 × 원가" [50, 55, 60, 65, 70, 75]
-        </pre>
-      </div>
+      <h5 class="sub" id="s16-3">3) 손익분기 구조</h5>
+      <p class="mono" style="text-align:center; background:var(--mist); border:1px solid var(--chalk); border-radius:var(--r-card); padding:var(--card-pad); font-weight:500; line-height:2;">필요 유료 사용자 수 = 월 고정비 ÷ 1인당 월 공헌이익<br>1인당 월 공헌이익 = 월 단가 − (월 이용 횟수 × 회당 과금 분수 × 분당 AI 단가) − 결제 수수료</p>
+      <p><b>분모가 0 이하이면 사용자를 아무리 늘려도 손익분기가 오지 않습니다.</b> 지금 확보된 AI Human 단가만으로도 1인당 월 2.7만~13.4만 원(<a href="#s15-3">§15</a>)이고 여기에 음성·LLM이 더해지므로, 월 단가가 그 위로 올라가거나 <b>이용량 상한</b>을 두어야 구조가 성립합니다.</p>
+      <p>따라서 결정해야 할 것은 세 가지입니다 — <b>몇 명이 결제해야 하는지 / 어느 가격이어야 하는지 / 한 사람이 얼마나 쓰도록 허용할 것인지.</b></p>
 
-      <h5 class="sub" id="s16-4">4) 사업성 핵심 조건</h5>
+      <hr class="pbreak">
+      <h5 class="sub" id="s16-4">4) 가격 × 이용량 민감도</h5>
+      <p>사용자 수는 가정이지만 <b>AI Human 단가는 실측값</b>이라, 가격과 이용량만으로 공헌이익의 <b>상한</b>을 계산할 수 있습니다. 아래는 <b>립싱크 층만</b> 반영한 것이므로, 음성·LLM·결제 수수료를 더하면 실제 공헌이익은 이보다 낮아집니다.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>월 이용량</th><th>1인 월 AI Human 원가<br><span class="note">립싱크 층만</span></th><th>월 3만 원 상품</th><th>월 5만 원 상품</th><th>월 8만 원 상품</th></tr></thead>
+          <tbody>
+            <tr><td>10회 × 10분<br><span class="note">100분</span></td><td>1.4~2.2만 원</td><td>+1.6~0.8만</td><td>+3.6~2.8만</td><td>+6.6~5.8만</td></tr>
+            <tr><td>20회 × 10분<br><span class="note">200분</span></td><td>2.7~4.5만 원</td><td class="flagcell">+0.3~<b>−1.5만</b></td><td>+2.3~0.5만</td><td>+5.3~3.5만</td></tr>
+            <tr><td>20회 × 30분<br><span class="note">600분</span></td><td>8.0~13.4만 원</td><td class="flagcell"><b>−5.0~−10.4만</b></td><td class="flagcell"><b>−3.0~−8.4만</b></td><td class="flagcell"><b>0.0~−5.4만</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">분당 $0.095(HeyGen Lite)~$0.16(Anam), 환율 1,400원 기준. 음영 칸은 <b>립싱크 비용만으로도 공헌이익이 0 이하</b>가 되는 구간입니다. 음성·LLM 층과 결제 수수료를 더하면 음영은 더 넓어지므로, <b>흰 칸이라고 흑자라는 뜻은 아닙니다.</b></p>
+      <p class="note flag">이 표가 말하는 것은 두 가지입니다 — <b>가격 하한</b>(어느 가격 아래로는 어떤 이용량에서도 성립하지 않는가)과 <b>이용량 상한</b>(그 가격에서 한 사람이 얼마까지 쓰게 둘 것인가). 둘 다 상품 설계 단계에서 정해야 합니다.</p>
+
+      <h5 class="sub" id="s16-5">5) 사업성 핵심 조건</h5>
       <p class="mono" style="text-align:center; background:var(--mist); border:1px solid var(--chalk); border-radius:var(--r-card); padding:var(--card-pad); font-weight:500;">수업 1회당 원가 × 월 이용 횟수 &lt; 월 구독료</p>
     </section>
 
@@ -1397,7 +1575,7 @@ xychart-beta
   </div>
   <div class="story-item"><span class="si-num mono">01</span><div class="si-body"><h4>사업 추진 경과</h4><p>4월부터 시장조사·기획/목업·콘텐츠·기술 네 트랙을 병행했습니다. 컨셉 설계와 목업 제작, 기술 검토, 계열사 요구사항·특허 검토를 마쳤고 현재 9월 FGI를 준비 중입니다.</p></div></div>
   <div class="story-item"><span class="si-num mono">02</span><div class="si-body"><h4>서비스 개요</h4><p>AI 휴먼 강사가 정답 대신 단계별 힌트를 주고, 학습자가 스스로 풀어내도록 이끄는 서비스입니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">03</span><div class="si-body"><h4>기술 검토 현황 및 결과</h4><p>LLM·STT/TTS·AI 휴먼은 외부에서 조달하고, 답변 제어와 스캐폴딩 로직은 내부에서 직접 설계합니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">03</span><div class="si-body"><h4>기술 검토 현황 및 결과</h4><p>LLM·STT/TTS·AI 휴먼은 외부에서 조달하고, 답변 제어와 스캐폴딩 로직은 내부에서 직접 설계합니다. 벤더를 바꿔도 남는 자산이 여기입니다.</p></div></div>
   <div class="story-item"><span class="si-num mono">04</span><div class="si-body"><h4>목업의 한계 및 상용화 전환 시 필요사항</h4><p>기획 조직이 바이브코딩으로 만든 컨셉 검증용 목업입니다. 상용화하려면 개발·콘텐츠·운영을 새로 구축해야 합니다.</p></div></div>
 
   <div class="story-part">
@@ -1412,16 +1590,16 @@ xychart-beta
     <h3>사업 추진 구조</h3>
   </div>
   <div class="story-item"><span class="si-num mono">07</span><div class="si-body"><h4>서비스 제공 모델</h4><p>기존 인강의 보완 상품으로 시작합니다. 이미 검증된 판매 채널 위에 얹는 방식이 초기 리스크가 낮습니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">08</span><div class="si-body"><h4>수익모델 검토</h4><p>과금 모델 후보와 매출 발생 구조를 정리했습니다. 초기에는 진입 장벽을 낮추고 이후 유료로 전환하는 방향이며, 가격은 미확정입니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">09</span><div class="si-body"><h4>서비스 확장 방향 <span class="flag">제안</span></h4><p>단기 인강 연계, 중기 강사별 브랜딩 앱, 장기 B2B 교재 패키지 순으로 검증된 인프라 위에 단계적으로 확장합니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">08</span><div class="si-body"><h4>수익모델 검토</h4><p>과금 모델 후보와 모델별 매출 산식을 정리했습니다. 어느 모델을 쓸지는 사업 운영 주체에 따라 달라지고, 단가는 미확정입니다.</p></div></div>
 
   <div class="story-part">
     <span class="part-eyebrow">Part Ⅳ</span>
     <h3>사업 추진 및 운영 구조</h3>
   </div>
+  <div class="story-item"><span class="si-num mono">09</span><div class="si-body"><h4>운영 주체별 사업 모델 <span class="flag">검토안</span></h4><p>어느 조직이 운영하느냐에 따라 주력 상품이 달라집니다. 조직마다 쥐고 있는 자산이 다르기 때문입니다.</p></div></div>
   <div class="story-item"><span class="si-num mono">10</span><div class="si-body"><h4>사업 운영에 필요한 역할</h4><p>상용 서비스에는 Product, Contents & Quality, Business & Operation 세 영역의 역할이 필요합니다. 현재 조직은 Product에 쏠려 있습니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">11</span><div class="si-body"><h4>사업 주체 및 운영 모델 검토</h4><p>인강사업본부로 이관하고, 어학원은 강사 IP·콘텐츠 파트너로 참여하는 구조를 권고합니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">12</span><div class="si-body"><h4>사업 추진 체계 및 R&R</h4><p>AI랩·인강사업본부·어학원·개발사의 역할과 의사결정 권한을 어디까지 나눌지 정리해야 합니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">11</span><div class="si-body"><h4>사업 주체 및 운영 모델 검토</h4><p>어느 조직이 운영하느냐에 따라 필요한 것이 달라집니다. 선정 기준과 조직별 적합성, 운영 모델 대안을 정리했습니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">12</span><div class="si-body"><h4>사업 추진 체계 및 R&R</h4><p>AI랩·인강사업본부·어학원사업본부·개발사의 역할과 의사결정 권한을 어디까지 나눌지 정리해야 합니다.</p></div></div>
 
   <div class="story-part">
     <span class="part-eyebrow">Part Ⅴ</span>
@@ -1430,7 +1608,7 @@ xychart-beta
   <div class="story-item"><span class="si-num mono">13</span><div class="si-body"><h4>상용 서비스 구축 방안 및 기술 구조</h4><p>서비스 로직과 데이터는 전문 개발사가 내부에 짓고, 범용 AI 기술만 외부에서 가져옵니다.</p></div></div>
   <div class="story-item"><span class="si-num mono">14</span><div class="si-body"><h4>구축 비용</h4><p>개발비, 콘텐츠·데이터 구축비, 강사 IP 계약금 등 비용 항목을 정리했습니다. 금액은 FGI 반영 요구사항이 확정돼야 산정할 수 있습니다.</p></div></div>
   <div class="story-item"><span class="si-num mono">15</span><div class="si-body"><h4>운영 비용</h4><p>고정비와 LLM·음성·AI 휴먼 트래픽 변동비로 나뉩니다. 사용자당 AI 원가를 얼마로 관리하느냐가 관건입니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">16</span><div class="si-body"><h4>예상 매출 및 수익성</h4><p>가정에 따른 시나리오 추정입니다. 사용자당 원가가 구독료를 넘지 않는 선에서 손익이 성립합니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">16</span><div class="si-body"><h4>예상 매출 및 수익성</h4><p>손익분기를 내는 데 필요한 변수를 정리했습니다. 1인당 월 AI 원가가 월 단가를 넘지 않아야 사용자를 늘리는 의미가 생깁니다.</p></div></div>
 
   <div class="story-part">
     <span class="part-eyebrow">Part Ⅵ</span>
@@ -1453,13 +1631,26 @@ xychart-beta
   /* 한 장 안에 .pbreak 가 있으면 그만큼 페이지를 쪼갠다. 각 자식에 소속 페이지 번호를 심어둔다. */
   var pages = [];
   Array.prototype.slice.call(document.querySelectorAll('.part-divider, .slide')).forEach(function(el){
-    if (!el.classList.contains('slide')){ pages.push({ el: el, pg: 0, parts: 1 }); return; }
+    if (!el.classList.contains('slide')){
+      var eyebrow = el.querySelector('.part-eyebrow');
+      var partName = eyebrow ? eyebrow.textContent.split('—')[0].trim() : '';
+      pages.push({ el: el, pg: 0, parts: 1, label: partName });
+      return;
+    }
+    var numEl = el.querySelector('.s-num');
+    var sNum = numEl ? numEl.textContent.trim() : '';
     var pg = 0;
     Array.prototype.slice.call(el.children).forEach(function(ch){
       if (ch.classList.contains('pbreak')) pg += 1;
       ch.dataset.pg = pg;
     });
-    for (var i = 0; i <= pg; i++) pages.push({ el: el, pg: i, parts: pg + 1 });
+    for (var i = 0; i <= pg; i++) pages.push({ el: el, pg: i, parts: pg + 1, sNum: sNum });
+  });
+  /* 카운터는 목차 기준으로 읽는다 — 발표 보기의 페이지 수가 아니라 몇 번 슬라이드인지 */
+  var slideTotal = document.querySelectorAll('.slide').length;
+  pages.forEach(function(p){
+    if (p.label) return;
+    p.label = p.sNum + ' / ' + slideTotal + (p.parts > 1 ? ' · ' + (p.pg + 1) + '/' + p.parts : '');
   });
   var idx = 0;
   var counterEl = document.getElementById('vcounter');
@@ -1496,7 +1687,7 @@ xychart-beta
       }
     }
 
-    if (counterEl) counterEl.textContent = (idx + 1) + ' / ' + pages.length;
+    if (counterEl) counterEl.textContent = cur.label;
     if (prevBtn) prevBtn.disabled = idx === 0;
     if (nextBtn) nextBtn.disabled = idx === pages.length - 1;
     cur.el.scrollTop = 0;
