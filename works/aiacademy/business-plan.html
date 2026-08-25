@@ -334,6 +334,14 @@
   body.present-mode .part-divider p{font-size:var(--text-heading-sm); line-height:1.4;}
   body.present-mode .slide-head h3{font-size:clamp(24px,3vw,var(--text-heading)); line-height:var(--leading-heading);}
   body.present-mode .msg p{font-size:var(--text-heading-sm); line-height:1.4;}
+  /* 긴 장은 .pbreak 로 끊어 발표 보기에서 여러 페이지로 넘긴다 (목차는 그대로 한 항목) */
+  .pbreak{display:none;}
+  body.present-mode .slide.is-current > .pg-off{display:none;}
+  .pg-cont{
+    margin-left:10px; font-size:var(--text-caption); color:var(--fog);
+    font-variant-numeric:tabular-nums; letter-spacing:.04em;
+  }
+  body:not(.present-mode) .pg-cont{display:none;}
   @media (max-width:720px){
     .viewbar{flex-wrap:wrap; height:auto; padding:12px 16px; gap:12px;}
     .masthead{padding-top:24px;}
@@ -469,7 +477,6 @@
           <li><a href="#s1-1">1) 주요 추진 이력</a></li>
           <li><a href="#s1-2">2) 현재 추진 단계</a></li>
           <li><a href="#s1-3">3) 향후 주요 일정</a></li>
-          <li><a href="#s1-4">4) 기획·설계 산출물</a></li>
         </ul>
       </li>
       <li><a href="#s2"><span class="num">02</span><span class="dot good"></span>서비스 개요</a>
@@ -481,10 +488,12 @@
       </li>
       <li><a href="#s3"><span class="num">03</span><span class="dot warn"></span>기술 검토 현황 및 결과</a>
         <ul class="sub-list">
-          <li><a href="#s3-1">1) 주요 검토 기술</a></li>
-          <li><a href="#s3-2">2) 기술별 검토 결과</a></li>
-          <li><a href="#s3-3">3) AI Human 업체 검토 결과</a></li>
-          <li><a href="#s3-4">4) 기술 적용 기본 방향</a></li>
+          <li><a href="#s3-1">1) 수업 한 턴의 기술 흐름</a></li>
+          <li><a href="#s3-2">2) 적용 기술 검토</a></li>
+          <li><a href="#s3-3">3) LLM · STT · TTS 검토 결과</a></li>
+          <li><a href="#s3-4">4) AI Human 업체 검토 결과</a></li>
+          <li><a href="#s3-5">5) 우리가 직접 설계하는 영역</a></li>
+          <li><a href="#s3-6">6) 기술 적용 기본 방향</a></li>
         </ul>
       </li>
       <li><a href="#s4"><span class="num">04</span><span class="dot good"></span>목업의 한계 및 상용화 전환 시 필요사항</a>
@@ -648,27 +657,42 @@
         <p>이후 11월 티저 공개, 2027년 3월 오픈베타를 목표로 하고 있습니다.</p>
         <p>이에 따라 현 시점에서는 목업 단계 이후 상용화를 위해 필요한 정식 개발 범위, 기술 적용방안, 사업모델, 사업 운영 주체 및 추진체계를 구체화할 필요가 있습니다.</p>
       </blockquote>
-      <p class="op-close">"오늘은 컨셉을 자랑하는 자리가 아니라, 이미 잡힌 목표(27.3 오픈베타)를 향해 다음 단계 구조를 결정하는 자리"라는 게 처음부터 선다.</p>
     </section>
 
     <!-- PART I -->
     <div class="part-divider">
       <span class="part-eyebrow">Part Ⅰ — 01~04</span>
       <h2>사업 개요</h2>
-      <p>여기까지 무엇을 했고, 뭘 만들었고, 뭘 검토했고, 그래서 어디에 한계가 있는지 — 네 장으로 현재 상태를 정리한다.</p>
+      <p>주요 추진 이력과 현재 추진 단계, 향후 주요 일정을 먼저 정리하고 이어서 서비스 컨셉, 기술 검토 결과, 현재 목업의 한계를 다룹니다.</p>
     </div>
 
     <section class="slide" id="s1">
       <div class="slide-head"><span class="s-num mono">01</span><h3>사업 추진 경과</h3><span class="status good">good</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>생각만 하지 않았습니다. 스캐폴딩 구조도부터 MVP 42강 커리큘럼, FGI용 문항 매핑까지 실제로 설계했고, 9월 FGI를 향해 이미 움직이고 있습니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>4월부터 시장조사·기획/목업·콘텐츠·기술 네 트랙을 병행했습니다. 컨셉 설계와 목업 제작, 기술 검토, 계열사 요구사항·특허 검토를 마쳤고 현재 9월 FGI를 준비 중입니다.</p></div>
 
       <h5 class="sub" id="s1-1">1) 주요 추진 이력</h5>
-      <p class="note">2026년 4월~7월, 네 트랙 병행 (2026.8.11 AI랩 진행현황 보고 기준)</p>
+      <ul>
+        <li>서비스 컨셉 및 핵심 학습 경험 설계</li>
+        <li>바이브코딩 기반 목업 제작</li>
+        <li>AI 학습 시나리오 및 주요 기능 구체화</li>
+        <li>AI Human / LLM / STT / TTS 등 기술 검토</li>
+        <li>내부 서비스 컨셉 검토</li>
+        <li>계열사 간 요구사항 검토</li>
+        <li>특허 출원 검토</li>
+      </ul>
+      <p class="note">위 항목은 아래 네 트랙으로 나눠 병행 진행했습니다. 2026년 4월~8월 (2026.8.11 AI랩 진행현황 보고 기준)</p>
+      <div class="grid2">
+        <div class="card"><h5>시장조사</h5><p>시장조사</p></div>
+        <div class="card"><h5>기획 및 목업개발</h5><ul><li>샘플 목업 개발</li><li>컨셉 설명 및 목업 시연(대표·회장 보고)</li><li>계열사 간 요구사항 검토</li><li>특허 출원 검토</li><li>핵심기능 리스트 정의</li><li>목업 보완(FGI 체험판)</li></ul></div>
+        <div class="card"><h5>콘텐츠 개발</h5><ul><li>활용 교재 선정(YBM 토익)</li><li>콘텐츠 입수(편집1국)</li><li>맞춤형 강사 페르소나 설계</li><li>강사별 커리큘럼 설계</li><li>문제 분석 1단계 완료</li><li>MVP 검증 가설 수립</li><li>스캐폴딩 구조 기획</li><li>콘텐츠 유형 정리</li><li>FGI용 문항 매핑</li></ul></div>
+        <div class="card"><h5>기술 개발</h5><ul><li>개발사 컨택 및 선정</li><li>기술검토 및 POC 진행</li><li>설계방향 협의</li><li>구현기능 정의</li></ul></div>
+      </div>
+      <hr class="pbreak">
       <div class="diagram">
         <span class="diagram-label">트랙별 타임라인 — 4월 착수 (월별 배치는 추정치, 정확한 날짜 아님)</span>
         <pre class="mermaid">
 gantt
-    title 4월~7월 진행 업무 (4개 트랙 병행)
+    title 4월~8월 진행 업무 (4개 트랙 병행)
     dateFormat YYYY-MM-DD
     axisFormat %m월
     section 시장조사
@@ -676,30 +700,28 @@ gantt
     section 기획 및 목업개발
     샘플 목업 개발 :done, b1, 2026-04-10, 40d
     컨셉 설명 및 목업 시연 :done, b2, 2026-05-15, 30d
-    특허 출원 진행 :done, b3, 2026-06-05, 55d
-    핵심기능 리스트 정의 :done, b4, 2026-06-15, 30d
+    계열사 간 요구사항 검토 :done, b3, 2026-06-01, 45d
+    특허 출원 검토 :done, b4, 2026-06-05, 55d
+    핵심기능 리스트 정의 :done, b5, 2026-06-15, 30d
+    목업 보완(FGI 체험판) :done, b6, 2026-07-01, 55d
     section 콘텐츠 개발
     활용 교재 선정(YBM 토익) :done, c1, 2026-05-01, 20d
     맞춤형 강사 페르소나 설계 :done, c2, 2026-05-20, 40d
-    강사별 커리큘럼 설계 :done, c3, 2026-06-15, 35d
-    문제 분석 1단계 완료 :done, c4, 2026-06-15, 30d
-    MVP 검증 가설 수립 :done, c5, 2026-07-01, 20d
-    스캐폴딩 구조 기획 :done, c6, 2026-07-01, 25d
-    콘텐츠 유형 정리 :done, c7, 2026-07-15, 15d
+    콘텐츠 입수(편집1국) :done, c3, 2026-06-01, 30d
+    강사별 커리큘럼 설계 :done, c4, 2026-06-15, 35d
+    문제 분석 1단계 완료 :done, c5, 2026-06-15, 30d
+    MVP 검증 가설 수립 :done, c6, 2026-07-01, 20d
+    스캐폴딩 구조 기획 :done, c7, 2026-07-01, 25d
+    콘텐츠 유형 정리 :done, c8, 2026-07-15, 15d
+    FGI용 문항 매핑 :done, c9, 2026-08-01, 20d
     section 기술 개발
-    개발사 선정 :done, d1, 2026-05-15, 30d
+    개발사 컨택·선정 :done, d1, 2026-05-15, 30d
     기술검토 및 POC 진행 :done, d2, 2026-06-01, 45d
     설계방향 협의 :done, d3, 2026-07-01, 20d
     구현기능 정의 :done, d4, 2026-07-10, 20d
         </pre>
       </div>
-      <div class="grid2">
-        <div class="card"><h5>시장조사</h5><p>시장조사</p></div>
-        <div class="card"><h5>기획 및 목업개발</h5><ul><li>샘플 목업 개발</li><li>컨셉 설명 및 목업 시연</li><li>특허 출원 진행</li><li>핵심기능 리스트 정의</li></ul></div>
-        <div class="card"><h5>콘텐츠 개발</h5><ul><li>맞춤형 강사 페르소나 설계</li><li>강사별 커리큘럼 설계</li><li>MVP 검증 가설 수립</li><li>활용 교재 선정(YBM 토익)</li><li>문제 분석 1단계 완료</li><li>스캐폴딩 구조 기획</li><li>콘텐츠 유형 정리</li></ul></div>
-        <div class="card"><h5>기술 개발</h5><ul><li>개발사 선정</li><li>기술검토 및 POC 진행</li><li>설계방향 협의</li><li>구현기능 정의</li></ul></div>
-      </div>
-
+      <hr class="pbreak">
       <h5 class="sub" id="s1-2">2) 현재 추진 단계</h5>
       <ul>
         <li>서비스 컨셉 및 목업 구현 단계 완료 및 내부 검수 단계</li>
@@ -715,21 +737,7 @@ gantt
         <div class="rung"><span class="rd">2027.03</span><div class="rt">Open Beta</div><div class="rs">실제 사용자 기반 사업 검증</div></div>
       </div>
       <p class="note">단계별 통과 기준과 상세 일정은 <a href="#s18">§18 단계별 추진 로드맵</a>에서 다룹니다.</p>
-
-      <h5 class="sub" id="s1-4">4) 콘텐츠·기능 기획 설계 산출물</h5>
-      <ol class="steps">
-        <li>스캐폴딩 구조도 설계</li>
-        <li>전체 강의 리스트 정리 (MVP 42강)</li>
-        <li>MVP 수업 커리큘럼 (2주 코스)</li>
-        <li>강사 & 코스 정리</li>
-        <li>문항 메타데이터 개발</li>
-        <li>FGI용 수업 문항 매핑 작업</li>
-        <li>FGI/MVP 가설 검증 정리</li>
-        <li>MVP 핵심 기능 정리</li>
-        <li>개발사 일감 논의 리스트</li>
-        <li>FGI 체험용 목업 개발 <span class="mono">aiacademy-mockup.vercel.app</span></li>
-      </ol>
-      <p class="note">출처: "AI어학원 추진 예상 일정 및 진행 현황"(2026.8.11 AI랩)</p>
+      <hr class="pbreak">
 
       <div class="diagram">
         <span class="diagram-label">추진 경과와 향후 일정</span>
@@ -750,7 +758,7 @@ timeline
 
     <section class="slide" id="s2">
       <div class="slide-head"><span class="s-num mono">02</span><h3>서비스 개요</h3><span class="status good">good</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>정답을 바로 주지 않습니다. 학습자가 스스로 풀어내도록, 단계적으로 돕는 AI 강사입니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>AI 휴먼 강사가 정답 대신 단계별 힌트를 주고, 학습자가 스스로 풀어내도록 이끄는 서비스입니다.</p></div>
 
       <h5 class="sub" id="s2-1">1) 서비스 컨셉</h5>
       <ul>
@@ -785,20 +793,107 @@ graph LR
 
     <section class="slide" id="s3">
       <div class="slide-head"><span class="s-num mono">03</span><h3>기술 검토 현황 및 결과</h3><span class="status warn">warn</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>LLM은 외부에서 가져오지만, 무슨 말을 하게 할지는 우리가 통제합니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>LLM·STT/TTS·AI 휴먼은 외부에서 조달하고, <b>답변 제어와 스캐폴딩 로직은 내부에서 직접 설계합니다.</b> 벤더를 바꿔도 남는 자산이 여기입니다.</p></div>
 
-      <h5 class="sub" id="s3-1">1) 주요 검토 기술</h5>
-      <p>LLM, STT, TTS, AI Human — 벤더 업체별 비교</p>
-
-      <h5 class="sub" id="s3-2">2) 기술별 검토 결과</h5>
-      <p class="note flag">각 기술(LLM/STT/TTS)의 검토 결과 상세는 신규 정리 필요 — 현재는 §13(구축방안)의 내부/외부 분류로 대체.</p>
-
-      <h5 class="sub" id="s3-3">3) AI Human 업체 검토 결과</h5>
-      <p class="note flag">AI 휴먼 벤더 후보가 자료마다 다름 — 딥브레인·V몬스터·이스트소프트(국내3사) vs Anam·Simli·클레온·타입캐스트(기술스택 시트). 단일 후보군 확정 필요.</p>
-
-      <h5 class="sub" id="s3-4">4) 기술 적용 기본 방향</h5>
+      <h5 class="sub" id="s3-1">1) 수업 한 턴의 기술 흐름</h5>
+      <p>학생이 말하면 STT가 텍스트로 바꾸고, LLM이 해설 문장을 만들고, TTS와 AI Human이 강사의 목소리·영상으로 내보냅니다. 이때 LLM이 해설을 지어내지 않도록 <b>YBM 콘텐츠 DB(문항·정답·해설)</b>에서 근거를 꺼내 함께 넘깁니다.</p>
       <div class="diagram">
-        <span class="diagram-label">Mermaid 초안 — LLM 원천 모델은 외부, 답변 통제·근거는 내부</span>
+        <span class="diagram-label">기술 투입 순서</span>
+        <pre class="mermaid">
+flowchart LR
+  S["학생이 말한다"] --&gt; STT["STT<br/>음성 → 텍스트"]
+  STT --&gt; LLM["LLM<br/>해설 문장 생성"]
+  DB["YBM 콘텐츠 DB<br/>문항 · 정답 · 해설"] --&gt; LLM
+  LLM --&gt; TTS["TTS<br/>강사 목소리로 합성"]
+  TTS --&gt; AH["AI Human<br/>립싱크 영상"]
+  AH --&gt; S
+  classDef ext fill:#ffffff,stroke:#b9c4bd,color:#3b4a43;
+  classDef int fill:#e4f2e9,stroke:#10884f,color:#1e2a24;
+  class STT,LLM,TTS,AH ext;
+  class DB int;
+        </pre>
+      </div>
+      <p class="note">STT·LLM·TTS·AI Human은 업체 제품을 골라 쓰고, 콘텐츠 DB는 YBM 문항·해설을 구조화해 만들어야 합니다. 데이터 구축 비용은 <a href="#s14">§14 구축 비용</a>에 잡혀 있습니다.</p>
+
+      <hr class="pbreak">
+      <h5 class="sub" id="s3-2">2) 적용 기술 검토 (LLM · STT · TTS · AI Human)</h5>
+      <p>이 네 가지는 범용 기술이라 벤더 제품을 가져다 씁니다. 업체별로 성능과 단가를 비교해 선정하고, 서비스 구조를 바꾸지 않고 교체할 수 있도록 설계합니다.</p>
+
+      <h5 class="sub" id="s3-3">3) LLM · STT · TTS 검토 결과</h5>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>기술</th><th>후보</th><th>목업에 적용한 것</th><th>선정 시 확인 항목</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>LLM</b><br><span class="note">해설 문장 생성</span></td>
+              <td>Gemini · GPT · Claude</td>
+              <td>Gemini <span class="mono">gemini-3-flash-preview</span></td>
+              <td>한국어 해설 품질, 응답 지연(실시간 대화 가능 수준), 토큰 단가, 지시 준수도(정답을 먼저 말하지 않는지)</td>
+            </tr>
+            <tr>
+              <td><b>STT</b><br><span class="note">학생 음성 인식</span></td>
+              <td>브라우저 내장(Web Speech) · ElevenLabs 내장 · 별도 STT 엔진</td>
+              <td>ElevenLabs 음성 에이전트 내장 STT · 브라우저 Web Speech</td>
+              <td>한국어·영어 혼용 발화 인식률, 학습자 발음 오류에 대한 관대함, 지연, 앱(WebView) 동작 여부</td>
+            </tr>
+            <tr>
+              <td><b>TTS</b><br><span class="note">강사 목소리</span></td>
+              <td>ElevenLabs · Google Cloud TTS · 타입캐스트</td>
+              <td>ElevenLabs (강사별 파라미터 적용)</td>
+              <td>실제 강사 음성 클로닝 품질, 영어·한국어 혼용 문장 처리, 글자당 단가, 강사 음성권 계약과의 정합</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note flag">세 기술 모두 <b>업체별 단가·성능 실측 비교는 아직 없습니다.</b> 목업은 개발 편의로 고른 조합이며, 상용 선정은 FGI 이후 개발사와 함께 진행해야 합니다. AI Human만 실측 비교가 끝난 상태입니다(아래).</p>
+
+      <hr class="pbreak">
+      <h5 class="sub" id="s3-4">4) AI Human 업체 검토 결과</h5>
+      <p>기존 강사 음성(ElevenLabs)을 그대로 쓸 수 있는지를 단일 기준으로 8개 업체를 검토했습니다. 외부 음성을 받아 립싱크만 해주는 업체만 후보로 남습니다.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>업체</th><th>형태</th><th>분당 단가</th><th>1인 월 비용<br><span class="note">300분 가정</span></th><th>검토 의견</th><th>상태</th></tr></thead>
+          <tbody>
+            <tr class="rec"><td><b>Simli</b></td><td>립싱크 단독</td><td>$0.01~0.05</td><td>약 0.4~2.1만 원</td><td>후보 중 단가가 가장 낮음. 한국어 품질 자료가 부족해 실측이 선행돼야 함</td><td>1차 실측</td></tr>
+            <tr class="rec"><td><b>Anam</b></td><td>립싱크 단독</td><td>$0.11~0.16</td><td>약 4.6~6.7만 원</td><td>오디오 패스스루 지원, 한국어 포함 70개 언어 명시. 해외 후보 중 단가는 높은 편</td><td>1차 실측</td></tr>
+            <tr class="rec"><td><b>클레온</b> <span class="note">국내</span></td><td>번들형<br><span class="note">우회 가능</span></td><td colspan="2">비공개 — 영업 문의</td><td>SDK가 외부 음성 입력을 지원(<span class="mono">startAudioEcho</span>). 국내 업체라 한국어 립싱크에 강점 예상. 과금 기준 확인 필요</td><td>1차 실측</td></tr>
+            <tr><td>Beyond Presence</td><td>립싱크 단독 / 번들</td><td>€0.0875</td><td>약 4.0만 원</td><td>S2V 모드에서 외부 TTS 사용 가능. 독일 법인이라 데이터 관할이 유럽</td><td>예비</td></tr>
+            <tr><td>HeyGen LiveAvatar</td><td>립싱크 단독 / 번들</td><td>$0.095</td><td>약 4.0만 원</td><td>구조는 적합하나 1차 후보 대비 비용이 높음</td><td>예비</td></tr>
+            <tr><td>Tavus</td><td>번들형</td><td>$0.32</td><td>약 13.4만 원</td><td>립싱크만 분리 구매 불가. 부가 기능을 안 써도 단가가 동일</td><td>제외</td></tr>
+            <tr><td>D-ID</td><td>번들형</td><td colspan="2">비공개</td><td>립싱크 단독 판매 없음, 실시간 분당 요금 비공개라 비용 예측 불가</td><td>제외</td></tr>
+            <tr><td>딥브레인 <span class="note">국내</span></td><td>번들형</td><td colspan="2">비공개 — 영업 문의</td><td>SDK가 텍스트만 입력받고 자체 TTS로 발화. 기존 강사 음성을 입힐 수 없음</td><td>제외</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">환율 1,400원·유로/달러 1.08, 2026-08-13 각 사 공개 요금제 기준. 립싱크 단독형 단가에는 ElevenLabs 음성 합성 비용이 빠져 있고, 실제 과금은 발화 시간이 아니라 <b>아바타 스트림이 열려 있는 시간</b> 기준입니다. 수업 1회당 실제 발화 시간을 측정해 원가를 다시 잡아야 합니다. 상세는 별도 검토 보고서 참조.</p>
+
+      <hr class="pbreak">
+      <h5 class="sub" id="s3-5">5) 우리가 직접 설계하는 영역</h5>
+      <p>범용 LLM에 수업을 그대로 맡기면 <b>정답을 먼저 말해버리고, 화면에 없는 것을 말하고, 학습 단계를 건너뜁니다.</b> 그래서 무엇을 언제 말할지는 외부에 맡기지 않고 직접 설계했습니다.</p>
+      <div class="grid2">
+        <div class="card">
+          <h5>스캐폴딩 로직</h5>
+          <ul>
+            <li>막혔을 때 <b>어떤 순서로 힌트를 주고 언제 거둘지</b>(Fading)를 문항 유형 단위로 설계</li>
+            <li>유형별 단계(레일)를 데이터로 두어, 강사·문항이 바뀌어도 같은 구조가 동작</li>
+            <li>학습 효과 가설(스캐폴딩이 실제로 통하는가)이 여기에 걸려 있음</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h5>LLM 답변 제어</h5>
+          <ul>
+            <li><b>판단은 백엔드, 발화는 LLM</b> — 채점·힌트 수준·다음 단계는 우리가 정하고 LLM은 그것을 말로 옮김</li>
+            <li>단계 게이트로 앞서가는 말·화면과 어긋난 말을 차단</li>
+            <li>토익 정답·해설을 내부 지식베이스(RAG)로 두어 지어내지 못하게 함</li>
+          </ul>
+        </div>
+      </div>
+      <p class="note">벤더(LLM·TTS·AI 휴먼)는 언제든 교체할 수 있지만 이 설계는 남습니다. <b>외주로 넘기면 안 되는 부분</b>이자 상용화 이후에도 우리가 쥐고 있어야 할 자산입니다.</p>
+
+      <hr class="pbreak">
+      <h5 class="sub" id="s3-6">6) 기술 적용 기본 방향</h5>
+      <div class="diagram">
+        <span class="diagram-label">원천 모델·음성·아바타는 외부, 답변 제어와 스캐폴딩 설계는 내부</span>
         <pre class="mermaid">
 graph TB
   subgraph 외부["외부 활용"]
@@ -806,12 +901,14 @@ graph TB
     E2["TTS/STT"]
     E3[AI 휴먼 벤더]
   end
-  subgraph 내부["내부 핵심 — 직접 통제"]
-    I5["LLM 답변 통제<br/>(가드레일·프롬프트 구조·스캐폴딩 룰)"]
+  subgraph 내부["내부 핵심 — 우리가 직접 설계"]
+    I4["스캐폴딩 로직<br/>(단계·힌트 순서·Fading)"]
+    I5["LLM 답변 제어<br/>(가드레일·단계 게이트)"]
     I6["RAG 지식베이스<br/>(토익 정답·해설 데이터)"]
   end
   A[학습자에게 전달되는 답변]
   E1 --> I5
+  I4 --> I5
   I6 --> I5
   I5 --> A
         </pre>
@@ -820,7 +917,7 @@ graph TB
 
     <section class="slide" id="s4">
       <div class="slide-head"><span class="s-num mono">04</span><h3>목업의 한계 및 상용화 전환 시 필요사항</h3><span class="status good">good</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>이건 기획 조직이 바이브코딩으로 만든, 컨셉 검증용 결과물입니다. 정식 상용화 산출물이 아닙니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>기획 조직이 바이브코딩으로 만든 컨셉 검증용 목업입니다. 상용화하려면 개발·콘텐츠·운영을 새로 구축해야 합니다.</p></div>
 
       <h5 class="sub" id="s4-1">1) 목업 제작 목적</h5>
       <ul>
@@ -846,6 +943,7 @@ graph TB
         </ul></div>
       </div>
 
+      <hr class="pbreak">
       <h5 class="sub" id="s4-3">3) 상용화를 위해 추가로 필요한 요소</h5>
       <div class="grid2">
         <div class="card"><h5>(1) 사용자</h5><ul><li>회원</li><li>권한</li><li>이용권</li><li>결제</li><li>학습 이력</li></ul></div>
@@ -854,6 +952,7 @@ graph TB
         <div class="card"><h5>(4) 기술</h5><ul><li>Backend</li><li>DB</li><li>로그 분석</li><li>모니터링</li><li>보안</li><li>장애 대응</li></ul></div>
       </div>
 
+      <hr class="pbreak">
       <h5 class="sub" id="s4-4">4) 상용화 전환 시 핵심 결정사항</h5>
       <ol class="steps">
         <li>어떤 범위까지 정식 개발할 것인가</li>
@@ -874,7 +973,7 @@ graph TB
 
     <section class="slide" id="s5">
       <div class="slide-head"><span class="s-num mono">05</span><h3>타깃 유저 대상 컨셉 검증 계획</h3><span class="status warn">warn</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>FGI는 사업을 다시 검토하는 조사가 아닙니다. 상용 MVP의 요구사항을 확정하는 단계입니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>9월 FGI에서 타깃 유저 50명에게 컨셉을 검증하고, 그 결과로 상용 MVP 요구사항을 확정합니다.</p></div>
 
       <h5 class="sub" id="s5-1">1) FGI 진행 목적</h5>
       <p>단순 만족도 조사가 아니다.</p>
@@ -907,7 +1006,7 @@ graph LR
 
     <section class="slide" id="s6">
       <div class="slide-head"><span class="s-num mono">06</span><h3>상용 MVP 구축 방향</h3><span class="status warn">warn</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>지금 범위는 가설입니다. 최종 범위는 FGI 결과를 반영해 확정됩니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>현재 정리한 MVP 범위는 가설 단계이며, 최종 범위는 FGI 결과를 반영해 확정합니다.</p></div>
 
       <h5 class="sub" id="s6-1">1) 상용 MVP 정의</h5>
       <p class="flag">한 줄 정의 — FGI 결과 반영 후 확정 (예: "핵심 학습 흐름 + 결제 + 최소 운영도구를 갖춘 첫 유료 가능 버전")</p>
@@ -930,7 +1029,7 @@ graph LR
 
     <section class="slide" id="s7">
       <div class="slide-head"><span class="s-num mono">07</span><h3>서비스 제공 모델</h3><span class="status warn">warn</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>독립 서비스가 아니라 기존 인강의 보완재로 시작합니다. 검증된 채널 위에 얹는 게 리스크가 낮습니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>기존 인강의 보완 상품으로 시작합니다. 이미 검증된 판매 채널 위에 얹는 방식이 초기 리스크가 낮습니다.</p></div>
 
       <h5 class="sub" id="s7-1">1) 초기 서비스 형태</h5>
       <p><b>기존 강의 보완재 (권고)</b> — 인강 수강 후 복습·질문 케어를 앱이 담당, 기존 채널·결제 재사용</p>
@@ -950,7 +1049,7 @@ graph LR
 
     <section class="slide" id="s8">
       <div class="slide-head"><span class="s-num mono">08</span><h3>수익모델 검토</h3><span class="status warn">warn</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>가격을 확정하는 자리가 아니라 구조를 보여드리는 자리입니다. 초기엔 장벽을 낮추고, 이후 유료로 전환합니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>과금 모델 후보와 매출 발생 구조를 정리했습니다. 초기에는 진입 장벽을 낮추고 이후 유료로 전환하는 방향이며, 가격은 미확정입니다.</p></div>
 
       <h5 class="sub" id="s8-1">1) 과금 모델 후보</h5>
       <div class="grid2">
@@ -968,6 +1067,7 @@ graph LR
         <div class="card"><h5>무료→유료</h5><p>초기 진입장벽 낮음 / 전환율 미지수</p></div>
       </div>
 
+      <hr class="pbreak">
       <h5 class="sub" id="s8-3">3) 초기 권고 모델</h5>
       <p>구독 또는 강의 결합 판매 — §7의 인강 보완재 포지션과 가장 잘 맞음</p>
 
@@ -977,7 +1077,7 @@ graph LR
 
     <section class="slide" id="s9">
       <div class="slide-head"><span class="s-num mono">09</span><h3>서비스 확장 방향</h3><span class="status warn">warn</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>확장은 검증된 인프라 위에 얹습니다. 새로운 상품과 새로운 페르소나를 동시에 떠안지 않습니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>단기 인강 연계, 중기 강사별 브랜딩 앱, 장기 B2B 교재 패키지 순으로 검증된 인프라 위에 단계적으로 확장합니다.</p></div>
       <p class="note flag">아래 단기→중기→장기 순서는 확정된 로드맵이 아니라 제안입니다. 실제 순서·품목은 §5 FGI 결과와 §11 사업주체 결정에 따라 바뀔 수 있습니다.</p>
       <div class="diagram">
         <span class="diagram-label">Mermaid 초안 — 단기 → 중기 → 장기 (제안, 확정 아님)</span>
@@ -1003,7 +1103,7 @@ graph LR
 
     <section class="slide" id="s10">
       <div class="slide-head"><span class="s-num mono">10</span><h3>사업 운영에 필요한 역할</h3><span class="status good">good</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>상용 서비스에는 Product · Contents & Quality · Business & Operation, 세 영역이 필요합니다. 지금 조직은 Product에 쏠려 있습니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>상용 서비스에는 Product, Contents & Quality, Business & Operation 세 영역의 역할이 필요합니다. 현재 조직은 Product에 쏠려 있습니다.</p></div>
       <div class="grid2">
         <div class="card" id="s10-1"><h5>1) Product</h5><p>서비스 기획 · UX · 개발 · AI 기술</p></div>
         <div class="card" id="s10-2"><h5>2) Contents & Quality</h5><p>콘텐츠 제작·검수 · AI 응답 품질 관리</p></div>
@@ -1044,7 +1144,7 @@ graph LR
 
     <section class="slide" id="s12">
       <div class="slide-head"><span class="s-num mono">12</span><h3>사업 추진 체계 및 R&R</h3><span class="status warn">warn</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>인계는 운영을 넘기는 것으로 끝나지 않습니다. 책임과 의사결정 권한을 어디까지 나눌지 정하는 문제입니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>AI랩·인강사업본부·어학원·개발사의 역할과 의사결정 권한을 어디까지 나눌지 정리해야 합니다.</p></div>
 
       <h5 class="sub" id="s12-1">1) 전체 추진 체계</h5>
       <p>현재 조직(우리 팀) → 사업 운영 계열사 → 개발 조직 → 콘텐츠 조직, 네 축으로 구성</p>
@@ -1097,6 +1197,7 @@ graph LR
       </div>
       <p id="s13-4"><b>4) 외부 AI 활용 영역</b> — LLM, STT, TTS, AI Human</p>
 
+      <hr class="pbreak">
       <h5 class="sub" id="s13-5">5) 기술 선정 원칙</h5>
       <div class="grid3">
         <div class="card"><p>품질</p></div>
@@ -1111,7 +1212,7 @@ graph LR
 
     <section class="slide" id="s14">
       <div class="slide-head"><span class="s-num mono">14</span><h3>구축 비용</h3><span class="status gap">gap</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>FGI 반영 최종 요구사항이 나와야 정확히 산정할 수 있습니다. 지금은 항목만 짚어둡니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>개발비, 콘텐츠·데이터 구축비, 강사 IP 계약금 등 비용 항목을 정리했습니다. 금액은 FGI 반영 요구사항이 확정돼야 산정할 수 있습니다.</p></div>
       <div class="grid2">
         <div class="card" id="s14-1"><h5>1) 상용 MVP 개발비</h5><p>개발사(캐치잇) 용역비 — 인건비 기준 월단위 협의 중 <span class="flag">투입 인원·기간 미확정</span></p></div>
         <div class="card" id="s14-2"><h5>2) 콘텐츠·데이터 구축비</h5><p>문항·해설·음성 자산, 4,000문항 태깅</p></div>
@@ -1122,7 +1223,7 @@ graph LR
 
     <section class="slide" id="s15">
       <div class="slide-head"><span class="s-num mono">15</span><h3>운영 비용</h3><span class="status good">good</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>회원 수보다 중요한 건 사용자당 AI 원가를 얼마로 관리하느냐입니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>고정비와 LLM·음성·AI 휴먼 트래픽 변동비로 나뉩니다. 사용자당 AI 원가를 얼마로 관리하느냐가 관건입니다.</p></div>
       <div class="grid2">
         <div class="card" id="s15-1"><h5>1) 고정비</h5><p>개발사 운영 인력, 유지보수, 서버 기본비, 콘텐츠 운영</p></div>
         <div class="card" id="s15-2" style="border-color:var(--accent);"><h5 style="color:var(--accent)">2) 변동비</h5><p>LLM, STT, TTS, AI Human 트래픽</p></div>
@@ -1141,7 +1242,7 @@ graph LR
 
     <section class="slide" id="s16">
       <div class="slide-head"><span class="s-num mono">16</span><h3>예상 매출 및 수익성</h3><span class="status gap">gap</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>확정 매출이 아니라 가정에 따른 시나리오입니다. 핵심은 사용자당 원가가 구독료를 넘지 않는 것입니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>가정에 따른 시나리오 추정입니다. 사용자당 원가가 구독료를 넘지 않는 선에서 손익이 성립합니다.</p></div>
 
       <h5 class="sub" id="s16-1">1) 주요 가정</h5>
       <p>가입자, 유료 전환율, ARPU, 이용기간 <span class="flag">전부 가정 필요 — 마케팅·운영계열사(§11) 협의 후 확정</span></p>
@@ -1159,6 +1260,7 @@ graph LR
         </table>
       </div>
 
+      <hr class="pbreak">
       <h5 class="sub" id="s16-3">3) 손익구조</h5>
       <p>몇 명이 결제해야 하는지 / 어느 가격이어야 하는지 / 사용량이 어느 수준까지 허용되는지</p>
       <div class="diagram">
@@ -1186,7 +1288,7 @@ xychart-beta
 
     <section class="slide" id="s17">
       <div class="slide-head"><span class="s-num mono">17</span><h3>상용화 시 주요 리스크 및 대응</h3><span class="status warn">warn</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>리스크를 다 없애고 시작하지 않습니다. 단계마다 기준을 두고 진행 여부를 결정합니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>기술·비용·운영·사업 네 축의 리스크와 대응 방안을 정리했습니다. 단계마다 기준을 두고 진행 여부를 판단합니다.</p></div>
       <div class="tbl-wrap">
         <table>
           <thead><tr><th>구분</th><th>리스크</th><th>대응</th></tr></thead>
@@ -1202,7 +1304,7 @@ xychart-beta
 
     <section class="slide" id="s18">
       <div class="slide-head"><span class="s-num mono">18</span><h3>단계별 추진 로드맵</h3><span class="status good">good</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>9월 FGI, 11월 티저, 3월 오픈베타 — 검증 방식만 바꿔가며 세 단계가 이어집니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>9월 FGI, 11월 티저 공개, 27년 3월 오픈베타 세 단계로 진행하며 단계마다 검증 방식이 달라집니다.</p></div>
 
       <div class="tbl-wrap">
         <table>
@@ -1219,6 +1321,13 @@ xychart-beta
         </table>
       </div>
 
+      <hr class="pbreak">
+      <div class="diagram">
+        <span class="diagram-label">월별 상세 일정 — 2안(9월 FGI · 11월 영상 오픈 · 27년 3월 OBT)</span>
+        <img src="img/schedule-2026-2027.png" alt="AI 어학원 월별 일정표 2안 — 시장조사·기획·검증, FGI 준비·실행, 티저 영상 및 홍보, 오픈 베타테스트 트랙별 8월~27년 3월 일정" style="width:100%;height:auto;display:block;border-radius:6px;">
+      </div>
+
+      <hr class="pbreak">
       <h5 class="sub">검증 사다리 — 단계마다 검증 방식이 다르다</h5>
       <div class="ladder">
         <div class="rung"><span class="rd">2026.09</span><div class="rt">FGI</div><div class="rs">정성 검증 — 왜 그렇게 느끼는지</div></div>
@@ -1232,7 +1341,7 @@ xychart-beta
 
     <section class="slide" id="s19">
       <div class="slide-head"><span class="s-num mono">19</span><h3>사업 검증 기준</h3><span class="status good">good</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>일정이 됐다고 자동으로 다음 단계로 가지 않습니다. 단계마다 정해둔 지표로 판단합니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>단계마다 통과 지표를 정해두고, 그 지표로 다음 단계 진행 여부를 판단합니다.</p></div>
 
       <h5 class="sub" id="s19-1">1) FGI — Concept Validation</h5>
       <p>서비스 필요성, 핵심 UI, 스캐폴딩 학습법, AI 학습 수용성, 요구사항</p>
@@ -1256,7 +1365,7 @@ xychart-beta
 
     <section class="slide" id="s20">
       <div class="slide-head"><span class="s-num mono">20</span><h3>주요 의사결정 사항</h3><span class="status good">good</span></div>
-      <div class="msg"><span class="msg-label">핵심메시지</span><p>"사업을 할까요 말까요"가 아닙니다. 이미 잡힌 27년 3월 오픈베타를 향해, 지금 필요한 사업 구조를 결정해 달라는 요청입니다.</p></div>
+      <div class="msg"><span class="msg-label">핵심메시지</span><p>27년 3월 오픈베타를 목표로 사업 주체, 추진 모델, 수익 모델, 상용 MVP 범위, 비용 부담 원칙을 결정해 주시기 바랍니다.</p></div>
       <div class="tbl-wrap">
         <table>
           <thead><tr><th>구분</th><th>결정 사항</th></tr></thead>
@@ -1286,62 +1395,72 @@ xychart-beta
     <span class="part-eyebrow">Part Ⅰ</span>
     <h3>사업 개요</h3>
   </div>
-  <div class="story-item"><span class="si-num mono">01</span><div class="si-body"><h4>사업 추진 경과</h4><p>생각만 하지 않았습니다. 스캐폴딩 구조도부터 MVP 42강 커리큘럼, FGI용 문항 매핑까지 실제로 설계했고, 9월 FGI를 향해 이미 움직이고 있습니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">02</span><div class="si-body"><h4>서비스 개요</h4><p>정답을 바로 주지 않습니다. 학습자가 스스로 풀어내도록, 단계적으로 돕는 AI 강사입니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">03</span><div class="si-body"><h4>기술 검토 현황 및 결과</h4><p>LLM은 외부에서 가져오지만, 무슨 말을 하게 할지는 우리가 통제합니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">04</span><div class="si-body"><h4>목업의 한계 및 상용화 전환 시 필요사항</h4><p>이건 기획 조직이 바이브코딩으로 만든, 컨셉 검증용 결과물입니다. 정식 상용화 산출물이 아닙니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">01</span><div class="si-body"><h4>사업 추진 경과</h4><p>4월부터 시장조사·기획/목업·콘텐츠·기술 네 트랙을 병행했습니다. 컨셉 설계와 목업 제작, 기술 검토, 계열사 요구사항·특허 검토를 마쳤고 현재 9월 FGI를 준비 중입니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">02</span><div class="si-body"><h4>서비스 개요</h4><p>AI 휴먼 강사가 정답 대신 단계별 힌트를 주고, 학습자가 스스로 풀어내도록 이끄는 서비스입니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">03</span><div class="si-body"><h4>기술 검토 현황 및 결과</h4><p>LLM·STT/TTS·AI 휴먼은 외부에서 조달하고, 답변 제어와 스캐폴딩 로직은 내부에서 직접 설계합니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">04</span><div class="si-body"><h4>목업의 한계 및 상용화 전환 시 필요사항</h4><p>기획 조직이 바이브코딩으로 만든 컨셉 검증용 목업입니다. 상용화하려면 개발·콘텐츠·운영을 새로 구축해야 합니다.</p></div></div>
 
   <div class="story-part">
     <span class="part-eyebrow">Part Ⅱ</span>
     <h3>타깃 검증 및 상용 서비스 구체화</h3>
   </div>
-  <div class="story-item"><span class="si-num mono">05</span><div class="si-body"><h4>타깃 유저 대상 컨셉 검증 계획</h4><p>FGI는 사업을 다시 검토하는 조사가 아닙니다. 상용 MVP의 요구사항을 확정하는 단계입니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">06</span><div class="si-body"><h4>상용 MVP 구축 방향</h4><p>지금 범위는 가설입니다. 최종 범위는 FGI 결과를 반영해 확정됩니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">05</span><div class="si-body"><h4>타깃 유저 대상 컨셉 검증 계획</h4><p>9월 FGI에서 타깃 유저 50명에게 컨셉을 검증하고, 그 결과로 상용 MVP 요구사항을 확정합니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">06</span><div class="si-body"><h4>상용 MVP 구축 방향</h4><p>현재 정리한 MVP 범위는 가설 단계이며, 최종 범위는 FGI 결과를 반영해 확정합니다.</p></div></div>
 
   <div class="story-part">
     <span class="part-eyebrow">Part Ⅲ</span>
     <h3>사업 추진 구조</h3>
   </div>
-  <div class="story-item"><span class="si-num mono">07</span><div class="si-body"><h4>서비스 제공 모델</h4><p>독립 서비스가 아니라 기존 인강의 보완재로 시작합니다. 검증된 채널 위에 얹는 게 리스크가 낮습니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">08</span><div class="si-body"><h4>수익모델 검토</h4><p>가격을 확정하는 자리가 아니라 구조를 보여드리는 자리입니다. 초기엔 장벽을 낮추고, 이후 유료로 전환합니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">09</span><div class="si-body"><h4>서비스 확장 방향 <span class="flag">제안</span></h4><p>확장은 검증된 인프라 위에 얹습니다. 새로운 상품과 새로운 페르소나를 동시에 떠안지 않습니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">07</span><div class="si-body"><h4>서비스 제공 모델</h4><p>기존 인강의 보완 상품으로 시작합니다. 이미 검증된 판매 채널 위에 얹는 방식이 초기 리스크가 낮습니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">08</span><div class="si-body"><h4>수익모델 검토</h4><p>과금 모델 후보와 매출 발생 구조를 정리했습니다. 초기에는 진입 장벽을 낮추고 이후 유료로 전환하는 방향이며, 가격은 미확정입니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">09</span><div class="si-body"><h4>서비스 확장 방향 <span class="flag">제안</span></h4><p>단기 인강 연계, 중기 강사별 브랜딩 앱, 장기 B2B 교재 패키지 순으로 검증된 인프라 위에 단계적으로 확장합니다.</p></div></div>
 
   <div class="story-part">
     <span class="part-eyebrow">Part Ⅳ</span>
     <h3>사업 추진 및 운영 구조</h3>
   </div>
-  <div class="story-item"><span class="si-num mono">10</span><div class="si-body"><h4>사업 운영에 필요한 역할</h4><p>상용 서비스에는 Product · Contents & Quality · Business & Operation, 세 영역이 필요합니다. 지금 조직은 Product에 쏠려 있습니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">10</span><div class="si-body"><h4>사업 운영에 필요한 역할</h4><p>상용 서비스에는 Product, Contents & Quality, Business & Operation 세 영역의 역할이 필요합니다. 현재 조직은 Product에 쏠려 있습니다.</p></div></div>
   <div class="story-item"><span class="si-num mono">11</span><div class="si-body"><h4>사업 주체 및 운영 모델 검토</h4><p>인강사업본부로 이관하고, 어학원은 강사 IP·콘텐츠 파트너로 참여하는 구조를 권고합니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">12</span><div class="si-body"><h4>사업 추진 체계 및 R&R</h4><p>인계는 운영을 넘기는 것으로 끝나지 않습니다. 책임과 의사결정 권한을 어디까지 나눌지 정하는 문제입니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">12</span><div class="si-body"><h4>사업 추진 체계 및 R&R</h4><p>AI랩·인강사업본부·어학원·개발사의 역할과 의사결정 권한을 어디까지 나눌지 정리해야 합니다.</p></div></div>
 
   <div class="story-part">
     <span class="part-eyebrow">Part Ⅴ</span>
     <h3>구축 및 사업성 검토</h3>
   </div>
   <div class="story-item"><span class="si-num mono">13</span><div class="si-body"><h4>상용 서비스 구축 방안 및 기술 구조</h4><p>서비스 로직과 데이터는 전문 개발사가 내부에 짓고, 범용 AI 기술만 외부에서 가져옵니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">14</span><div class="si-body"><h4>구축 비용</h4><p>FGI 반영 최종 요구사항이 나와야 정확히 산정할 수 있습니다. 지금은 항목만 짚어둡니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">15</span><div class="si-body"><h4>운영 비용</h4><p>회원 수보다 중요한 건 사용자당 AI 원가를 얼마로 관리하느냐입니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">16</span><div class="si-body"><h4>예상 매출 및 수익성</h4><p>확정 매출이 아니라 가정에 따른 시나리오입니다. 핵심은 사용자당 원가가 구독료를 넘지 않는 것입니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">14</span><div class="si-body"><h4>구축 비용</h4><p>개발비, 콘텐츠·데이터 구축비, 강사 IP 계약금 등 비용 항목을 정리했습니다. 금액은 FGI 반영 요구사항이 확정돼야 산정할 수 있습니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">15</span><div class="si-body"><h4>운영 비용</h4><p>고정비와 LLM·음성·AI 휴먼 트래픽 변동비로 나뉩니다. 사용자당 AI 원가를 얼마로 관리하느냐가 관건입니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">16</span><div class="si-body"><h4>예상 매출 및 수익성</h4><p>가정에 따른 시나리오 추정입니다. 사용자당 원가가 구독료를 넘지 않는 선에서 손익이 성립합니다.</p></div></div>
 
   <div class="story-part">
     <span class="part-eyebrow">Part Ⅵ</span>
     <h3>사업화 리스크 및 실행 계획</h3>
   </div>
-  <div class="story-item"><span class="si-num mono">17</span><div class="si-body"><h4>상용화 시 주요 리스크 및 대응</h4><p>리스크를 다 없애고 시작하지 않습니다. 단계마다 기준을 두고 진행 여부를 결정합니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">18</span><div class="si-body"><h4>단계별 추진 로드맵</h4><p>9월 FGI, 11월 티저, 3월 오픈베타 — 검증 방식만 바꿔가며 세 단계가 이어집니다.</p></div></div>
-  <div class="story-item"><span class="si-num mono">19</span><div class="si-body"><h4>사업 검증 기준</h4><p>일정이 됐다고 자동으로 다음 단계로 가지 않습니다. 단계마다 정해둔 지표로 판단합니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">17</span><div class="si-body"><h4>상용화 시 주요 리스크 및 대응</h4><p>기술·비용·운영·사업 네 축의 리스크와 대응 방안을 정리했습니다. 단계마다 기준을 두고 진행 여부를 판단합니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">18</span><div class="si-body"><h4>단계별 추진 로드맵</h4><p>9월 FGI, 11월 티저 공개, 27년 3월 오픈베타 세 단계로 진행하며 단계마다 검증 방식이 달라집니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">19</span><div class="si-body"><h4>사업 검증 기준</h4><p>단계마다 통과 지표를 정해두고, 그 지표로 다음 단계 진행 여부를 판단합니다.</p></div></div>
 
   <div class="story-part">
     <span class="part-eyebrow">Part Ⅶ</span>
     <h3>주요 의사결정 사항</h3>
   </div>
-  <div class="story-item"><span class="si-num mono">20</span><div class="si-body"><h4>주요 의사결정 사항</h4><p>"사업을 할까요 말까요"가 아닙니다. 이미 잡힌 27년 3월 오픈베타를 향해, 지금 필요한 사업 구조를 결정해 달라는 요청입니다.</p></div></div>
+  <div class="story-item"><span class="si-num mono">20</span><div class="si-body"><h4>주요 의사결정 사항</h4><p>27년 3월 오픈베타를 목표로 사업 주체, 추진 모델, 수익 모델, 상용 MVP 범위, 비용 부담 원칙을 결정해 주시기 바랍니다.</p></div></div>
 </div>
 
 
 <script>
 (function(){
-  var pages = Array.prototype.slice.call(document.querySelectorAll('.part-divider, .slide'));
+  /* 한 장 안에 .pbreak 가 있으면 그만큼 페이지를 쪼갠다. 각 자식에 소속 페이지 번호를 심어둔다. */
+  var pages = [];
+  Array.prototype.slice.call(document.querySelectorAll('.part-divider, .slide')).forEach(function(el){
+    if (!el.classList.contains('slide')){ pages.push({ el: el, pg: 0, parts: 1 }); return; }
+    var pg = 0;
+    Array.prototype.slice.call(el.children).forEach(function(ch){
+      if (ch.classList.contains('pbreak')) pg += 1;
+      ch.dataset.pg = pg;
+    });
+    for (var i = 0; i <= pg; i++) pages.push({ el: el, pg: i, parts: pg + 1 });
+  });
   var idx = 0;
   var counterEl = document.getElementById('vcounter');
   var prevBtn = document.getElementById('vprev');
@@ -1350,12 +1469,37 @@ xychart-beta
   var tabs = Array.prototype.slice.call(document.querySelectorAll('.vtab'));
 
   function renderPresent(){
-    pages.forEach(function(p, i){ p.classList.toggle('is-current', i === idx); });
+    var cur = pages[idx];
+    pages.forEach(function(p){ p.el.classList.remove('is-current'); });
+    cur.el.classList.add('is-current');
+
+    if (cur.el.classList.contains('slide')){
+      /* 슬라이드 머리(번호·제목)는 이어지는 페이지에도 계속 남긴다 */
+      Array.prototype.slice.call(cur.el.children).forEach(function(ch){
+        var on = ch.classList.contains('slide-head') || ch.dataset.pg === String(cur.pg);
+        ch.classList.toggle('pg-off', !on);
+      });
+      var head = cur.el.querySelector('.slide-head');
+      if (head){
+        var mark = head.querySelector('.pg-cont');
+        if (cur.parts > 1){
+          if (!mark){
+            mark = document.createElement('span');
+            mark.className = 'pg-cont';
+            head.appendChild(mark);
+          }
+          mark.textContent = (cur.pg + 1) + ' / ' + cur.parts;
+          mark.hidden = false;
+        } else if (mark){
+          mark.hidden = true;
+        }
+      }
+    }
+
     if (counterEl) counterEl.textContent = (idx + 1) + ' / ' + pages.length;
     if (prevBtn) prevBtn.disabled = idx === 0;
     if (nextBtn) nextBtn.disabled = idx === pages.length - 1;
-    var current = pages[idx];
-    if (current && current.scrollIntoView) current.scrollTop = 0;
+    cur.el.scrollTop = 0;
   }
 
   function setView(view){
