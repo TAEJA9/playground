@@ -179,6 +179,16 @@ const CARD_DATA = [
     author: "유진",
     type: "report"
   },
+  {
+    icon: "📝",
+    title: "컨닝 스터디 워크플로우 모음",
+    desc: "컨닝 스터디에서 공유된 다른 사람들의 AI 활용 워크플로우 정리",
+    href: "https://cunningday-study.vercel.app/",
+    cats: ["report"],
+    isActive: true,
+    author: "유진",
+    type: "report"
+  },
 
   { icon: "🤖", title: "Coming Soon", desc: "곧 공개됩니다", href: "#", cats: [], isActive: false, author: null, type: "tool" },
   { icon: "✨", title: "Coming Soon", desc: "곧 공개됩니다", href: "#", cats: [], isActive: false, author: null, type: "tool" },
