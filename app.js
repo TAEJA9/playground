@@ -140,12 +140,22 @@ const CARD_DATA = [
   },
   {
     icon: "🧭",
-    title: "당신을 위한 바이브코딩 가이드",
-    desc: "바이브코딩의 기초부터 협업 흐름, 업무 자동화 방법에 대한 가이드를 제공합니다.",
+    title: "당신을 위한 AI 에이전트 가이드",
+    desc: "AI 에이전트 세팅부터 바이브코딩, 업무 자동화, 구글 연동, CLAUDE.md·Hooks 활용까지 한 번에 정리한 가이드를 제공합니다.",
     href: "https://ai-guide-01.vercel.app/",
     cats: ["report"],
     isActive: true,
     author: "정연",
+    type: "report"
+  },
+  {
+    icon: "📡",
+    title: "AI Trend Lab",
+    desc: "AI 트렌드를 모으고 판정하고 발행하는 사내 아카이브. 이번 주 꼭 볼 것과 주간 요약까지!",
+    href: "https://ai-trend-lab.vercel.app/",
+    cats: ["report"],
+    isActive: true,
+    author: "유진",
     type: "report"
   },
   {
